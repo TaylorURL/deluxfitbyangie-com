@@ -1,0 +1,37 @@
+{
+  "name": "@deluxfit/ds",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DeluxFit by Angie design system — red/black gym-luxe tokens, theme, components, and layout primitives for React + Tailwind.",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./tailwind-preset": "./tailwind-preset.cjs",
+    "./tailwind-preset.cjs": "./tailwind-preset.cjs"
+  },
+  "peerDependencies": {
+    "@radix-ui/react-accordion": ">=1",
+    "@radix-ui/react-slot": ">=1",
+    "class-variance-authority": ">=0.7",
+    "clsx": ">=2",
+    "framer-motion": ">=11",
+    "lucide-react": ">=0.4",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tailwind-merge": ">=2"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "tailwind",
+    "fitness",
+    "deluxfit"
+  ],
+  "license": "UNLICENSED"
+}

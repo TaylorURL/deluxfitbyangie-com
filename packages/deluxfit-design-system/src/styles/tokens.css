@@ -1,0 +1,136 @@
+/* =============================================================================
+   DeluxFit Design System — tokens & primitives
+   -----------------------------------------------------------------------------
+   The single, portable source of the DeluxFit visual language: a red/black
+   "gym-luxe" theme — true blacks and charcoals, an aggressive crimson accent,
+   off-white text, a heavy condensed display face for headlines, and a clean
+   sans for body copy.
+
+   Theming model
+   -------------
+   Every color is a CSS custom property under the `--df-*` namespace. Wrap the
+   tree in an element with the `df-root` class (defaults to the dark theme).
+   The Tailwind preset maps these vars onto `df-*` utilities
+   (`bg-df-surface`, `text-df-text-muted`, `border-df-border-strong`, …) so the
+   tokens are the single source of truth for both CSS and Tailwind.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
+
+/* ---- Global, theme-independent scales ------------------------------------ */
+:root {
+  --df-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --df-font-display: 'Oswald', 'Inter', system-ui, sans-serif;
+
+  /* Radius scale */
+  --df-radius-xs: 4px;
+  --df-radius-sm: 6px;
+  --df-radius-md: 10px;
+  --df-radius-lg: 14px;
+  --df-radius-xl: 20px;
+  --df-radius-2xl: 28px;
+  --df-radius-full: 9999px;
+
+  /* Motion — durations + athletic easings */
+  --df-duration-fast: 140ms;
+  --df-duration-base: 220ms;
+  --df-duration-slow: 420ms;
+  --df-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --df-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --df-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Elevation — layered ambient + key light so surfaces read as lifted. */
+  --df-shadow-ambient: rgba(0, 0, 0, 0.55);
+  --df-shadow-key: rgba(0, 0, 0, 0.45);
+  --df-shadow-sm: 0 1px 2px var(--df-shadow-key);
+  --df-shadow-md: 0 1px 2px var(--df-shadow-ambient), 0 6px 16px var(--df-shadow-key);
+  --df-shadow-lg: 0 2px 6px var(--df-shadow-ambient), 0 18px 40px var(--df-shadow-key);
+  --df-shadow-xl: 0 4px 10px var(--df-shadow-ambient), 0 30px 70px var(--df-shadow-key);
+
+  /* Signature red glow — used on the highlighted pricing tier + CTAs. */
+  --df-shadow-glow: 0 0 0 1px rgba(225, 29, 42, 0.45),
+    0 18px 60px -12px rgba(225, 29, 42, 0.55);
+  --df-shadow-glow-soft: 0 14px 50px -16px rgba(225, 29, 42, 0.45);
+
+  /* Layering */
+  --df-z-sticky: 1100;
+  --df-z-overlay: 1200;
+  --df-z-modal: 1300;
+}
+
+/* ---- Dark theme (default) ------------------------------------------------ */
+.df-root,
+.df-root[data-theme='dark'],
+[data-theme='dark'] {
+  /* Surfaces — true black up through elevated charcoal */
+  --df-bg: #050505;
+  --df-bg-elevated: #0c0c0d;
+  --df-surface: #121214;
+  --df-surface-2: #1a1a1d;
+  --df-surface-3: #242428;
+
+  /* Borders */
+  --df-border: rgba(255, 255, 255, 0.08);
+  --df-border-strong: rgba(255, 255, 255, 0.16);
+  --df-border-input: rgba(255, 255, 255, 0.24);
+  --df-border-hover: rgba(225, 29, 42, 0.55);
+
+  /* Text */
+  --df-text: #f5f3f2;
+  --df-text-muted: #a8a4a3;
+  --df-text-faint: #76726f;
+
+  /* Brand red scale (50–950) */
+  --df-red-50: #fff1f2;
+  --df-red-100: #ffdfe1;
+  --df-red-200: #ffc4c8;
+  --df-red-300: #ff9aa2;
+  --df-red-400: #fb5663;
+  --df-red-500: #f01f2d;
+  --df-red-600: #e11d2a;
+  --df-red-700: #bd1521;
+  --df-red-800: #9c141e;
+  --df-red-900: #81151d;
+  --df-red-950: #47070c;
+
+  /* Accent — the crimson voice of the brand */
+  --df-accent: #e11d2a;
+  --df-accent-bright: #fb3645;
+  --df-accent-deep: #bd1521;
+  --df-accent-soft: rgba(225, 29, 42, 0.14);
+  --df-accent-softer: rgba(225, 29, 42, 0.08);
+  --df-on-accent: #ffffff;
+
+  /* Semantic */
+  --df-positive: #34d399;
+  --df-positive-soft: rgba(52, 211, 153, 0.14);
+  --df-warning: #fbbf24;
+  --df-warning-soft: rgba(251, 191, 36, 0.14);
+  --df-danger: #f43f5e;
+  --df-danger-soft: rgba(244, 63, 94, 0.14);
+
+  /* Overlays + glass */
+  --df-overlay: rgba(0, 0, 0, 0.72);
+  --df-glass-fill: rgba(18, 18, 20, 0.72);
+  --df-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ---- Base element resets bound to tokens --------------------------------- */
+.df-root {
+  background-color: var(--df-bg);
+  color: var(--df-text);
+  font-family: var(--df-font-sans);
+}
+
+/* Reduced motion — honor the OS preference globally. The app also wraps the
+   tree in framer-motion's <MotionConfig reducedMotion="user" />. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

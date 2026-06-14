@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Offset anchor jumps so the sticky header never covers section tops. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-df-bg font-sans text-df-text antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-df-accent text-df-on-accent;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-df-accent-bright ring-offset-2 ring-offset-df-bg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
