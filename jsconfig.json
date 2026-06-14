@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@deluxfit/ds": ["packages/deluxfit-design-system/index.js"]
+    }
+  },
+  "include": ["src", "packages/deluxfit-design-system"]
+}
