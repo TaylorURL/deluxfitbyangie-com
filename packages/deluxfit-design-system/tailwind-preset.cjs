@@ -124,6 +124,14 @@ module.exports = {
           '0%, 100%': { opacity: '0.55' },
           '50%': { opacity: '1' },
         },
+        'df-acc-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'df-acc-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         'df-fade-up': 'df-fade-up 420ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
