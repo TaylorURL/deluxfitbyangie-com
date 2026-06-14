@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import { Button, Container } from '@deluxfit/ds'
+import { Button, Container, cn } from '@deluxfit/ds'
 import { brand, nav } from '@/content/site'
-import { cn } from '@/lib/cn'
 
 /**
  * Sticky site header. Gains an elevated, blurred background once the page is
