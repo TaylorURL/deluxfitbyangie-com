@@ -43,9 +43,23 @@ export default defineConfig([
       ],
     },
   },
-  // The Tailwind preset is a CommonJS config file consumed by Node tooling.
+  // The design system is a publishable library, not HMR-refreshed app code, so
+  // co-exporting `cva` variant helpers alongside their components is intentional.
   {
-    files: ['**/tailwind-preset.cjs', '**/postcss.config.js', '**/tailwind.config.js'],
+    files: ['packages/deluxfit-design-system/**/*.{js,jsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  // Node-consumed config files (CommonJS presets + Vite config) run outside the
+  // browser, so expose Node globals like `module`, `require`, and `__dirname`.
+  {
+    files: [
+      '**/tailwind-preset.cjs',
+      '**/postcss.config.js',
+      '**/tailwind.config.js',
+      '**/vite.config.js',
+    ],
     languageOptions: {
       globals: { ...globals.node, module: 'writable', require: 'readonly' },
     },
