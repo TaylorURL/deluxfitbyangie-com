@@ -1,7 +1,12 @@
 import { ArrowRight, Star } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Button, Container, Marquee, cn } from '@deluxfit/ds'
+import { Button, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
+
+const MotionDiv = motion.div
+const MotionH1 = motion.h1
+const MotionSpan = motion.span
+const MotionP = motion.p
 
 /**
  * Hero — Cinematic #4: an anamorphic title-card opening. Full-bleed hero image
