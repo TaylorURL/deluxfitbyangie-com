@@ -4,7 +4,7 @@ import { Button, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
 
 const MotionDiv = MotionDiv
-const MotionH1 = motion.h1
+const MotionH1 = MotionH1
 const MotionSpan = motion.span
 const MotionP = motion.p
 
@@ -183,7 +183,7 @@ function TitleCard() {
     <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
       <CinematicEyebrow>Now Showing</CinematicEyebrow>
 
-      <motion.h1
+      <MotionH1
         className="mt-7 font-display text-[3.25rem] font-700 uppercase leading-[0.9] tracking-[-0.01em] text-df-text sm:text-7xl md:text-8xl lg:text-[7.5rem]"
         style={{ textShadow: '0 6px 40px rgba(0,0,0,0.6)' }}
         variants={HEADLINE_STAGGER}
@@ -203,7 +203,7 @@ function TitleCard() {
             {line}
           </motion.span>
         ))}
-      </motion.h1>
+      </MotionH1>
 
       <motion.p
         className="mt-8 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg"
