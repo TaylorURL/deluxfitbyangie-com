@@ -5,7 +5,7 @@ import { hero, marqueeItems } from '@/content/site'
 
 const MotionDiv = MotionDiv
 const MotionH1 = MotionH1
-const MotionSpan = motion.span
+const MotionSpan = MotionSpan
 const MotionP = motion.p
 
 /**
@@ -191,7 +191,7 @@ function TitleCard() {
         animate={prefersReducedMotion ? undefined : 'visible'}
       >
         {hero.headline.map((line, index) => (
-          <motion.span
+          <MotionSpan
             key={line}
             className={cn(
               'block',
@@ -201,7 +201,7 @@ function TitleCard() {
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
             {line}
-          </motion.span>
+          </MotionSpan>
         ))}
       </MotionH1>
 
