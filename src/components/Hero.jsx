@@ -6,7 +6,7 @@ import { hero, marqueeItems } from '@/content/site'
 const MotionDiv = MotionDiv
 const MotionH1 = MotionH1
 const MotionSpan = MotionSpan
-const MotionP = motion.p
+const MotionP = MotionP
 
 /**
  * Hero — Cinematic #4: an anamorphic title-card opening. Full-bleed hero image
@@ -205,14 +205,14 @@ function TitleCard() {
         ))}
       </MotionH1>
 
-      <motion.p
+      <MotionP
         className="mt-8 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
         animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.95 }}
       >
         {hero.subhead}
-      </motion.p>
+      </MotionP>
 
       <MotionDiv
         className="mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
