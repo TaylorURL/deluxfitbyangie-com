@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Button, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
 
-const MotionDiv = motion.div
+const MotionDiv = MotionDiv
 const MotionH1 = motion.h1
 const MotionSpan = motion.span
 const MotionP = motion.p
@@ -45,7 +45,7 @@ function CinematicFrame() {
   return (
     <>
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div
+        <MotionDiv
           className="absolute inset-0 will-change-transform"
           initial={{ scale: 1.08, x: '-1%', y: '-1%' }}
           animate={
@@ -61,7 +61,7 @@ function CinematicFrame() {
             className="absolute inset-0 h-full w-full object-cover object-[60%_30%]"
             loading="eager"
           />
-        </motion.div>
+        </MotionDiv>
 
         <div
           aria-hidden="true"
@@ -214,7 +214,7 @@ function TitleCard() {
         {hero.subhead}
       </motion.p>
 
-      <motion.div
+      <MotionDiv
         className="mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
         animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
@@ -229,9 +229,9 @@ function TitleCard() {
         <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
           <a href="#results">{hero.secondaryCta}</a>
         </Button>
-      </motion.div>
+      </MotionDiv>
 
-      <motion.div
+      <MotionDiv
         className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:gap-6"
         initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={prefersReducedMotion ? undefined : { opacity: 1 }}
@@ -252,7 +252,7 @@ function TitleCard() {
         </div>
         <span className="hidden h-4 w-px bg-df-border-strong sm:block" aria-hidden="true" />
         <span className="text-sm font-600 text-df-text">{hero.trust.clients}</span>
-      </motion.div>
+      </MotionDiv>
     </div>
   )
 }
