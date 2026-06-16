@@ -16,19 +16,20 @@ function TikTokGlyph({ className }) {
 }
 
 /**
- * Footer — closing navigation, social links (Instagram + TikTok), the legal
- * disclaimer, and copyright. Social icons resolve from site content: a lucide
- * component when supplied, or the inline TikTok glyph for the 'tiktok' marker.
+ * Footer — closing navigation, social links (Instagram + TikTok), a ghosted
+ * oversized wordmark as a final type-specimen flourish, and the legal
+ * disclaimer. Social icons resolve from site content: a lucide component when
+ * supplied, or the inline TikTok glyph for the 'tiktok' marker.
  */
 export default function Footer() {
   return (
-    <footer className="border-t border-df-border bg-df-bg py-14">
+    <footer className="overflow-hidden border-t border-df-border bg-df-bg pt-16">
       <Container size="xl">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
             <a
               href="#top"
-              className="font-display text-2xl font-700 uppercase tracking-tight text-df-text"
+              className="font-display text-2xl font-400 uppercase tracking-tight text-df-text"
             >
               {brand.name}
               <span className="text-df-accent-bright">.</span>
@@ -43,7 +44,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="flex h-10 w-10 items-center justify-center rounded-df-full border border-df-border text-df-text-muted transition-colors hover:border-df-accent hover:text-df-accent-bright"
+                    className="flex h-11 w-11 items-center justify-center rounded-df-full border border-df-border text-df-text-muted transition-colors hover:border-df-accent hover:text-df-accent-bright"
                   >
                     {Icon === 'tiktok' ? (
                       <TikTokGlyph className="h-5 w-5" />
@@ -69,9 +70,17 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 border-t border-df-border pt-8">
-          <p className="text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
-          <p className="mt-4 text-xs text-df-text-faint">
+        <div
+          aria-hidden="true"
+          className="mt-14 select-none font-display text-[clamp(2.5rem,20vw,13rem)] font-400 uppercase leading-[0.78] tracking-tight text-df-surface-3"
+        >
+          {brand.name}
+          <span className="text-df-accent/30">.</span>
+        </div>
+
+        <div className="flex flex-col gap-4 border-t border-df-border py-8">
+          <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
+          <p className="text-xs text-df-text-faint">
             © {CURRENT_YEAR} {brand.fullName}. All rights reserved.
           </p>
         </div>
