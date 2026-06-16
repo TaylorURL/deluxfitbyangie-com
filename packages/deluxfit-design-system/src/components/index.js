@@ -18,6 +18,7 @@ export { Field } from './Field'
 // Marketing primitives
 export { SectionEyebrow } from './SectionEyebrow'
 export { SectionIndex } from './SectionIndex'
+export { SplitHeading } from './SplitHeading'
 export { Marquee } from './Marquee'
 
 // Motion
