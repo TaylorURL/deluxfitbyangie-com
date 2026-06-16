@@ -66,6 +66,7 @@ export const marqueeItems = [
 export const pain = {
   eyebrow: 'Sound familiar?',
   heading: 'You’re not lazy. You’ve just been handed the wrong plan.',
+  accent: 'the wrong plan',
   subhead:
     'You’ve tried hard before — maybe harder than anyone knows. The problem was never your effort. It was a cookie-cutter program that ignored your body, your schedule, and your life.',
   points: [
@@ -81,6 +82,7 @@ export const pain = {
 export const benefits = {
   eyebrow: 'What you get',
   heading: 'A complete system — not just another workout PDF.',
+  accent: 'complete system',
   subhead:
     'Everything is built for you and adjusted every week as you progress. This is coaching, not a template you download and never open again.',
   items: [
@@ -126,6 +128,7 @@ export const benefits = {
 export const program = {
   eyebrow: 'The program',
   heading: 'The DeluxFit 12-week transformation method.',
+  accent: 'transformation method',
   subhead:
     'Three focused phases that build on each other — so you don’t just lose weight, you build a body and a routine that lasts.',
   phases: [
@@ -159,6 +162,7 @@ export const program = {
 export const results = {
   eyebrow: 'Real women, real results',
   heading: 'Transformations that speak for themselves.',
+  accent: 'speak for themselves',
   subhead:
     'These are placeholder stories and photos — Angie will swap in real client wins and before/after images here.',
   testimonials: [
@@ -166,6 +170,7 @@ export const results = {
       quote:
         'Angie gave me a plan that actually fit my life as a working mom of two. I’m down 28 pounds and stronger than I was in my twenties.',
       name: 'Jessica M.',
+      metric: '−28 lbs',
       result: 'Lost 28 lbs in 12 weeks',
       rating: 5,
     },
@@ -173,6 +178,7 @@ export const results = {
       quote:
         'I’ve done every diet out there. This was the first time I didn’t feel deprived — and the first time it actually stuck.',
       name: 'Priya K.',
+      metric: '−3 sizes',
       result: 'Down 3 dress sizes',
       rating: 5,
     },
@@ -180,6 +186,7 @@ export const results = {
       quote:
         'The weekly check-ins kept me honest. Knowing Angie was reviewing my week made me show up even when I didn’t feel like it.',
       name: 'Dana R.',
+      metric: '1st pull-up',
       result: 'First-ever pull-up',
       rating: 5,
     },
@@ -187,6 +194,7 @@ export const results = {
       quote:
         'I came for fat loss and left with confidence I didn’t know I was missing. Best money I’ve ever spent on myself.',
       name: 'Megan T.',
+      metric: '−19 lbs',
       result: 'Lost 19 lbs, gained strength',
       rating: 5,
     },
@@ -201,6 +209,7 @@ export const results = {
 export const pricing = {
   eyebrow: 'Choose your transformation',
   heading: 'Pick the plan that matches your goals.',
+  accent: 'matches your goals',
   subhead:
     'Every tier includes custom training, nutrition coaching, and weekly accountability. Cancel anytime — no contracts, no games.',
   note: 'Prices shown in USD. Placeholder pricing — Angie sets the final numbers in Stripe.',
@@ -274,6 +283,7 @@ export const about = {
   eyebrow: 'Meet your coach',
   name: 'Angie',
   heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
+  accent: 'the woman you’re becoming',
   bio: [
     'For over a decade I’ve helped women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
     'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a proven system and someone in your corner every single week.',
@@ -290,6 +300,7 @@ export const about = {
 export const faq = {
   eyebrow: 'Questions',
   heading: 'Everything you need to know.',
+  accent: 'need to know',
   items: [
     {
       question: 'Do I need a gym membership?',
@@ -327,6 +338,7 @@ export const faq = {
 export const finalCta = {
   eyebrow: 'Your transformation starts now',
   heading: 'The next 12 weeks are happening either way.',
+  accent: 'either way',
   subhead:
     'You can arrive there wishing you’d started today — or arrive stronger, leaner, and prouder than ever. Spots in each coaching group are limited so I can give every client real attention.',
   primaryCta: 'Start Your Transformation',

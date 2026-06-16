@@ -1,30 +1,36 @@
-import { X } from 'lucide-react'
-import { Card, Reveal, Section } from '@deluxfit/ds'
+import { Reveal, Section } from '@deluxfit/ds'
 import { pain } from '@/content/site'
 
 /**
- * Pain / Agitation — names the frustrations the prospect arrives with so they
- * feel understood before the offer is made. Each "Tired of…" point is a card in
- * a responsive grid with a red dismissive icon.
+ * Pain / Agitation — names the frustrations the prospect arrives with as a
+ * numbered editorial list. Oversized crimson indices carry the rhythm; the air
+ * around each line keeps the section confident rather than crowded.
  */
 export default function Pain() {
   return (
-    <Section id="pain" eyebrow={pain.eyebrow} heading={pain.heading} subhead={pain.subhead}>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <Section
+      id="pain"
+      index="01"
+      eyebrow={pain.eyebrow}
+      heading={pain.heading}
+      accent={pain.accent}
+      subhead={pain.subhead}
+    >
+      <ol className="grid gap-x-12 sm:grid-cols-2">
         {pain.points.map((point, index) => (
-          <Reveal key={point} delay={index * 0.06}>
-            <Card variant="surface" className="flex h-full items-start gap-4">
+          <Reveal key={point} delay={index * 0.05} as="li">
+            <div className="flex items-baseline gap-5 border-t border-df-border py-6">
               <span
-                className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright"
                 aria-hidden="true"
+                className="font-display text-2xl font-400 leading-none tabular-nums text-df-accent-bright"
               >
-                <X className="h-4 w-4" strokeWidth={2.5} />
+                {String(index + 1).padStart(2, '0')}
               </span>
-              <p className="text-[15px] leading-relaxed text-df-text-muted">{point}</p>
-            </Card>
+              <p className="text-[15px] leading-relaxed text-df-text-muted sm:text-base">{point}</p>
+            </div>
           </Reveal>
         ))}
-      </div>
+      </ol>
     </Section>
   )
 }

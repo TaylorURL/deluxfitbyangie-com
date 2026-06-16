@@ -42,7 +42,7 @@ export const PricingCard = forwardRef(function PricingCard(
     <div
       ref={ref}
       className={cn(
-        'relative flex flex-col rounded-df-xl border p-7 transition-transform duration-300 ease-df-out sm:p-8',
+        'relative flex flex-col rounded-df-xl border p-7 transition-transform duration-300 ease-df-out sm:p-9',
         highlighted
           ? 'border-df-accent bg-df-surface-2 shadow-df-glow lg:scale-[1.04]'
           : 'border-df-border bg-df-surface hover:border-df-border-strong',
@@ -51,24 +51,29 @@ export const PricingCard = forwardRef(function PricingCard(
       {...props}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+        <div className="absolute -top-3 left-7 sm:left-9">
           <Badge tone="accent" variant="solid" size="md" className="shadow-df-glow-soft">
             {badgeLabel}
           </Badge>
         </div>
       )}
 
-      <h3 className="font-display text-2xl font-600 uppercase tracking-wide text-df-text">
+      <h3 className="font-display text-xl font-400 uppercase tracking-[0.04em] text-df-text-muted">
         {name}
       </h3>
-      {description && <p className="mt-1.5 text-sm text-df-text-muted">{description}</p>}
 
-      <div className="mt-5 flex items-end gap-1.5">
-        <span className="font-display text-5xl font-700 leading-none text-df-text">{price}</span>
-        {period && <span className="pb-1 text-sm text-df-text-faint">{period}</span>}
+      <div className="mt-6 flex items-end gap-2 border-b border-df-border pb-7">
+        <span className="font-display text-[clamp(3.5rem,9vw,5.5rem)] font-400 leading-[0.82] tracking-tight tabular-nums text-df-text">
+          {price}
+        </span>
+        {period && <span className="pb-2 text-sm text-df-text-faint">{period}</span>}
       </div>
 
-      <ul className="mt-7 flex flex-col gap-3.5">
+      {description && (
+        <p className="mt-5 text-[15px] leading-relaxed text-df-text-muted">{description}</p>
+      )}
+
+      <ul className="mt-7 flex flex-1 flex-col gap-3.5">
         {features.map(feature => (
           <li key={feature} className="flex items-start gap-3 text-sm text-df-text-muted">
             <span
@@ -89,7 +94,7 @@ export const PricingCard = forwardRef(function PricingCard(
         variant={highlighted ? 'primary' : 'outline'}
         size="lg"
         block
-        className="mt-8"
+        className="mt-9"
       >
         <a href={ctaHref} target="_blank" rel="noopener noreferrer">
           {ctaLabel}
