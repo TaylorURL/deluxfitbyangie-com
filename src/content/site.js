@@ -40,16 +40,16 @@ export const nav = [
 ]
 
 export const hero = {
-  badge: 'Now coaching the Summer 2026 transformation group',
+  badge: 'Now enrolling new 1-on-1 coaching clients',
   headline: ['Build the body', 'you stopped', 'believing was possible.'],
   subhead:
     'DeluxFit is 1-on-1 online coaching for women who are done starting over. Custom workouts, real nutrition coaching, and weekly accountability — built around your life, not someone else’s highlight reel.',
   primaryCta: 'Start Your Transformation',
   secondaryCta: 'See Results',
   trust: {
-    rating: '4.9/5',
-    ratingLabel: 'average client rating',
-    clients: '500+ clients transformed',
+    pillarValue: '1:1',
+    pillarLabel: 'personal coaching',
+    tagline: 'Coaching · Nutrition · Accountability',
   },
   imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
 }
