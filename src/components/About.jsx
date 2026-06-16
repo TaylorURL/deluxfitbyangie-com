@@ -16,7 +16,7 @@ export default function About() {
           <Reveal className="relative order-last lg:order-first">
             <div
               aria-hidden="true"
-              className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent/10 blur-3xl"
+              className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
             />
             <PhotoPlaceholder
               label={`${about.name} · Coach`}
