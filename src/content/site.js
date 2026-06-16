@@ -162,48 +162,33 @@ export const program = {
 
 export const results = {
   eyebrow: 'Real women, real results',
-  heading: 'Transformations that speak for themselves.',
-  accent: 'speak for themselves',
+  heading: 'Built on what real transformations need.',
+  accent: 'real transformations need',
   subhead:
-    'These are placeholder stories and photos — Angie will swap in real client wins and before/after images here.',
-  testimonials: [
+    'Real client stories and before/after photos will be featured here as Angie’s clients complete their programs. Until then, this is what every DeluxFit transformation is built around.',
+  pillars: [
     {
-      quote:
-        'Angie gave me a plan that actually fit my life as a working mom of two. I’m down 28 pounds and stronger than I was in my twenties.',
-      name: 'Jessica M.',
-      metric: '−28 lbs',
-      result: 'Lost 28 lbs in 12 weeks',
-      rating: 5,
+      title: 'Real Strength',
+      description:
+        'Lifts that get heavier, energy that lasts, and a body that can do more than it used to.',
     },
     {
-      quote:
-        'I’ve done every diet out there. This was the first time I didn’t feel deprived — and the first time it actually stuck.',
-      name: 'Priya K.',
-      metric: '−3 sizes',
-      result: 'Down 3 dress sizes',
-      rating: 5,
+      title: 'Real Habits',
+      description:
+        'Food, training, and recovery routines you can actually keep when life gets busy.',
     },
     {
-      quote:
-        'The weekly check-ins kept me honest. Knowing Angie was reviewing my week made me show up even when I didn’t feel like it.',
-      name: 'Dana R.',
-      metric: '1st pull-up',
-      result: 'First-ever pull-up',
-      rating: 5,
-    },
-    {
-      quote:
-        'I came for fat loss and left with confidence I didn’t know I was missing. Best money I’ve ever spent on myself.',
-      name: 'Megan T.',
-      metric: '−19 lbs',
-      result: 'Lost 19 lbs, gained strength',
-      rating: 5,
+      title: 'Real Confidence',
+      description:
+        'How you show up in the mirror, in the gym, and in every room you walk into.',
     },
   ],
+  galleryNote:
+    'Before & after photos coming soon — placeholders shown until Angie adds real client transformations.',
   gallery: [
-    { label: 'Sarah · 16 weeks', alt: 'Before and after transformation placeholder' },
-    { label: 'Aisha · 12 weeks', alt: 'Before and after transformation placeholder' },
-    { label: 'Lauren · 20 weeks', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
   ],
 }
 
