@@ -2,22 +2,25 @@ import { PricingCard, Reveal, Section } from '@deluxfit/ds'
 import { pricing } from '@/content/site'
 
 /**
- * Pricing — three coaching tiers with the middle "Most Popular" tier
- * highlighted. Each PricingCard CTA opens its Stripe Payment Link in a new tab.
- * Anchored at #pricing for the header/hero CTAs.
+ * Pricing — three coaching tiers led by hero-scale price numerals, with the
+ * middle "Most Popular" Transform tier carrying the crimson glow. Each
+ * PricingCard CTA opens its Stripe Payment Link. Anchored at #pricing.
  */
 export default function Pricing() {
   return (
     <Section
       id="pricing"
+      index="05"
       eyebrow={pricing.eyebrow}
       heading={pricing.heading}
+      accent={pricing.accent}
       subhead={pricing.subhead}
     >
-      <div className="grid items-start gap-6 lg:grid-cols-3">
+      <div className="grid items-stretch gap-6 lg:grid-cols-3">
         {pricing.tiers.map((tier, index) => (
-          <Reveal key={tier.id} delay={index * 0.08}>
+          <Reveal key={tier.id} delay={index * 0.08} className="flex">
             <PricingCard
+              className="w-full"
               name={tier.name}
               price={tier.price}
               period={tier.period}
@@ -32,7 +35,7 @@ export default function Pricing() {
         ))}
       </div>
 
-      <p className="mt-8 text-center text-sm text-df-text-faint">{pricing.note}</p>
+      <p className="mt-10 text-sm text-df-text-faint">{pricing.note}</p>
     </Section>
   )
 }
