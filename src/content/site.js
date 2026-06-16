@@ -283,6 +283,7 @@ export const about = {
   eyebrow: 'Meet your coach',
   name: 'Angie',
   heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
+  accent: 'the woman you’re becoming',
   bio: [
     'For over a decade I’ve helped women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
     'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a proven system and someone in your corner every single week.',
