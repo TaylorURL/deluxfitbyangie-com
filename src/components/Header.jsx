@@ -245,7 +245,7 @@ export default function Header() {
 
       <AnimatePresence>
         {menuOpen && (
-          <motion.div key="mobile-navigation" id="mobile-navigation" className="md:hidden">
+          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="md:hidden">
             <motion.button
               type="button"
               aria-label="Close menu"
@@ -257,7 +257,7 @@ export default function Header() {
               variants={BACKDROP_VARIANTS}
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
             />
-            <motion.div
+            <MotionDiv
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
