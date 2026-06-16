@@ -1,7 +1,7 @@
 {
   "name": "deluxfitbyangie-com",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "DeluxFit by Angie — direct-sale funnel for a personal training program.",
   "type": "module",
   "scripts": {
@@ -12,6 +12,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"packages/**/*.{js,jsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"packages/**/*.{js,jsx,css}\""
+  },
+  "engines": {
+    "node": "22.x"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",
