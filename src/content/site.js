@@ -209,6 +209,7 @@ export const results = {
 export const pricing = {
   eyebrow: 'Choose your transformation',
   heading: 'Pick the plan that matches your goals.',
+  accent: 'matches your goals',
   subhead:
     'Every tier includes custom training, nutrition coaching, and weekly accountability. Cancel anytime — no contracts, no games.',
   note: 'Prices shown in USD. Placeholder pricing — Angie sets the final numbers in Stripe.',
