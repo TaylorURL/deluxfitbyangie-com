@@ -48,19 +48,18 @@ export default function Hero() {
           animate={prefersReducedMotion ? undefined : 'visible'}
         >
           {hero.headline.map((line, index) => (
-            <span key={line} className="block overflow-hidden">
-              <MotionSpan
-                className={cn(
-                  'block',
-                  index === lastIndex &&
-                    'font-accent text-[0.92em] normal-case italic text-df-accent-bright'
-                )}
-                variants={prefersReducedMotion ? undefined : LINE}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {line}
-              </MotionSpan>
-            </span>
+            <MotionSpan
+              key={line}
+              className={cn(
+                'block',
+                index === lastIndex &&
+                  'pb-[0.08em] font-accent text-[0.92em] normal-case italic text-df-accent-bright'
+              )}
+              variants={prefersReducedMotion ? undefined : LINE}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {line}
+            </MotionSpan>
           ))}
         </MotionH1>
 
