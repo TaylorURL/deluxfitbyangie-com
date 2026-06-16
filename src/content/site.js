@@ -271,14 +271,14 @@ export const about = {
   heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
   accent: 'the woman you’re becoming',
   bio: [
-    'For over a decade I’ve helped women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
-    'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a proven system and someone in your corner every single week.',
+    'I help women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
+    'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a clear system and someone in your corner every single week.',
   ],
   credentials: [
     'Certified Personal Trainer (NASM-CPT)',
     'Precision Nutrition Level 1 Coach',
     'Pre/Postnatal Fitness Specialist',
-    '10+ years coaching women online & in person',
+    '1-on-1 online & in-person coaching',
   ],
   imageAlt: 'Angie coaching a client through a leg-press set',
 }
