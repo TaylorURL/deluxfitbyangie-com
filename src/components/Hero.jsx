@@ -1,4 +1,4 @@
-import { ArrowRight, Star } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
@@ -82,7 +82,7 @@ export default function Hero() {
             <div className="mt-8 flex items-center gap-3">
               <span className="h-px w-8 bg-df-accent" aria-hidden="true" />
               <span className="text-sm font-600 uppercase tracking-wide text-df-text">
-                {hero.trust.clients}
+                {hero.trust.tagline}
               </span>
             </div>
           </div>
@@ -95,18 +95,11 @@ export default function Hero() {
           >
             <FramedPhoto src="/angie-squat.png" alt={hero.imageAlt} aspect="aspect-[4/5]" />
             <div className="absolute -bottom-5 -left-3 rounded-df-md border border-df-glass-border bg-df-glass-fill px-5 py-3 backdrop-blur-xl sm:-left-5">
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-text">
-                  {hero.trust.rating}
-                </span>
-                <span className="flex" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} className="h-3.5 w-3.5 fill-df-accent text-df-accent" />
-                  ))}
-                </span>
+              <div className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
+                {hero.trust.pillarValue}
               </div>
               <div className="mt-1 text-[10px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
-                {hero.trust.ratingLabel}
+                {hero.trust.pillarLabel}
               </div>
             </div>
           </MotionDiv>
