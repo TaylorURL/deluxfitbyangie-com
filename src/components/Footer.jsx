@@ -29,10 +29,17 @@ export default function Footer() {
           <div className="max-w-sm">
             <a
               href="#top"
-              className="font-display text-2xl font-400 uppercase tracking-tight text-df-text"
+              aria-label={brand.fullName}
+              className="inline-flex items-center"
             >
-              {brand.name}
-              <span className="text-df-accent-bright">.</span>
+              <img
+                src="/deluxfit-logo.png"
+                alt={brand.fullName}
+                width="946"
+                height="308"
+                className="h-10 w-auto select-none [filter:invert(1)_hue-rotate(180deg)]"
+                draggable="false"
+              />
             </a>
             <p className="mt-4 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
 
