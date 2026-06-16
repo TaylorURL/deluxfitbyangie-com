@@ -326,8 +326,8 @@ export default function Header() {
                   {brand.tagline}
                 </p>
               </div>
-            </motion.div>
-          </motion.div>
+            </MotionDiv>
+          </MotionDiv>
         )}
       </AnimatePresence>
     </header>
