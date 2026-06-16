@@ -300,6 +300,7 @@ export const about = {
 export const faq = {
   eyebrow: 'Questions',
   heading: 'Everything you need to know.',
+  accent: 'need to know',
   items: [
     {
       question: 'Do I need a gym membership?',
