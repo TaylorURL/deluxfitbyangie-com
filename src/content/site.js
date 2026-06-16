@@ -82,6 +82,7 @@ export const pain = {
 export const benefits = {
   eyebrow: 'What you get',
   heading: 'A complete system — not just another workout PDF.',
+  accent: 'complete system',
   subhead:
     'Everything is built for you and adjusted every week as you progress. This is coaching, not a template you download and never open again.',
   items: [
