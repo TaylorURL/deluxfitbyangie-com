@@ -66,6 +66,7 @@ export const marqueeItems = [
 export const pain = {
   eyebrow: 'Sound familiar?',
   heading: 'You’re not lazy. You’ve just been handed the wrong plan.',
+  accent: 'the wrong plan',
   subhead:
     'You’ve tried hard before — maybe harder than anyone knows. The problem was never your effort. It was a cookie-cutter program that ignored your body, your schedule, and your life.',
   points: [
