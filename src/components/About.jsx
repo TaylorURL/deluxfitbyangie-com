@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react'
 import { Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
 import { about } from '@/content/site'
-import PhotoPlaceholder from './PhotoPlaceholder'
+import FramedPhoto from './FramedPhoto'
 
 /**
  * About Angie — the founder editorial. A framed portrait sits opposite a large
