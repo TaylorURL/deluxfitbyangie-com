@@ -9,8 +9,9 @@
    file so nothing else needs to be touched for normal copy/price updates.
 
    • Stripe checkout links live separately in `src/config/checkout.js`.
-   • Images point at `/public/*` placeholder assets — drop in real photos with
-     the same filenames (or update the paths here) to swap them.
+   • The brand logo and Angie's hero + coaching photos live in `/public/` as
+     real client-provided images; placeholder frames are still used for the
+     before/after gallery until Angie supplies those.
    ========================================================================== */
 
 import { CHECKOUT_LINKS } from '../config/checkout'
