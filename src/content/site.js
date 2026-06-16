@@ -291,12 +291,12 @@ export const faq = {
     {
       question: 'Do I need a gym membership?',
       answer:
-        'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. Plenty of clients get incredible results training from home.',
+        'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. You can get incredible results training from home.',
     },
     {
       question: 'I’m a total beginner. Is this for me?',
       answer:
-        'Absolutely. Most of my clients start exactly where you are. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
+        'Absolutely. Beginners are exactly who DeluxFit is built for. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
     },
     {
       question: 'How is this different from a free workout app?',
