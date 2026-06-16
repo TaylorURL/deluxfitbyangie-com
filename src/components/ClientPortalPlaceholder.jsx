@@ -58,7 +58,7 @@ export default function ClientPortalPlaceholder() {
       </header>
 
       <main className="flex flex-1 items-center justify-center px-5 py-16 sm:py-24">
-        <motion.div
+        <MotionDiv
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
