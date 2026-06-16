@@ -109,19 +109,11 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 lg:items-end lg:text-right">
-            <div className="flex items-center gap-2 lg:flex-row-reverse">
-              <div className="flex" aria-hidden="true">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={index} className="h-4 w-4 fill-df-accent text-df-accent" />
-                ))}
-              </div>
-              <span className="text-sm font-600 text-df-text">
-                {hero.trust.rating}
-                <span className="ml-1.5 font-400 text-df-text-faint">{hero.trust.ratingLabel}</span>
-              </span>
-            </div>
-            <span className="text-sm font-600 text-df-text">{hero.trust.clients}</span>
+          <div className="flex items-center gap-3 lg:justify-end">
+            <span className="h-px w-8 bg-df-accent" aria-hidden="true" />
+            <span className="text-sm font-600 uppercase tracking-wide text-df-text">
+              {hero.trust.clients}
+            </span>
           </div>
         </div>
       </Container>
