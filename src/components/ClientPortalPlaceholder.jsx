@@ -3,6 +3,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Container } from '@deluxfit/ds'
 import { brand } from '@/content/site'
 
+const MotionDiv = motion.div
+
 /**
  * ClientPortalPlaceholder — the temporary destination behind the navbar's
  * "Client Login" link. Visually complete and on-brand so the navbar entry
