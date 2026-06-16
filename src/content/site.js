@@ -128,6 +128,7 @@ export const benefits = {
 export const program = {
   eyebrow: 'The program',
   heading: 'The DeluxFit 12-week transformation method.',
+  accent: 'transformation method',
   subhead:
     'Three focused phases that build on each other — so you don’t just lose weight, you build a body and a routine that lasts.',
   phases: [
