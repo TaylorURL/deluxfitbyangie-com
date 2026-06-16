@@ -51,7 +51,7 @@ export const hero = {
     ratingLabel: 'average client rating',
     clients: '500+ clients transformed',
   },
-  imageAlt: 'Angie coaching a client through a strength workout',
+  imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
 }
 
 export const marqueeItems = [
