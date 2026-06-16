@@ -4,6 +4,10 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
 import { brand, nav } from '@/content/site'
 
+const MotionDiv = motion.div
+const MotionButton = motion.button
+const MotionAnchor = motion.a
+
 /**
  * PORTAL ENTRY POINT — temporary destination for the "Client Login" affordance.
  * The route renders a branded "coming soon" placeholder until the real member
