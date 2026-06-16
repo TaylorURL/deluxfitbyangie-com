@@ -17,7 +17,7 @@ export const Accordion = forwardRef(function Accordion(
       ref={ref}
       type={type}
       collapsible={type === 'single' ? collapsible : undefined}
-      className={cn('flex flex-col gap-3', className)}
+      className={cn('flex flex-col border-t border-df-border', className)}
       {...props}
     />
   )
@@ -33,7 +33,7 @@ export const Accordion = forwardRef(function Accordion(
  * @param {React.ReactNode} props.answer
  */
 export const FaqItem = forwardRef(function FaqItem(
-  { className, value, question, answer, children, ...props },
+  { className, value, index, question, answer, children, ...props },
   ref
 ) {
   return (
@@ -41,14 +41,24 @@ export const FaqItem = forwardRef(function FaqItem(
       ref={ref}
       value={value}
       className={cn(
-        'overflow-hidden rounded-df-lg border border-df-border bg-df-surface transition-colors data-[state=open]:border-df-border-strong',
+        'group/item border-b border-df-border transition-colors',
         className
       )}
       {...props}
     >
       <AccordionPrimitive.Header>
-        <AccordionPrimitive.Trigger className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-display text-base font-500 uppercase tracking-wide text-df-text transition-colors hover:text-df-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright sm:px-6 sm:text-lg">
-          {question}
+        <AccordionPrimitive.Trigger className="group flex w-full items-center gap-4 py-6 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright sm:gap-6">
+          {index && (
+            <span
+              aria-hidden="true"
+              className="font-display text-xl font-400 leading-none tabular-nums text-df-accent-bright sm:text-2xl"
+            >
+              {index}
+            </span>
+          )}
+          <span className="flex-1 text-base font-600 text-df-text transition-colors group-hover:text-df-accent-bright sm:text-lg">
+            {question}
+          </span>
           <Plus
             className="h-5 w-5 shrink-0 text-df-accent-bright transition-transform duration-300 ease-df-out group-data-[state=open]:rotate-45"
             aria-hidden="true"
@@ -56,7 +66,7 @@ export const FaqItem = forwardRef(function FaqItem(
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
       <AccordionPrimitive.Content className="overflow-hidden data-[state=closed]:animate-[df-acc-up_220ms_ease] data-[state=open]:animate-[df-acc-down_220ms_ease]">
-        <div className="px-5 pb-5 text-[15px] leading-relaxed text-df-text-muted sm:px-6">
+        <div className="pb-6 pr-4 text-[15px] leading-relaxed text-df-text-muted sm:pl-[3.25rem]">
           {answer ?? children}
         </div>
       </AccordionPrimitive.Content>

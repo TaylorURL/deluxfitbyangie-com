@@ -77,7 +77,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        display: ['Oswald', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Anton', 'Oswald', 'system-ui', 'sans-serif'],
+        accent: ['Fraunces', 'Georgia', 'Times New Roman', 'serif'],
       },
       borderRadius: {
         df: 'var(--df-radius-md)',
