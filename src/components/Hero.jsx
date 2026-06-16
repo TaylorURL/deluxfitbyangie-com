@@ -2,7 +2,7 @@ import { ArrowRight, Star } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
-import PhotoPlaceholder from './PhotoPlaceholder'
+import FramedPhoto from './FramedPhoto'
 
 const MotionH1 = motion.h1
 const MotionSpan = motion.span
