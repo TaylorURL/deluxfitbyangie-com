@@ -41,7 +41,7 @@ export default function Program() {
       </ol>
 
       <Reveal delay={0.1}>
-        <div className="mt-20 grid grid-cols-2 gap-x-8 gap-y-12 border-t border-df-border pt-12 lg:grid-cols-4">
+        <div className="mt-20 grid grid-cols-2 gap-x-10 gap-y-12 border-t border-df-border pt-12 lg:grid-cols-4">
           {program.stats.map(({ value, label }, index) => (
             <StatBlock
               key={label}
