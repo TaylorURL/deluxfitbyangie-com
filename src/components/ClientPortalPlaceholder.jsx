@@ -98,7 +98,7 @@ export default function ClientPortalPlaceholder() {
             />
             Back to DeluxFit
           </a>
-        </motion.div>
+        </MotionDiv>
       </main>
 
       <footer className="border-t border-df-border">
