@@ -14,7 +14,7 @@ import { cn } from '../lib/cn'
  */
 const buttonVariants = cva(
   [
-    'group relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-df-sm font-semibold uppercase tracking-wide',
+    'group relative inline-flex select-none items-center justify-center gap-2 rounded-df-sm text-center font-semibold uppercase tracking-wide',
     'transition-[background-color,color,border-color,box-shadow,transform] duration-150 ease-df-out',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
     'active:translate-y-px disabled:pointer-events-none disabled:opacity-50',
