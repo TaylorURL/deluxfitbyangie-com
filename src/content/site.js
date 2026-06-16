@@ -9,8 +9,9 @@
    file so nothing else needs to be touched for normal copy/price updates.
 
    • Stripe checkout links live separately in `src/config/checkout.js`.
-   • Images point at `/public/*` placeholder assets — drop in real photos with
-     the same filenames (or update the paths here) to swap them.
+   • The brand logo and Angie's hero + coaching photos live in `/public/` as
+     real client-provided images; placeholder frames are still used for the
+     before/after gallery until Angie supplies those.
    ========================================================================== */
 
 import { CHECKOUT_LINKS } from '../config/checkout'
@@ -50,7 +51,7 @@ export const hero = {
     ratingLabel: 'average client rating',
     clients: '500+ clients transformed',
   },
-  imageAlt: 'Angie coaching a client through a strength workout',
+  imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
 }
 
 export const marqueeItems = [
@@ -294,7 +295,7 @@ export const about = {
     'Pre/Postnatal Fitness Specialist',
     '10+ years coaching women online & in person',
   ],
-  imageAlt: 'Angie, certified personal trainer and founder of DeluxFit',
+  imageAlt: 'Angie coaching a client through a leg-press set',
 }
 
 export const faq = {

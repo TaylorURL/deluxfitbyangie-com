@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react'
 import { Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
 import { about } from '@/content/site'
-import PhotoPlaceholder from './PhotoPlaceholder'
+import FramedPhoto from './FramedPhoto'
 
 /**
  * About Angie — the founder editorial. A framed portrait sits opposite a large
@@ -18,11 +18,7 @@ export default function About() {
               aria-hidden="true"
               className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
             />
-            <PhotoPlaceholder
-              label={`${about.name} · Coach`}
-              alt={about.imageAlt}
-              aspect="aspect-[4/5]"
-            />
+            <FramedPhoto src="/angie-coaching.png" alt={about.imageAlt} aspect="aspect-[4/5]" />
           </Reveal>
 
           <Reveal delay={0.1} className="flex flex-col items-start">

@@ -33,10 +33,17 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between sm:h-20">
           <a
             href="#top"
-            className="font-display text-2xl font-700 uppercase tracking-tight text-df-text"
+            aria-label={brand.fullName}
+            className="inline-flex items-center"
           >
-            {brand.name}
-            <span className="text-df-accent-bright">.</span>
+            <img
+              src="/deluxfit-logo.png"
+              alt={brand.fullName}
+              width="946"
+              height="308"
+              className="h-8 w-auto select-none [filter:invert(1)_hue-rotate(180deg)] sm:h-9"
+              draggable="false"
+            />
           </a>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
