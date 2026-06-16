@@ -162,6 +162,7 @@ export const program = {
 export const results = {
   eyebrow: 'Real women, real results',
   heading: 'Transformations that speak for themselves.',
+  accent: 'speak for themselves',
   subhead:
     'These are placeholder stories and photos — Angie will swap in real client wins and before/after images here.',
   testimonials: [
