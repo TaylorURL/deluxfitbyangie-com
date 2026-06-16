@@ -246,7 +246,7 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <MotionDiv key="mobile-navigation" id="mobile-navigation" className="md:hidden">
-            <motion.button
+            <MotionButton
               type="button"
               aria-label="Close menu"
               onClick={closeMenu}
