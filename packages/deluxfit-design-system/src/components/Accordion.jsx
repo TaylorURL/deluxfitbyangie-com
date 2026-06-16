@@ -17,7 +17,7 @@ export const Accordion = forwardRef(function Accordion(
       ref={ref}
       type={type}
       collapsible={type === 'single' ? collapsible : undefined}
-      className={cn('flex flex-col gap-3', className)}
+      className={cn('flex flex-col border-t border-df-border', className)}
       {...props}
     />
   )
