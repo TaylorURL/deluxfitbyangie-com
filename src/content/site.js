@@ -295,7 +295,7 @@ export const about = {
     'Pre/Postnatal Fitness Specialist',
     '10+ years coaching women online & in person',
   ],
-  imageAlt: 'Angie, certified personal trainer and founder of DeluxFit',
+  imageAlt: 'Angie coaching a client through a leg-press set',
 }
 
 export const faq = {
