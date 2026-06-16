@@ -170,6 +170,7 @@ export const results = {
       quote:
         'Angie gave me a plan that actually fit my life as a working mom of two. I’m down 28 pounds and stronger than I was in my twenties.',
       name: 'Jessica M.',
+      metric: '−28 lbs',
       result: 'Lost 28 lbs in 12 weeks',
       rating: 5,
     },
@@ -177,6 +178,7 @@ export const results = {
       quote:
         'I’ve done every diet out there. This was the first time I didn’t feel deprived — and the first time it actually stuck.',
       name: 'Priya K.',
+      metric: '−3 sizes',
       result: 'Down 3 dress sizes',
       rating: 5,
     },
@@ -184,6 +186,7 @@ export const results = {
       quote:
         'The weekly check-ins kept me honest. Knowing Angie was reviewing my week made me show up even when I didn’t feel like it.',
       name: 'Dana R.',
+      metric: '1st pull-up',
       result: 'First-ever pull-up',
       rating: 5,
     },
@@ -191,6 +194,7 @@ export const results = {
       quote:
         'I came for fat loss and left with confidence I didn’t know I was missing. Best money I’ve ever spent on myself.',
       name: 'Megan T.',
+      metric: '−19 lbs',
       result: 'Lost 19 lbs, gained strength',
       rating: 5,
     },
