@@ -75,7 +75,7 @@ export default function Footer() {
           className="mt-14 select-none font-display text-[clamp(2.5rem,20vw,13rem)] font-400 uppercase leading-[0.78] tracking-tight text-df-surface-3"
         >
           {brand.name}
-          <span className="text-df-accent/30">.</span>
+          <span className="text-df-accent-deep">.</span>
         </div>
 
         <div className="flex flex-col gap-4 border-t border-df-border py-8">
