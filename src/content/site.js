@@ -311,7 +311,7 @@ export const faq = {
     {
       question: 'How much time do I need each week?',
       answer:
-        'Most clients train 3–5 times a week for 30–45 minutes, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
+        'Programs typically run 3–5 training sessions a week at 30–45 minutes each, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
     },
     {
       question: 'What if it’s not for me?',
