@@ -73,14 +73,14 @@ export const Section = forwardRef(function Section(
                 {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
               </div>
               {heading && (
-                <h2
+                <SplitHeading
+                  text={heading}
+                  accent={accent}
                   className={cn(
-                    'mt-5 font-display text-[clamp(2.25rem,6vw,4.75rem)] font-400 leading-[0.92] tracking-[-0.01em] text-df-text sm:mt-7',
+                    'mt-5 text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.92] sm:mt-7',
                     centered ? 'max-w-[18ch]' : 'max-w-[20ch]'
                   )}
-                >
-                  {renderHeading(heading, accent)}
-                </h2>
+                />
               )}
               {subhead && (
                 <p
