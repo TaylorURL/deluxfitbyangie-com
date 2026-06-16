@@ -338,6 +338,7 @@ export const faq = {
 export const finalCta = {
   eyebrow: 'Your transformation starts now',
   heading: 'The next 12 weeks are happening either way.',
+  accent: 'either way',
   subhead:
     'You can arrive there wishing you’d started today — or arrive stronger, leaner, and prouder than ever. Spots in each coaching group are limited so I can give every client real attention.',
   primaryCta: 'Start Your Transformation',
