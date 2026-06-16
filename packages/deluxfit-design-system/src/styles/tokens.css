@@ -15,12 +15,18 @@
    tokens are the single source of truth for both CSS and Tailwind.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ---- Global, theme-independent scales ------------------------------------ */
 :root {
   --df-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --df-font-display: 'Oswald', 'Inter', system-ui, sans-serif;
+
+  /* Display — Anton: an ultra-condensed grotesque that carries the whole
+     "type specimen" identity at extreme scale. Accent — Fraunces: a soft,
+     high-contrast serif used in italic for one phrase per heading, the
+     couture-feminine counterweight that keeps the system off gym-bro. */
+  --df-font-display: 'Anton', 'Oswald', system-ui, sans-serif;
+  --df-font-accent: 'Fraunces', Georgia, 'Times New Roman', serif;
 
   /* Radius scale */
   --df-radius-xs: 4px;
