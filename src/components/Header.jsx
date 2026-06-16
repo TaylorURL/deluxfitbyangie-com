@@ -312,7 +312,7 @@ export default function Header() {
                           aria-hidden="true"
                           className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:translate-x-1 group-hover/mlink:-translate-y-1 group-hover/mlink:text-df-accent"
                         />
-                      </motion.a>
+                      </MotionAnchor>
                     )
                   })}
                 </nav>
