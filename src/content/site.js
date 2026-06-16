@@ -9,8 +9,9 @@
    file so nothing else needs to be touched for normal copy/price updates.
 
    • Stripe checkout links live separately in `src/config/checkout.js`.
-   • Images point at `/public/*` placeholder assets — drop in real photos with
-     the same filenames (or update the paths here) to swap them.
+   • The brand logo and Angie's hero + coaching photos live in `/public/` as
+     real client-provided images; placeholder frames are still used for the
+     before/after gallery until Angie supplies those.
    ========================================================================== */
 
 import { CHECKOUT_LINKS } from '../config/checkout'
@@ -39,18 +40,18 @@ export const nav = [
 ]
 
 export const hero = {
-  badge: 'Now coaching the Summer 2026 transformation group',
+  badge: 'Now enrolling new 1-on-1 coaching clients',
   headline: ['Build the body', 'you stopped', 'believing was possible.'],
   subhead:
     'DeluxFit is 1-on-1 online coaching for women who are done starting over. Custom workouts, real nutrition coaching, and weekly accountability — built around your life, not someone else’s highlight reel.',
   primaryCta: 'Start Your Transformation',
   secondaryCta: 'See Results',
   trust: {
-    rating: '4.9/5',
-    ratingLabel: 'average client rating',
-    clients: '500+ clients transformed',
+    pillarValue: '1:1',
+    pillarLabel: 'personal coaching',
+    tagline: 'Coaching · Nutrition · Accountability',
   },
-  imageAlt: 'Angie coaching a client through a strength workout',
+  imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
 }
 
 export const marqueeItems = [
@@ -153,56 +154,41 @@ export const program = {
   ],
   stats: [
     { value: '12', label: 'Week Program' },
-    { value: '500+', label: 'Clients Transformed' },
-    { value: '4.9★', label: 'Average Rating' },
-    { value: '93%', label: 'Finish & Re-enroll' },
+    { value: '3', label: 'Focused Phases' },
+    { value: '1:1', label: 'Coaching Format' },
+    { value: '14', label: 'Day Guarantee' },
   ],
 }
 
 export const results = {
   eyebrow: 'Real women, real results',
-  heading: 'Transformations that speak for themselves.',
-  accent: 'speak for themselves',
+  heading: 'Built on what real transformations need.',
+  accent: 'real transformations need',
   subhead:
-    'These are placeholder stories and photos — Angie will swap in real client wins and before/after images here.',
-  testimonials: [
+    'Real client stories and before/after photos will be featured here as Angie’s clients complete their programs. Until then, this is what every DeluxFit transformation is built around.',
+  pillars: [
     {
-      quote:
-        'Angie gave me a plan that actually fit my life as a working mom of two. I’m down 28 pounds and stronger than I was in my twenties.',
-      name: 'Jessica M.',
-      metric: '−28 lbs',
-      result: 'Lost 28 lbs in 12 weeks',
-      rating: 5,
+      title: 'Real Strength',
+      description:
+        'Lifts that get heavier, energy that lasts, and a body that can do more than it used to.',
     },
     {
-      quote:
-        'I’ve done every diet out there. This was the first time I didn’t feel deprived — and the first time it actually stuck.',
-      name: 'Priya K.',
-      metric: '−3 sizes',
-      result: 'Down 3 dress sizes',
-      rating: 5,
+      title: 'Real Habits',
+      description:
+        'Food, training, and recovery routines you can actually keep when life gets busy.',
     },
     {
-      quote:
-        'The weekly check-ins kept me honest. Knowing Angie was reviewing my week made me show up even when I didn’t feel like it.',
-      name: 'Dana R.',
-      metric: '1st pull-up',
-      result: 'First-ever pull-up',
-      rating: 5,
-    },
-    {
-      quote:
-        'I came for fat loss and left with confidence I didn’t know I was missing. Best money I’ve ever spent on myself.',
-      name: 'Megan T.',
-      metric: '−19 lbs',
-      result: 'Lost 19 lbs, gained strength',
-      rating: 5,
+      title: 'Real Confidence',
+      description:
+        'How you show up in the mirror, in the gym, and in every room you walk into.',
     },
   ],
+  galleryNote:
+    'Before & after photos coming soon — placeholders shown until Angie adds real client transformations.',
   gallery: [
-    { label: 'Sarah · 16 weeks', alt: 'Before and after transformation placeholder' },
-    { label: 'Aisha · 12 weeks', alt: 'Before and after transformation placeholder' },
-    { label: 'Lauren · 20 weeks', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+    { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
   ],
 }
 
@@ -285,16 +271,16 @@ export const about = {
   heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
   accent: 'the woman you’re becoming',
   bio: [
-    'For over a decade I’ve helped women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
-    'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a proven system and someone in your corner every single week.',
+    'I help women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
+    'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a clear system and someone in your corner every single week.',
   ],
   credentials: [
     'Certified Personal Trainer (NASM-CPT)',
     'Precision Nutrition Level 1 Coach',
     'Pre/Postnatal Fitness Specialist',
-    '10+ years coaching women online & in person',
+    '1-on-1 online & in-person coaching',
   ],
-  imageAlt: 'Angie, certified personal trainer and founder of DeluxFit',
+  imageAlt: 'Angie coaching a client through a leg-press set',
 }
 
 export const faq = {
@@ -305,12 +291,12 @@ export const faq = {
     {
       question: 'Do I need a gym membership?',
       answer:
-        'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. Plenty of clients get incredible results training from home.',
+        'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. You can get incredible results training from home.',
     },
     {
       question: 'I’m a total beginner. Is this for me?',
       answer:
-        'Absolutely. Most of my clients start exactly where you are. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
+        'Absolutely. Beginners are exactly who DeluxFit is built for. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
     },
     {
       question: 'How is this different from a free workout app?',
@@ -325,7 +311,7 @@ export const faq = {
     {
       question: 'How much time do I need each week?',
       answer:
-        'Most clients train 3–5 times a week for 30–45 minutes, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
+        'Programs typically run 3–5 training sessions a week at 30–45 minutes each, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
     },
     {
       question: 'What if it’s not for me?',
