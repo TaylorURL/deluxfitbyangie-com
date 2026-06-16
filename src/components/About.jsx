@@ -18,11 +18,7 @@ export default function About() {
               aria-hidden="true"
               className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
             />
-            <PhotoPlaceholder
-              label={`${about.name} · Coach`}
-              alt={about.imageAlt}
-              aspect="aspect-[4/5]"
-            />
+            <FramedPhoto src="/angie-coaching.png" alt={about.imageAlt} aspect="aspect-[4/5]" />
           </Reveal>
 
           <Reveal delay={0.1} className="flex flex-col items-start">
