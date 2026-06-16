@@ -3,28 +3,10 @@ import { cn } from '../lib/cn'
 import { Container } from './Container'
 import { SectionEyebrow } from '../components/SectionEyebrow'
 import { SectionIndex } from '../components/SectionIndex'
+import { SplitHeading } from '../components/SplitHeading'
 import { Reveal } from '../components/Reveal'
 
 const SPACE = { sm: 'py-16', md: 'py-20 sm:py-28', lg: 'py-24 sm:py-36', xl: 'py-28 sm:py-44' }
-
-/**
- * Splits a heading string around its accent phrase, rendering that phrase in the
- * couture Fraunces italic so every section heading carries one warm, crimson
- * counter-voice against the condensed Anton display face.
- */
-function renderHeading(heading, accent) {
-  if (typeof heading !== 'string' || !accent || !heading.includes(accent)) {
-    return heading
-  }
-  const [before, after] = heading.split(accent)
-  return (
-    <>
-      {before}
-      <span className="font-accent italic font-400 text-df-accent-bright">{accent}</span>
-      {after}
-    </>
-  )
-}
 
 /**
  * Section — a vertically-rhythmed page band on the shared "type specimen" grid.
