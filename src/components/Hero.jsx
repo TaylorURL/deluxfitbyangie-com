@@ -93,7 +93,7 @@ export default function Hero() {
             animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
           >
-            <PhotoPlaceholder label={hero.imageAlt} alt={hero.imageAlt} aspect="aspect-[4/5]" />
+            <FramedPhoto src="/angie-squat.png" alt={hero.imageAlt} aspect="aspect-[4/5]" />
             <div className="absolute -bottom-5 -left-3 rounded-df-md border border-df-glass-border bg-df-glass-fill px-5 py-3 backdrop-blur-xl sm:-left-5">
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-text">
