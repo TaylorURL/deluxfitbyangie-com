@@ -288,7 +288,7 @@ export default function Header() {
                   {nav.map((item, index) => {
                     const active = isActive(item.href)
                     return (
-                      <motion.a
+                      <MotionAnchor
                         key={item.href}
                         href={item.href}
                         onClick={closeMenu}
