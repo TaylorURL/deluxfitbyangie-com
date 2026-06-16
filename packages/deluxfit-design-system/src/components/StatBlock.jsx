@@ -3,7 +3,7 @@ import { cn } from '../lib/cn'
 
 const VALUE_SIZE = {
   md: 'text-[clamp(2.5rem,6vw,3.5rem)]',
-  giant: 'text-[clamp(3.5rem,12vw,9rem)]',
+  giant: 'text-[clamp(2.75rem,7vw,6.5rem)]',
 }
 
 /**
