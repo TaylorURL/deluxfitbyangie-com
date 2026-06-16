@@ -154,9 +154,9 @@ export const program = {
   ],
   stats: [
     { value: '12', label: 'Week Program' },
-    { value: '500+', label: 'Clients Transformed' },
-    { value: '4.9★', label: 'Average Rating' },
-    { value: '93%', label: 'Finish & Re-enroll' },
+    { value: '3', label: 'Focused Phases' },
+    { value: '1:1', label: 'Coaching Format' },
+    { value: '14', label: 'Day Guarantee' },
   ],
 }
 
