@@ -1,6 +1,6 @@
 import { ArrowRight, Star } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Button, Container, Marquee, SplitHeading, cn } from '@deluxfit/ds'
+import { Button, Container, Marquee, cn } from '@deluxfit/ds'
 import { hero, marqueeItems } from '@/content/site'
 import PhotoPlaceholder from './PhotoPlaceholder'
 
