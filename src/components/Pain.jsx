@@ -7,6 +7,7 @@ import { useContent } from '@/i18n'
  * around each line keeps the section confident rather than crowded.
  */
 export default function Pain() {
+  const { pain } = useContent()
   return (
     <Section
       id="pain"
