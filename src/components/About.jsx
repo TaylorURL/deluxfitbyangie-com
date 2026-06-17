@@ -9,6 +9,7 @@ import FramedPhoto from './FramedPhoto'
  * credential grid — the human proof directly before the FAQ.
  */
 export default function About() {
+  const { about } = useContent()
   return (
     <section id="about" className="overflow-hidden py-24 sm:py-36">
       <Container size="lg">
