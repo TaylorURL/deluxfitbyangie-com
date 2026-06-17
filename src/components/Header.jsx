@@ -145,10 +145,10 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
  * type-specimen, then crystallises into a blurred, hairline-bordered surface
  * once the page scrolls. On wide screens it shows the logo, an animated
  * underline nav with active-section tracking, a ghost-styled Client Login
- * entry point for the forthcoming member portal, the EN / ES language toggle,
- * and the red primary CTA. On mobile it collapses into a polished right-side
- * drawer with a backdrop blur, staggered link entry, and all action
- * affordances (CTA, login, language toggle) pinned to the bottom.
+ * entry point for the forthcoming member portal, and the red primary CTA.
+ * On mobile it collapses into a polished right-side drawer with a backdrop
+ * blur, staggered link entry, and action affordances (CTA, login) pinned
+ * to the bottom.
  */
 export default function Header() {
   const { brand, nav, header } = useContent()
