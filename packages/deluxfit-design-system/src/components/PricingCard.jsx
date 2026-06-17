@@ -100,9 +100,13 @@ export const PricingCard = forwardRef(function PricingCard(
         block
         className="mt-9"
       >
-        <a href={ctaHref} target="_blank" rel="noopener noreferrer">
-          {ctaLabel}
-        </a>
+        {isInternal ? (
+          <a href={ctaHref}>{ctaLabel}</a>
+        ) : (
+          <a href={ctaHref} target="_blank" rel="noopener noreferrer">
+            {ctaLabel}
+          </a>
+        )}
       </Button>
     </div>
   )
