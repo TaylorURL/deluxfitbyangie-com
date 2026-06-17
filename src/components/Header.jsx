@@ -333,7 +333,6 @@ export default function Header() {
                     label={header.clientLogin}
                     ariaLabel={header.clientLoginAria}
                   />
-                  <LanguageSwitcher size="md" block />
                 </div>
 
                 <p className="mt-auto pt-10 text-[11px] font-600 uppercase tracking-[0.22em] text-df-text-faint">
