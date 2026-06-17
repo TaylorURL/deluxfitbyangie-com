@@ -1,5 +1,5 @@
 import { Container } from '@deluxfit/ds'
-import { brand, footer, nav } from '@/content/site'
+import { useContent } from '@/i18n'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -22,6 +22,7 @@ function TikTokGlyph({ className }) {
  * supplied, or the inline TikTok glyph for the 'tiktok' marker.
  */
 export default function Footer() {
+  const { brand, footer, nav } = useContent()
   return (
     <footer className="overflow-hidden border-t border-df-border bg-df-bg pt-16">
       <Container size="xl">
@@ -64,7 +65,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-3">
+          <nav aria-label={footer.navLabel} className="flex flex-wrap gap-x-8 gap-y-3">
             {nav.map(item => (
               <a
                 key={item.href}
@@ -88,7 +89,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4 border-t border-df-border py-8">
           <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
           <p className="text-xs text-df-text-faint">
-            © {CURRENT_YEAR} {brand.fullName}. All rights reserved.
+            © {CURRENT_YEAR} {brand.fullName}. {footer.rightsReserved}
           </p>
         </div>
       </Container>

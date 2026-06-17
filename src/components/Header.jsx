@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
-import { brand, nav } from '@/content/site'
+import { useContent } from '@/i18n'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const MotionDiv = motion.div
 const MotionButton = motion.button
@@ -15,14 +16,6 @@ const MotionAnchor = motion.a
  * URL and the rest of the navbar wiring stays as-is.
  */
 const PORTAL_HREF = '/portal'
-
-const PRIMARY_CTA_HREF = '#pricing'
-const PRIMARY_CTA_LABEL = 'Apply Now'
-
-const SECTION_IDS = nav
-  .map(item => item.href)
-  .filter(href => href.startsWith('#') && href !== '#top')
-  .map(href => href.slice(1))
 
 const NAV_LINK_BASE =
   'group/link relative inline-flex h-9 items-center px-1 text-[12px] font-700 uppercase tracking-[0.18em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg'
@@ -117,12 +110,12 @@ function NavLink({ href, label, active, onClick }) {
   )
 }
 
-function ClientLoginLink({ block = false, onClick }) {
+function ClientLoginLink({ block = false, onClick, label, ariaLabel }) {
   return (
     <a
       href={PORTAL_HREF}
       onClick={onClick}
-      aria-label="Client login portal"
+      aria-label={ariaLabel}
       className={cn(
         'group/login inline-flex items-center justify-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
         block ? 'h-12 w-full text-[12px]' : 'h-10'
@@ -132,16 +125,16 @@ function ClientLoginLink({ block = false, onClick }) {
         aria-hidden="true"
         className="h-4 w-4 text-df-text-muted transition-colors duration-200 group-hover/login:text-df-accent-bright"
       />
-      Client Login
+      {label}
     </a>
   )
 }
 
-function PrimaryCta({ size = 'sm', block = false, onClick }) {
+function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
   return (
     <Button asChild size={size} block={block} onClick={onClick}>
-      <a href={PRIMARY_CTA_HREF}>
-        {PRIMARY_CTA_LABEL}
+      <a href={href}>
+        {label}
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
       </a>
     </Button>
@@ -153,14 +146,24 @@ function PrimaryCta({ size = 'sm', block = false, onClick }) {
  * type-specimen, then crystallises into a blurred, hairline-bordered surface
  * once the page scrolls. On wide screens it shows the logo, an animated
  * underline nav with active-section tracking, a ghost-styled Client Login
- * entry point for the forthcoming member portal, and the red primary CTA. On
- * mobile it collapses into a polished right-side drawer with a backdrop blur,
- * staggered link entry, and both action affordances pinned to the bottom.
+ * entry point for the forthcoming member portal, the EN / ES language toggle,
+ * and the red primary CTA. On mobile it collapses into a polished right-side
+ * drawer with a backdrop blur, staggered link entry, and all action
+ * affordances (CTA, login, language toggle) pinned to the bottom.
  */
 export default function Header() {
+  const { brand, nav, header } = useContent()
   const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
-  const activeSection = useActiveSection(SECTION_IDS)
+  const sectionIds = useMemo(
+    () =>
+      nav
+        .map(item => item.href)
+        .filter(href => href.startsWith('#') && href !== '#top')
+        .map(href => href.slice(1)),
+    [nav]
+  )
+  const activeSection = useActiveSection(sectionIds)
   const prefersReducedMotion = useReducedMotion()
 
   useBodyScrollLock(menuOpen)
@@ -208,7 +211,7 @@ export default function Header() {
           </a>
 
           <nav
-            aria-label="Primary"
+            aria-label={header.primaryNavLabel}
             className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 md:flex lg:gap-9"
           >
             {nav.map(item => (
@@ -222,13 +225,14 @@ export default function Header() {
           </nav>
 
           <div className="hidden items-center gap-2.5 md:flex">
-            <ClientLoginLink />
-            <PrimaryCta />
+            <LanguageSwitcher />
+            <ClientLoginLink label={header.clientLogin} ariaLabel={header.clientLoginAria} />
+            <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
           </div>
 
           <button
             type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? header.closeMenu : header.openMenu}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen(open => !open)}
@@ -248,7 +252,7 @@ export default function Header() {
           <MotionDiv key="mobile-navigation" id="mobile-navigation" className="md:hidden">
             <MotionButton
               type="button"
-              aria-label="Close menu"
+              aria-label={header.closeMenu}
               onClick={closeMenu}
               className="fixed inset-0 z-overlay bg-df-overlay backdrop-blur-md"
               initial="hidden"
@@ -260,7 +264,7 @@ export default function Header() {
             <MotionDiv
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile navigation"
+              aria-label={header.mobileDialogLabel}
               className="fixed inset-y-0 right-0 z-modal flex w-full max-w-sm flex-col border-l border-df-border bg-df-bg-elevated/95 shadow-df-xl backdrop-blur-2xl"
               initial="hidden"
               animate="visible"
@@ -275,7 +279,7 @@ export default function Header() {
                 </span>
                 <button
                   type="button"
-                  aria-label="Close menu"
+                  aria-label={header.closeMenu}
                   onClick={closeMenu}
                   className="flex h-10 w-10 items-center justify-center rounded-df-sm border border-df-border-strong text-df-text transition-colors hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
                 >
@@ -284,7 +288,7 @@ export default function Header() {
               </div>
 
               <div className="flex flex-1 flex-col overflow-y-auto px-5 py-6">
-                <nav aria-label="Mobile" className="flex flex-col">
+                <nav aria-label={header.mobileNavLabel} className="flex flex-col">
                   {nav.map((item, index) => {
                     const active = isActive(item.href)
                     return (
@@ -318,8 +322,20 @@ export default function Header() {
                 </nav>
 
                 <div className="mt-8 flex flex-col gap-3">
-                  <PrimaryCta size="lg" block onClick={closeMenu} />
-                  <ClientLoginLink block onClick={closeMenu} />
+                  <PrimaryCta
+                    size="lg"
+                    block
+                    onClick={closeMenu}
+                    href={header.primaryCtaHref}
+                    label={header.primaryCta}
+                  />
+                  <ClientLoginLink
+                    block
+                    onClick={closeMenu}
+                    label={header.clientLogin}
+                    ariaLabel={header.clientLoginAria}
+                  />
+                  <LanguageSwitcher size="md" block />
                 </div>
 
                 <p className="mt-auto pt-10 text-[11px] font-600 uppercase tracking-[0.22em] text-df-text-faint">

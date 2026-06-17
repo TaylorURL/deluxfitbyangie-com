@@ -1,5 +1,5 @@
 import { Card, Reveal, Section } from '@deluxfit/ds'
-import { results } from '@/content/site'
+import { useContent } from '@/i18n'
 import PhotoPlaceholder from './PhotoPlaceholder'
 
 /**
@@ -11,6 +11,7 @@ import PhotoPlaceholder from './PhotoPlaceholder'
  * CTA and the header nav.
  */
 export default function Results() {
+  const { results } = useContent()
   return (
     <Section
       id="results"
