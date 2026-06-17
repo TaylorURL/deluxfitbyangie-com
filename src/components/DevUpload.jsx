@@ -10,7 +10,7 @@ import {
   UploadCloud,
 } from 'lucide-react'
 import { Button, Container, Field, Input, cn } from '@deluxfit/ds'
-import { DEV_UPLOAD_BUCKET, DEV_UPLOAD_ROOT_FOLDER, supabase } from '@/config/supabase'
+import { supabase } from '@/config/supabase'
 
 const MAX_FILE_BYTES = 500 * 1024 * 1024
 const ACCEPTED_TYPE_PREFIXES = ['image/', 'video/']
