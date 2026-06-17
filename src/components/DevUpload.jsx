@@ -170,10 +170,8 @@ function buildEntry(file) {
 }
 
 /**
- * DevUpload — standalone media-upload page for Angie's clients. Drag-and-drop
- * (or click) to queue progress images/videos, optionally tag the upload with
- * the client's name, and push every file into the `DeluxFit/` folder of the
- * `sunday-files` Supabase bucket.
+ * DevUpload — content-intake page where the site owner and team upload
+ * high-quality photos and videos for use on the DeluxFit website.
  */
 export default function DevUpload() {
   const [entries, setEntries] = useState([])
@@ -385,21 +383,22 @@ export default function DevUpload() {
           <div className="mb-8">
             <span className="inline-flex items-center gap-2 rounded-df-full border border-df-border-strong bg-df-accent-soft px-3 py-1 text-[10px] font-700 uppercase tracking-[0.24em] text-df-accent-bright">
               <UploadCloud className="h-3.5 w-3.5" aria-hidden="true" />
-              Client uploads
+              Content upload
             </span>
             <h1 className="mt-5 font-display text-[clamp(2.5rem,6vw,3.5rem)] font-400 uppercase leading-[0.95] tracking-tight text-df-text">
-              Send your progress<span className="text-df-accent">.</span>
+              Upload your content<span className="text-df-accent">.</span>
             </h1>
             <p className="mt-4 max-w-prose text-sm leading-relaxed text-df-text-muted sm:text-base">
-              Drop your progress photos and videos here. Angie will see them on the other side.
-              Images and videos only — up to {formatBytes(MAX_FILE_BYTES)} per file.
+              Drop your high-quality photos and videos below and they'll be added to the
+              DeluxFit site. Send original-resolution files for the best results — up to{' '}
+              {formatBytes(MAX_FILE_BYTES)} per file.
             </p>
           </div>
 
           <div className="rounded-df-2xl border border-df-border bg-df-surface/85 p-6 shadow-df-xl backdrop-blur-xl sm:p-8">
             <Field
               label="Your name (optional)"
-              helper="Tagging your upload so Angie knows it's from you."
+              helper="Used to organize your uploads into a named folder."
             >
               <Input
                 value={clientName}
@@ -446,7 +445,7 @@ export default function DevUpload() {
                 files OK
               </p>
               <label htmlFor="dev-upload-file-input" className="sr-only">
-                Choose images and videos to upload
+                Choose photos and videos for the site
               </label>
               <input
                 ref={fileInputRef}
@@ -496,8 +495,8 @@ export default function DevUpload() {
               >
                 <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
                 <p>
-                  All {successCount} {successCount === 1 ? 'file is' : 'files are'} on the way to
-                  Angie.
+                  All {successCount} {successCount === 1 ? 'file has' : 'files have'} been received
+                  and will appear on the site.
                 </p>
               </div>
             ) : null}
