@@ -10,7 +10,7 @@ import {
   UploadCloud,
 } from 'lucide-react'
 import { Button, Container, Field, Input, cn } from '@deluxfit/ds'
-import { DEV_UPLOAD_BUCKET, DEV_UPLOAD_ROOT_FOLDER, supabase } from '@/config/supabase'
+import { supabase } from '@/config/supabase'
 
 const MAX_FILE_BYTES = 500 * 1024 * 1024
 const ACCEPTED_TYPE_PREFIXES = ['image/', 'video/']
@@ -33,15 +33,6 @@ function sanitizeSegment(value) {
     .slice(0, 64)
 }
 
-function sanitizeFilename(name) {
-  const lastDot = name.lastIndexOf('.')
-  const stem = lastDot > 0 ? name.slice(0, lastDot) : name
-  const ext = lastDot > 0 ? name.slice(lastDot + 1) : ''
-  const cleanStem = sanitizeSegment(stem) || 'file'
-  const cleanExt = sanitizeSegment(ext).toLowerCase()
-  return cleanExt ? `${cleanStem}.${cleanExt}` : cleanStem
-}
-
 function randomToken() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID().replace(/-/g, '').slice(0, 10)
@@ -49,13 +40,14 @@ function randomToken() {
   return Math.random().toString(36).slice(2, 12)
 }
 
-function buildObjectPath(file, clientNameSegment) {
-  const stamp = `${Date.now()}-${randomToken()}`
-  const safeName = sanitizeFilename(file.name)
-  const folder = clientNameSegment
-    ? `${DEV_UPLOAD_ROOT_FOLDER}/${clientNameSegment}`
-    : DEV_UPLOAD_ROOT_FOLDER
-  return `${folder}/${stamp}-${safeName}`
+async function describeInvokeError(error) {
+  try {
+    const body = await error?.context?.json?.()
+    if (body?.error) return new Error(body.error)
+  } catch {
+    /* body already consumed or not JSON — fall back to the original message */
+  }
+  return error instanceof Error ? error : new Error(String(error))
 }
 
 function isAcceptedFile(file) {
@@ -301,12 +293,12 @@ export default function DevUpload() {
     for (const entryId of idsToProcess) {
       const current = entries.find(entry => entry.id === entryId)
       if (!current) continue
-      const path = buildObjectPath(current.file, sanitizedName)
       try {
-        const { error } = await supabase.storage
-          .from(DEV_UPLOAD_BUCKET)
-          .upload(path, current.file, { contentType: current.file.type })
-        if (error) throw error
+        const form = new FormData()
+        form.append('file', current.file, current.file.name)
+        if (sanitizedName) form.append('client_name', sanitizedName)
+        const { error } = await supabase.functions.invoke('deluxfit-intake', { body: form })
+        if (error) throw await describeInvokeError(error)
         setEntries(prev =>
           prev.map(entry =>
             entry.id === entryId ? { ...entry, status: STATUS.success, error: null } : entry

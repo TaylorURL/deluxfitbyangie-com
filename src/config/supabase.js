@@ -2,17 +2,14 @@ import { createClient } from '@supabase/supabase-js'
 
 /**
  * Sunday's public Supabase project — anon key is shipped intentionally.
- * Inserts are gated by a server-side RLS policy that only allows anonymous
- * uploads into the `sunday-files` bucket under the `DeluxFit/` first-folder,
- * so the key is safe in client code. Hardcoded (rather than read from
- * import.meta.env) so production deploys do not require dashboard env wiring.
+ * Client uploads route through the public `deluxfit-intake` edge function,
+ * which owns the storage write and the `sunday_files` row insert server-side.
+ * Hardcoded (rather than read from import.meta.env) so production deploys do
+ * not require dashboard env wiring.
  */
 export const SUPABASE_URL = 'https://gujgtjqqurildqurpffh.supabase.co'
 export const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1amd0anFxdXJpbGRxdXJwZmZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MTkxOTAsImV4cCI6MjA3OTQ5NTE5MH0.9jd6izem9wvp9RgYvlzgLhjSAiRxfsCfTxuIQHOunZc'
-
-export const DEV_UPLOAD_BUCKET = 'sunday-files'
-export const DEV_UPLOAD_ROOT_FOLDER = 'DeluxFit'
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
