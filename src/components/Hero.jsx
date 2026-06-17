@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, Marquee, cn } from '@deluxfit/ds'
-import { hero, marqueeItems } from '@/content/site'
+import { useContent } from '@/i18n'
 import FramedPhoto from './FramedPhoto'
 
 const MotionH1 = motion.h1
@@ -25,6 +25,7 @@ const LINE_STAGGER = {
  * crimson. Copy, CTAs, and the marquee continue to flow from site.js.
  */
 export default function Hero() {
+  const { hero, marqueeItems } = useContent()
   const prefersReducedMotion = useReducedMotion()
   const lastIndex = hero.headline.length - 1
 

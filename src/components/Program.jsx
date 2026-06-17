@@ -1,5 +1,5 @@
 import { Reveal, Section, StatBlock } from '@deluxfit/ds'
-import { program } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Program Breakdown — the three-phase 12-week method as a numeral-led timeline,
@@ -7,6 +7,7 @@ import { program } from '@/content/site'
  * anchor. Anchored at #program for the header nav.
  */
 export default function Program() {
+  const { program } = useContent()
   return (
     <Section
       id="program"

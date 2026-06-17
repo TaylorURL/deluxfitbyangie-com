@@ -1,5 +1,5 @@
 import { PricingCard, Reveal, Section } from '@deluxfit/ds'
-import { pricing } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Pricing — three coaching tiers led by hero-scale price numerals, with the
@@ -7,6 +7,7 @@ import { pricing } from '@/content/site'
  * PricingCard CTA opens its Stripe Payment Link. Anchored at #pricing.
  */
 export default function Pricing() {
+  const { pricing } = useContent()
   return (
     <Section
       id="pricing"

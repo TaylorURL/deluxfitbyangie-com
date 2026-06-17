@@ -1,5 +1,5 @@
 import { Accordion, FaqItem, Reveal, Section } from '@deluxfit/ds'
-import { faq } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * FAQ — the DS Accordion as a numbered editorial list handling the prospect's
@@ -7,6 +7,7 @@ import { faq } from '@/content/site'
  * from site.js. Anchored at #faq for the header nav and final CTA link.
  */
 export default function Faq() {
+  const { faq } = useContent()
   return (
     <Section
       id="faq"

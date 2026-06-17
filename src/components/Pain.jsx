@@ -1,5 +1,5 @@
 import { Reveal, Section } from '@deluxfit/ds'
-import { pain } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Pain / Agitation — names the frustrations the prospect arrives with as a
@@ -7,6 +7,7 @@ import { pain } from '@/content/site'
  * around each line keeps the section confident rather than crowded.
  */
 export default function Pain() {
+  const { pain } = useContent()
   return (
     <Section
       id="pain"

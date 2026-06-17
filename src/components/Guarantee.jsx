@@ -1,5 +1,5 @@
 import { Button, Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
-import { guarantee } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Guarantee / risk-reversal band — a crimson-glow surface that removes the last
@@ -7,6 +7,7 @@ import { guarantee } from '@/content/site'
  * promise reads instantly; the CTA scrolls to pricing.
  */
 export default function Guarantee() {
+  const { guarantee } = useContent()
   const { icon: Icon } = guarantee
 
   return (
@@ -28,7 +29,7 @@ export default function Guarantee() {
                 </span>
                 <span className="flex items-center gap-2 text-xs font-700 uppercase tracking-[0.22em] text-df-text-muted">
                   <Icon className="h-4 w-4 text-df-accent-bright" strokeWidth={2} aria-hidden="true" />
-                  Day guarantee
+                  {guarantee.dayBadge}
                 </span>
               </div>
 
@@ -39,7 +40,7 @@ export default function Guarantee() {
                 </div>
                 <SplitHeading
                   text={guarantee.heading}
-                  accent="love it or it’s free"
+                  accent={guarantee.accent}
                   className="mt-5 text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95]"
                 />
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">

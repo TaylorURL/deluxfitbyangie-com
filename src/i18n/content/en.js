@@ -1,0 +1,386 @@
+/* =============================================================================
+   DELUXFIT BY ANGIE — ENGLISH CONTENT (en)
+   -----------------------------------------------------------------------------
+   ⚠️  PLACEHOLDER CONTENT — FOR ANGIE TO REPLACE.
+
+   Every string, statistic, testimonial, image path, and social handle below is
+   placeholder copy written in a confident, motivating fitness-sales voice. Edit
+   here to change the live English site — sections read from this single tree
+   via the i18n context, so nothing else needs to be touched for copy updates.
+
+   • Stripe checkout links live in `src/config/checkout.js`.
+   • Spanish equivalents live in `./es.js` — every key here must exist there.
+   ========================================================================== */
+
+import { CHECKOUT_LINKS } from '../../config/checkout'
+import {
+  Dumbbell,
+  Apple,
+  MessageCircleHeart,
+  Users,
+  CalendarCheck,
+  LineChart,
+  ShieldCheck,
+  Instagram,
+} from 'lucide-react'
+
+const en = {
+  meta: {
+    title: 'DeluxFit by Angie — Transform Your Body in 12 Weeks',
+    description:
+      'DeluxFit by Angie — online coaching that transforms. Custom workouts, nutrition coaching, and weekly accountability from a certified personal trainer.',
+  },
+
+  brand: {
+    name: 'DELUXFIT',
+    fullName: 'DeluxFit by Angie',
+    tagline: 'Online coaching that transforms.',
+  },
+
+  nav: [
+    { label: 'Program', href: '#program' },
+    { label: 'Results', href: '#results' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'FAQ', href: '#faq' },
+  ],
+
+  header: {
+    primaryCta: 'Apply Now',
+    primaryCtaHref: '#pricing',
+    clientLogin: 'Client Login',
+    clientLoginAria: 'Client login portal',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    primaryNavLabel: 'Primary',
+    mobileNavLabel: 'Mobile',
+    mobileDialogLabel: 'Mobile navigation',
+  },
+
+  language: {
+    label: 'Language',
+    english: 'English',
+    spanish: 'Spanish',
+    switchToEnglish: 'Switch to English',
+    switchToSpanish: 'Switch to Spanish',
+  },
+
+  hero: {
+    badge: 'Now enrolling new 1-on-1 coaching clients',
+    headline: ['Build the body', 'you stopped', 'believing was possible.'],
+    subhead:
+      'DeluxFit is 1-on-1 online coaching for women who are done starting over. Custom workouts, real nutrition coaching, and weekly accountability — built around your life, not someone else’s highlight reel.',
+    primaryCta: 'Start Your Transformation',
+    secondaryCta: 'See Results',
+    trust: {
+      pillarValue: '1:1',
+      pillarLabel: 'personal coaching',
+      tagline: 'Coaching · Nutrition · Accountability',
+    },
+    imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
+  },
+
+  marqueeItems: [
+    'Strength Training',
+    'Fat Loss',
+    'Nutrition Coaching',
+    'Accountability',
+    'Mindset',
+    'Mobility',
+    'Postpartum Strong',
+  ],
+
+  pain: {
+    eyebrow: 'Sound familiar?',
+    heading: 'You’re not lazy. You’ve just been handed the wrong plan.',
+    accent: 'the wrong plan',
+    subhead:
+      'You’ve tried hard before — maybe harder than anyone knows. The problem was never your effort. It was a cookie-cutter program that ignored your body, your schedule, and your life.',
+    points: [
+      'Tired of starting a new diet every Monday and quitting by Thursday.',
+      'Sick of generic workout plans that leave you sore, bored, and stuck.',
+      'Exhausted by all-or-nothing rules that make food feel like the enemy.',
+      'Frustrated that the scale won’t budge no matter how little you eat.',
+      'Done with “fitspo” programs built for 22-year-olds with no kids and no job.',
+      'Lonely doing it alone, with no one checking in or in your corner.',
+    ],
+  },
+
+  benefits: {
+    eyebrow: 'What you get',
+    heading: 'A complete system — not just another workout PDF.',
+    accent: 'complete system',
+    subhead:
+      'Everything is built for you and adjusted every week as you progress. This is coaching, not a template you download and never open again.',
+    items: [
+      {
+        icon: Dumbbell,
+        title: 'Custom Workout Plans',
+        description:
+          'Programming designed around your goals, equipment, and experience — at home or in the gym, in 3–5 sessions a week.',
+      },
+      {
+        icon: Apple,
+        title: 'Nutrition Coaching',
+        description:
+          'A flexible, food-freedom approach with targets that fit your real life. No banned foods, no starving, no guilt.',
+      },
+      {
+        icon: CalendarCheck,
+        title: 'Weekly Accountability',
+        description:
+          'Check in every week with photos, stats, and wins. I review everything and adjust your plan so you keep moving.',
+      },
+      {
+        icon: MessageCircleHeart,
+        title: 'Direct Access to Angie',
+        description:
+          'Message me between check-ins through the app. Stuck, traveling, or tempted to quit? I’m one text away.',
+      },
+      {
+        icon: Users,
+        title: 'Private Community',
+        description:
+          'Train alongside a group of driven women who celebrate your wins and pull you forward on the hard days.',
+      },
+      {
+        icon: LineChart,
+        title: 'Progress Tracking',
+        description:
+          'See your strength, measurements, and habits trend in one place — proof you’re changing, even when the scale lies.',
+      },
+    ],
+  },
+
+  program: {
+    eyebrow: 'The program',
+    heading: 'The DeluxFit 12-week transformation method.',
+    accent: 'transformation method',
+    subhead:
+      'Three focused phases that build on each other — so you don’t just lose weight, you build a body and a routine that lasts.',
+    phases: [
+      {
+        label: 'Phase 01 · Weeks 1–4',
+        title: 'Foundation',
+        description:
+          'We dial in your nutrition baseline, master core lifts with perfect form, and build the daily habits everything else stands on.',
+      },
+      {
+        label: 'Phase 02 · Weeks 5–8',
+        title: 'Build & Burn',
+        description:
+          'Training intensifies and nutrition gets strategic. This is where the mirror starts changing and your confidence catches fire.',
+      },
+      {
+        label: 'Phase 03 · Weeks 9–12',
+        title: 'Sculpt & Sustain',
+        description:
+          'We sharpen your results and lock in a lifestyle you can keep — so the transformation outlasts the program.',
+      },
+    ],
+    stats: [
+      { value: '12', label: 'Week Program' },
+      { value: '3', label: 'Focused Phases' },
+      { value: '1:1', label: 'Coaching Format' },
+      { value: '14', label: 'Day Guarantee' },
+    ],
+  },
+
+  results: {
+    eyebrow: 'Real women, real results',
+    heading: 'Built on what real transformations need.',
+    accent: 'real transformations need',
+    subhead:
+      'Real client stories and before/after photos will be featured here as Angie’s clients complete their programs. Until then, this is what every DeluxFit transformation is built around.',
+    pillars: [
+      {
+        title: 'Real Strength',
+        description:
+          'Lifts that get heavier, energy that lasts, and a body that can do more than it used to.',
+      },
+      {
+        title: 'Real Habits',
+        description:
+          'Food, training, and recovery routines you can actually keep when life gets busy.',
+      },
+      {
+        title: 'Real Confidence',
+        description:
+          'How you show up in the mirror, in the gym, and in every room you walk into.',
+      },
+    ],
+    galleryNote:
+      'Before & after photos coming soon — placeholders shown until Angie adds real client transformations.',
+    gallery: [
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+    ],
+  },
+
+  pricing: {
+    eyebrow: 'Choose your transformation',
+    heading: 'Pick the plan that matches your goals.',
+    accent: 'matches your goals',
+    subhead:
+      'Every tier includes custom training, nutrition coaching, and weekly accountability. Cancel anytime — no contracts, no games.',
+    note: 'Prices shown in USD. Placeholder pricing — Angie sets the final numbers in Stripe.',
+    tiers: [
+      {
+        id: 'kickstart',
+        name: 'Kickstart',
+        price: '$149',
+        period: '/ 1 month',
+        description: 'Test the waters and feel the difference in 30 days.',
+        features: [
+          'Custom 4-week workout plan',
+          'Personalized nutrition targets',
+          'Weekly check-in & plan adjustments',
+          'In-app messaging support',
+          'Private community access',
+        ],
+        ctaLabel: 'Start Kickstart',
+        ctaHref: CHECKOUT_LINKS.kickstart,
+        highlighted: false,
+      },
+      {
+        id: 'transform',
+        name: 'Transform',
+        price: '$129',
+        period: '/ mo · 3 months',
+        description: 'The full 12-week method — our most popular path to real change.',
+        features: [
+          'Everything in Kickstart',
+          'Full 12-week transformation method',
+          'Bi-weekly form-check video reviews',
+          'Priority messaging with Angie',
+          'Habit & mindset coaching modules',
+          'Progress tracking dashboard',
+        ],
+        ctaLabel: 'Start Transforming',
+        ctaHref: CHECKOUT_LINKS.transform,
+        highlighted: true,
+        badgeLabel: 'Most Popular',
+      },
+      {
+        id: 'elite',
+        name: 'Elite 1:1',
+        price: '$199',
+        period: '/ mo · 6 months',
+        description: 'Maximum access for the woman who wants the fastest, deepest results.',
+        features: [
+          'Everything in Transform',
+          'Weekly 1:1 video coaching calls',
+          'Fully bespoke training & nutrition',
+          'Daily check-in & unlimited messaging',
+          'Supplement & recovery guidance',
+          'Lifetime alumni community access',
+        ],
+        ctaLabel: 'Go Elite',
+        ctaHref: CHECKOUT_LINKS.elite,
+        highlighted: false,
+      },
+    ],
+  },
+
+  guarantee: {
+    icon: ShieldCheck,
+    eyebrow: 'Zero risk',
+    heading: 'The 14-day “love it or it’s free” guarantee.',
+    accent: 'love it or it’s free',
+    dayBadge: 'Day guarantee',
+    body: 'Show up, do the work, and use the coaching for 14 days. If you don’t feel more confident, more capable, and genuinely supported, email us and get every penny back. The only risk is staying exactly where you are.',
+    cta: 'Claim Your Spot',
+  },
+
+  about: {
+    eyebrow: 'Meet your coach',
+    name: 'Angie',
+    heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
+    accent: 'the woman you’re becoming',
+    bio: [
+      'I help women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
+      'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a clear system and someone in your corner every single week.',
+    ],
+    credentials: [
+      'Certified Personal Trainer (NASM-CPT)',
+      'Precision Nutrition Level 1 Coach',
+      'Pre/Postnatal Fitness Specialist',
+      '1-on-1 online & in-person coaching',
+    ],
+    imageAlt: 'Angie coaching a client through a leg-press set',
+  },
+
+  faq: {
+    eyebrow: 'Questions',
+    heading: 'Everything you need to know.',
+    accent: 'need to know',
+    items: [
+      {
+        question: 'Do I need a gym membership?',
+        answer:
+          'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. You can get incredible results training from home.',
+      },
+      {
+        question: 'I’m a total beginner. Is this for me?',
+        answer:
+          'Absolutely. Beginners are exactly who DeluxFit is built for. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
+      },
+      {
+        question: 'How is this different from a free workout app?',
+        answer:
+          'Apps hand you a generic plan and disappear. DeluxFit is real coaching: your program is built for you, adjusted every week based on your progress, and backed by direct access to me whenever you’re stuck.',
+      },
+      {
+        question: 'Will I have to give up the foods I love?',
+        answer:
+          'Never. My approach is flexible and sustainable — no banned foods, no starving. You’ll learn to enjoy the foods you love while still hitting your goals, which is exactly why it lasts.',
+      },
+      {
+        question: 'How much time do I need each week?',
+        answer:
+          'Programs typically run 3–5 training sessions a week at 30–45 minutes each, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
+      },
+      {
+        question: 'What if it’s not for me?',
+        answer:
+          'You’re protected by the 14-day “love it or it’s free” guarantee. Try the coaching risk-free, and if it’s not the right fit, email us within 14 days for a full refund.',
+      },
+    ],
+  },
+
+  finalCta: {
+    eyebrow: 'Your transformation starts now',
+    heading: 'The next 12 weeks are happening either way.',
+    accent: 'either way',
+    subhead:
+      'You can arrive there wishing you’d started today — or arrive stronger, leaner, and prouder than ever. Spots in each coaching group are limited so I can give every client real attention.',
+    primaryCta: 'Start Your Transformation',
+    secondaryCta: 'Read the FAQ',
+  },
+
+  footer: {
+    blurb:
+      'Online fitness coaching that transforms bodies and rebuilds confidence — one woman at a time.',
+    navLabel: 'Footer',
+    rightsReserved: 'All rights reserved.',
+    socials: [
+      { label: 'Instagram', href: 'https://instagram.com/REPLACE_ME', icon: Instagram },
+      // TikTok has no dedicated lucide glyph; the music note stands in until swapped.
+      { label: 'TikTok', href: 'https://tiktok.com/@REPLACE_ME', icon: 'tiktok' },
+    ],
+    smallPrint:
+      'Results vary. DeluxFit by Angie provides fitness and nutrition coaching for educational purposes and is not a substitute for medical advice. Consult your physician before beginning any exercise or nutrition program.',
+  },
+
+  portal: {
+    backToSite: 'Back to site',
+    backToHome: 'Back to DeluxFit',
+    comingSoon: 'Coming soon',
+    headingLines: ['Client', 'Portal'],
+    blurb:
+      'A members-only home for current DeluxFit clients — your training plan, weekly check-ins, macros, progress trends, and direct chat with Angie — is launching shortly.',
+    signInHint: 'Existing client? Sign in here once we go live.',
+  },
+}
+
+export default en

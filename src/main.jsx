@@ -3,11 +3,14 @@ import { createRoot } from 'react-dom/client'
 import { MotionConfig } from 'framer-motion'
 import './index.css'
 import App from './App'
+import { LanguageProvider } from './i18n'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <MotionConfig reducedMotion="user">
-      <App />
-    </MotionConfig>
+    <LanguageProvider>
+      <MotionConfig reducedMotion="user">
+        <App />
+      </MotionConfig>
+    </LanguageProvider>
   </StrictMode>
 )

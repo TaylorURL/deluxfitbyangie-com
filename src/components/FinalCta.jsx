@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Button, Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
-import { finalCta } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Final CTA — the closing statement at full type-specimen scale. The headline
@@ -8,6 +8,7 @@ import { finalCta } from '@/content/site'
  * couture italic; the primary CTA opens pricing, the secondary links to the FAQ.
  */
 export default function FinalCta() {
+  const { finalCta } = useContent()
   return (
     <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-28 sm:py-40">
       <div

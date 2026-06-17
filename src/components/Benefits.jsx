@@ -1,5 +1,5 @@
 import { Card, Reveal, Section } from '@deluxfit/ds'
-import { benefits } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Benefits / What You Get — the offer reframed as one complete coaching system.
@@ -7,6 +7,7 @@ import { benefits } from '@/content/site'
  * furniture, a crimson icon, and a condensed display title.
  */
 export default function Benefits() {
+  const { benefits } = useContent()
   return (
     <Section
       id="benefits"
