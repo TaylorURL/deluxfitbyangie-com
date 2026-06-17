@@ -12,6 +12,7 @@ import {
 import { Button, Container, Field, Input, cn } from '@deluxfit/ds'
 import { supabase } from '@/config/supabase'
 
+const SUNDAY_ADMIN_USER_ID = '07a1299d-d63d-4b4c-b862-53ea44a02b1a'
 const MAX_FILE_BYTES = 500 * 1024 * 1024
 const ACCEPTED_TYPE_PREFIXES = ['image/', 'video/']
 
