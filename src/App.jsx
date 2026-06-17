@@ -1,48 +1,35 @@
 import { useEffect } from 'react'
 import ClientPortalPlaceholder from './components/ClientPortalPlaceholder'
 import DevUpload from './components/DevUpload'
-import Header from './components/Header'
-import Hero from './components/Hero'
-import Pain from './components/Pain'
-import Benefits from './components/Benefits'
-import Program from './components/Program'
-import Results from './components/Results'
-import Pricing from './components/Pricing'
-import Guarantee from './components/Guarantee'
-import About from './components/About'
-import Faq from './components/Faq'
-import FinalCta from './components/FinalCta'
-import Footer from './components/Footer'
+import SiteShell from './components/SiteShell'
+import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
 import { useContent } from './i18n'
 
 /**
- * PORTAL ROUTE — the navbar's "Client Login" link points at /portal, which the
- * Vercel SPA rewrite serves with this same app shell. Until the real member
- * portal exists we render a branded placeholder; swap the import once the real
- * portal ships and this conditional becomes a single-component replacement.
+ * Standalone routes — these render outside the SiteShell because they own
+ * their own chrome (header + footer treatment).
  */
-function isPortalRoute() {
-  if (typeof window === 'undefined') return false
-  return window.location.pathname.replace(/\/+$/, '').toLowerCase().startsWith('/portal')
-}
+const STANDALONE_ROUTES = [
+  { path: '/portal', component: ClientPortalPlaceholder },
+  { path: '/dev-upload', component: DevUpload },
+]
 
-/**
- * DEV-UPLOAD ROUTE — `/dev-upload` is a standalone media-upload page for
- * Angie's clients to drop progress images and videos. Same SPA-rewrite
- * pattern as `/portal`: Vercel serves index.html and this conditional
- * picks up the path on the client.
- */
-function isDevUploadRoute() {
-  if (typeof window === 'undefined') return false
-  return window.location.pathname.replace(/\/+$/, '').toLowerCase().startsWith('/dev-upload')
+function matchStandalone(pathname) {
+  const normalized = normalizePath(pathname)
+  return (
+    STANDALONE_ROUTES.find(route =>
+      normalized === normalizePath(route.path) ||
+      normalized.startsWith(`${normalizePath(route.path)}/`)
+    ) ?? null
+  )
 }
 
 /**
  * Keep <title> and the description / OG meta tags in sync with the active
- * locale so search engines, social previews, and the browser tab match the
- * language the visitor is reading.
+ * locale and the current route so search engines and social previews stay
+ * accurate.
  */
-function useDocumentMeta(meta) {
+function useDocumentMeta(meta, pathname) {
   useEffect(() => {
     if (typeof document === 'undefined') return
     document.title = meta.title
@@ -55,44 +42,96 @@ function useDocumentMeta(meta) {
     setMeta('meta[name="description"]', meta.description)
     setMeta('meta[property="og:title"]', meta.title)
     setMeta('meta[property="og:description"]', meta.description)
-  }, [meta.title, meta.description])
+  }, [meta.title, meta.description, pathname])
 }
 
 /**
- * App — the DeluxFit by Angie sales funnel assembled top to bottom. A single
- * scroll-through page: hook → agitate → present the system → prove it → price
- * it → de-risk it → humanize it → answer objections → close. All editable copy
- * lives in the locale trees under `src/i18n/content/`; UI is composed entirely
- * from `@deluxfit/ds`.
+ * useScrollToTopOnNavigate — when the SPA router lands on a new pathname (no
+ * hash), reset scroll to the top so each page reads from its hero. Anchors
+ * within a page handle their own scrolling via the Link component.
+ */
+function useScrollToTopOnNavigate(pathname, hash) {
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (hash) return
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
+  }, [pathname, hash])
+}
+
+/**
+ * useGlobalLinkInterception — Catches clicks on plain anchors with internal
+ * paths (e.g. those rendered by the design-system PricingCard / CTAs that
+ * don't go through the SPA <Link>) and routes them through the SPA history
+ * API so the page transitions client-side instead of doing a full reload.
+ */
+function useGlobalLinkInterception(navigate) {
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    const handler = event => {
+      if (event.defaultPrevented) return
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1) {
+        return
+      }
+      const anchor = event.target.closest?.('a[href]')
+      if (!anchor) return
+      const href = anchor.getAttribute('href')
+      if (!href || !href.startsWith('/')) return
+      if (anchor.target === '_blank' || anchor.hasAttribute('download')) return
+      if (anchor.dataset.routerSkip === 'true') return
+      // Cross-origin anchors with absolute URLs slip past the startsWith check.
+      const url = new URL(anchor.href, window.location.origin)
+      if (url.origin !== window.location.origin) return
+
+      event.preventDefault()
+      const isSamePath = url.pathname === window.location.pathname
+      if (isSamePath && url.hash) {
+        window.history.replaceState({}, '', `${url.pathname}${url.hash}`)
+        document
+          .getElementById(url.hash.slice(1))
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+      navigate(`${url.pathname}${url.hash || ''}`)
+      if (url.hash) {
+        requestAnimationFrame(() => {
+          document
+            .getElementById(url.hash.slice(1))
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        })
+      }
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [navigate])
+}
+
+/**
+ * App — the DeluxFit by Angie site. Renders one of three branches:
+ *
+ *   1. Standalone routes (`/portal`, `/dev-upload`) — their own chrome.
+ *   2. A SPA route in `src/router/routes.js` — rendered inside SiteShell.
+ *   3. Anything else — a branded 404, also inside SiteShell.
  */
 export default function App() {
   const { meta } = useContent()
-  useDocumentMeta(meta)
+  const { pathname, hash, navigate } = useLocation()
 
-  if (isDevUploadRoute()) {
-    return <DevUpload />
+  useDocumentMeta(meta, pathname)
+  useScrollToTopOnNavigate(pathname, hash)
+  useGlobalLinkInterception(navigate)
+
+  const standalone = matchStandalone(pathname)
+  if (standalone) {
+    const Standalone = standalone.component
+    return <Standalone />
   }
 
-  if (isPortalRoute()) {
-    return <ClientPortalPlaceholder />
-  }
+  const matched = matchRoute(pathname)
+  const PageComponent = matched ? matched.component : NOT_FOUND
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main>
-        <Hero />
-        <Pain />
-        <Benefits />
-        <Program />
-        <Results />
-        <Pricing />
-        <Guarantee />
-        <About />
-        <Faq />
-        <FinalCta />
-      </main>
-      <Footer />
-    </div>
+    <SiteShell>
+      <PageComponent />
+    </SiteShell>
   )
 }
