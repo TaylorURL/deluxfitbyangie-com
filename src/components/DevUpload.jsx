@@ -383,7 +383,7 @@ export default function DevUpload() {
           <div className="mb-8">
             <span className="inline-flex items-center gap-2 rounded-df-full border border-df-border-strong bg-df-accent-soft px-3 py-1 text-[10px] font-700 uppercase tracking-[0.24em] text-df-accent-bright">
               <UploadCloud className="h-3.5 w-3.5" aria-hidden="true" />
-              Client uploads
+              Content upload
             </span>
             <h1 className="mt-5 font-display text-[clamp(2.5rem,6vw,3.5rem)] font-400 uppercase leading-[0.95] tracking-tight text-df-text">
               Send your progress<span className="text-df-accent">.</span>
