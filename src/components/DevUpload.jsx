@@ -445,7 +445,7 @@ export default function DevUpload() {
                 files OK
               </p>
               <label htmlFor="dev-upload-file-input" className="sr-only">
-                Choose images and videos to upload
+                Choose photos and videos for the site
               </label>
               <input
                 ref={fileInputRef}
