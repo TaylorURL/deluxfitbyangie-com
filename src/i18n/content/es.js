@@ -312,7 +312,7 @@ const es = {
           icon: HandHeart,
           title: 'Progreso honesto y sostenible',
           description:
-            'Sin promesas exageradas, sin planes de comida rígidos, sin un ritmo de check-ins irreal. Guía básica de nutrición, entrenamiento real y una estructura que realmente puedes mantener.',
+            'Sin promesas exageradas, sin planes de comida, sin un ritmo de check-ins irreal. Guía básica de nutrición, entrenamiento real y una estructura que realmente puedes mantener.',
         },
       ],
     },
@@ -456,7 +456,7 @@ const es = {
         icon: Apple,
         title: 'Guía básica de nutrición',
         description:
-          'Orientación nutricional general y sostenible para apoyar tu entrenamiento — sin planes de comida rígidos.',
+          'Orientación nutricional general y sostenible para apoyar tu entrenamiento — sin planes de comida.',
       },
     ],
     responsibilities: {
