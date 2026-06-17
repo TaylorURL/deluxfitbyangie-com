@@ -10,9 +10,8 @@ import {
   UploadCloud,
 } from 'lucide-react'
 import { Button, Container, Field, Input, cn } from '@deluxfit/ds'
-import { DEV_UPLOAD_BUCKET, DEV_UPLOAD_ROOT_FOLDER, supabase } from '@/config/supabase'
+import { supabase } from '@/config/supabase'
 
-const SUNDAY_ADMIN_USER_ID = '07a1299d-d63d-4b4c-b862-53ea44a02b1a'
 const MAX_FILE_BYTES = 500 * 1024 * 1024
 const ACCEPTED_TYPE_PREFIXES = ['image/', 'video/']
 
@@ -34,15 +33,6 @@ function sanitizeSegment(value) {
     .slice(0, 64)
 }
 
-function sanitizeFilename(name) {
-  const lastDot = name.lastIndexOf('.')
-  const stem = lastDot > 0 ? name.slice(0, lastDot) : name
-  const ext = lastDot > 0 ? name.slice(lastDot + 1) : ''
-  const cleanStem = sanitizeSegment(stem) || 'file'
-  const cleanExt = sanitizeSegment(ext).toLowerCase()
-  return cleanExt ? `${cleanStem}.${cleanExt}` : cleanStem
-}
-
 function randomToken() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID().replace(/-/g, '').slice(0, 10)
@@ -50,13 +40,14 @@ function randomToken() {
   return Math.random().toString(36).slice(2, 12)
 }
 
-function buildObjectPath(file, clientNameSegment) {
-  const stamp = `${Date.now()}-${randomToken()}`
-  const safeName = sanitizeFilename(file.name)
-  const folder = clientNameSegment
-    ? `${DEV_UPLOAD_ROOT_FOLDER}/${clientNameSegment}`
-    : DEV_UPLOAD_ROOT_FOLDER
-  return `${folder}/${stamp}-${safeName}`
+async function describeInvokeError(error) {
+  try {
+    const body = await error?.context?.json?.()
+    if (body?.error) return new Error(body.error)
+  } catch {
+    /* body already consumed or not JSON — fall back to the original message */
+  }
+  return error instanceof Error ? error : new Error(String(error))
 }
 
 function isAcceptedFile(file) {
@@ -302,36 +293,12 @@ export default function DevUpload() {
     for (const entryId of idsToProcess) {
       const current = entries.find(entry => entry.id === entryId)
       if (!current) continue
-      const path = buildObjectPath(current.file, sanitizedName)
       try {
-        const { error } = await supabase.storage
-          .from(DEV_UPLOAD_BUCKET)
-          .upload(path, current.file, { contentType: current.file.type })
-        if (error) throw error
-
-        const { data: pub } = supabase.storage.from(DEV_UPLOAD_BUCKET).getPublicUrl(path)
-        const { error: metaError } = await supabase.from('sunday_files').insert({
-          user_id: SUNDAY_ADMIN_USER_ID,
-          name: current.file.name,
-          storage_path: path,
-          mime_type: current.file.type || 'application/octet-stream',
-          size_bytes: current.file.size,
-          source: 'uploaded',
-          folder: DEV_UPLOAD_ROOT_FOLDER,
-          public_url: pub.publicUrl,
-        })
-        if (metaError) {
-          console.error('Failed to insert file metadata:', metaError)
-          setEntries(prev =>
-            prev.map(entry =>
-              entry.id === entryId
-                ? { ...entry, status: STATUS.error, error: 'Uploaded but metadata save failed' }
-                : entry
-            )
-          )
-          continue
-        }
-
+        const form = new FormData()
+        form.append('file', current.file, current.file.name)
+        if (sanitizedName) form.append('client_name', sanitizedName)
+        const { error } = await supabase.functions.invoke('deluxfit-intake', { body: form })
+        if (error) throw await describeInvokeError(error)
         setEntries(prev =>
           prev.map(entry =>
             entry.id === entryId ? { ...entry, status: STATUS.success, error: null } : entry
