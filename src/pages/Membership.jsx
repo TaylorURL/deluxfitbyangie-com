@@ -1,4 +1,4 @@
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Info } from 'lucide-react'
 import {
   Badge,
   Button,
