@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import ClientPortalPlaceholder from './components/ClientPortalPlaceholder'
+import DevUpload from './components/DevUpload'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Pain from './components/Pain'
