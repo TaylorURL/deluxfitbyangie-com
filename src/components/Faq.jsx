@@ -1,5 +1,5 @@
 import { Accordion, FaqItem, Reveal, Section } from '@deluxfit/ds'
-import { faq } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * FAQ — the DS Accordion as a numbered editorial list handling the prospect's
