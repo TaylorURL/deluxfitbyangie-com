@@ -63,12 +63,14 @@ export function usePortalData() {
 
   const reloadProgress = useCallback(async () => {
     if (!userId) return
-    setState(prev => ({ ...prev, progress: await getProgressEntries(userId) }))
+    const progress = await getProgressEntries(userId)
+    setState(prev => ({ ...prev, progress }))
   }, [userId])
 
   const reloadMessages = useCallback(async () => {
     if (!userId) return
-    setState(prev => ({ ...prev, messages: await getMessages(userId) }))
+    const messages = await getMessages(userId)
+    setState(prev => ({ ...prev, messages }))
   }, [userId])
 
   return {
