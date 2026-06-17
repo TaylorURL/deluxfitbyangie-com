@@ -10,7 +10,7 @@ import { useContent } from './i18n'
  * their own chrome (header + footer treatment).
  */
 const STANDALONE_ROUTES = [
-  { path: '/portal', component: ClientPortalPlaceholder },
+  { path: '/portal', component: ClientPortal },
   { path: '/dev-upload', component: DevUpload },
 ]
 
