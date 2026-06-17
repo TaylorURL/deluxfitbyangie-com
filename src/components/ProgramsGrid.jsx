@@ -1,16 +1,22 @@
 import { Badge, PricingCard, Reveal, Section } from '@deluxfit/ds'
-import { Link } from '@/router'
 import { useContent } from '@/i18n'
 
 /**
- * ProgramsGrid — the three live services + the in-person "coming soon" teaser.
- * On the Home page this is the central comparison band; on individual service
- * pages it acts as the "compare programs" footer. Pricing strings come from
- * `services` in the i18n content tree and follow the client spec verbatim.
+ * ProgramsGrid — the four bookable/active services + the in-person "coming
+ * soon" teaser. On the Home page this is the central comparison band; on
+ * individual service pages it acts as the "compare programs" footer. Pricing
+ * strings come from `services` in the i18n content tree and follow the client
+ * spec verbatim.
  */
 export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
   const { programs, services, inPerson } = useContent()
-  const ordered = [services.membership, services.coaching, services.oneOnOne]
+  const ordered = [
+    services.membership,
+    services.coaching,
+    services.singleSession,
+    services.liveProgram,
+  ]
+  const highlightId = highlightServiceId ?? 'coaching'
 
   return (
     <Section
@@ -20,10 +26,14 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
       accent={programs.accent}
       subhead={programs.subhead}
     >
-      <div className="grid items-stretch gap-6 lg:grid-cols-3">
+      <div className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-4">
         {ordered.map((service, index) => (
-          <Reveal key={service.id} delay={index * 0.08} className="flex">
-            <PricingCardLink className="w-full" service={service} highlighted={service.id === (highlightServiceId ?? 'coaching')} />
+          <Reveal key={service.id} delay={index * 0.06} className="flex">
+            <PricingCardLink
+              className="w-full"
+              service={service}
+              highlighted={service.id === highlightId}
+            />
           </Reveal>
         ))}
       </div>
@@ -36,7 +46,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
                 {inPerson.eyebrow}
               </Badge>
               <span className="text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-faint">
-                {inPerson.sessionLength}
+                {services.inPerson.status}
               </span>
             </span>
             <p className="font-display text-2xl font-400 uppercase tracking-[0.01em] text-df-text">
@@ -45,7 +55,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
             <p className="text-sm leading-relaxed text-df-text-muted">{inPerson.summary}</p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="font-display text-[clamp(2.25rem,4vw,3rem)] font-400 leading-none tabular-nums text-df-text">
+            <p className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-400 leading-none tabular-nums text-df-text">
               {inPerson.price}
             </p>
             <p className="mt-2 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
@@ -58,11 +68,17 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
   )
 }
 
+const BADGE_LABEL = {
+  coaching: 'Most Personalized',
+  'single-session': 'Try It First',
+  'live-program': 'Closest to In-Person',
+}
+
 /**
- * PricingCardLink — wraps PricingCard so the CTA navigates with the SPA Link
- * (path-based routes) instead of opening in a new tab. The DS PricingCard
- * defaults to a Stripe checkout link; here the destination is always an
- * internal page, so we render our own CTA via Link inside a styled card.
+ * PricingCardLink — wraps PricingCard so the CTA navigates with the SPA's
+ * global anchor interception (internal paths) instead of opening a new tab.
+ * Feature lists come from `includes` (membership/coaching/program) or
+ * `perfectFor` (single session).
  */
 function PricingCardLink({ service, highlighted, className }) {
   return (
@@ -72,11 +88,11 @@ function PricingCardLink({ service, highlighted, className }) {
       price={service.price}
       period={service.period}
       description={service.summary}
-      features={service.includes}
+      features={service.includes ?? service.perfectFor ?? []}
       ctaLabel={service.cardCta}
       ctaHref={service.href}
       highlighted={highlighted}
-      badgeLabel={service.id === 'coaching' ? 'Most Personalized' : undefined}
+      badgeLabel={BADGE_LABEL[service.id] ?? 'Most Popular'}
     />
   )
 }

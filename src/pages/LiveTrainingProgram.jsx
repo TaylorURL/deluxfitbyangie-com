@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Info } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import {
   Badge,
   Button,
@@ -8,75 +8,64 @@ import {
   SectionEyebrow,
   SectionIndex,
   SplitHeading,
+  StatBlock,
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
-import MembershipSignupForm from '@/components/forms/MembershipSignupForm'
+import BookingCalendar from '@/components/BookingCalendar'
 
 /**
- * Membership — the $14.99/month self-guided fitness membership. Hero +
- * includes grid + best-for band + sign-up section + cross-link to the other
- * programs.
+ * LiveTrainingProgram — Service 04: the ongoing $50/session Live Online
+ * Personal Training Program over Zoom. Hero + includes grid + frequency
+ * recommendation + the live booking calendar.
  */
-export default function Membership() {
-  const { membership, services } = useContent()
-  const service = services.membership
+export default function LiveTrainingProgram() {
+  const { training, services } = useContent()
+  const service = services.liveProgram
 
   return (
     <>
       <PageHero
-        eyebrow={membership.hero.eyebrow}
-        heading={membership.hero.heading}
-        accent={membership.hero.accent}
-        subhead={membership.hero.subhead}
-        primary={{
-          label: membership.hero.primaryCta,
-          href: membership.hero.primaryCtaHref,
-        }}
-        secondary={{
-          label: membership.hero.secondaryCta,
-          href: membership.hero.secondaryCtaHref,
-        }}
+        eyebrow={training.hero.eyebrow}
+        heading={training.hero.heading}
+        accent={training.hero.accent}
+        subhead={training.hero.subhead}
+        primary={{ label: training.hero.primaryCta, href: training.hero.primaryCtaHref }}
+        secondary={{ label: training.hero.secondaryCta, href: training.hero.secondaryCtaHref }}
         aside={<ServicePriceTile service={service} />}
       />
 
       <IncludesGrid
-        eyebrow={membership.includesEyebrow}
-        heading={membership.includesHeading}
-        accent={membership.includesAccent}
-        items={membership.includes}
+        eyebrow={training.includesEyebrow}
+        heading={training.includesHeading}
+        accent={training.includesAccent}
+        items={training.includes}
       />
 
-      <Container size="md">
-        <Reveal>
-          <div className="flex items-start gap-3 rounded-df-md border border-df-border-strong bg-df-surface-2 px-5 py-4">
-            <Info className="mt-0.5 h-5 w-5 shrink-0 text-df-accent-bright" aria-hidden="true" />
-            <p className="text-sm leading-relaxed text-df-text-muted">
-              {membership.notPersonalizedCallout}
-            </p>
-          </div>
-        </Reveal>
-      </Container>
-
       <Section
-        eyebrow={membership.bestFor.eyebrow}
-        heading={membership.bestFor.heading}
-        accent={membership.bestFor.accent}
+        eyebrow={training.recommendation.eyebrow}
+        heading={training.recommendation.heading}
+        accent={training.recommendation.accent}
         index="02"
         containerSize="md"
       >
         <Reveal>
-          <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
-            {membership.bestFor.body}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-10 border-t border-df-border pt-10 lg:grid-cols-3">
+            <StatBlock value={service.price} label="per session" size="giant" align="left" accent />
+            <StatBlock value="3" label="sessions / week recommended" size="giant" align="left" />
+            <StatBlock value="$150" label="per week at 3 sessions" size="giant" align="left" accent />
+          </div>
+          <p className="mt-10 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            {training.recommendation.body}
           </p>
         </Reveal>
       </Section>
 
       <section
-        id={membership.signupSection.id}
+        id={training.bookSection.id}
         className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28"
       >
         <div
@@ -87,25 +76,25 @@ export default function Membership() {
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
               <SectionIndex>03</SectionIndex>
-              <SectionEyebrow>{membership.signupSection.eyebrow}</SectionEyebrow>
+              <SectionEyebrow>{training.bookSection.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
-              text={membership.signupSection.heading}
-              accent={membership.signupSection.accent}
+              text={training.bookSection.heading}
+              accent={training.bookSection.accent}
               className="mt-6 text-[clamp(2rem,5vw,3.5rem)] leading-[0.95]"
             />
             <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
-              {membership.signupSection.body}
+              {training.bookSection.body}
             </p>
           </Reveal>
 
           <Reveal delay={0.1} className="mt-10">
-            <MembershipSignupForm />
+            <BookingCalendar service="live_program" />
           </Reveal>
         </Container>
       </section>
 
-      <ProgramsGrid id="programs" highlightServiceId="membership" />
+      <ProgramsGrid id="programs" highlightServiceId="live-program" />
     </>
   )
 }
@@ -125,8 +114,11 @@ function ServicePriceTile({ service }) {
         </span>
         <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
       </div>
+      <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
+        {service.recommendation}
+      </p>
       <ul className="mt-6 flex flex-col gap-3">
-        {service.includes.slice(0, 5).map(feature => (
+        {service.includes.map(feature => (
           <li key={feature} className="flex items-start gap-3 text-sm text-df-text-muted">
             <span
               className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright"

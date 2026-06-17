@@ -50,19 +50,19 @@ export default function OnlineCoaching() {
       />
 
       <Section
-        eyebrow={coaching.responsibilities.eyebrow}
-        heading={coaching.responsibilities.heading}
-        accent={coaching.responsibilities.accent}
+        eyebrow={coaching.communication.eyebrow}
+        heading={coaching.communication.heading}
+        accent={coaching.communication.accent}
         index="02"
         containerSize="md"
       >
         <Reveal>
           <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
-            {coaching.responsibilities.body}
+            {coaching.communication.body}
           </p>
         </Reveal>
         <ul className="mt-8 flex flex-col">
-          {coaching.responsibilities.items.map((item, index) => (
+          {coaching.communication.points.map((item, index) => (
             <Reveal key={item} delay={index * 0.05} as="li">
               <div className="flex items-baseline gap-5 border-t border-df-border py-5">
                 <span
