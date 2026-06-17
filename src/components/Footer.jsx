@@ -1,5 +1,6 @@
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
