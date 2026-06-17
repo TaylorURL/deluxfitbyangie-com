@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react'
 import { Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
-import { about } from '@/content/site'
+import { useContent } from '@/i18n'
 import FramedPhoto from './FramedPhoto'
 
 /**
