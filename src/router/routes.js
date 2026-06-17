@@ -13,7 +13,8 @@ import Home from '../pages/Home'
 import About from '../pages/About'
 import Membership from '../pages/Membership'
 import OnlineCoaching from '../pages/OnlineCoaching'
-import OneOnOneTraining from '../pages/OneOnOneTraining'
+import SingleSession from '../pages/SingleSession'
+import LiveTrainingProgram from '../pages/LiveTrainingProgram'
 import Testimonials from '../pages/Testimonials'
 import Contact from '../pages/Contact'
 import NotFound from '../pages/NotFound'
@@ -23,7 +24,8 @@ export const ROUTES = [
   { path: '/about', component: About },
   { path: '/membership', component: Membership },
   { path: '/online-coaching', component: OnlineCoaching },
-  { path: '/training', component: OneOnOneTraining },
+  { path: '/single-session', component: SingleSession },
+  { path: '/training', component: LiveTrainingProgram },
   { path: '/testimonials', component: Testimonials },
   { path: '/contact', component: Contact },
 ]
