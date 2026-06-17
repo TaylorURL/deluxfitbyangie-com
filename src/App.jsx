@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import ClientPortalPlaceholder from './components/ClientPortalPlaceholder'
+import DevUpload from './components/DevUpload'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Pain from './components/Pain'
@@ -23,6 +24,17 @@ import { useContent } from './i18n'
 function isPortalRoute() {
   if (typeof window === 'undefined') return false
   return window.location.pathname.replace(/\/+$/, '').toLowerCase().startsWith('/portal')
+}
+
+/**
+ * DEV-UPLOAD ROUTE — `/dev-upload` is a standalone media-upload page for
+ * Angie's clients to drop progress images and videos. Same SPA-rewrite
+ * pattern as `/portal`: Vercel serves index.html and this conditional
+ * picks up the path on the client.
+ */
+function isDevUploadRoute() {
+  if (typeof window === 'undefined') return false
+  return window.location.pathname.replace(/\/+$/, '').toLowerCase().startsWith('/dev-upload')
 }
 
 /**
@@ -56,6 +68,10 @@ function useDocumentMeta(meta) {
 export default function App() {
   const { meta } = useContent()
   useDocumentMeta(meta)
+
+  if (isDevUploadRoute()) {
+    return <DevUpload />
+  }
 
   if (isPortalRoute()) {
     return <ClientPortalPlaceholder />
