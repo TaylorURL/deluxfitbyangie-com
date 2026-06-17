@@ -57,6 +57,22 @@ export default function About() {
         </Container>
       </section>
 
+      <section className="border-y border-df-border bg-df-bg-elevated py-16 sm:py-20">
+        <Container size="md">
+          <Reveal className="flex flex-col items-start">
+            <SectionEyebrow>{about.mission.eyebrow}</SectionEyebrow>
+            <SplitHeading
+              text={about.mission.heading}
+              accent={about.mission.accent}
+              className="mt-5 text-[clamp(2rem,6vw,3.75rem)] leading-[0.92]"
+            />
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              {about.mission.body}
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
       <Section
         eyebrow={about.story.eyebrow}
         heading={about.story.heading}

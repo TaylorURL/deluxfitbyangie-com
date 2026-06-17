@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import ClientPortalPlaceholder from './components/ClientPortalPlaceholder'
+import ClientPortal from './portal/ClientPortal'
 import DevUpload from './components/DevUpload'
 import SiteShell from './components/SiteShell'
 import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
@@ -10,7 +10,7 @@ import { useContent } from './i18n'
  * their own chrome (header + footer treatment).
  */
 const STANDALONE_ROUTES = [
-  { path: '/portal', component: ClientPortalPlaceholder },
+  { path: '/portal', component: ClientPortal },
   { path: '/dev-upload', component: DevUpload },
 ]
 

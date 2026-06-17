@@ -2,90 +2,64 @@ import { ArrowRight, Check } from 'lucide-react'
 import {
   Badge,
   Button,
+  Card,
   Container,
   Reveal,
   Section,
   SectionEyebrow,
   SectionIndex,
   SplitHeading,
-  StatBlock,
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
-import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
-import OneOnOneBookingForm from '@/components/forms/OneOnOneBookingForm'
+import BookingCalendar from '@/components/BookingCalendar'
 
 /**
- * OneOnOneTraining — the live $50/session online training page. Hero +
- * includes grid + session details strip + the booking request form.
+ * SingleSession — Service 03: the one-time $75 Single Live Training Session.
+ * Hero + "perfect for" grid + session details + the live booking calendar.
  */
-export default function OneOnOneTraining() {
-  const { training, services } = useContent()
-  const service = services.oneOnOne
+export default function SingleSession() {
+  const { session, services } = useContent()
+  const service = services.singleSession
 
   return (
     <>
       <PageHero
-        eyebrow={training.hero.eyebrow}
-        heading={training.hero.heading}
-        accent={training.hero.accent}
-        subhead={training.hero.subhead}
-        primary={{
-          label: training.hero.primaryCta,
-          href: training.hero.primaryCtaHref,
-        }}
-        secondary={{
-          label: training.hero.secondaryCta,
-          href: training.hero.secondaryCtaHref,
-        }}
+        eyebrow={session.hero.eyebrow}
+        heading={session.hero.heading}
+        accent={session.hero.accent}
+        subhead={session.hero.subhead}
+        primary={{ label: session.hero.primaryCta, href: session.hero.primaryCtaHref }}
+        secondary={{ label: session.hero.secondaryCta, href: session.hero.secondaryCtaHref }}
         aside={<ServicePriceTile service={service} />}
       />
 
-      <IncludesGrid
-        eyebrow={training.includesEyebrow}
-        heading={training.includesHeading}
-        accent={training.includesAccent}
-        items={training.includes}
-      />
-
       <Section
-        eyebrow={training.sessionDetails.eyebrow}
-        heading={training.bestFor ?? training.sessionDetails.bestFor}
-        index="02"
+        eyebrow={session.perfectForEyebrow}
+        heading={session.perfectForHeading}
+        accent={session.perfectForAccent}
       >
-        <Reveal>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-10 border-t border-df-border pt-10 lg:grid-cols-3">
-            <StatBlock
-              value={service.price}
-              label="per session"
-              size="giant"
-              align="left"
-              accent
-            />
-            <StatBlock
-              value="45–60"
-              label="minutes per session"
-              size="giant"
-              align="left"
-            />
-            <StatBlock
-              value="1:1"
-              label="live with Angie"
-              size="giant"
-              align="left"
-              accent
-            />
-          </div>
-          <p className="mt-10 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
-            {training.sessionDetails.bestFor}
-          </p>
-        </Reveal>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {session.perfectFor.map(({ icon: Icon, title }, index) => (
+            <Reveal key={title} delay={index * 0.05}>
+              <Card variant="surface" className="flex h-full items-start gap-4">
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
+                  aria-hidden="true"
+                >
+                  <Icon className="h-5 w-5" strokeWidth={2} />
+                </span>
+                <p className="pt-1.5 text-[15px] font-600 leading-snug text-df-text">{title}</p>
+              </Card>
+            </Reveal>
+          ))}
+        </div>
       </Section>
 
       <section
-        id={training.bookSection.id}
+        id={session.bookSection.id}
         className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28"
       >
         <div
@@ -95,26 +69,26 @@ export default function OneOnOneTraining() {
         <Container size="md">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
-              <SectionIndex>03</SectionIndex>
-              <SectionEyebrow>{training.bookSection.eyebrow}</SectionEyebrow>
+              <SectionIndex>02</SectionIndex>
+              <SectionEyebrow>{session.bookSection.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
-              text={training.bookSection.heading}
-              accent={training.bookSection.accent}
+              text={session.bookSection.heading}
+              accent={session.bookSection.accent}
               className="mt-6 text-[clamp(2rem,5vw,3.5rem)] leading-[0.95]"
             />
             <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
-              {training.bookSection.body}
+              {session.bookSection.body}
             </p>
           </Reveal>
 
           <Reveal delay={0.1} className="mt-10">
-            <OneOnOneBookingForm />
+            <BookingCalendar service="single_session" />
           </Reveal>
         </Container>
       </section>
 
-      <ProgramsGrid id="programs" highlightServiceId="one-on-one" />
+      <ProgramsGrid id="programs" highlightServiceId="single-session" />
     </>
   )
 }
@@ -138,7 +112,7 @@ function ServicePriceTile({ service }) {
         {service.sessionLength}
       </p>
       <ul className="mt-6 flex flex-col gap-3">
-        {service.includes.slice(0, 5).map(feature => (
+        {service.perfectFor.map(feature => (
           <li key={feature} className="flex items-start gap-3 text-sm text-df-text-muted">
             <span
               className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright"

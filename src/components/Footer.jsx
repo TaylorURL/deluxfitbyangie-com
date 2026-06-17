@@ -28,7 +28,10 @@ export default function Footer() {
                 draggable="false"
               />
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
+            <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.24em] text-df-accent-bright">
+              {brand.slogan}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
 
             <div className="mt-6">
               <SocialLinks />
