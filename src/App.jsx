@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import ClientPortalPlaceholder from './components/ClientPortalPlaceholder'
+import ClientPortal from './portal/ClientPortal'
 import DevUpload from './components/DevUpload'
 import SiteShell from './components/SiteShell'
 import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
