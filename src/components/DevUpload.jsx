@@ -308,6 +308,30 @@ export default function DevUpload() {
           .from(DEV_UPLOAD_BUCKET)
           .upload(path, current.file, { contentType: current.file.type })
         if (error) throw error
+
+        const { data: pub } = supabase.storage.from(DEV_UPLOAD_BUCKET).getPublicUrl(path)
+        const { error: metaError } = await supabase.from('sunday_files').insert({
+          user_id: SUNDAY_ADMIN_USER_ID,
+          name: current.file.name,
+          storage_path: path,
+          mime_type: current.file.type || 'application/octet-stream',
+          size_bytes: current.file.size,
+          source: 'uploaded',
+          folder: DEV_UPLOAD_ROOT_FOLDER,
+          public_url: pub.publicUrl,
+        })
+        if (metaError) {
+          console.error('Failed to insert file metadata:', metaError)
+          setEntries(prev =>
+            prev.map(entry =>
+              entry.id === entryId
+                ? { ...entry, status: STATUS.error, error: 'Uploaded but metadata save failed' }
+                : entry
+            )
+          )
+          continue
+        }
+
         setEntries(prev =>
           prev.map(entry =>
             entry.id === entryId ? { ...entry, status: STATUS.success, error: null } : entry
