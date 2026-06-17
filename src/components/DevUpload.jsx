@@ -170,10 +170,8 @@ function buildEntry(file) {
 }
 
 /**
- * DevUpload — standalone media-upload page for Angie's clients. Drag-and-drop
- * (or click) to queue progress images/videos, optionally tag the upload with
- * the client's name, and push every file into the `DeluxFit/` folder of the
- * `sunday-files` Supabase bucket.
+ * DevUpload — content-intake page where the site owner and team upload
+ * high-quality photos and videos for use on the DeluxFit website.
  */
 export default function DevUpload() {
   const [entries, setEntries] = useState([])
