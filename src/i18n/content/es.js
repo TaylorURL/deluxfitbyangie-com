@@ -2,20 +2,17 @@
    DELUXFIT BY ANGIE — CONTENIDO EN ESPAÑOL (es)
    -----------------------------------------------------------------------------
    Equivalente en español del árbol en `./en.js`. Precios, características y
-   lenguaje de servicio respetan EXACTAMENTE el plan del cliente:
+   lenguaje de servicio respetan EXACTAMENTE el modelo de negocio finalizado:
 
-     1. Membresía de Fitness — $14.99 al mes
-     2. Coaching Online Personalizado — $150 al mes
-     3. Entrenamiento Online 1 a 1 en Vivo — $50 por sesión (45–60 min)
+     1. Membresía Delux Fit              — $14.99 / mes  (general, NO personalizado)
+     2. Coaching Online Personalizado    — $150 / mes
+     3. Sesión de Entrenamiento en Vivo   — $75 / sesión (45–60 min, prueba única)
+     4. Programa de Entrenamiento en Vivo — $50 / sesión (continuo, Zoom)
+     5. Entrenamiento Presencial Futuro   — Desde $75 / sesión — MUY PRONTO
 
-   El entrenamiento presencial ($75/sesión) solo se muestra como "Muy Pronto" —
-   no es reservable ni se describe como activo.
-
-   Reglas duras: nunca anunciar coaching diario, check-ins semanales, mensajería
-   ilimitada, resultados garantizados, planes de comida personalizados, ni nada
-   fuera de los tres servicios activos. Coaching Online incluye un check-in
-   MENSUAL y una revisión de progreso MENSUAL; nutrición es únicamente "guía
-   básica de nutrición" — nunca un plan de comidas.
+   Los servicios 3 y 4 son DOS productos distintos: el #3 es una sesión de
+   prueba única de $75, el #4 es el programa continuo de $50/sesión. Cada clave
+   aquí debe existir en `./en.js`.
    ========================================================================== */
 
 import {
@@ -37,6 +34,10 @@ import {
   HandHeart,
   GraduationCap,
   HeartPulse,
+  MessageSquare,
+  Repeat,
+  Zap,
+  Target,
 } from 'lucide-react'
 
 const services = {
@@ -45,20 +46,24 @@ const services = {
     slug: 'membership',
     href: '/membership',
     eyebrow: 'Servicio 01',
-    name: 'Membresía de Fitness',
-    tagline: 'Entrenamiento auto-guiado, a tu ritmo.',
+    name: 'Membresía Delux Fit',
+    tagline: 'Contenido general de fitness para todos — a tu ritmo.',
     price: '$14.99',
     period: '/ mes',
     summary:
-      'Acceso económico a programas de entrenamiento, biblioteca de ejercicios y educación fitness — sin coaching personalizado.',
+      'Membresía de nivel inicial con acceso a contenido general (no personalizado) de fitness y recursos educativos pensados para el público.',
+    notPersonalizedNote: 'Este contenido es general y NO está personalizado.',
     bestFor:
-      'Ideal para personas que quieren acceso económico a programas de entrenamiento y educación fitness sin coaching personalizado.',
+      'Ideal para personas que quieren acceso económico a programas de entrenamiento y educación fitness — sin coaching personalizado.',
     includes: [
-      'Biblioteca de entrenamientos',
-      'Demostraciones de ejercicios',
-      'Rutinas para casa y gimnasio',
-      'Contenido educativo de fitness',
-      'Recursos de guía básica de nutrición',
+      'Programas de entrenamiento',
+      'Biblioteca de ejercicios',
+      'Videos de entrenamiento',
+      'Educación fitness',
+      'Guía general de nutrición',
+      'Programas de pérdida de grasa',
+      'Programas de ganancia muscular',
+      'Rutinas de core y abdomen',
       'Contenido nuevo añadido regularmente',
     ],
     ctaLabel: 'Suscribirme',
@@ -71,81 +76,104 @@ const services = {
     href: '/online-coaching',
     eyebrow: 'Servicio 02',
     name: 'Coaching Online Personalizado',
-    tagline: 'Un programa hecho para ti — guiado por Angie.',
+    tagline: 'Un programa hecho para tus metas y tu nivel.',
     price: '$150',
     period: '/ mes',
     summary:
-      'Coaching online personalizado diseñado en torno a tus metas, nivel, estilo de vida y experiencia.',
+      'Coaching personalizado construido alrededor de tus metas y tu nivel, con mensajería directa a Angie dentro de la plataforma.',
     bestFor:
-      'Ideal para clientes que quieren un plan estructurado y guía profesional sin sesiones en vivo.',
+      'Ideal para clientes que quieren un programa estructurado y personalizado y guía profesional sin sesiones en vivo.',
     includes: [
-      'Evaluación inicial de onboarding',
+      'Consulta inicial',
       'Plan de entrenamiento personalizado',
-      '4 programas semanales por mes',
-      'Programación según tu meta (pérdida de grasa, ganancia muscular, fuerza, fitness general)',
+      'Calendario de entrenamiento personalizado',
       'Revisión de progreso mensual',
       'Check-in mensual',
-      'Ajustes al programa cuando sea necesario',
+      'Seguimiento de progreso',
+      'Mensajería directa dentro de la plataforma',
       'Guía básica de nutrición',
+      'Recomendaciones personalizadas',
     ],
-    responsibilities: [
-      'Completar los entrenamientos por tu cuenta',
-      'Llevar registro de tu progreso',
-      'Enviar fotos y actualizaciones de progreso cada mes',
-    ],
+    communicationNote:
+      'Toda la comunicación ocurre dentro de la plataforma Delux Fit — no hay acceso telefónico personal. El tiempo de respuesta es de hasta 72 horas hábiles.',
+    responseTime: 'Tiempo de respuesta: hasta 72 horas hábiles',
     ctaLabel: 'Aplicar Ahora',
     ctaHref: '/online-coaching#apply',
     cardCta: 'Aplicar Ahora',
   },
-  oneOnOne: {
-    id: 'one-on-one',
-    slug: 'training',
-    href: '/training',
+  singleSession: {
+    id: 'single-session',
+    slug: 'single-session',
+    href: '/single-session',
     eyebrow: 'Servicio 03',
-    name: 'Entrenamiento Online 1 a 1 en Vivo',
-    tagline: 'Entrenamiento personal virtual en vivo con Angie.',
-    price: '$50',
+    name: 'Sesión de Entrenamiento en Vivo',
+    tagline: 'Una sesión privada en vivo, una sola vez, con Angie.',
+    price: '$75',
     period: '/ sesión',
-    sessionLength: '45–60 minutos por sesión',
+    sessionLength: '45–60 minutos',
     summary:
-      'Entrenamiento personal virtual en vivo donde Angie trabaja contigo directamente durante la sesión — coaching en tiempo real, corrección de ejercicios y acompañamiento.',
-    bestFor:
-      'Ideal para clientes que quieren coaching directo e interacción real durante su entrenamiento.',
-    includes: [
-      'Sesión por video en vivo',
-      'Coaching en tiempo real',
-      'Corrección de ejercicios',
-      'Motivación y acompañamiento',
-      'Sesión personalizada',
-      'Instrucción según tu meta',
+      'Una sesión privada virtual en vivo, una sola vez, con Angie — perfecta para probar Delux Fit antes de comprometerte.',
+    perfectFor: [
+      'Probar Delux Fit antes de comprometerte',
+      'Aprender la técnica correcta',
+      'Corrección de técnica',
+      'Motivación',
+      'Preguntas y respuestas',
+      'Una experiencia de entrenamiento personalizada',
     ],
     ctaLabel: 'Reservar Sesión',
-    ctaHref: '/training#book',
+    ctaHref: '/single-session#book',
     cardCta: 'Reservar Sesión',
+  },
+  liveProgram: {
+    id: 'live-program',
+    slug: 'training',
+    href: '/training',
+    eyebrow: 'Servicio 04',
+    name: 'Programa de Entrenamiento Personal en Vivo',
+    tagline: 'Entrenamiento en vivo continuo — lo más cercano a lo presencial.',
+    price: '$50',
+    period: '/ sesión',
+    summary:
+      'Entrenamiento personal en vivo y continuo por Zoom con Angie presente durante toda la sesión — la experiencia más cercana al entrenamiento presencial.',
+    recommendation: 'Recomendado un mínimo de 3 sesiones por semana.',
+    recommendationExample: 'Ejemplo: 3 sesiones/semana = $150/semana.',
+    includes: [
+      'Coaching en vivo',
+      'Correcciones en tiempo real',
+      'Acompañamiento',
+      'Guía de ejercicios',
+      'Estructura de entrenamiento personalizada',
+    ],
+    ctaLabel: 'Empezar',
+    ctaHref: '/training#book',
+    cardCta: 'Reservar Sesiones',
   },
   inPerson: {
     id: 'in-person',
-    name: 'Entrenamiento Personal Presencial',
-    price: '$75',
+    name: 'Entrenamiento Presencial Futuro',
+    price: 'Desde $75',
     period: '/ sesión',
-    sessionLength: '45–60 minutos por sesión',
     summary:
-      'Entrenamiento personal presencial con Angie. Próximamente — todavía no se puede reservar.',
+      'Sesiones privadas presenciales con Angie. No disponible en el lanzamiento — se podrá sumar a medida que Delux Fit crezca.',
     status: 'Muy Pronto',
   },
 }
 
 const es = {
   meta: {
-    title: 'DeluxFit by Angie — Coaching Online de Fitness y Entrenamiento 1 a 1',
+    title: 'DeluxFit by Angie — Coaching Online, Membresías y Entrenamiento en Vivo',
     description:
-      'DeluxFit by Angie ofrece membresía de fitness por $14.99/mes, coaching online personalizado por $150/mes y sesiones de entrenamiento 1 a 1 en vivo por $50 con la entrenadora personal certificada Angie.',
+      'DeluxFit by Angie ofrece una membresía de fitness por $14.99/mes, coaching online personalizado por $150/mes, sesiones de entrenamiento en vivo por $75 y un programa de entrenamiento personal en vivo por $50/sesión con la entrenadora personal certificada Angie.',
   },
 
   brand: {
     name: 'DELUXFIT',
     fullName: 'DeluxFit by Angie',
-    tagline: 'Coaching de fitness personalizado, diseñado alrededor de tu vida.',
+    slogan: 'DISCIPLINA SOBRE EXCUSAS',
+    tagline: 'Disciplina. Acompañamiento. Educación. Coaching personalizado.',
+    mission:
+      'Delux Fit ayuda a sus clientes a alcanzar sus metas de fitness a través de disciplina, acompañamiento, educación y coaching personalizado.',
   },
 
   nav: [
@@ -153,7 +181,7 @@ const es = {
     { label: 'Sobre Angie', href: '/about' },
     { label: 'Membresía', href: '/membership' },
     { label: 'Coaching Online', href: '/online-coaching' },
-    { label: 'Entrenamiento 1 a 1', href: '/training' },
+    { label: 'Entrenamiento en Vivo', href: '/training' },
     { label: 'Testimonios', href: '/testimonials' },
     { label: 'Contacto', href: '/contact' },
   ],
@@ -183,9 +211,10 @@ const es = {
   home: {
     hero: {
       badge: 'Aceptando nuevos clientes online',
-      headline: ['Entrenamiento personalizado', 'diseñado para', 'tus metas.'],
+      slogan: 'DISCIPLINA SOBRE EXCUSAS',
+      headline: ['Disciplina', 'sobre', 'excusas.'],
       subhead:
-        'DeluxFit by Angie es coaching online de fitness personalizado y entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie — pensado para quien quiere un programa diseñado alrededor de sus metas, su agenda y su experiencia.',
+        'Delux Fit ayuda a sus clientes a alcanzar sus metas de fitness a través de disciplina, acompañamiento, educación y coaching personalizado — desde membresías hasta entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie.',
       primaryCta: 'Ver los programas',
       primaryCtaHref: '#programs',
       secondaryCta: 'Aplicar a Coaching',
@@ -193,7 +222,7 @@ const es = {
       trust: {
         pillarValue: '1:1',
         pillarLabel: 'coaching personalizado',
-        tagline: 'Membresía · Coaching Online · 1 a 1 en vivo',
+        tagline: 'Membresía · Coaching · Entrenamiento en vivo',
       },
       imageAlt: 'Angie en sentadilla en una máquina Smith, vista desde atrás',
     },
@@ -203,8 +232,8 @@ const es = {
       heading: 'Una coach que construye el programa alrededor de la persona — no al revés.',
       accent: 'alrededor de la persona',
       body: [
-        'Soy Angie — entrenadora personal certificada. Ayudo a personas a volverse más fuertes, más constantes y más seguras con un coaching que se adapta a su vida real.',
-        'Ya sea que quieras una membresía auto-guiada, un programa totalmente personalizado o sesiones en vivo por video conmigo, todo lo que ofrezco lo entrego directamente yo — sin plantillas, sin programas reciclados, sin adivinanzas.',
+        'Soy Angie — entrenadora personal certificada. Ayudo a personas a volverse más fuertes, más constantes y más seguras con disciplina, acompañamiento, educación y un coaching que se adapta a su vida real.',
+        'Ya sea que quieras contenido de membresía general, un programa totalmente personalizado o sesiones en vivo por video conmigo, todo lo que ofrezco lo entrego directamente yo — sin plantillas, sin programas reciclados, sin adivinanzas.',
       ],
       ctaLabel: 'Lee mi historia',
       ctaHref: '/about',
@@ -213,15 +242,15 @@ const es = {
 
     servicesSection: {
       eyebrow: 'Elige cómo trabajamos juntos',
-      heading: 'Tres formas de entrenar con DeluxFit by Angie.',
-      accent: 'Tres formas',
+      heading: 'Cuatro formas de entrenar con DeluxFit by Angie.',
+      accent: 'Cuatro formas',
       subhead:
-        'Membresía auto-guiada, coaching online personalizado o sesiones 1 a 1 en vivo por video — elige el nivel de apoyo que se ajusta a donde estás hoy.',
+        'Una membresía general, coaching online personalizado, una sesión en vivo única o un programa de entrenamiento en vivo continuo — elige el nivel de apoyo que se ajusta a donde estás hoy.',
     },
 
     transformationCallout: {
-      eyebrow: 'Así se ve',
-      heading: 'Coaching real, hecho para la vida real — no para el feed perfecto.',
+      eyebrow: 'Sobre qué se construye',
+      heading: 'Disciplina, acompañamiento, educación — hecho para la vida real.',
       accent: 'vida real',
       body: 'Las historias y fotos de transformación de clientes aparecen en la página de testimonios a medida que las clientas terminan sus programas. Mientras tanto, esto es alrededor de lo que se construye cada programa DeluxFit.',
       pillars: [
@@ -235,13 +264,13 @@ const es = {
           icon: HeartPulse,
           title: 'Guía real',
           description:
-            'Guía básica de nutrición y coaching enfocado en técnica para que el esfuerzo que pones realmente te haga avanzar.',
+            'Guía básica de nutrición, educación fitness y coaching enfocado en técnica para que el esfuerzo que pones realmente te haga avanzar.',
         },
         {
           icon: HandHeart,
-          title: 'Apoyo real',
+          title: 'Acompañamiento real',
           description:
-            'Acceso directo a mí en cada programa — check-ins mensuales en coaching, coaching en vivo en sesiones de entrenamiento.',
+            'Acceso directo a mí dentro de la plataforma — check-ins mensuales en coaching, coaching en vivo en las sesiones, sin excusas.',
         },
       ],
       ctaLabel: 'Ver historias',
@@ -253,11 +282,11 @@ const es = {
       heading: 'Elige el programa que encaja contigo.',
       accent: 'encaja contigo',
       subhead:
-        'Suscríbete a la membresía, aplica al coaching personalizado o reserva una sesión 1 a 1 en vivo — y arrancamos desde ahí.',
+        'Suscríbete a la membresía, aplica al coaching personalizado o reserva una sesión de entrenamiento en vivo — y arrancamos desde ahí.',
       primaryCta: 'Aplicar a Coaching',
       primaryCtaHref: '/online-coaching#apply',
       secondaryCta: 'Reservar Sesión',
-      secondaryCtaHref: '/training#book',
+      secondaryCtaHref: '/single-session#book',
     },
   },
 
@@ -268,6 +297,12 @@ const es = {
       accent: 'entrenar a personas como yo siempre quise que me entrenaran',
       tagline: 'Entrenadora Personal Certificada · Online y en vivo',
       imageAlt: 'Angie acompañando a una clienta en una serie de prensa de piernas',
+    },
+    mission: {
+      eyebrow: 'La misión',
+      heading: 'Disciplina sobre excusas.',
+      accent: 'sobre excusas',
+      body: 'Delux Fit ayuda a sus clientes a alcanzar sus metas de fitness a través de disciplina, acompañamiento, educación y coaching personalizado.',
     },
     story: {
       eyebrow: 'Mi historia',
@@ -300,7 +335,7 @@ const es = {
           icon: ClipboardCheck,
           title: 'Hecho para ti',
           description:
-            'Cada programa se forma alrededor de tus metas, tu nivel, tu estilo de vida y tu experiencia — nunca un plan genérico sacado de una plantilla.',
+            'Cada programa personalizado se forma alrededor de tus metas, tu nivel, tu estilo de vida y tu experiencia — nunca un plan genérico sacado de una plantilla.',
         },
         {
           icon: GraduationCap,
@@ -320,7 +355,7 @@ const es = {
       heading: '¿Lista para entrenar juntas?',
       accent: 'entrenar juntas',
       subhead:
-        'Explora la membresía, aplica al coaching personalizado o reserva una sesión 1 a 1 en vivo por video.',
+        'Explora la membresía, aplica al coaching personalizado o reserva una sesión en vivo online.',
       primary: { label: 'Ver los programas', href: '/#programs' },
       secondary: { label: 'Contactar a Angie', href: '/contact' },
     },
@@ -328,69 +363,80 @@ const es = {
 
   membership: {
     hero: {
-      eyebrow: 'Servicio 01 · Membresía de Fitness',
-      heading: 'Una membresía hecha para el entrenamiento auto-guiado.',
+      eyebrow: 'Servicio 01 · Membresía Delux Fit',
+      heading: 'Contenido general de fitness, hecho para el entrenamiento auto-guiado.',
       accent: 'entrenamiento auto-guiado',
       subhead:
-        'Por $14.99 al mes tienes acceso a una biblioteca creciente de programas de entrenamiento, demostraciones de ejercicios, contenido educativo de fitness y recursos de guía básica de nutrición — a tu ritmo.',
+        'Por $14.99 al mes tienes acceso a contenido general (no personalizado) de fitness y recursos educativos pensados para el público — programas de entrenamiento, biblioteca de ejercicios, videos de entrenamiento y más.',
       primaryCta: 'Suscribirme — $14.99 / mes',
       primaryCtaHref: '#sign-up',
       secondaryCta: 'Comparar programas',
       secondaryCtaHref: '/#programs',
     },
+    notPersonalizedCallout:
+      'Esta es una membresía de nivel inicial. El contenido es GENERAL y NO está personalizado. Para un programa hecho a tu medida, mira el Coaching Online Personalizado.',
     includesEyebrow: 'Qué incluye',
     includesHeading: 'Todo lo que necesitas para entrenar con constancia.',
     includesAccent: 'entrenar con constancia',
     includes: [
       {
         icon: Library,
-        title: 'Biblioteca de entrenamientos',
-        description:
-          'Un catálogo creciente de programas que puedes seguir a tu propio ritmo.',
+        title: 'Programas de entrenamiento',
+        description: 'Un catálogo creciente de programas generales que puedes seguir a tu propio ritmo.',
+      },
+      {
+        icon: Dumbbell,
+        title: 'Biblioteca de ejercicios',
+        description: 'Una biblioteca de referencia de movimientos para que siempre sepas qué haces y por qué.',
       },
       {
         icon: PlayCircle,
-        title: 'Demostraciones de ejercicios',
-        description:
-          'Demostraciones en video de cada movimiento para que la técnica quede clara antes de empezar.',
-      },
-      {
-        icon: Home,
-        title: 'Rutinas para casa y gimnasio',
-        description:
-          'Rutinas para lo que tengas — entrenamientos en casa con poco equipo o sesiones completas en el gimnasio.',
+        title: 'Videos de entrenamiento',
+        description: 'Demostraciones en video de cada movimiento para que la técnica quede clara antes de empezar.',
       },
       {
         icon: GraduationCap,
-        title: 'Contenido educativo de fitness',
-        description:
-          'Lecciones cortas y prácticas que explican el porqué del entrenamiento, no solo el qué.',
+        title: 'Educación fitness',
+        description: 'Lecciones cortas y prácticas que explican el porqué del entrenamiento, no solo el qué.',
       },
       {
         icon: Apple,
-        title: 'Recursos de guía básica de nutrición',
-        description:
-          'Recursos educativos de nutrición para construir hábitos sostenibles junto a tu entrenamiento.',
+        title: 'Guía general de nutrición',
+        description: 'Una guía general de nutrición para construir hábitos sostenibles junto a tu entrenamiento.',
+      },
+      {
+        icon: Zap,
+        title: 'Programas de pérdida de grasa',
+        description: 'Entrenamiento estructurado de pérdida de grasa que puedes empezar de inmediato.',
+      },
+      {
+        icon: HeartPulse,
+        title: 'Programas de ganancia muscular',
+        description: 'Programas enfocados en hipertrofia para construir tamaño y fuerza con el tiempo.',
+      },
+      {
+        icon: Target,
+        title: 'Rutinas de core y abdomen',
+        description: 'Rutinas de core y abdomen para completar tu entrenamiento.',
       },
       {
         icon: Sparkles,
         title: 'Contenido nuevo añadido regularmente',
-        description:
-          'La biblioteca crece con el tiempo para que tu entrenamiento siga vigente.',
+        description: 'La biblioteca crece con el tiempo para que tu entrenamiento siga vigente.',
       },
     ],
     bestFor: {
       eyebrow: 'Para quién es',
       heading: 'Ideal para personas que quieren acceso económico a programas y educación fitness — sin coaching personalizado.',
       accent: 'sin coaching personalizado',
-      body: 'Si eres auto-motivada y quieres una biblioteca estructurada para entrenar, la membresía es la forma más económica de entrenar con DeluxFit. Para un programa personalizado, mira Coaching Online. Para sesiones en vivo en tiempo real con Angie, mira Entrenamiento 1 a 1.',
+      body: 'Si eres auto-motivada y quieres una biblioteca estructurada para entrenar, la membresía es la forma más económica de entrenar con DeluxFit. Para un programa personalizado, mira Coaching Online. Para sesiones en vivo en tiempo real con Angie, mira la Sesión en Vivo o el Programa de Entrenamiento Personal en Vivo.',
     },
     signupSection: {
       id: 'sign-up',
       eyebrow: 'Suscríbete',
       heading: 'Comienza la membresía — $14.99 / mes.',
       accent: '$14.99 / mes',
-      body: 'Suscríbete abajo y Angie te enviará los detalles de acceso. Cancela cuando quieras.',
+      body: 'Suscríbete abajo para iniciar tu membresía de $14.99/mes y desbloquear la biblioteca de contenido general. Cancela cuando quieras.',
     },
   },
 
@@ -400,7 +446,7 @@ const es = {
       heading: 'Coaching online personalizado, diseñado alrededor de ti.',
       accent: 'diseñado alrededor de ti',
       subhead:
-        'Por $150 al mes recibes coaching online personalizado construido alrededor de tus metas, tu nivel, tu estilo de vida y tu experiencia — con un programa personalizado, check-in mensual y revisión mensual de progreso.',
+        'Por $150 al mes recibes coaching personalizado construido alrededor de tus metas y tu nivel — un plan personalizado, revisiones mensuales, seguimiento de progreso y mensajería directa con Angie dentro de la plataforma.',
       primaryCta: 'Aplicar Ahora',
       primaryCtaHref: '#apply',
       secondaryCta: 'Comparar programas',
@@ -412,76 +458,73 @@ const es = {
     includes: [
       {
         icon: ClipboardCheck,
-        title: 'Evaluación inicial de onboarding',
-        description:
-          'Empezamos con una evaluación completa de tus metas, historial de entrenamiento, agenda y limitaciones.',
+        title: 'Consulta inicial',
+        description: 'Empezamos con una consulta para entender tus metas, tu historial, tu agenda y tus limitaciones.',
       },
       {
         icon: Dumbbell,
         title: 'Plan de entrenamiento personalizado',
-        description:
-          'Un programa diseñado específicamente para ti — no una plantilla — basado en la evaluación inicial.',
+        description: 'Un programa diseñado específicamente para ti — no una plantilla — construido alrededor de tus metas y tu nivel.',
       },
       {
         icon: CalendarCheck,
-        title: '4 programas semanales por mes',
-        description:
-          'Cada mes recibes cuatro programas semanales estructurados para progresar a lo largo del mes.',
-      },
-      {
-        icon: Sparkles,
-        title: 'Programación según tu meta',
-        description:
-          'Programación para pérdida de grasa, ganancia muscular, fuerza o fitness general — según tu meta.',
+        title: 'Calendario de entrenamiento personalizado',
+        description: 'Un calendario de entrenamiento estructurado alrededor de tu semana y tu disponibilidad.',
       },
       {
         icon: LineChart,
         title: 'Revisión de progreso mensual',
-        description:
-          'Cada mes revisamos juntas tu progreso para ver qué funciona y qué ajustar.',
+        description: 'Cada mes revisamos juntas tu progreso para ver qué funciona y qué ajustar.',
       },
       {
         icon: Video,
         title: 'Check-in mensual',
-        description:
-          'Un check-in agendado al mes para revisar el entrenamiento, resolver dudas y afinar el plan.',
+        description: 'Un check-in agendado al mes para revisar el entrenamiento, resolver dudas y afinar el plan.',
       },
       {
-        icon: ClipboardCheck,
-        title: 'Ajustes al programa cuando sea necesario',
-        description:
-          'Tu programa se actualiza con base en la revisión mensual para que siga moviéndose contigo.',
+        icon: Target,
+        title: 'Seguimiento de progreso',
+        description: 'Lleva el registro de tu progreso dentro de la plataforma para que cada ajuste se base en datos reales.',
+      },
+      {
+        icon: MessageSquare,
+        title: 'Mensajería directa dentro de la plataforma',
+        description: 'Escríbele a Angie directamente dentro de Delux Fit — el único canal de comunicación del coaching.',
       },
       {
         icon: Apple,
         title: 'Guía básica de nutrición',
-        description:
-          'Orientación nutricional general y sostenible para apoyar tu entrenamiento — sin planes de comida.',
+        description: 'Orientación nutricional general y sostenible para apoyar tu entrenamiento — sin planes de comida.',
+      },
+      {
+        icon: Sparkles,
+        title: 'Recomendaciones personalizadas',
+        description: 'Recomendaciones según tus metas, tu progreso y el momento en el que estás del programa.',
       },
     ],
-    responsibilities: {
-      eyebrow: 'Responsabilidades del cliente',
-      heading: 'Lo que tú aportas al programa.',
-      accent: 'tú aportas',
-      body: 'El coaching online funciona mejor cuando ambas partes cumplen lo suyo. Tu parte se ve así:',
-      items: [
-        'Completar los entrenamientos por tu cuenta',
-        'Llevar registro de tu progreso',
-        'Enviar fotos y actualizaciones de progreso cada mes',
+    communication: {
+      eyebrow: 'Cómo nos comunicamos',
+      heading: 'Toda la comunicación ocurre dentro de la plataforma Delux Fit.',
+      accent: 'dentro de la plataforma Delux Fit',
+      body: 'No hay acceso telefónico personal. Le escribes a Angie directamente por la plataforma y ella responde en hasta 72 horas hábiles.',
+      points: [
+        'Toda la comunicación ocurre dentro de la plataforma Delux Fit',
+        'Sin acceso telefónico personal',
+        'Tiempo de respuesta: hasta 72 horas hábiles',
       ],
     },
     bestFor: {
       eyebrow: 'Para quién es',
       heading: 'Ideal para clientes que quieren un plan estructurado y guía profesional — sin sesiones en vivo.',
       accent: 'sin sesiones en vivo',
-      body: 'Si quieres un programa hecho específicamente para ti que puedas seguir por tu cuenta, con coaching mensual de Angie, Coaching Online es la opción. Si además quieres coaching en vivo, suma o cambia a Entrenamiento 1 a 1.',
+      body: 'Si quieres un programa hecho específicamente para ti que puedas seguir por tu cuenta, con coaching mensual de Angie, Coaching Online es la opción. Si además quieres coaching en vivo, suma una Sesión en Vivo o el Programa de Entrenamiento Personal en Vivo.',
     },
     applicationSection: {
       id: 'apply',
       eyebrow: 'Aplica al coaching',
       heading: 'Cuéntale a Angie sobre tus metas.',
       accent: 'tus metas',
-      body: 'Llena la aplicación de abajo. Angie revisa cada una personalmente y responde con los siguientes pasos.',
+      body: 'Llena la aplicación de abajo. Angie revisa cada una personalmente y responde con los siguientes pasos antes de cobrar.',
     },
     application: {
       submitLabel: 'Enviar Aplicación',
@@ -501,13 +544,7 @@ const es = {
           label: 'Meta principal',
           placeholder: 'Selecciona tu meta principal',
           required: true,
-          options: [
-            'Pérdida de grasa',
-            'Ganancia muscular',
-            'Desarrollo de fuerza',
-            'Fitness general',
-            'Otra',
-          ],
+          options: ['Pérdida de grasa', 'Ganancia muscular', 'Desarrollo de fuerza', 'Fitness general', 'Otra'],
         },
         experience: {
           label: 'Experiencia de entrenamiento',
@@ -522,8 +559,7 @@ const es = {
         },
         equipment: {
           label: '¿A qué equipo tienes acceso?',
-          placeholder:
-            'Gimnasio completo, mancuernas en casa, solo peso corporal, etc.',
+          placeholder: 'Gimnasio completo, mancuernas en casa, solo peso corporal, etc.',
           required: true,
         },
         availability: {
@@ -533,8 +569,7 @@ const es = {
         },
         notes: {
           label: '¿Algo más que Angie deba saber?',
-          placeholder:
-            'Lesiones, condiciones médicas, restricciones de horario, metas específicas…',
+          placeholder: 'Lesiones, condiciones médicas, restricciones de horario, metas específicas…',
         },
         consent: {
           label:
@@ -545,112 +580,146 @@ const es = {
     },
   },
 
-  training: {
+  session: {
     hero: {
-      eyebrow: 'Servicio 03 · Entrenamiento Online 1 a 1 en Vivo',
-      heading: 'Entrenamiento personal virtual en vivo — directamente con Angie.',
-      accent: 'directamente con Angie',
+      eyebrow: 'Servicio 03 · Sesión de Entrenamiento en Vivo',
+      heading: 'Una sesión en vivo única — prueba Delux Fit antes de comprometerte.',
+      accent: 'antes de comprometerte',
       subhead:
-        '$50 por sesión, 45–60 minutos por sesión. Sesiones por video en vivo donde Angie trabaja directamente contigo — coaching en tiempo real, corrección de ejercicios, motivación y acompañamiento en cada sesión.',
+        '$75 por sesión, 45–60 minutos. Una sesión privada virtual en vivo, una sola vez, con Angie — perfecta para probar Delux Fit, aprender la técnica correcta, corrección de técnica, motivación, preguntas y respuestas, y una experiencia de entrenamiento personalizada.',
       primaryCta: 'Reservar Sesión',
       primaryCtaHref: '#book',
       secondaryCta: 'Comparar programas',
       secondaryCtaHref: '/#programs',
     },
-    includesEyebrow: 'Qué incluye',
-    includesHeading: 'Coaching directo, en video, en tiempo real.',
-    includesAccent: 'en tiempo real',
-    includes: [
-      {
-        icon: Video,
-        title: 'Sesión por video en vivo',
-        description:
-          'Una sesión en cámara y en tiempo real — Angie está contigo durante todo el entrenamiento.',
-      },
-      {
-        icon: HandHeart,
-        title: 'Coaching en tiempo real',
-        description:
-          'Coaching mientras entrenas: tempo, señales, intensidad, descansos — todo guiado en vivo.',
-      },
-      {
-        icon: ClipboardCheck,
-        title: 'Corrección de ejercicios',
-        description:
-          'Angie observa tu técnica y la corrige sobre la marcha para que cada repetición cuente.',
-      },
-      {
-        icon: Sparkles,
-        title: 'Motivación y acompañamiento',
-        description:
-          'Sin saltarte repeticiones ni series a medias — el acompañamiento es parte de la sesión.',
-      },
-      {
-        icon: Dumbbell,
-        title: 'Sesión personalizada',
-        description:
-          'Cada sesión se arma alrededor de lo que estás trabajando y el equipo que tienes.',
-      },
-      {
-        icon: MonitorPlay,
-        title: 'Instrucción según tu meta',
-        description:
-          'Las sesiones se construyen según tu meta — pérdida de grasa, ganancia muscular, fuerza o fitness general.',
-      },
+    perfectForEyebrow: 'Perfecta para',
+    perfectForHeading: 'Una sesión privada, construida por completo alrededor de ti.',
+    perfectForAccent: 'alrededor de ti',
+    perfectFor: [
+      { icon: Sparkles, title: 'Probar Delux Fit antes de comprometerte' },
+      { icon: GraduationCap, title: 'Aprender la técnica correcta' },
+      { icon: ClipboardCheck, title: 'Corrección de técnica' },
+      { icon: HandHeart, title: 'Motivación' },
+      { icon: MessageSquare, title: 'Preguntas y respuestas' },
+      { icon: Dumbbell, title: 'Una experiencia de entrenamiento personalizada' },
     ],
     sessionDetails: {
       eyebrow: 'Detalles de la sesión',
-      length: '45–60 minutos por sesión',
-      price: '$50 por sesión',
+      length: '45–60 minutos',
+      price: '$75 por sesión',
       bestFor:
-        'Ideal para clientes que quieren coaching directo e interacción real durante su entrenamiento.',
+        'Una sesión privada virtual en vivo, una sola vez, con Angie. Sin compromiso — reserva una sola sesión y vive Delux Fit de primera mano.',
     },
     bookSection: {
       id: 'book',
       eyebrow: 'Reservar sesión',
-      heading: 'Elige un horario y entrena con Angie en vivo.',
-      accent: 'en vivo',
-      body: 'Llena la solicitud abajo con algunos horarios que te funcionen. Angie confirma por correo y te envía el enlace seguro de video.',
+      heading: 'Elige una fecha y un horario y entrena con Angie en vivo.',
+      accent: 'entrena con Angie en vivo',
+      body: 'Selecciona abajo una fecha, un horario, tu enfoque de entrenamiento y tu meta. Tu cita se reserva por el calendario y se confirma automáticamente.',
     },
-    booking: {
-      submitLabel: 'Solicitar Sesión',
-      submittingLabel: 'Enviando…',
-      successHeading: 'Solicitud recibida.',
-      successBody:
-        'Gracias — Angie te contactará para confirmar tu sesión y compartir el enlace seguro de video.',
-      errorBody:
-        'Algo salió mal al enviar tu solicitud. Inténtalo de nuevo o escríbele directamente desde la página de Contacto.',
-      fields: {
-        name: { label: 'Nombre completo', placeholder: 'Tu nombre', required: true },
-        email: { label: 'Correo electrónico', placeholder: 'tu@ejemplo.com', required: true },
-        phone: { label: 'Teléfono (opcional)', placeholder: '(555) 555-5555' },
-        timezone: {
-          label: 'Zona horaria',
-          placeholder: 'ej. EST, PST, CST, MX',
-          required: true,
-        },
-        availability: {
-          label: 'Horarios preferidos',
-          placeholder:
-            'Lista algunos días / horarios (ej. Mar 7am EST, Mié 6pm EST)',
-          required: true,
-        },
-        goal: {
-          label: 'En qué quieres trabajar',
-          placeholder:
-            'Corrección de técnica, programación, fuerza, pérdida de grasa, empezar de cero, etc.',
-          required: true,
-        },
-        equipment: {
-          label: 'Equipo disponible',
-          placeholder: 'Gimnasio completo, mancuernas, solo peso corporal, etc.',
-        },
-        notes: {
-          label: '¿Algo más que Angie deba saber?',
-          placeholder: 'Lesiones, nivel de experiencia, preocupaciones específicas…',
-        },
+  },
+
+  training: {
+    hero: {
+      eyebrow: 'Servicio 04 · Programa de Entrenamiento Personal en Vivo',
+      heading: 'Entrenamiento en vivo continuo — lo más cercano a lo presencial.',
+      accent: 'lo más cercano a lo presencial',
+      subhead:
+        '$50 por sesión. Entrenamiento personal en vivo y continuo por Zoom con Angie presente durante toda la sesión — coaching en vivo, correcciones en tiempo real, acompañamiento y una estructura de entrenamiento personalizada cada vez.',
+      primaryCta: 'Empezar',
+      primaryCtaHref: '#book',
+      secondaryCta: 'Comparar programas',
+      secondaryCtaHref: '/#programs',
+    },
+    includesEyebrow: 'Qué incluye',
+    includesHeading: 'Coaching en vivo, por Zoom, en tiempo real.',
+    includesAccent: 'en tiempo real',
+    includes: [
+      {
+        icon: Video,
+        title: 'Coaching en vivo',
+        description: 'Una sesión en tiempo real por Zoom — Angie está presente durante todo el entrenamiento.',
       },
+      {
+        icon: ClipboardCheck,
+        title: 'Correcciones en tiempo real',
+        description: 'Angie observa tu técnica y la corrige sobre la marcha para que cada repetición cuente.',
+      },
+      {
+        icon: HandHeart,
+        title: 'Acompañamiento',
+        description: 'Sin saltarte repeticiones ni series a medias — el acompañamiento está en cada sesión.',
+      },
+      {
+        icon: GraduationCap,
+        title: 'Guía de ejercicios',
+        description: 'Guía de tempo, señales, intensidad y descansos — todo en vivo mientras entrenas.',
+      },
+      {
+        icon: Dumbbell,
+        title: 'Estructura de entrenamiento personalizada',
+        description: 'Cada sesión se estructura alrededor de tus metas y del equipo que tienes.',
+      },
+    ],
+    recommendation: {
+      eyebrow: 'Con qué frecuencia',
+      heading: 'Recomendado un mínimo de 3 sesiones por semana.',
+      accent: '3 sesiones por semana',
+      body: 'Para los mejores resultados recomendamos un mínimo de 3 sesiones por semana. Ejemplo: 3 sesiones/semana = $150/semana. Es continuo — la experiencia más cercana al entrenamiento presencial, desde donde estés.',
     },
+    sessionDetails: {
+      eyebrow: 'Detalles del programa',
+      length: 'Continuo — reserva tantas sesiones como necesites',
+      price: '$50 por sesión',
+      bestFor:
+        'Ideal para clientes que quieren coaching en vivo directo e interacción real durante cada entrenamiento, de forma continua.',
+    },
+    bookSection: {
+      id: 'book',
+      eyebrow: 'Reservar sesiones',
+      heading: 'Elige tus horarios y entrena con Angie en vivo.',
+      accent: 'entrena con Angie en vivo',
+      body: 'Selecciona abajo una fecha, un horario, tu enfoque de entrenamiento y tu meta. Reserva una sesión o varias en la semana — recomendamos un mínimo de 3 por semana.',
+    },
+  },
+
+  booking: {
+    selectDateLabel: 'Selecciona una fecha',
+    selectTimeLabel: 'Selecciona un horario',
+    trainingFocusLabel: 'Enfoque de entrenamiento',
+    trainingFocusPlaceholder: 'Selecciona un enfoque',
+    fitnessGoalLabel: 'Meta de fitness',
+    fitnessGoalPlaceholder: 'Selecciona tu meta',
+    nameLabel: 'Nombre completo',
+    namePlaceholder: 'Tu nombre',
+    emailLabel: 'Correo electrónico',
+    emailPlaceholder: 'tu@ejemplo.com',
+    loadingSlots: 'Cargando horarios disponibles…',
+    noSlots: 'No hay horarios disponibles en esta fecha. Prueba otro día.',
+    pickDateFirst: 'Elige una fecha para ver los horarios disponibles.',
+    slotTaken: 'Ocupado',
+    submitLabel: 'Confirmar Reserva',
+    submittingLabel: 'Reservando…',
+    successHeading: 'Sesión reservada.',
+    successBody:
+      'Tu sesión está confirmada. Recibirás una confirmación con el enlace seguro de video. Gestiona tus reservas cuando quieras desde el portal de clientes.',
+    errorBody:
+      'Algo salió mal al reservar tu sesión. Inténtalo de nuevo o escríbenos desde la página de Contacto.',
+    slotTakenError:
+      'Ese horario lo acaba de reservar otra persona. Por favor elige otro horario disponible.',
+    notConfiguredNotice:
+      'La reserva en vivo se activa cuando el calendario quede conectado. Tu selección quedó registrada y Angie confirmará por correo.',
+    trainingFocusOptions: [
+      'Cuerpo completo',
+      'Tren superior',
+      'Tren inferior',
+      'Core y abdomen',
+      'Fuerza',
+      'Acondicionamiento / cardio',
+      'Técnica',
+      'Movilidad',
+    ],
+    fitnessGoalOptions: ['Pérdida de grasa', 'Ganancia muscular', 'Desarrollo de fuerza', 'Fitness general', 'Otra'],
   },
 
   testimonials: {
@@ -708,7 +777,7 @@ const es = {
       subhead:
         'Elige un programa y empieza. Tu transformación puede ser la siguiente que destaquemos aquí — con tu permiso.',
       primary: { label: 'Aplicar a Coaching', href: '/online-coaching#apply' },
-      secondary: { label: 'Reservar Sesión', href: '/training#book' },
+      secondary: { label: 'Reservar Sesión', href: '/single-session#book' },
     },
   },
 
@@ -718,7 +787,7 @@ const es = {
       heading: 'Ponte en contacto con Angie.',
       accent: 'con Angie',
       subhead:
-        '¿Dudas sobre la membresía, el coaching online o las sesiones 1 a 1 en vivo? Envía un mensaje abajo — Angie lee y responde cada uno personalmente.',
+        '¿Dudas sobre la membresía, el coaching online o el entrenamiento en vivo? Envía un mensaje abajo — Angie lee y responde cada uno personalmente. (Los clientes activos de coaching se comunican dentro de la plataforma Delux Fit.)',
     },
     socialEyebrow: 'Sigue a Angie',
     socialHeading: 'Redes sociales',
@@ -740,7 +809,8 @@ const es = {
           options: [
             'Pregunta de membresía',
             'Pregunta de coaching online',
-            'Pregunta de entrenamiento 1 a 1',
+            'Pregunta de sesión en vivo',
+            'Pregunta del programa de entrenamiento en vivo',
             'Prensa / colaboraciones',
             'Otra cosa',
           ],
@@ -759,22 +829,21 @@ const es = {
     heading: 'Elige el nivel de apoyo que encaja.',
     accent: 'nivel de apoyo',
     subhead:
-      'Tres servicios activos y uno muy pronto. Precios y características exactos — nada escondido.',
+      'Cuatro formas de entrenar y una muy pronto. Precios y características exactos — nada escondido.',
   },
 
   inPerson: {
     eyebrow: 'Muy pronto',
-    title: 'Entrenamiento Personal Presencial',
-    price: '$75 / sesión',
-    sessionLength: '45–60 minutos por sesión',
+    title: 'Entrenamiento Presencial Futuro',
+    price: 'Desde $75 / sesión',
     summary:
-      'Entrenamiento personal presencial con Angie. Próximamente — todavía no se puede reservar.',
+      'Entrenamiento personal presencial con Angie. No disponible en el lanzamiento — se podrá sumar a medida que Delux Fit crezca.',
     icon: Building2,
   },
 
   footer: {
     blurb:
-      'Coaching de fitness personalizado y entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie.',
+      'Disciplina sobre excusas. Membresías de fitness, coaching online personalizado y entrenamiento en vivo con la entrenadora personal certificada Angie.',
     navLabel: 'Pie de página',
     rightsReserved: 'Todos los derechos reservados.',
     socials: [
@@ -788,16 +857,115 @@ const es = {
   portal: {
     backToSite: 'Volver al sitio',
     backToHome: 'Volver a DeluxFit',
-    comingSoon: 'Muy pronto',
-    headingLines: ['Portal', 'Clientes'],
-    blurb:
-      'Un espacio exclusivo para clientes actuales de DeluxFit llega muy pronto.',
-    signInHint: '¿Ya eres clienta? Inicia sesión aquí cuando lancemos.',
+    brandLockup: 'Portal de Clientes',
+    auth: {
+      signInTitle: 'Acceso Clientes',
+      signUpTitle: 'Crea tu cuenta',
+      signInSubtitle: 'Inicia sesión en tu portal de cliente Delux Fit.',
+      signUpSubtitle: 'Únete a Delux Fit para acceder a tu plan, tu progreso y tu coach.',
+      nameLabel: 'Nombre completo',
+      namePlaceholder: 'Tu nombre',
+      emailLabel: 'Correo electrónico',
+      emailPlaceholder: 'tu@ejemplo.com',
+      passwordLabel: 'Contraseña',
+      passwordPlaceholder: 'Al menos 8 caracteres',
+      signInCta: 'Iniciar Sesión',
+      signUpCta: 'Crear Cuenta',
+      signingIn: 'Iniciando sesión…',
+      signingUp: 'Creando cuenta…',
+      toSignUp: '¿Nueva en Delux Fit? Crea una cuenta',
+      toSignIn: '¿Ya tienes cuenta? Inicia sesión',
+      signOut: 'Cerrar sesión',
+      checkEmail: 'Revisa tu correo para confirmar tu cuenta y luego inicia sesión.',
+      genericError: 'Algo salió mal. Revisa tus datos e inténtalo de nuevo.',
+    },
+    nav: {
+      overview: 'Resumen',
+      plan: 'Mi Plan',
+      progress: 'Progreso',
+      bookings: 'Sesiones',
+      messages: 'Mensajes',
+      library: 'Biblioteca',
+    },
+    overview: {
+      greeting: 'Hola de nuevo',
+      subtitle: 'Esto es todo lo que hay en tu cuenta Delux Fit.',
+      membershipStatus: 'Membresía',
+      coachingStatus: 'Coaching',
+      noEntitlements:
+        'Todavía no tienes una membresía o un plan de coaching activo. Explora los programas para empezar.',
+      explorePrograms: 'Explorar programas',
+      active: 'Activo',
+      inactive: 'Inactivo',
+    },
+    plan: {
+      title: 'Mi plan personalizado',
+      empty:
+        'Todavía no se ha asignado un plan personalizado. Los planes personalizados están disponibles con el Coaching Online Personalizado.',
+      emptyCta: 'Aplicar a coaching',
+      gatedTitle: 'Los planes personalizados son parte del coaching',
+      gatedBody:
+        'Tus planes de entrenamiento asignados aparecen aquí cuando eres clienta activa de coaching.',
+    },
+    progress: {
+      title: 'Seguimiento de progreso',
+      addEntry: 'Registrar una entrada',
+      dateLabel: 'Fecha',
+      weightLabel: 'Peso (lb)',
+      bodyFatLabel: 'Grasa corporal (%)',
+      notesLabel: 'Notas',
+      notesPlaceholder: '¿Cómo se sintió el entrenamiento? Energía, sueño, logros…',
+      saveEntry: 'Guardar entrada',
+      saving: 'Guardando…',
+      empty: 'Aún no hay entradas. Registra la primera para empezar a llevar el seguimiento.',
+      colDate: 'Fecha',
+      colWeight: 'Peso',
+      colBodyFat: 'Grasa corporal',
+      colNotes: 'Notas',
+    },
+    bookings: {
+      title: 'Tus sesiones',
+      empty: 'No hay sesiones próximas. Reserva una sesión en vivo para empezar.',
+      bookCta: 'Reservar una sesión',
+      upcoming: 'Próximas',
+      past: 'Pasadas',
+    },
+    messages: {
+      title: 'Mensajes con Angie',
+      intro:
+        'Este es el único canal de comunicación del coaching. El tiempo de respuesta es de hasta 72 horas hábiles.',
+      placeholder: 'Escríbele un mensaje a Angie…',
+      send: 'Enviar',
+      sending: 'Enviando…',
+      empty: 'Aún no hay mensajes. Saluda para empezar la conversación.',
+      attach: 'Adjuntar archivo',
+      coachName: 'Angie',
+      youName: 'Tú',
+      gatedBody: 'La mensajería directa está disponible para clientes activos de coaching.',
+    },
+    library: {
+      title: 'Biblioteca de contenido',
+      intro: 'Videos de entrenamiento, recursos de nutrición y educación fitness.',
+      empty: 'Aún no hay contenido disponible. Vuelve pronto — se añade contenido nuevo regularmente.',
+      gatedTitle: 'Desbloquea la biblioteca de contenido',
+      gatedBody:
+        'La biblioteca de contenido está disponible con una membresía o un plan de coaching activo.',
+      gatedCta: 'Ver membresía',
+      categoryAll: 'Todo',
+      categoryWorkout: 'Entrenamientos',
+      categoryNutrition: 'Nutrición',
+      categoryEducation: 'Educación',
+      locked: 'Bloqueado',
+    },
+    loading: 'Cargando…',
+    offlineNotice:
+      'El portal no pudo conectar con el servidor. Algunos datos pueden no estar disponibles ahora.',
   },
 
   icons: {
     shield: ShieldCheck,
     users: Users,
+    repeat: Repeat,
   },
 }
 
