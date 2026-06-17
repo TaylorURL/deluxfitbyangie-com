@@ -7,6 +7,7 @@ import { useContent } from '@/i18n'
  * furniture, a crimson icon, and a condensed display title.
  */
 export default function Benefits() {
+  const { benefits } = useContent()
   return (
     <Section
       id="benefits"
