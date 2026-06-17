@@ -47,7 +47,7 @@ const HOME_MARQUEE = [
  */
 export default function Home() {
   const { home } = useContent()
-  const { hero, intro, servicesSection, transformationCallout, closing } = home
+  const { hero, intro, transformationCallout, closing } = home
   const prefersReducedMotion = useReducedMotion()
   const lastIndex = hero.headline.length - 1
 
