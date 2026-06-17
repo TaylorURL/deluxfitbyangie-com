@@ -293,12 +293,12 @@ export default function DevUpload() {
     for (const entryId of idsToProcess) {
       const current = entries.find(entry => entry.id === entryId)
       if (!current) continue
-      const path = buildObjectPath(current.file, sanitizedName)
       try {
-        const { error } = await supabase.storage
-          .from(DEV_UPLOAD_BUCKET)
-          .upload(path, current.file, { contentType: current.file.type })
-        if (error) throw error
+        const form = new FormData()
+        form.append('file', current.file, current.file.name)
+        if (sanitizedName) form.append('client_name', sanitizedName)
+        const { error } = await supabase.functions.invoke('deluxfit-intake', { body: form })
+        if (error) throw await describeInvokeError(error)
         setEntries(prev =>
           prev.map(entry =>
             entry.id === entryId ? { ...entry, status: STATUS.success, error: null } : entry
