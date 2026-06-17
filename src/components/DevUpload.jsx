@@ -398,7 +398,7 @@ export default function DevUpload() {
           <div className="rounded-df-2xl border border-df-border bg-df-surface/85 p-6 shadow-df-xl backdrop-blur-xl sm:p-8">
             <Field
               label="Your name (optional)"
-              helper="Tagging your upload so Angie knows it's from you."
+              helper="Used to organize your uploads into a named folder."
             >
               <Input
                 value={clientName}
