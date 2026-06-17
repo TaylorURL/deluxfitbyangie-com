@@ -7,6 +7,7 @@ import { useContent } from '@/i18n'
  * PricingCard CTA opens its Stripe Payment Link. Anchored at #pricing.
  */
 export default function Pricing() {
+  const { pricing } = useContent()
   return (
     <Section
       id="pricing"
