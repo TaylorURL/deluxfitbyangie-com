@@ -1,7 +1,9 @@
+import { Fragment } from 'react'
 import { ArrowLeft, LockKeyhole, Sparkles } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Container } from '@deluxfit/ds'
-import { brand } from '@/content/site'
+import { useContent } from '@/i18n'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const MotionDiv = motion.div
 
@@ -13,6 +15,7 @@ const MotionDiv = motion.div
  * surrounding wiring stays the same.
  */
 export default function ClientPortalPlaceholder() {
+  const { brand, portal } = useContent()
   const prefersReducedMotion = useReducedMotion()
 
   return (
@@ -43,16 +46,19 @@ export default function ClientPortalPlaceholder() {
                 draggable="false"
               />
             </a>
-            <a
-              href="/"
-              className="group inline-flex items-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 py-2.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
-            >
-              <ArrowLeft
-                aria-hidden="true"
-                className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
-              />
-              Back to site
-            </a>
+            <div className="flex items-center gap-2.5">
+              <LanguageSwitcher />
+              <a
+                href="/"
+                className="group inline-flex items-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 py-2.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+                />
+                {portal.backToSite}
+              </a>
+            </div>
           </div>
         </Container>
       </header>
@@ -66,25 +72,29 @@ export default function ClientPortalPlaceholder() {
         >
           <span className="inline-flex items-center gap-2 rounded-df-full border border-df-border-strong bg-df-accent-soft px-3 py-1 text-[10px] font-700 uppercase tracking-[0.24em] text-df-accent-bright">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-            Coming soon
+            {portal.comingSoon}
           </span>
 
           <h1 className="mt-6 font-display text-[clamp(2.75rem,7vw,4rem)] font-400 uppercase leading-[0.9] tracking-tight text-df-text">
-            Client
-            <br />
-            Portal
-            <span className="text-df-accent">.</span>
+            {portal.headingLines.map((line, index) => (
+              <Fragment key={line}>
+                {line}
+                {index < portal.headingLines.length - 1 && <br />}
+                {index === portal.headingLines.length - 1 && (
+                  <span className="text-df-accent">.</span>
+                )}
+              </Fragment>
+            ))}
           </h1>
 
           <p className="mt-5 text-sm leading-relaxed text-df-text-muted sm:text-base">
-            A members-only home for current DeluxFit clients — your training plan, weekly
-            check-ins, macros, progress trends, and direct chat with Angie — is launching shortly.
+            {portal.blurb}
           </p>
 
           <div className="mt-7 flex items-center gap-3 rounded-df-md border border-df-border bg-df-surface-2/60 px-4 py-3.5">
             <LockKeyhole className="h-4 w-4 shrink-0 text-df-accent-bright" aria-hidden="true" />
             <p className="text-[11px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
-              Existing client? Sign in here once we go live.
+              {portal.signInHint}
             </p>
           </div>
 
@@ -96,7 +106,7 @@ export default function ClientPortalPlaceholder() {
               aria-hidden="true"
               className="h-4 w-4 transition-transform duration-200 group-hover/cta:-translate-x-0.5"
             />
-            Back to DeluxFit
+            {portal.backToHome}
           </a>
         </MotionDiv>
       </main>
