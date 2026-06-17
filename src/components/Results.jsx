@@ -11,6 +11,7 @@ import PhotoPlaceholder from './PhotoPlaceholder'
  * CTA and the header nav.
  */
 export default function Results() {
+  const { results } = useContent()
   return (
     <Section
       id="results"
