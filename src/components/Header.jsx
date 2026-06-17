@@ -224,7 +224,6 @@ export default function Header() {
           </nav>
 
           <div className="hidden items-center gap-2.5 md:flex">
-            <LanguageSwitcher />
             <ClientLoginLink label={header.clientLogin} ariaLabel={header.clientLoginAria} />
             <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
           </div>
