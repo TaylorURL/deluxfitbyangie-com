@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, Marquee, cn } from '@deluxfit/ds'
-import { hero, marqueeItems } from '@/content/site'
+import { useContent } from '@/i18n'
 import FramedPhoto from './FramedPhoto'
 
 const MotionH1 = motion.h1
