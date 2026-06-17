@@ -389,8 +389,9 @@ export default function DevUpload() {
               Upload your content<span className="text-df-accent">.</span>
             </h1>
             <p className="mt-4 max-w-prose text-sm leading-relaxed text-df-text-muted sm:text-base">
-              Drop your progress photos and videos here. Angie will see them on the other side.
-              Images and videos only — up to {formatBytes(MAX_FILE_BYTES)} per file.
+              Drop your high-quality photos and videos below and they'll be added to the
+              DeluxFit site. Send original-resolution files for the best results — up to{' '}
+              {formatBytes(MAX_FILE_BYTES)} per file.
             </p>
           </div>
 
