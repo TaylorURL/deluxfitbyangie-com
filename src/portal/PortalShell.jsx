@@ -1,7 +1,7 @@
 import { ArrowLeft, LogOut } from 'lucide-react'
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 
 /**
  * PortalShell — the standalone chrome for the client portal: branded header

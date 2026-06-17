@@ -1,5 +1,5 @@
 import { useContent } from '@/i18n'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 import PortalShell from './PortalShell'
 import PortalAuth from './PortalAuth'
 import PortalDashboard from './PortalDashboard'

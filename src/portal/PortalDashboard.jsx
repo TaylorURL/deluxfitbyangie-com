@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 import { usePortalData } from './usePortalData'
 import OverviewPanel from './panels/OverviewPanel'
 import PlanPanel from './panels/PlanPanel'

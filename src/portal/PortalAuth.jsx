@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
 /**

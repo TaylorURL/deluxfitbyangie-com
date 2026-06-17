@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight, CalendarDays, Clock, Loader2 } from 'lucide-react'
 import { Button, Field, Input, Select, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 import {
   createBooking,
   fetchTakenSlots,

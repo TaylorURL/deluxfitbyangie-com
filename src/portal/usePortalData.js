@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useAuth } from '@/auth/AuthProvider'
+import { useAuth } from '@/auth/useAuth'
 import { useLanguage } from '@/i18n'
 import {
   deriveEntitlements,
