@@ -1,0 +1,56 @@
+import { Container, Reveal, Section, SectionEyebrow } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
+import PageHero from '@/components/PageHero'
+import ContactForm from '@/components/forms/ContactForm'
+import SocialLinks from '@/components/SocialLinks'
+
+/**
+ * Contact — message form on the left, social channels on the right. Form
+ * submissions route through the shared `submitForm` helper (see
+ * `src/lib/formSubmission.js` for the production-endpoint TODO).
+ */
+export default function Contact() {
+  const { contact } = useContent()
+
+  return (
+    <>
+      <PageHero
+        eyebrow={contact.hero.eyebrow}
+        heading={contact.hero.heading}
+        accent={contact.hero.accent}
+        subhead={contact.hero.subhead}
+      />
+
+      <Section index="01" eyebrow="Send a message" heading="Tell Angie what you’d like to talk about." accent="talk about">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+          <Reveal>
+            <ContactForm />
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <aside className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-8 sm:px-8">
+              <SectionEyebrow>{contact.socialEyebrow}</SectionEyebrow>
+              <h3 className="mt-5 font-display text-2xl font-400 uppercase tracking-[0.01em] text-df-text">
+                {contact.socialHeading}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
+                Angie posts coaching tips, workouts, and behind-the-scenes content across these
+                channels.
+              </p>
+              <div className="mt-6">
+                <SocialLinks />
+              </div>
+            </aside>
+          </Reveal>
+        </div>
+      </Section>
+
+      <Container size="lg" className="pb-20">
+        <div className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-6 text-xs leading-relaxed text-df-text-faint sm:px-8 sm:py-7">
+          Looking to sign up, apply for coaching, or book a 1-on-1 session? The fastest path is
+          directly through the matching service page — those forms route straight to Angie.
+        </div>
+      </Container>
+    </>
+  )
+}
