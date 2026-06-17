@@ -7,6 +7,7 @@ import { useContent } from '@/i18n'
  * from site.js. Anchored at #faq for the header nav and final CTA link.
  */
 export default function Faq() {
+  const { faq } = useContent()
   return (
     <Section
       id="faq"
