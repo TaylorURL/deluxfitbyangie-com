@@ -386,7 +386,7 @@ export default function DevUpload() {
               Content upload
             </span>
             <h1 className="mt-5 font-display text-[clamp(2.5rem,6vw,3.5rem)] font-400 uppercase leading-[0.95] tracking-tight text-df-text">
-              Send your progress<span className="text-df-accent">.</span>
+              Upload your content<span className="text-df-accent">.</span>
             </h1>
             <p className="mt-4 max-w-prose text-sm leading-relaxed text-df-text-muted sm:text-base">
               Drop your progress photos and videos here. Angie will see them on the other side.
