@@ -1,5 +1,5 @@
 import { Card, Reveal, Section } from '@deluxfit/ds'
-import { results } from '@/content/site'
+import { useContent } from '@/i18n'
 import PhotoPlaceholder from './PhotoPlaceholder'
 
 /**
