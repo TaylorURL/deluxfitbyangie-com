@@ -1,27 +1,29 @@
 import { useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
-import { useFormSubmission } from './useFormSubmission'
+import { submitForm } from '@/lib/formSubmission'
+import { startCheckout } from '@/lib/payments'
 import { FormError, FormSuccess } from './FormFeedback'
 
+const STATUS = { idle: 'idle', working: 'working', success: 'success', error: 'error' }
+
 /**
- * MembershipSignupForm — the small intake form on /membership. Captures the
- * basics so Angie can send access details for the $14.99/month membership.
- * No payment is taken here; the production endpoint is wired up via
- * `src/lib/formSubmission.js`.
+ * MembershipSignupForm — the $14.99/month membership signup on /membership.
+ * Captures the basics, then sends the visitor to Stripe Checkout for the
+ * recurring subscription. If Stripe isn't configured yet, the intent is
+ * recorded and a clear "payments coming online" notice is shown — never a fake
+ * charge.
  */
 export default function MembershipSignupForm() {
   const [values, setValues] = useState({ name: '', email: '', notes: '' })
   const [errors, setErrors] = useState({})
-  const { submit, isSubmitting, isSuccess, errorMessage } = useFormSubmission(
-    'membership-signup'
-  )
+  const [status, setStatus] = useState(STATUS.idle)
+  const [notice, setNotice] = useState(null)
+  const [errorBody, setErrorBody] = useState(null)
 
   const handleChange = key => event => {
     setValues(prev => ({ ...prev, [key]: event.target.value }))
-    if (errors[key]) {
-      setErrors(prev => ({ ...prev, [key]: undefined }))
-    }
+    if (errors[key]) setErrors(prev => ({ ...prev, [key]: undefined }))
   }
 
   const handleSubmit = async event => {
@@ -32,18 +34,31 @@ export default function MembershipSignupForm() {
     else if (!values.email.includes('@')) nextErrors.email = 'Enter a valid email'
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) return
+
+    setStatus(STATUS.working)
+    setErrorBody(null)
     try {
-      await submit(values)
-    } catch {
-      /* error surfaced via hook */
+      const result = await startCheckout('membership')
+      if (result.status === 'redirecting') return // browser is navigating to Stripe
+      // Stripe not configured yet — record interest and confirm honestly.
+      await submitForm('membership-signup', values)
+      setNotice(result.message)
+      setStatus(STATUS.success)
+    } catch (error) {
+      setErrorBody(error?.message || 'Please try again in a moment.')
+      setStatus(STATUS.error)
     }
   }
 
-  if (isSuccess) {
+  if (status === STATUS.success) {
     return (
       <FormSuccess
-        heading="Welcome to DeluxFit."
-        body="Thanks for signing up — Angie will send your access details and onboarding info by email."
+        heading="You’re on the list."
+        body={
+          notice
+            ? `${notice} Angie will follow up with your access details.`
+            : 'Thanks for signing up — Angie will send your access details and onboarding info by email.'
+        }
       />
     )
   }
@@ -81,18 +96,14 @@ export default function MembershipSignupForm() {
         helper="Goals, schedule, equipment access — totally optional."
         className="mt-5"
       >
-        <Input
-          value={values.notes}
-          onChange={handleChange('notes')}
-          placeholder="Optional notes"
-        />
+        <Input value={values.notes} onChange={handleChange('notes')} placeholder="Optional notes" />
       </Field>
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="mt-7">
-        {isSubmitting ? (
+      <Button type="submit" size="lg" disabled={status === STATUS.working} className="mt-7">
+        {status === STATUS.working ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-            Signing you up…
+            Starting checkout…
           </>
         ) : (
           <>
@@ -102,9 +113,7 @@ export default function MembershipSignupForm() {
         )}
       </Button>
 
-      <FormError
-        body={errorMessage ? `${errorMessage}. Please try again.` : undefined}
-      />
+      <FormError body={status === STATUS.error ? errorBody : undefined} />
     </form>
   )
 }
