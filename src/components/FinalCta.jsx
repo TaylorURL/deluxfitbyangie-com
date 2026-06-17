@@ -8,6 +8,7 @@ import { useContent } from '@/i18n'
  * couture italic; the primary CTA opens pricing, the secondary links to the FAQ.
  */
 export default function FinalCta() {
+  const { finalCta } = useContent()
   return (
     <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-28 sm:py-40">
       <div
