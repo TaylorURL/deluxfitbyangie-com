@@ -3,7 +3,6 @@ import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import LanguageSwitcher from './LanguageSwitcher'
 
 const MotionDiv = motion.div
 const MotionButton = motion.button
