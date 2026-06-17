@@ -25,6 +25,7 @@ const LINE_STAGGER = {
  * crimson. Copy, CTAs, and the marquee continue to flow from site.js.
  */
 export default function Hero() {
+  const { hero, marqueeItems } = useContent()
   const prefersReducedMotion = useReducedMotion()
   const lastIndex = hero.headline.length - 1
 
