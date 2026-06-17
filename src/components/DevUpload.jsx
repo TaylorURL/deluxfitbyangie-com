@@ -33,15 +33,6 @@ function sanitizeSegment(value) {
     .slice(0, 64)
 }
 
-function sanitizeFilename(name) {
-  const lastDot = name.lastIndexOf('.')
-  const stem = lastDot > 0 ? name.slice(0, lastDot) : name
-  const ext = lastDot > 0 ? name.slice(lastDot + 1) : ''
-  const cleanStem = sanitizeSegment(stem) || 'file'
-  const cleanExt = sanitizeSegment(ext).toLowerCase()
-  return cleanExt ? `${cleanStem}.${cleanExt}` : cleanStem
-}
-
 function randomToken() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID().replace(/-/g, '').slice(0, 10)
@@ -49,13 +40,14 @@ function randomToken() {
   return Math.random().toString(36).slice(2, 12)
 }
 
-function buildObjectPath(file, clientNameSegment) {
-  const stamp = `${Date.now()}-${randomToken()}`
-  const safeName = sanitizeFilename(file.name)
-  const folder = clientNameSegment
-    ? `${DEV_UPLOAD_ROOT_FOLDER}/${clientNameSegment}`
-    : DEV_UPLOAD_ROOT_FOLDER
-  return `${folder}/${stamp}-${safeName}`
+async function describeInvokeError(error) {
+  try {
+    const body = await error?.context?.json?.()
+    if (body?.error) return new Error(body.error)
+  } catch {
+    /* body already consumed or not JSON — fall back to the original message */
+  }
+  return error instanceof Error ? error : new Error(String(error))
 }
 
 function isAcceptedFile(file) {
