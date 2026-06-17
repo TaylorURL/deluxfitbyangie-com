@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Button, Container, Reveal, SectionEyebrow, SectionIndex, SplitHeading } from '@deluxfit/ds'
-import { finalCta } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Final CTA — the closing statement at full type-specimen scale. The headline
