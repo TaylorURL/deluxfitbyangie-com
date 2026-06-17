@@ -8,19 +8,21 @@ import { Button } from './Button'
  * PricingCard — a single coaching tier. The `highlighted` ("Most Popular") state
  * scales up, swaps to a red-glow border, and reads as the recommended choice.
  *
- * The CTA is rendered as an anchor (via Button `asChild`) so it can open a
- * Stripe Payment Link in a new tab without any backend.
+ * The CTA renders as an anchor (via Button `asChild`). When `ctaHref` is an
+ * internal path (starts with `/` or `#`) the link stays in the SPA and
+ * navigates via the host's anchor handling. External URLs (Stripe Payment
+ * Links, scheduling tools, etc.) open in a new tab with safe rel attributes.
  *
  * @param {object} props
- * @param {string} props.name - tier name
- * @param {string} props.price - formatted price (e.g. "$249")
- * @param {string} [props.period] - billing period label (e.g. "one-time")
- * @param {string} [props.description] - short positioning line
- * @param {string[]} props.features - feature list rendered with check icons
- * @param {string} props.ctaLabel - button text
- * @param {string} props.ctaHref - Stripe Payment Link URL
- * @param {boolean} [props.highlighted] - "Most Popular" emphasis
- * @param {string} [props.badgeLabel] - label for the highlight badge
+ * @param {string} props.name
+ * @param {string} props.price
+ * @param {string} [props.period]
+ * @param {string} [props.description]
+ * @param {string[]} props.features
+ * @param {string} props.ctaLabel
+ * @param {string} props.ctaHref
+ * @param {boolean} [props.highlighted]
+ * @param {string} [props.badgeLabel]
  */
 export const PricingCard = forwardRef(function PricingCard(
   {
@@ -38,6 +40,8 @@ export const PricingCard = forwardRef(function PricingCard(
   },
   ref
 ) {
+  const isInternal =
+    typeof ctaHref === 'string' && (ctaHref.startsWith('/') || ctaHref.startsWith('#'))
   return (
     <div
       ref={ref}
@@ -96,9 +100,13 @@ export const PricingCard = forwardRef(function PricingCard(
         block
         className="mt-9"
       >
-        <a href={ctaHref} target="_blank" rel="noopener noreferrer">
-          {ctaLabel}
-        </a>
+        {isInternal ? (
+          <a href={ctaHref}>{ctaLabel}</a>
+        ) : (
+          <a href={ctaHref} target="_blank" rel="noopener noreferrer">
+            {ctaLabel}
+          </a>
+        )}
       </Button>
     </div>
   )

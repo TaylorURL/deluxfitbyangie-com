@@ -1,52 +1,174 @@
 /* =============================================================================
    DELUXFIT BY ANGIE — ENGLISH CONTENT (en)
    -----------------------------------------------------------------------------
-   ⚠️  PLACEHOLDER CONTENT — FOR ANGIE TO REPLACE.
+   The active English content tree for the multi-page DeluxFit site. Pricing,
+   features, and service language follow the client's finalized plan VERBATIM:
 
-   Every string, statistic, testimonial, image path, and social handle below is
-   placeholder copy written in a confident, motivating fitness-sales voice. Edit
-   here to change the live English site — sections read from this single tree
-   via the i18n context, so nothing else needs to be touched for copy updates.
+     1. Fitness Membership — $14.99 per month
+     2. Personalized Online Coaching — $150 per month
+     3. Live 1-on-1 Online Training — $50 per session (45–60 min)
 
-   • Stripe checkout links live in `src/config/checkout.js`.
-   • Spanish equivalents live in `./es.js` — every key here must exist there.
+   In-Person Personal Training ($75/session) is shown only as a "Coming Soon"
+   teaser — it is NOT bookable and never described as active.
+
+   HARD RULES (kept in lockstep with the brief):
+   • Never advertise daily coaching, weekly check-ins, unlimited messaging,
+     guaranteed results, customized meal plans, or anything beyond the three
+     active services above.
+   • Online Coaching includes a MONTHLY check-in / MONTHLY progress review only.
+   • Nutrition support is "basic nutrition guidance" only — never meal plans.
+
+   Spanish equivalents live in `./es.js` — every key here must exist there.
    ========================================================================== */
 
-import { CHECKOUT_LINKS } from '../../config/checkout'
 import {
   Dumbbell,
   Apple,
-  MessageCircleHeart,
-  Users,
   CalendarCheck,
+  ClipboardCheck,
   LineChart,
+  PlayCircle,
+  Video,
+  Sparkles,
   ShieldCheck,
+  Users,
   Instagram,
+  Library,
+  Home,
+  Building2,
+  MonitorPlay,
+  HandHeart,
+  GraduationCap,
+  HeartPulse,
 } from 'lucide-react'
+
+/* ---------------------------------------------------------------------------
+   Service spec — the three live services + the coming-soon in-person teaser.
+   Every page that surfaces a service reads from this single source so prices,
+   names, and features stay in lockstep. EXACT VALUES — do not paraphrase.
+   ------------------------------------------------------------------------ */
+const services = {
+  membership: {
+    id: 'membership',
+    slug: 'membership',
+    href: '/membership',
+    eyebrow: 'Service 01',
+    name: 'Fitness Membership',
+    tagline: 'Self-guided fitness, on your time.',
+    price: '$14.99',
+    period: '/ month',
+    summary:
+      'Affordable access to workout programs, exercise libraries, and fitness education — without personalized coaching.',
+    bestFor:
+      'Best for individuals who want affordable access to workout programs and fitness education without personalized coaching.',
+    includes: [
+      'Workout library',
+      'Exercise demonstrations',
+      'Home and gym workout routines',
+      'Fitness education content',
+      'Basic nutrition guidance resources',
+      'New content added regularly',
+    ],
+    ctaLabel: 'Sign Up',
+    ctaHref: '/membership#sign-up',
+    cardCta: 'Sign Up',
+  },
+  coaching: {
+    id: 'coaching',
+    slug: 'online-coaching',
+    href: '/online-coaching',
+    eyebrow: 'Service 02',
+    name: 'Personalized Online Coaching',
+    tagline: 'A program built around your goals — guided by Angie.',
+    price: '$150',
+    period: '/ month',
+    summary:
+      'Customized online coaching designed around your goals, fitness level, lifestyle, and experience.',
+    bestFor:
+      'Best for clients who want a structured plan and professional guidance without live training sessions.',
+    includes: [
+      'Initial onboarding assessment',
+      'Personalized workout plan',
+      '4 weekly training programs per month',
+      'Goal-specific programming (fat loss, muscle gain, strength development, general fitness)',
+      'Monthly progress review',
+      'Monthly check-in',
+      'Program adjustments as needed',
+      'Basic nutrition guidance',
+    ],
+    responsibilities: [
+      'Complete workouts independently',
+      'Track your progress',
+      'Submit progress photos and updates monthly',
+    ],
+    ctaLabel: 'Apply Now',
+    ctaHref: '/online-coaching#apply',
+    cardCta: 'Apply Now',
+  },
+  oneOnOne: {
+    id: 'one-on-one',
+    slug: 'training',
+    href: '/training',
+    eyebrow: 'Service 03',
+    name: 'Live 1-on-1 Online Training',
+    tagline: 'Live virtual personal training with Angie.',
+    price: '$50',
+    period: '/ session',
+    sessionLength: '45–60 minutes per session',
+    summary:
+      'Live virtual personal training where Angie works directly with you during the session — real-time coaching, correction, and accountability.',
+    bestFor:
+      'Best for clients who want hands-on coaching and direct interaction during their workouts.',
+    includes: [
+      'Live video session',
+      'Real-time coaching',
+      'Exercise correction',
+      'Motivation and accountability',
+      'Customized workout experience',
+      'Goal-specific instruction',
+    ],
+    ctaLabel: 'Book a Session',
+    ctaHref: '/training#book',
+    cardCta: 'Book a Session',
+  },
+  inPerson: {
+    id: 'in-person',
+    name: 'In-Person Personal Training',
+    price: '$75',
+    period: '/ session',
+    sessionLength: '45–60 minutes per session',
+    summary:
+      'Hands-on, in-person personal training with Angie. Launching soon — not currently bookable.',
+    status: 'Coming Soon',
+  },
+}
 
 const en = {
   meta: {
-    title: 'DeluxFit by Angie — Transform Your Body in 12 Weeks',
+    title: 'DeluxFit by Angie — Online Fitness Coaching & 1-on-1 Training',
     description:
-      'DeluxFit by Angie — online coaching that transforms. Custom workouts, nutrition coaching, and weekly accountability from a certified personal trainer.',
+      'DeluxFit by Angie offers a $14.99/month fitness membership, $150/month personalized online coaching, and $50 live 1-on-1 online training sessions with certified personal trainer Angie.',
   },
 
   brand: {
     name: 'DELUXFIT',
     fullName: 'DeluxFit by Angie',
-    tagline: 'Online coaching that transforms.',
+    tagline: 'Personalized fitness coaching, built around your life.',
   },
 
   nav: [
-    { label: 'Program', href: '#program' },
-    { label: 'Results', href: '#results' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Membership', href: '/membership' },
+    { label: 'Online Coaching', href: '/online-coaching' },
+    { label: '1-on-1 Training', href: '/training' },
+    { label: 'Testimonials', href: '/testimonials' },
+    { label: 'Contact', href: '/contact' },
   ],
 
   header: {
     primaryCta: 'Apply Now',
-    primaryCtaHref: '#pricing',
+    primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Client Login',
     clientLoginAria: 'Client login portal',
     openMenu: 'Open menu',
@@ -64,312 +186,639 @@ const en = {
     switchToSpanish: 'Switch to Spanish',
   },
 
-  hero: {
-    badge: 'Now enrolling new 1-on-1 coaching clients',
-    headline: ['Build the body', 'you stopped', 'believing was possible.'],
-    subhead:
-      'DeluxFit is 1-on-1 online coaching for women who are done starting over. Custom workouts, real nutrition coaching, and weekly accountability — built around your life, not someone else’s highlight reel.',
-    primaryCta: 'Start Your Transformation',
-    secondaryCta: 'See Results',
-    trust: {
-      pillarValue: '1:1',
-      pillarLabel: 'personal coaching',
-      tagline: 'Coaching · Nutrition · Accountability',
+  services,
+
+  /* ----------------------------------------------------------------------- */
+  /*  HOME                                                                    */
+  /* ----------------------------------------------------------------------- */
+  home: {
+    hero: {
+      badge: 'Now coaching new online clients',
+      headline: ['Personalized training', 'built around', 'your goals.'],
+      subhead:
+        'DeluxFit by Angie is personalized online fitness coaching and live 1-on-1 training with certified personal trainer Angie — built for people who want a program designed around their goals, schedule, and experience.',
+      primaryCta: 'See the Programs',
+      primaryCtaHref: '#programs',
+      secondaryCta: 'Apply for Coaching',
+      secondaryCtaHref: '/online-coaching#apply',
+      trust: {
+        pillarValue: '1:1',
+        pillarLabel: 'personalized coaching',
+        tagline: 'Membership · Online Coaching · Live 1-on-1',
+      },
+      imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
     },
-    imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
+
+    intro: {
+      eyebrow: 'Meet Angie',
+      heading: 'A coach who builds the program around the person — not the other way around.',
+      accent: 'around the person',
+      body: [
+        'I’m Angie — a certified personal trainer helping people get stronger, more confident, and more consistent through coaching that actually fits their life.',
+        'Whether you want a self-guided membership, a fully personalized program, or live sessions on video with me, every option below is delivered directly by me — no templates, no resold programs, no guesswork.',
+      ],
+      ctaLabel: 'Read my story',
+      ctaHref: '/about',
+      imageAlt: 'Angie coaching a client through a leg-press set',
+    },
+
+    servicesSection: {
+      eyebrow: 'Choose how we work together',
+      heading: 'Three ways to train with DeluxFit by Angie.',
+      accent: 'Three ways',
+      subhead:
+        'Self-guided membership, personalized online coaching, or live 1-on-1 sessions on video — pick the level of support that fits where you are right now.',
+    },
+
+    transformationCallout: {
+      eyebrow: 'What it looks like',
+      heading: 'Real coaching, built for real life — not the highlight reel.',
+      accent: 'real life',
+      body: 'Client transformation stories and progress photos are featured on the testimonials page as clients complete their programs. Until then, here is what every DeluxFit program is built around.',
+      pillars: [
+        {
+          icon: Dumbbell,
+          title: 'Real Training',
+          description:
+            'Programming designed around your goals — fat loss, muscle gain, strength, or general fitness — not a one-size-fits-all template.',
+        },
+        {
+          icon: HeartPulse,
+          title: 'Real Guidance',
+          description:
+            'Basic nutrition guidance and form-focused coaching so the work you put in actually moves you forward.',
+        },
+        {
+          icon: HandHeart,
+          title: 'Real Support',
+          description:
+            'Direct access to me through every program — monthly check-ins on coaching, live coaching on training sessions.',
+        },
+      ],
+      ctaLabel: 'See Client Stories',
+      ctaHref: '/testimonials',
+    },
+
+    closing: {
+      eyebrow: 'Ready to start?',
+      heading: 'Pick the program that fits where you are.',
+      accent: 'fits where you are',
+      subhead:
+        'Sign up for the membership, apply for personalized coaching, or book a live 1-on-1 session — and we’ll go from there.',
+      primaryCta: 'Apply for Coaching',
+      primaryCtaHref: '/online-coaching#apply',
+      secondaryCta: 'Book a Session',
+      secondaryCtaHref: '/training#book',
+    },
   },
 
-  marqueeItems: [
-    'Strength Training',
-    'Fat Loss',
-    'Nutrition Coaching',
-    'Accountability',
-    'Mindset',
-    'Mobility',
-    'Postpartum Strong',
-  ],
-
-  pain: {
-    eyebrow: 'Sound familiar?',
-    heading: 'You’re not lazy. You’ve just been handed the wrong plan.',
-    accent: 'the wrong plan',
-    subhead:
-      'You’ve tried hard before — maybe harder than anyone knows. The problem was never your effort. It was a cookie-cutter program that ignored your body, your schedule, and your life.',
-    points: [
-      'Tired of starting a new diet every Monday and quitting by Thursday.',
-      'Sick of generic workout plans that leave you sore, bored, and stuck.',
-      'Exhausted by all-or-nothing rules that make food feel like the enemy.',
-      'Frustrated that the scale won’t budge no matter how little you eat.',
-      'Done with “fitspo” programs built for 22-year-olds with no kids and no job.',
-      'Lonely doing it alone, with no one checking in or in your corner.',
-    ],
+  /* ----------------------------------------------------------------------- */
+  /*  ABOUT                                                                   */
+  /* ----------------------------------------------------------------------- */
+  about: {
+    hero: {
+      eyebrow: 'About Angie',
+      heading: 'Hi, I’m Angie — and I built DeluxFit to coach people the way I always wanted to be coached.',
+      accent: 'coach people the way I always wanted to be coached',
+      tagline: 'Certified Personal Trainer · Online & Live',
+      imageAlt: 'Angie coaching a client through a leg-press set',
+    },
+    story: {
+      eyebrow: 'My story',
+      heading: 'From training myself, to training others.',
+      accent: 'training others',
+      paragraphs: [
+        'Fitness has been part of my life for as long as I can remember. What started as a personal pursuit became a career — because I kept watching friends, family, and strangers get handed cookie-cutter programs that ignored their goals, their bodies, and the lives they were actually living.',
+        'I started DeluxFit by Angie to do the opposite: build training that bends around the person, with real coaching, real accountability, and a structure you can keep up with whether you train from a full gym or your living room.',
+        'Whether you’re brand new to lifting or coming back after a long break, you don’t need another generic plan. You need a coach who actually pays attention.',
+      ],
+    },
+    credentials: {
+      eyebrow: 'Certifications & experience',
+      heading: 'Trained to coach, certified to lead.',
+      accent: 'certified to lead',
+      note: 'Detailed certification logos and credential numbers will be added by Angie as part of the public site copy review.',
+      items: [
+        'Certified Personal Trainer',
+        'Continuing education in strength and conditioning',
+        'Years of experience coaching online and in person',
+        'Experience programming for fat loss, muscle gain, strength, and general fitness',
+      ],
+    },
+    philosophy: {
+      eyebrow: 'Coaching philosophy',
+      heading: 'Personalized, professional, sustainable.',
+      accent: 'sustainable',
+      pillars: [
+        {
+          icon: ClipboardCheck,
+          title: 'Built for you',
+          description:
+            'Every program is shaped around your goals, fitness level, lifestyle, and experience — never a generic plan lifted off a shelf.',
+        },
+        {
+          icon: GraduationCap,
+          title: 'Coaching, not guesswork',
+          description:
+            'You get the training plan AND the explanation — why the lifts, why the structure, why the progression. The goal is to leave you smarter and more independent every month.',
+        },
+        {
+          icon: HandHeart,
+          title: 'Honest, sustainable progress',
+          description:
+            'No crash promises, no meal plans, no unrealistic check-in cadence. Basic nutrition guidance, real training, and a structure you can actually maintain.',
+        },
+      ],
+    },
+    cta: {
+      heading: 'Ready to train together?',
+      accent: 'train together',
+      subhead:
+        'Browse the membership, apply for personalized coaching, or book a live 1-on-1 online session.',
+      primary: { label: 'See the Programs', href: '/#programs' },
+      secondary: { label: 'Contact Angie', href: '/contact' },
+    },
   },
 
-  benefits: {
-    eyebrow: 'What you get',
-    heading: 'A complete system — not just another workout PDF.',
-    accent: 'complete system',
-    subhead:
-      'Everything is built for you and adjusted every week as you progress. This is coaching, not a template you download and never open again.',
-    items: [
+  /* ----------------------------------------------------------------------- */
+  /*  MEMBERSHIP                                                              */
+  /* ----------------------------------------------------------------------- */
+  membership: {
+    hero: {
+      eyebrow: 'Service 01 · Fitness Membership',
+      heading: 'A fitness membership built for self-guided training.',
+      accent: 'self-guided training',
+      subhead:
+        'For $14.99 a month you get access to a growing library of workout programs, exercise demonstrations, fitness education content, and basic nutrition guidance resources — on your schedule, at your pace.',
+      primaryCta: 'Sign Up — $14.99 / month',
+      primaryCtaHref: '#sign-up',
+      secondaryCta: 'Compare Programs',
+      secondaryCtaHref: '/#programs',
+    },
+    includesEyebrow: 'What’s included',
+    includesHeading: 'Everything you need to train consistently.',
+    includesAccent: 'train consistently',
+    includes: [
       {
-        icon: Dumbbell,
-        title: 'Custom Workout Plans',
+        icon: Library,
+        title: 'Workout library',
         description:
-          'Programming designed around your goals, equipment, and experience — at home or in the gym, in 3–5 sessions a week.',
+          'A growing catalog of training programs you can follow at your own pace.',
+      },
+      {
+        icon: PlayCircle,
+        title: 'Exercise demonstrations',
+        description:
+          'Video demonstrations for every movement so the form is clear before you start.',
+      },
+      {
+        icon: Home,
+        title: 'Home & gym workout routines',
+        description:
+          'Routines built for whatever you have access to — minimal-equipment workouts at home or full-gym sessions.',
+      },
+      {
+        icon: GraduationCap,
+        title: 'Fitness education content',
+        description:
+          'Short, practical lessons that explain the why behind the training, not just the what.',
       },
       {
         icon: Apple,
-        title: 'Nutrition Coaching',
+        title: 'Basic nutrition guidance resources',
         description:
-          'A flexible, food-freedom approach with targets that fit your real life. No banned foods, no starving, no guilt.',
+          'Educational nutrition resources to help you build sustainable habits alongside your training.',
+      },
+      {
+        icon: Sparkles,
+        title: 'New content added regularly',
+        description:
+          'The library grows over time so your training stays fresh as you progress.',
+      },
+    ],
+    bestFor: {
+      eyebrow: 'Who it’s for',
+      heading: 'Best for individuals who want affordable access to workout programs and fitness education — without personalized coaching.',
+      accent: 'without personalized coaching',
+      body: 'If you’re self-motivated and want a structured library to train from, the membership is the most affordable way to train with DeluxFit. For a personalized program built around your goals, see Online Coaching. For live, real-time sessions with Angie, see 1-on-1 Training.',
+    },
+    signupSection: {
+      id: 'sign-up',
+      eyebrow: 'Sign up',
+      heading: 'Start the membership — $14.99 / month.',
+      accent: '$14.99 / month',
+      body: 'Sign up below and you’ll receive access details from Angie. Cancel anytime.',
+    },
+  },
+
+  /* ----------------------------------------------------------------------- */
+  /*  ONLINE COACHING                                                         */
+  /* ----------------------------------------------------------------------- */
+  coaching: {
+    hero: {
+      eyebrow: 'Service 02 · Personalized Online Coaching',
+      heading: 'Personalized online coaching, designed around you.',
+      accent: 'designed around you',
+      subhead:
+        'For $150 a month you get customized online coaching built around your goals, fitness level, lifestyle, and experience — with a personalized program, monthly check-in, and monthly progress review.',
+      primaryCta: 'Apply Now',
+      primaryCtaHref: '#apply',
+      secondaryCta: 'Compare Programs',
+      secondaryCtaHref: '/#programs',
+    },
+    includesEyebrow: 'What’s included',
+    includesHeading: 'Everything you need — built around you, adjusted as you progress.',
+    includesAccent: 'adjusted as you progress',
+    includes: [
+      {
+        icon: ClipboardCheck,
+        title: 'Initial onboarding assessment',
+        description:
+          'We start with a thorough assessment of your goals, training history, schedule, and any limitations.',
+      },
+      {
+        icon: Dumbbell,
+        title: 'Personalized workout plan',
+        description:
+          'A program designed specifically for you — not a template — based on the onboarding assessment.',
       },
       {
         icon: CalendarCheck,
-        title: 'Weekly Accountability',
+        title: '4 weekly training programs per month',
         description:
-          'Check in every week with photos, stats, and wins. I review everything and adjust your plan so you keep moving.',
+          'Each month you receive four weekly training programs to follow, structured to progress over the month.',
       },
       {
-        icon: MessageCircleHeart,
-        title: 'Direct Access to Angie',
+        icon: Sparkles,
+        title: 'Goal-specific programming',
         description:
-          'Message me between check-ins through the app. Stuck, traveling, or tempted to quit? I’m one text away.',
-      },
-      {
-        icon: Users,
-        title: 'Private Community',
-        description:
-          'Train alongside a group of driven women who celebrate your wins and pull you forward on the hard days.',
+          'Programming for fat loss, muscle gain, strength development, or general fitness — depending on your goal.',
       },
       {
         icon: LineChart,
-        title: 'Progress Tracking',
+        title: 'Monthly progress review',
         description:
-          'See your strength, measurements, and habits trend in one place — proof you’re changing, even when the scale lies.',
+          'Each month we review your progress together to see what’s working and what to adjust.',
+      },
+      {
+        icon: Video,
+        title: 'Monthly check-in',
+        description:
+          'One scheduled check-in per month to review training, ask questions, and refine the plan.',
+      },
+      {
+        icon: ClipboardCheck,
+        title: 'Program adjustments as needed',
+        description:
+          'Your program is updated based on the monthly review so it keeps moving with you.',
+      },
+      {
+        icon: Apple,
+        title: 'Basic nutrition guidance',
+        description:
+          'General, sustainable nutrition guidance to support your training — no meal plans.',
       },
     ],
+    responsibilities: {
+      eyebrow: 'Client responsibilities',
+      heading: 'What you bring to the program.',
+      accent: 'you bring',
+      body: 'Online coaching works best when both sides are doing their part. Your side looks like this:',
+      items: [
+        'Complete workouts independently',
+        'Track your progress',
+        'Submit progress photos and updates monthly',
+      ],
+    },
+    bestFor: {
+      eyebrow: 'Who it’s for',
+      heading: 'Best for clients who want a structured plan and professional guidance — without live training sessions.',
+      accent: 'without live training sessions',
+      body: 'If you want a program built specifically for you that you can follow on your own time, with monthly coaching from Angie, Online Coaching is the fit. If you also want live, real-time coaching, add or switch to 1-on-1 Training.',
+    },
+    applicationSection: {
+      id: 'apply',
+      eyebrow: 'Apply for coaching',
+      heading: 'Tell Angie about your goals.',
+      accent: 'your goals',
+      body: 'Fill out the application below. Angie reviews every application personally and follows up with next steps for onboarding.',
+    },
+    application: {
+      submitLabel: 'Submit Application',
+      submittingLabel: 'Submitting…',
+      successHeading: 'Application received.',
+      successBody:
+        'Thanks for applying. Angie will review your application personally and follow up by email with next steps.',
+      errorBody:
+        'Something went wrong submitting your application. Please try again, or email Angie directly from the Contact page.',
+      fields: {
+        name: { label: 'Full name', placeholder: 'Your name', required: true },
+        email: { label: 'Email', placeholder: 'you@example.com', required: true },
+        phone: { label: 'Phone (optional)', placeholder: '(555) 555-5555' },
+        age: { label: 'Age', placeholder: '30', required: true },
+        location: { label: 'City / location', placeholder: 'City, State' },
+        goal: {
+          label: 'Primary goal',
+          placeholder: 'Select your primary goal',
+          required: true,
+          options: [
+            'Fat loss',
+            'Muscle gain',
+            'Strength development',
+            'General fitness',
+            'Other',
+          ],
+        },
+        experience: {
+          label: 'Training experience',
+          placeholder: 'Select your experience level',
+          required: true,
+          options: [
+            'Brand new — never trained consistently',
+            'Beginner — trained occasionally',
+            'Intermediate — trained consistently for 1+ years',
+            'Advanced — multiple years of structured training',
+          ],
+        },
+        equipment: {
+          label: 'What equipment do you have access to?',
+          placeholder:
+            'Full gym, dumbbells at home, bodyweight only, etc.',
+          required: true,
+        },
+        availability: {
+          label: 'How many days per week can you train?',
+          placeholder: 'e.g. 3–4 days',
+          required: true,
+        },
+        notes: {
+          label: 'Anything else Angie should know?',
+          placeholder:
+            'Injuries, medical conditions, schedule constraints, specific goals…',
+        },
+        consent: {
+          label:
+            'I understand this is an application — Angie will review it and follow up before any payment is taken.',
+          required: true,
+        },
+      },
+    },
   },
 
-  program: {
-    eyebrow: 'The program',
-    heading: 'The DeluxFit 12-week transformation method.',
-    accent: 'transformation method',
-    subhead:
-      'Three focused phases that build on each other — so you don’t just lose weight, you build a body and a routine that lasts.',
-    phases: [
+  /* ----------------------------------------------------------------------- */
+  /*  1-ON-1 TRAINING                                                         */
+  /* ----------------------------------------------------------------------- */
+  training: {
+    hero: {
+      eyebrow: 'Service 03 · Live 1-on-1 Online Training',
+      heading: 'Live virtual personal training — directly with Angie.',
+      accent: 'directly with Angie',
+      subhead:
+        '$50 per session, 45–60 minutes per session. Live video sessions where Angie works directly with you — real-time coaching, exercise correction, motivation, and accountability built into every session.',
+      primaryCta: 'Book a Session',
+      primaryCtaHref: '#book',
+      secondaryCta: 'Compare Programs',
+      secondaryCtaHref: '/#programs',
+    },
+    includesEyebrow: 'What’s included',
+    includesHeading: 'Hands-on coaching, on video, in real time.',
+    includesAccent: 'in real time',
+    includes: [
       {
-        label: 'Phase 01 · Weeks 1–4',
-        title: 'Foundation',
+        icon: Video,
+        title: 'Live video session',
         description:
-          'We dial in your nutrition baseline, master core lifts with perfect form, and build the daily habits everything else stands on.',
+          'A real-time, on-camera session — Angie is there with you for the entire workout.',
       },
       {
-        label: 'Phase 02 · Weeks 5–8',
-        title: 'Build & Burn',
+        icon: HandHeart,
+        title: 'Real-time coaching',
         description:
-          'Training intensifies and nutrition gets strategic. This is where the mirror starts changing and your confidence catches fire.',
+          'Coaching as you train: tempo, cues, intensity, rest — all called live.',
       },
       {
-        label: 'Phase 03 · Weeks 9–12',
-        title: 'Sculpt & Sustain',
+        icon: ClipboardCheck,
+        title: 'Exercise correction',
         description:
-          'We sharpen your results and lock in a lifestyle you can keep — so the transformation outlasts the program.',
+          'Angie watches your form and corrects it as you go, so the work counts.',
+      },
+      {
+        icon: Sparkles,
+        title: 'Motivation and accountability',
+        description:
+          'No skipping reps, no half-effort sets — accountability is part of the session.',
+      },
+      {
+        icon: Dumbbell,
+        title: 'Customized workout experience',
+        description:
+          'Each session is built around what you’re working on and the equipment you have.',
+      },
+      {
+        icon: MonitorPlay,
+        title: 'Goal-specific instruction',
+        description:
+          'Sessions are built around your goal — fat loss, muscle gain, strength, or general fitness.',
       },
     ],
-    stats: [
-      { value: '12', label: 'Week Program' },
-      { value: '3', label: 'Focused Phases' },
-      { value: '1:1', label: 'Coaching Format' },
-      { value: '14', label: 'Day Guarantee' },
-    ],
+    sessionDetails: {
+      eyebrow: 'Session details',
+      length: '45–60 minutes per session',
+      price: '$50 per session',
+      bestFor:
+        'Best for clients who want hands-on coaching and direct interaction during their workouts.',
+    },
+    bookSection: {
+      id: 'book',
+      eyebrow: 'Book a session',
+      heading: 'Pick a time and train with Angie live.',
+      accent: 'train with Angie live',
+      body: 'Fill out the request below with a few session times that work for you. Angie will confirm by email and send the secure video link.',
+    },
+    booking: {
+      submitLabel: 'Request Session',
+      submittingLabel: 'Submitting…',
+      successHeading: 'Session request received.',
+      successBody:
+        'Thanks — Angie will reach out to confirm your session and share the secure video link.',
+      errorBody:
+        'Something went wrong submitting your request. Please try again, or email Angie directly from the Contact page.',
+      fields: {
+        name: { label: 'Full name', placeholder: 'Your name', required: true },
+        email: { label: 'Email', placeholder: 'you@example.com', required: true },
+        phone: { label: 'Phone (optional)', placeholder: '(555) 555-5555' },
+        timezone: {
+          label: 'Time zone',
+          placeholder: 'e.g. EST, PST, CST',
+          required: true,
+        },
+        availability: {
+          label: 'Preferred session times',
+          placeholder:
+            'List a few dates / times that work for you (e.g. Tue 7am EST, Wed 6pm EST)',
+          required: true,
+        },
+        goal: {
+          label: 'What you want to work on',
+          placeholder:
+            'Form correction, programming, strength, fat loss, getting started, etc.',
+          required: true,
+        },
+        equipment: {
+          label: 'Equipment available',
+          placeholder: 'Full gym, dumbbells, bodyweight only, etc.',
+        },
+        notes: {
+          label: 'Anything else Angie should know?',
+          placeholder: 'Injuries, experience level, specific concerns…',
+        },
+      },
+    },
   },
 
-  results: {
-    eyebrow: 'Real women, real results',
-    heading: 'Built on what real transformations need.',
-    accent: 'real transformations need',
-    subhead:
-      'Real client stories and before/after photos will be featured here as Angie’s clients complete their programs. Until then, this is what every DeluxFit transformation is built around.',
-    pillars: [
+  /* ----------------------------------------------------------------------- */
+  /*  TESTIMONIALS                                                            */
+  /* ----------------------------------------------------------------------- */
+  testimonials: {
+    hero: {
+      eyebrow: 'Client stories',
+      heading: 'Real clients, real progress.',
+      accent: 'real progress',
+      subhead:
+        'Client success stories, reviews, and transformation photos are featured here as Angie’s clients complete their programs. The stories below are placeholders shown until real client content is added.',
+    },
+    placeholderNote:
+      'Placeholder content — real client stories will appear here as Angie’s clients complete their programs.',
+    items: [
       {
-        title: 'Real Strength',
-        description:
-          'Lifts that get heavier, energy that lasts, and a body that can do more than it used to.',
+        metric: 'Coming soon',
+        quote:
+          'Client success stories will live here. Angie’s clients will share what changed, what they learned, and how they kept it.',
+        name: 'Future Client',
+        result: 'Real story coming soon',
+        rating: 5,
       },
       {
-        title: 'Real Habits',
-        description:
-          'Food, training, and recovery routines you can actually keep when life gets busy.',
+        metric: 'Coming soon',
+        quote:
+          'This is a placeholder card. Once clients complete their programs, their words and results will appear here in their own voice.',
+        name: 'Future Client',
+        result: 'Real story coming soon',
+        rating: 5,
       },
       {
-        title: 'Real Confidence',
-        description:
-          'How you show up in the mirror, in the gym, and in every room you walk into.',
+        metric: 'Coming soon',
+        quote:
+          'Reviews and quotes are reserved for real clients only. We do not invent testimonials — what shows up here will be genuine.',
+        name: 'Future Client',
+        result: 'Real story coming soon',
+        rating: 5,
       },
     ],
+    galleryEyebrow: 'Transformations',
+    galleryHeading: 'Before & after gallery.',
+    galleryAccent: 'Before & after',
     galleryNote:
-      'Before & after photos coming soon — placeholders shown until Angie adds real client transformations.',
+      'Transformation photos coming soon — placeholders are shown until Angie adds real client before/after content.',
     gallery: [
       { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
       { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
       { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
+      { label: 'Coming soon', alt: 'Before and after transformation placeholder' },
     ],
+    cta: {
+      heading: 'Want to be one of the real stories?',
+      accent: 'real stories',
+      subhead:
+        'Pick a program and start. Your transformation can be the next one we feature here — with your permission.',
+      primary: { label: 'Apply for Coaching', href: '/online-coaching#apply' },
+      secondary: { label: 'Book a Session', href: '/training#book' },
+    },
   },
 
-  pricing: {
-    eyebrow: 'Choose your transformation',
-    heading: 'Pick the plan that matches your goals.',
-    accent: 'matches your goals',
+  /* ----------------------------------------------------------------------- */
+  /*  CONTACT                                                                 */
+  /* ----------------------------------------------------------------------- */
+  contact: {
+    hero: {
+      eyebrow: 'Contact',
+      heading: 'Get in touch with Angie.',
+      accent: 'with Angie',
+      subhead:
+        'Questions about the membership, online coaching, or live 1-on-1 sessions? Send a message below — Angie reads and responds to every one personally.',
+    },
+    socialEyebrow: 'Follow along',
+    socialHeading: 'Social',
+    form: {
+      submitLabel: 'Send Message',
+      submittingLabel: 'Sending…',
+      successHeading: 'Message sent.',
+      successBody:
+        'Thanks for reaching out — Angie will get back to you by email as soon as possible.',
+      errorBody:
+        'Something went wrong sending your message. Please try again in a moment, or reach out on social.',
+      fields: {
+        name: { label: 'Your name', placeholder: 'Your name', required: true },
+        email: { label: 'Email', placeholder: 'you@example.com', required: true },
+        topic: {
+          label: 'What is this about?',
+          placeholder: 'Pick a topic',
+          required: true,
+          options: [
+            'Membership question',
+            'Online coaching question',
+            '1-on-1 training question',
+            'Press / collaborations',
+            'Something else',
+          ],
+        },
+        message: {
+          label: 'Message',
+          placeholder: 'Tell Angie what you’d like to talk about…',
+          required: true,
+        },
+      },
+    },
+  },
+
+  /* ----------------------------------------------------------------------- */
+  /*  PROGRAMS GRID — shared section used on Home + service pages             */
+  /* ----------------------------------------------------------------------- */
+  programs: {
+    eyebrow: 'Programs',
+    heading: 'Pick the level of support that fits.',
+    accent: 'level of support',
     subhead:
-      'Every tier includes custom training, nutrition coaching, and weekly accountability. Cancel anytime — no contracts, no games.',
-    note: 'Prices shown in USD. Placeholder pricing — Angie sets the final numbers in Stripe.',
-    tiers: [
-      {
-        id: 'kickstart',
-        name: 'Kickstart',
-        price: '$149',
-        period: '/ 1 month',
-        description: 'Test the waters and feel the difference in 30 days.',
-        features: [
-          'Custom 4-week workout plan',
-          'Personalized nutrition targets',
-          'Weekly check-in & plan adjustments',
-          'In-app messaging support',
-          'Private community access',
-        ],
-        ctaLabel: 'Start Kickstart',
-        ctaHref: CHECKOUT_LINKS.kickstart,
-        highlighted: false,
-      },
-      {
-        id: 'transform',
-        name: 'Transform',
-        price: '$129',
-        period: '/ mo · 3 months',
-        description: 'The full 12-week method — our most popular path to real change.',
-        features: [
-          'Everything in Kickstart',
-          'Full 12-week transformation method',
-          'Bi-weekly form-check video reviews',
-          'Priority messaging with Angie',
-          'Habit & mindset coaching modules',
-          'Progress tracking dashboard',
-        ],
-        ctaLabel: 'Start Transforming',
-        ctaHref: CHECKOUT_LINKS.transform,
-        highlighted: true,
-        badgeLabel: 'Most Popular',
-      },
-      {
-        id: 'elite',
-        name: 'Elite 1:1',
-        price: '$199',
-        period: '/ mo · 6 months',
-        description: 'Maximum access for the woman who wants the fastest, deepest results.',
-        features: [
-          'Everything in Transform',
-          'Weekly 1:1 video coaching calls',
-          'Fully bespoke training & nutrition',
-          'Daily check-in & unlimited messaging',
-          'Supplement & recovery guidance',
-          'Lifetime alumni community access',
-        ],
-        ctaLabel: 'Go Elite',
-        ctaHref: CHECKOUT_LINKS.elite,
-        highlighted: false,
-      },
-    ],
+      'Three live services and one coming soon. Pricing and features are exact — nothing hidden.',
   },
 
-  guarantee: {
-    icon: ShieldCheck,
-    eyebrow: 'Zero risk',
-    heading: 'The 14-day “love it or it’s free” guarantee.',
-    accent: 'love it or it’s free',
-    dayBadge: 'Day guarantee',
-    body: 'Show up, do the work, and use the coaching for 14 days. If you don’t feel more confident, more capable, and genuinely supported, email us and get every penny back. The only risk is staying exactly where you are.',
-    cta: 'Claim Your Spot',
-  },
-
-  about: {
-    eyebrow: 'Meet your coach',
-    name: 'Angie',
-    heading: 'Hi, I’m Angie — and I built DeluxFit for the woman you’re becoming.',
-    accent: 'the woman you’re becoming',
-    bio: [
-      'I help women cut through the noise of crash diets and punishing workouts to build bodies — and confidence — that last. I’ve been where you are: frustrated, overwhelmed, and ready for something that finally works.',
-      'DeluxFit is the coaching I wish I’d had: real food, smart training, and a coach who actually shows up. No shame, no extremes — just a clear system and someone in your corner every single week.',
-    ],
-    credentials: [
-      'Certified Personal Trainer (NASM-CPT)',
-      'Precision Nutrition Level 1 Coach',
-      'Pre/Postnatal Fitness Specialist',
-      '1-on-1 online & in-person coaching',
-    ],
-    imageAlt: 'Angie coaching a client through a leg-press set',
-  },
-
-  faq: {
-    eyebrow: 'Questions',
-    heading: 'Everything you need to know.',
-    accent: 'need to know',
-    items: [
-      {
-        question: 'Do I need a gym membership?',
-        answer:
-          'Not at all. Tell me what you have — a full gym, a few dumbbells, or just your bodyweight at home — and I’ll build your program around it. You can get incredible results training from home.',
-      },
-      {
-        question: 'I’m a total beginner. Is this for me?',
-        answer:
-          'Absolutely. Beginners are exactly who DeluxFit is built for. Every workout includes video demos and form coaching, and we scale everything to your level so you build confidence from day one.',
-      },
-      {
-        question: 'How is this different from a free workout app?',
-        answer:
-          'Apps hand you a generic plan and disappear. DeluxFit is real coaching: your program is built for you, adjusted every week based on your progress, and backed by direct access to me whenever you’re stuck.',
-      },
-      {
-        question: 'Will I have to give up the foods I love?',
-        answer:
-          'Never. My approach is flexible and sustainable — no banned foods, no starving. You’ll learn to enjoy the foods you love while still hitting your goals, which is exactly why it lasts.',
-      },
-      {
-        question: 'How much time do I need each week?',
-        answer:
-          'Programs typically run 3–5 training sessions a week at 30–45 minutes each, plus a few minutes for your weekly check-in. The plan flexes around your schedule — not the other way around.',
-      },
-      {
-        question: 'What if it’s not for me?',
-        answer:
-          'You’re protected by the 14-day “love it or it’s free” guarantee. Try the coaching risk-free, and if it’s not the right fit, email us within 14 days for a full refund.',
-      },
-    ],
-  },
-
-  finalCta: {
-    eyebrow: 'Your transformation starts now',
-    heading: 'The next 12 weeks are happening either way.',
-    accent: 'either way',
-    subhead:
-      'You can arrive there wishing you’d started today — or arrive stronger, leaner, and prouder than ever. Spots in each coaching group are limited so I can give every client real attention.',
-    primaryCta: 'Start Your Transformation',
-    secondaryCta: 'Read the FAQ',
+  /* ----------------------------------------------------------------------- */
+  /*  In-person coming soon                                                   */
+  /* ----------------------------------------------------------------------- */
+  inPerson: {
+    eyebrow: 'Coming soon',
+    title: 'In-Person Personal Training',
+    price: '$75 / session',
+    sessionLength: '45–60 minutes per session',
+    summary:
+      'Hands-on, in-person personal training with Angie. Launching soon — not currently bookable.',
+    icon: Building2,
   },
 
   footer: {
     blurb:
-      'Online fitness coaching that transforms bodies and rebuilds confidence — one woman at a time.',
+      'Personalized fitness coaching and live 1-on-1 online training with certified personal trainer Angie.',
     navLabel: 'Footer',
     rightsReserved: 'All rights reserved.',
     socials: [
       { label: 'Instagram', href: 'https://instagram.com/REPLACE_ME', icon: Instagram },
-      // TikTok has no dedicated lucide glyph; the music note stands in until swapped.
+      // TikTok has no dedicated lucide glyph; the inline glyph picks up this marker.
       { label: 'TikTok', href: 'https://tiktok.com/@REPLACE_ME', icon: 'tiktok' },
     ],
     smallPrint:
-      'Results vary. DeluxFit by Angie provides fitness and nutrition coaching for educational purposes and is not a substitute for medical advice. Consult your physician before beginning any exercise or nutrition program.',
+      'Results vary. DeluxFit by Angie provides fitness coaching for educational purposes and is not a substitute for medical advice. Consult your physician before beginning any exercise or nutrition program.',
   },
 
   portal: {
@@ -378,8 +827,16 @@ const en = {
     comingSoon: 'Coming soon',
     headingLines: ['Client', 'Portal'],
     blurb:
-      'A members-only home for current DeluxFit clients — your training plan, weekly check-ins, macros, progress trends, and direct chat with Angie — is launching shortly.',
+      'A members-only home for current DeluxFit clients is launching shortly.',
     signInHint: 'Existing client? Sign in here once we go live.',
+  },
+
+  /* ----------------------------------------------------------------------- */
+  /*  Shared icons exposed for components that want a generic icon by name    */
+  /* ----------------------------------------------------------------------- */
+  icons: {
+    shield: ShieldCheck,
+    users: Users,
   },
 }
 
