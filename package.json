@@ -1,7 +1,7 @@
 {
   "name": "deluxfitbyangie-com",
   "private": true,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "DeluxFit by Angie — direct-sale funnel for a personal training program.",
   "type": "module",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.4",
     "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/supabase-js": "^2.45.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.29.2",
