@@ -5,7 +5,7 @@ const SWITCHER_BASE =
   'group/lang inline-flex items-center rounded-df-sm border border-df-border-strong bg-df-surface/40 p-0.5 transition-colors duration-200 ease-df-out hover:border-df-border-hover'
 
 const OPTION_BASE =
-  'relative inline-flex items-center justify-center rounded-[calc(theme(borderRadius.df-sm)-2px)] px-3 text-[11px] font-700 uppercase tracking-[0.22em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg'
+  'relative inline-flex items-center justify-center rounded-df-xs px-3 text-[11px] font-700 uppercase tracking-[0.22em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg'
 
 /**
  * LanguageSwitcher — segmented EN / ES control in the header. Reads the
