@@ -69,6 +69,10 @@ export default function App() {
   const { meta } = useContent()
   useDocumentMeta(meta)
 
+  if (isDevUploadRoute()) {
+    return <DevUpload />
+  }
+
   if (isPortalRoute()) {
     return <ClientPortalPlaceholder />
   }
