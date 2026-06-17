@@ -50,6 +50,17 @@ export default function Membership() {
         items={membership.includes}
       />
 
+      <Container size="md">
+        <Reveal>
+          <div className="flex items-start gap-3 rounded-df-md border border-df-border-strong bg-df-surface-2 px-5 py-4">
+            <Info className="mt-0.5 h-5 w-5 shrink-0 text-df-accent-bright" aria-hidden="true" />
+            <p className="text-sm leading-relaxed text-df-text-muted">
+              {membership.notPersonalizedCallout}
+            </p>
+          </div>
+        </Reveal>
+      </Container>
+
       <Section
         eyebrow={membership.bestFor.eyebrow}
         heading={membership.bestFor.heading}
