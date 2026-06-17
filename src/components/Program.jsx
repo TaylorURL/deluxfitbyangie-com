@@ -1,5 +1,5 @@
 import { Reveal, Section, StatBlock } from '@deluxfit/ds'
-import { program } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Program Breakdown — the three-phase 12-week method as a numeral-led timeline,
