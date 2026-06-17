@@ -27,6 +27,17 @@ function isPortalRoute() {
 }
 
 /**
+ * DEV-UPLOAD ROUTE — `/dev-upload` is a standalone media-upload page for
+ * Angie's clients to drop progress images and videos. Same SPA-rewrite
+ * pattern as `/portal`: Vercel serves index.html and this conditional
+ * picks up the path on the client.
+ */
+function isDevUploadRoute() {
+  if (typeof window === 'undefined') return false
+  return window.location.pathname.replace(/\/+$/, '').toLowerCase().startsWith('/dev-upload')
+}
+
+/**
  * Keep <title> and the description / OG meta tags in sync with the active
  * locale so search engines, social previews, and the browser tab match the
  * language the visitor is reading.
