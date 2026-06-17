@@ -1,12 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/config/supabase'
-
-const AuthContext = createContext(null)
+import { AuthContext } from './useAuth'
 
 /**
  * AuthProvider — owns the Supabase Auth session and exposes sign-in / sign-up /
  * sign-out to the member portal. The session is hydrated on mount and kept in
- * sync via `onAuthStateChange`.
+ * sync via `onAuthStateChange`. The `useAuth` hook lives in `./useAuth`.
  */
 export default function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
@@ -54,11 +53,4 @@ export default function AuthProvider({ children }) {
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
-
-/** Access the auth session + actions. Must be used inside <AuthProvider>. */
-export function useAuth() {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>.')
-  return ctx
 }
