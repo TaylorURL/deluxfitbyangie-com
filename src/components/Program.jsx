@@ -7,6 +7,7 @@ import { useContent } from '@/i18n'
  * anchor. Anchored at #program for the header nav.
  */
 export default function Program() {
+  const { program } = useContent()
   return (
     <Section
       id="program"
