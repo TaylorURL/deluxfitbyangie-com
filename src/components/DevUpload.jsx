@@ -495,8 +495,8 @@ export default function DevUpload() {
               >
                 <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
                 <p>
-                  All {successCount} {successCount === 1 ? 'file is' : 'files are'} on the way to
-                  Angie.
+                  All {successCount} {successCount === 1 ? 'file has' : 'files have'} been received
+                  and will appear on the site.
                 </p>
               </div>
             ) : null}
