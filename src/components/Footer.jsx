@@ -1,5 +1,6 @@
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -86,11 +87,14 @@ export default function Footer() {
           <span className="text-df-accent-deep">.</span>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-df-border py-8">
-          <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
-          <p className="text-xs text-df-text-faint">
-            © {CURRENT_YEAR} {brand.fullName}. {footer.rightsReserved}
-          </p>
+        <div className="flex flex-col gap-4 border-t border-df-border py-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4">
+            <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
+            <p className="text-xs text-df-text-faint">
+              © {CURRENT_YEAR} {brand.fullName}. {footer.rightsReserved}
+            </p>
+          </div>
+          <LanguageSwitcher className="self-start sm:self-center" />
         </div>
       </Container>
     </footer>
