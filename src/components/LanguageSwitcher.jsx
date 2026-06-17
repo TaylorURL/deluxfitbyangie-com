@@ -8,15 +8,11 @@ const OPTION_BASE =
   'relative inline-flex items-center justify-center rounded-df-xs px-3 text-[11px] font-700 uppercase tracking-[0.22em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg'
 
 /**
- * LanguageSwitcher — segmented EN / ES control in the header. Reads the
- * available locales from the language context and reports the active one via
- * `aria-pressed`, so screen readers announce the current selection. Styled to
- * sit comfortably alongside Client Login and the primary CTA in both desktop
- * and mobile drawer contexts.
+ * LanguageSwitcher — segmented EN / ES control rendered in the site footer.
  *
  * @param {object} props
- * @param {'sm'|'md'} [props.size='sm'] - control height (matches Client Login)
- * @param {boolean} [props.block=false] - stretch full width (mobile drawer)
+ * @param {'sm'|'md'} [props.size='sm'] - control height
+ * @param {boolean} [props.block=false] - stretch full width
  */
 export default function LanguageSwitcher({ size = 'sm', block = false, className }) {
   const { locale, setLocale, locales } = useLanguage()
