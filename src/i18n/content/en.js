@@ -326,7 +326,7 @@ const en = {
           icon: HandHeart,
           title: 'Honest, sustainable progress',
           description:
-            'No crash promises, no rigid meal plans, no unrealistic check-in cadence. Basic nutrition guidance, real training, and a structure you can actually maintain.',
+            'No crash promises, no meal plans, no unrealistic check-in cadence. Basic nutrition guidance, real training, and a structure you can actually maintain.',
         },
       ],
     },
@@ -476,7 +476,7 @@ const en = {
         icon: Apple,
         title: 'Basic nutrition guidance',
         description:
-          'General, sustainable nutrition guidance to support your training — no rigid meal plans.',
+          'General, sustainable nutrition guidance to support your training — no meal plans.',
       },
     ],
     responsibilities: {
