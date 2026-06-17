@@ -13,6 +13,8 @@ export { Accordion, FaqItem } from './Accordion'
 
 // Forms
 export { Input, inputVariants } from './Input'
+export { Textarea, textareaVariants } from './Textarea'
+export { Select, selectVariants } from './Select'
 export { Field } from './Field'
 
 // Marketing primitives

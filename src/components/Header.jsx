@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { Link, useLocation, normalizePath } from '@/router'
 
 const MotionDiv = motion.div
 const MotionButton = motion.button
-const MotionAnchor = motion.a
 
 /**
  * PORTAL ENTRY POINT — temporary destination for the "Client Login" affordance.
@@ -20,14 +20,8 @@ const NAV_LINK_BASE =
   'group/link relative inline-flex h-9 items-center px-1 text-[12px] font-700 uppercase tracking-[0.18em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg'
 
 const DRAWER_TRANSITION = { type: 'tween', ease: [0.22, 1, 0.36, 1], duration: 0.42 }
-const DRAWER_VARIANTS = {
-  hidden: { x: '100%' },
-  visible: { x: 0 },
-}
-const BACKDROP_VARIANTS = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-}
+const DRAWER_VARIANTS = { hidden: { x: '100%' }, visible: { x: 0 } }
+const BACKDROP_VARIANTS = { hidden: { opacity: 0 }, visible: { opacity: 1 } }
 
 function useScrolled(threshold = 12) {
   const [scrolled, setScrolled] = useState(false)
@@ -38,28 +32,6 @@ function useScrolled(threshold = 12) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [threshold])
   return scrolled
-}
-
-function useActiveSection(ids) {
-  const [active, setActive] = useState(null)
-  useEffect(() => {
-    if (!ids.length) return
-    const elements = ids.map(id => document.getElementById(id)).filter(Boolean)
-    if (!elements.length) return
-
-    const observer = new IntersectionObserver(
-      entries => {
-        const visible = entries
-          .filter(entry => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]) setActive(visible[0].target.id)
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
-    )
-    elements.forEach(element => observer.observe(element))
-    return () => observer.disconnect()
-  }, [ids])
-  return active
 }
 
 function useBodyScrollLock(locked) {
@@ -86,10 +58,10 @@ function useEscapeKey(active, onEscape) {
 
 function NavLink({ href, label, active, onClick }) {
   return (
-    <a
+    <Link
       href={href}
       onClick={onClick}
-      aria-current={active ? 'true' : undefined}
+      aria-current={active ? 'page' : undefined}
       className={cn(
         NAV_LINK_BASE,
         active ? 'text-df-text' : 'text-df-text-muted hover:text-df-text'
@@ -105,13 +77,13 @@ function NavLink({ href, label, active, onClick }) {
           )}
         />
       </span>
-    </a>
+    </Link>
   )
 }
 
 function ClientLoginLink({ block = false, onClick, label, ariaLabel }) {
   return (
-    <a
+    <Link
       href={PORTAL_HREF}
       onClick={onClick}
       aria-label={ariaLabel}
@@ -125,17 +97,17 @@ function ClientLoginLink({ block = false, onClick, label, ariaLabel }) {
         className="h-4 w-4 text-df-text-muted transition-colors duration-200 group-hover/login:text-df-accent-bright"
       />
       {label}
-    </a>
+    </Link>
   )
 }
 
 function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
   return (
     <Button asChild size={size} block={block} onClick={onClick}>
-      <a href={href}>
+      <Link href={href}>
         {label}
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </a>
+      </Link>
     </Button>
   )
 }
@@ -143,33 +115,26 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
 /**
  * Header — the DeluxFit branded site chrome. Sits transparent over the hero
  * type-specimen, then crystallises into a blurred, hairline-bordered surface
- * once the page scrolls. On wide screens it shows the logo, an animated
- * underline nav with active-section tracking, a ghost-styled Client Login
- * entry point for the forthcoming member portal, and the red primary CTA.
- * On mobile it collapses into a polished right-side drawer with a backdrop
- * blur, staggered link entry, and action affordances (CTA, login) pinned
- * to the bottom.
+ * once the page scrolls. The page-based nav reads from the active i18n
+ * content tree; active state matches the current pathname.
  */
 export default function Header() {
   const { brand, nav, header } = useContent()
+  const { pathname } = useLocation()
   const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
-  const sectionIds = useMemo(
-    () =>
-      nav
-        .map(item => item.href)
-        .filter(href => href.startsWith('#') && href !== '#top')
-        .map(href => href.slice(1)),
-    [nav]
-  )
-  const activeSection = useActiveSection(sectionIds)
   const prefersReducedMotion = useReducedMotion()
+  const currentPath = normalizePath(pathname)
 
   useBodyScrollLock(menuOpen)
   useEscapeKey(menuOpen, () => setMenuOpen(false))
 
   const closeMenu = () => setMenuOpen(false)
-  const isActive = href => href.startsWith('#') && activeSection === href.slice(1)
+  const isActive = href => {
+    const target = normalizePath(href.split('#')[0])
+    if (target === '/') return currentPath === '/'
+    return currentPath === target || currentPath.startsWith(`${target}/`)
+  }
 
   return (
     <header
@@ -187,8 +152,8 @@ export default function Header() {
             scrolled ? 'h-16 sm:h-[68px]' : 'h-20 sm:h-24'
           )}
         >
-          <a
-            href="#top"
+          <Link
+            href="/"
             aria-label={brand.fullName}
             className="group/logo relative inline-flex items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
           >
@@ -207,11 +172,11 @@ export default function Header() {
               )}
               draggable="false"
             />
-          </a>
+          </Link>
 
           <nav
             aria-label={header.primaryNavLabel}
-            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 md:flex lg:gap-9"
+            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex lg:gap-7 xl:gap-9"
           >
             {nav.map(item => (
               <NavLink
@@ -223,7 +188,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2.5 md:flex">
+          <div className="hidden items-center gap-2.5 lg:flex">
             <ClientLoginLink label={header.clientLogin} ariaLabel={header.clientLoginAria} />
             <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
           </div>
@@ -234,7 +199,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen(open => !open)}
-            className="flex h-11 w-11 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg lg:hidden"
           >
             {menuOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -247,7 +212,7 @@ export default function Header() {
 
       <AnimatePresence>
         {menuOpen && (
-          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="md:hidden">
+          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="lg:hidden">
             <MotionButton
               type="button"
               aria-label={header.closeMenu}
@@ -287,23 +252,16 @@ export default function Header() {
 
               <div className="flex flex-1 flex-col overflow-y-auto px-5 py-6">
                 <nav aria-label={header.mobileNavLabel} className="flex flex-col">
-                  {nav.map((item, index) => {
+                  {nav.map(item => {
                     const active = isActive(item.href)
                     return (
-                      <MotionAnchor
+                      <Link
                         key={item.href}
                         href={item.href}
                         onClick={closeMenu}
-                        aria-current={active ? 'true' : undefined}
-                        initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
-                        animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
-                        transition={{
-                          delay: 0.1 + index * 0.05,
-                          duration: 0.4,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
+                        aria-current={active ? 'page' : undefined}
                         className={cn(
-                          'group/mlink flex items-center justify-between border-b border-df-border py-5 font-display text-3xl font-400 uppercase tracking-tight transition-colors duration-200 ease-df-out',
+                          'group/mlink flex items-center justify-between border-b border-df-border py-5 font-display text-2xl font-400 uppercase tracking-tight transition-colors duration-200 ease-df-out',
                           active
                             ? 'text-df-accent-bright'
                             : 'text-df-text hover:text-df-accent-bright'
@@ -314,7 +272,7 @@ export default function Header() {
                           aria-hidden="true"
                           className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:translate-x-1 group-hover/mlink:-translate-y-1 group-hover/mlink:text-df-accent"
                         />
-                      </MotionAnchor>
+                      </Link>
                     )
                   })}
                 </nav>

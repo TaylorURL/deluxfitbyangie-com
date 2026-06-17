@@ -1,26 +1,15 @@
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { Link } from '@/router'
 import LanguageSwitcher from './LanguageSwitcher'
+import SocialLinks from './SocialLinks'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
 /**
- * TikTokGlyph — lucide ships no TikTok icon, so this inline SVG stands in with
- * the same sizing/stroke contract as the lucide social icons beside it.
- */
-function TikTokGlyph({ className }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M16.5 3a5.5 5.5 0 0 0 4.5 4.5v3a8.5 8.5 0 0 1-4.5-1.3v6.05a6.25 6.25 0 1 1-6.25-6.25c.26 0 .51.02.76.05v3.1a3.2 3.2 0 1 0 2.24 3.05V3h3.25Z" />
-    </svg>
-  )
-}
-
-/**
- * Footer — closing navigation, social links (Instagram + TikTok), a ghosted
- * oversized wordmark as a final type-specimen flourish, and the legal
- * disclaimer. Social icons resolve from site content: a lucide component when
- * supplied, or the inline TikTok glyph for the 'tiktok' marker.
+ * Footer — closing navigation, social channels, a ghosted oversized wordmark
+ * as a final type-specimen flourish, and the legal disclaimer. The nav links
+ * mirror the page list in i18n content so adding a route is a one-edit job.
  */
 export default function Footer() {
   const { brand, footer, nav } = useContent()
@@ -29,11 +18,7 @@ export default function Footer() {
       <Container size="xl">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
-            <a
-              href="#top"
-              aria-label={brand.fullName}
-              className="inline-flex items-center"
-            >
+            <Link href="/" aria-label={brand.fullName} className="inline-flex items-center">
               <img
                 src="/deluxfit-logo.png"
                 alt={brand.fullName}
@@ -42,39 +27,23 @@ export default function Footer() {
                 className="h-10 w-auto select-none [filter:invert(1)_hue-rotate(180deg)]"
                 draggable="false"
               />
-            </a>
+            </Link>
             <p className="mt-4 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
 
-            <ul className="mt-6 flex items-center gap-3">
-              {footer.socials.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="flex h-11 w-11 items-center justify-center rounded-df-full border border-df-border text-df-text-muted transition-colors hover:border-df-accent hover:text-df-accent-bright"
-                  >
-                    {Icon === 'tiktok' ? (
-                      <TikTokGlyph className="h-5 w-5" />
-                    ) : (
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-6">
+              <SocialLinks />
+            </div>
           </div>
 
-          <nav aria-label={footer.navLabel} className="flex flex-wrap gap-x-8 gap-y-3">
+          <nav aria-label={footer.navLabel} className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3">
             {nav.map(item => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="text-sm font-500 text-df-text-muted transition-colors hover:text-df-text"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -89,7 +58,9 @@ export default function Footer() {
 
         <div className="flex flex-col gap-4 border-t border-df-border py-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-4">
-            <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">{footer.smallPrint}</p>
+            <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">
+              {footer.smallPrint}
+            </p>
             <p className="text-xs text-df-text-faint">
               © {CURRENT_YEAR} {brand.fullName}. {footer.rightsReserved}
             </p>
