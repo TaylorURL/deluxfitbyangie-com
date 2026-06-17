@@ -1,5 +1,5 @@
 import { Card, Reveal, Section } from '@deluxfit/ds'
-import { benefits } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Benefits / What You Get — the offer reframed as one complete coaching system.
