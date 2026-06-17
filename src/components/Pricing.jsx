@@ -1,5 +1,5 @@
 import { PricingCard, Reveal, Section } from '@deluxfit/ds'
-import { pricing } from '@/content/site'
+import { useContent } from '@/i18n'
 
 /**
  * Pricing — three coaching tiers led by hero-scale price numerals, with the
