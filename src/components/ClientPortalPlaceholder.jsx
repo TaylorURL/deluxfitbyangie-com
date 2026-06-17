@@ -3,7 +3,6 @@ import { ArrowLeft, LockKeyhole, Sparkles } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import LanguageSwitcher from './LanguageSwitcher'
 
 const MotionDiv = motion.div
 
