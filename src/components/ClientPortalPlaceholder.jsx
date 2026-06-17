@@ -46,7 +46,7 @@ export default function ClientPortalPlaceholder() {
               />
             </a>
             <div className="flex items-center gap-2.5">
-              <
+              <a
                 href="/"
                 className="group inline-flex items-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 py-2.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
               >
