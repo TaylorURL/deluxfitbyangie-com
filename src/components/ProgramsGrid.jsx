@@ -26,7 +26,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
       accent={programs.accent}
       subhead={programs.subhead}
     >
-      <div className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
         {ordered.map((service, index) => (
           <Reveal key={service.id} delay={index * 0.06} className="flex">
             <PricingCardLink
