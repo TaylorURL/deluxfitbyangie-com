@@ -17,7 +17,7 @@ const MotionButton = motion.button
 const PORTAL_HREF = '/portal'
 
 const NAV_LINK_BASE =
-  'group/link relative inline-flex h-9 items-center px-1 text-[12px] font-700 uppercase tracking-[0.18em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg'
+  'group/link relative inline-flex h-9 shrink-0 items-center whitespace-nowrap px-1 text-[12px] font-700 uppercase tracking-[0.16em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg 2xl:tracking-[0.18em]'
 
 const DRAWER_TRANSITION = { type: 'tween', ease: [0.22, 1, 0.36, 1], duration: 0.42 }
 const DRAWER_VARIANTS = { hidden: { x: '100%' }, visible: { x: 0 } }
