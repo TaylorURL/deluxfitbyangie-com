@@ -252,7 +252,7 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-5">
             {transformationCallout.pillars.map(({ icon: Icon, title, description }, index) => (
               <Reveal key={title} delay={index * 0.06}>
                 <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
