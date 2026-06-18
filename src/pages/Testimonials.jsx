@@ -50,8 +50,13 @@ export default function Testimonials() {
         </Reveal>
       </Container>
 
-      <Section index="01" eyebrow="Client stories" heading="What clients will say." accent="will say">
-        <div className="grid gap-5 lg:grid-cols-3">
+      <Section
+        index="01"
+        eyebrow="Client stories"
+        heading="What clients will say."
+        accent="will say"
+      >
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3">
           {testimonials.items.map(({ metric, quote, name, result, rating }, index) => (
             <Reveal key={`${name}-${index}`} delay={index * 0.06}>
               <Testimonial
