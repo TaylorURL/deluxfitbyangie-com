@@ -55,7 +55,7 @@ export const PricingCard = forwardRef(function PricingCard(
       {...props}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-7 sm:left-9">
+        <div className="absolute -top-3 left-6 sm:left-9">
           <Badge tone="accent" variant="solid" size="md" className="shadow-df-glow-soft">
             {badgeLabel}
           </Badge>
