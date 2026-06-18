@@ -5,14 +5,18 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    /* `overflow-x: clip` contains horizontal overflow without establishing a
+       new scroll container on `html`. `hidden` here breaks `position: fixed`
+       touch handling on iOS Safari once the page is scrolled, which is what
+       prevented the mobile nav from being tappable at non-zero scroll. */
+    overflow-x: clip;
     /* Offset anchor jumps so the sticky header never covers section tops. */
     scroll-padding-top: 5rem;
   }
 
   body {
     @apply m-0 min-h-screen bg-df-bg font-sans text-df-text antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::selection {
@@ -21,6 +25,24 @@
 
   :focus-visible {
     @apply outline-none ring-2 ring-df-accent-bright ring-offset-2 ring-offset-df-bg;
+  }
+
+  /* Eliminate the 300ms tap delay and let every interactive control respond
+     instantly on touch, including the mobile nav at any scroll position. */
+  a,
+  button,
+  [role='button'],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+
+  /* Honor iOS safe-area when content sits against the screen edges. */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
 
