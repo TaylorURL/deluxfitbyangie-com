@@ -76,9 +76,9 @@ export default function About() {
               <SplitHeading
                 text={about.hero.heading}
                 accent={about.hero.accent}
-                className="mt-6 text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.95]"
+                className="mt-5 text-[clamp(2rem,8vw,4rem)] leading-[0.95] sm:mt-6"
               />
-              <p className="mt-6 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted">
+              <p className="mt-5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted sm:mt-6">
                 {about.hero.tagline}
               </p>
             </Reveal>
