@@ -33,7 +33,7 @@ export default function PageHero({
 }) {
   const hasAside = Boolean(aside)
   return (
-    <section className="relative isolate overflow-hidden bg-df-bg pb-16 pt-32 sm:pt-40 lg:pt-48">
+    <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-24 sm:pb-16 sm:pt-40 lg:pt-48">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,rgba(225,29,42,0.16),transparent_60%)]"
