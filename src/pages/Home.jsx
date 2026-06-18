@@ -279,8 +279,8 @@ export default function Home() {
             ))}
           </div>
 
-          <Reveal delay={0.2} className="mt-12">
-            <Button asChild size="lg" variant="outline">
+          <Reveal delay={0.2} className="mt-10 sm:mt-12">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
               <Link href={transformationCallout.ctaHref}>
                 {transformationCallout.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
