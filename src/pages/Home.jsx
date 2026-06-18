@@ -188,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* MEET ANGIE — intro band */}
-      <section className="overflow-hidden py-20 sm:py-28">
+      <section className="overflow-hidden py-16 sm:py-28">
         <Container size="lg">
           <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <Reveal className="relative order-last lg:order-first">
@@ -291,7 +291,7 @@ export default function Home() {
       </section>
 
       {/* SHOOT GALLERY — real brand photography */}
-      <section className="overflow-hidden py-20 sm:py-28">
+      <section className="overflow-hidden py-16 sm:py-28">
         <Container size="xl">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
