@@ -52,13 +52,13 @@ export default function About() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-32 sm:pt-40 lg:pt-48">
+      <section className="relative isolate overflow-hidden bg-df-bg pb-10 pt-24 sm:pb-12 sm:pt-40 lg:pt-48">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
         <Container size="xl">
-          <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+          <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
             <Reveal className="relative">
               <div
                 aria-hidden="true"
