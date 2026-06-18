@@ -42,7 +42,7 @@ export default function PageHero({
         <div
           className={
             hasAside
-              ? 'grid items-end gap-12 lg:grid-cols-[1.35fr_1fr]'
+              ? 'grid items-end gap-10 sm:gap-12 lg:grid-cols-[1.35fr_1fr]'
               : 'flex flex-col items-start'
           }
         >
