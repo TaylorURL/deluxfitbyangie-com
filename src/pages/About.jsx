@@ -12,6 +12,35 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
+import PhotoBand from '@/components/PhotoBand'
+import PhotoGallery from '@/components/PhotoGallery'
+
+const ABOUT_GALLERY = [
+  {
+    src: '/brand/gym-squat-rack-portrait.jpg',
+    alt: 'Angie leaning on the Force USA squat rack between sets',
+    span: 'tall',
+    objectPosition: 'object-[55%_30%]',
+  },
+  {
+    src: '/brand/gym-lat-pulldown.jpg',
+    alt: 'Angie pulling through a lat pulldown set',
+    span: 'regular',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-back-pose.jpg',
+    alt: 'Angie in a posed standing stretch, studio session',
+    span: 'regular',
+    objectPosition: 'object-[55%_30%]',
+  },
+  {
+    src: '/brand/gym-barbell-squat.jpg',
+    alt: 'Angie pinned at the bottom of a barbell squat',
+    span: 'wide',
+    objectPosition: 'object-[50%_40%]',
+  },
+]
 
 /**
  * About — Angie's story page. Three editorial bands stack: story, credentials,
