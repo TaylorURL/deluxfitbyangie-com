@@ -99,7 +99,13 @@ export default function MembershipSignupForm() {
         <Input value={values.notes} onChange={handleChange('notes')} placeholder="Optional notes" />
       </Field>
 
-      <Button type="submit" size="lg" disabled={status === STATUS.working} className="mt-7">
+      <Button
+        type="submit"
+        size="lg"
+        block
+        disabled={status === STATUS.working}
+        className="mt-7 sm:w-auto"
+      >
         {status === STATUS.working ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
