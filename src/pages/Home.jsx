@@ -105,14 +105,14 @@ export default function Home() {
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
 
-        <Container size="xl" className="pb-16 pt-32 sm:pb-20 sm:pt-40 lg:pb-24 lg:pt-48">
+        <Container size="xl" className="pb-14 pt-24 sm:pb-20 sm:pt-40 lg:pb-24 lg:pt-48">
           <span className="inline-flex items-center gap-2.5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
             <span className="h-1.5 w-1.5 rounded-df-full bg-df-accent" aria-hidden="true" />
             {hero.badge}
           </span>
 
           <MotionH1
-            className="mt-7 font-display text-[clamp(1.75rem,9vw,9rem)] font-400 uppercase leading-[0.86] tracking-[-0.01em] text-df-text"
+            className="mt-5 font-display text-[clamp(2.5rem,11vw,9rem)] font-400 uppercase leading-[0.86] tracking-[-0.01em] text-df-text sm:mt-7"
             variants={prefersReducedMotion ? undefined : LINE_STAGGER}
             initial={prefersReducedMotion ? false : 'hidden'}
             animate={prefersReducedMotion ? undefined : 'visible'}
