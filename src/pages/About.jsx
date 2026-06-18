@@ -65,7 +65,7 @@ export default function About() {
                 className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
               />
               <FramedPhoto
-                src="/angie-coaching.png"
+                src="/brand/studio-seated-portrait.jpg"
                 alt={about.hero.imageAlt}
                 aspect="aspect-[4/5]"
               />
