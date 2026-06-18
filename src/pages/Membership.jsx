@@ -44,6 +44,12 @@ export default function Membership() {
         aside={<ServicePriceTile service={service} />}
       />
 
+      <PhotoBand
+        src="/brand/studio-step-up-dumbbell.jpg"
+        alt="Angie mid step-up with a dumbbell in the studio"
+        objectPosition="object-[45%_25%]"
+      />
+
       <IncludesGrid
         eyebrow={membership.includesEyebrow}
         heading={membership.includesHeading}
