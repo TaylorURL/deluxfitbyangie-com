@@ -150,14 +150,14 @@ export default function Header() {
       <Container size="xl">
         <div
           className={cn(
-            'relative flex items-center justify-between transition-[height] duration-300 ease-df-out',
+            'relative flex items-center justify-between gap-4 transition-[height] duration-300 ease-df-out',
             scrolled ? 'h-16 sm:h-[68px]' : 'h-20 sm:h-24'
           )}
         >
           <Link
             href="/"
             aria-label={brand.fullName}
-            className="group/logo relative inline-flex items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+            className="group/logo relative inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
           >
             <span
               aria-hidden="true"
@@ -178,7 +178,7 @@ export default function Header() {
 
           <nav
             aria-label={header.primaryNavLabel}
-            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex lg:gap-7 xl:gap-9"
+            className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-7"
           >
             {nav.map(item => (
               <NavLink
@@ -190,8 +190,12 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2.5 lg:flex">
-            <ClientLoginLink label={header.clientLogin} ariaLabel={header.clientLoginAria} />
+          <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+            <ClientLoginLink
+              iconOnly
+              label={header.clientLogin}
+              ariaLabel={header.clientLoginAria}
+            />
             <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
           </div>
 
@@ -201,7 +205,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen(open => !open)}
-            className="flex h-11 w-11 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg lg:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
           >
             {menuOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
