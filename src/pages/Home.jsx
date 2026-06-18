@@ -160,7 +160,7 @@ export default function Home() {
             </div>
 
             <MotionDiv
-              className="relative mx-auto w-full max-w-xs sm:max-w-sm lg:mx-0 lg:justify-self-end"
+              className="relative mx-auto w-full max-w-[18rem] sm:max-w-sm lg:mx-0 lg:justify-self-end"
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
@@ -170,8 +170,8 @@ export default function Home() {
                 alt={hero.imageAlt}
                 aspect="aspect-[4/5]"
               />
-              <div className="absolute -bottom-5 -left-3 rounded-df-md border border-df-glass-border bg-df-glass-fill px-5 py-3 backdrop-blur-xl sm:-left-5">
-                <div className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
+              <div className="absolute -bottom-4 left-2 rounded-df-md border border-df-glass-border bg-df-glass-fill px-4 py-2.5 backdrop-blur-xl sm:-bottom-5 sm:-left-5 sm:px-5 sm:py-3">
+                <div className="font-display text-[clamp(1.75rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
                   {hero.trust.pillarValue}
                 </div>
                 <div className="mt-1 text-[10px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
