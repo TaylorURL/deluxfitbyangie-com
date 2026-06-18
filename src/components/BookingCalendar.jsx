@@ -123,7 +123,7 @@ export default function BookingCalendar({ service }) {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-7 shadow-df-lg sm:px-8 sm:py-9"
+      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
     >
       {/* DATE */}
       <fieldset>
