@@ -61,12 +61,18 @@ export default function LiveTrainingProgram() {
         containerSize="md"
       >
         <Reveal>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-10 border-t border-df-border pt-10 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-y-8 border-t border-df-border pt-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:pt-10 lg:grid-cols-3">
             <StatBlock value={service.price} label="per session" size="giant" align="left" accent />
             <StatBlock value="3" label="sessions / week recommended" size="giant" align="left" />
-            <StatBlock value="$150" label="per week at 3 sessions" size="giant" align="left" accent />
+            <StatBlock
+              value="$150"
+              label="per week at 3 sessions"
+              size="giant"
+              align="left"
+              accent
+            />
           </div>
-          <p className="mt-10 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+          <p className="mt-8 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-10 sm:text-lg">
             {training.recommendation.body}
           </p>
         </Reveal>
