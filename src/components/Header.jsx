@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
@@ -34,13 +35,40 @@ function useScrolled(threshold = 12) {
   return scrolled
 }
 
+/**
+ * iOS-safe body scroll lock. Plain `overflow: hidden` does not stop momentum
+ * scroll on mobile Safari, and toggling it can leave the page jumped to top
+ * once the menu closes. Pinning the body with `position: fixed` and a negative
+ * top offset locks scroll without losing the user's place.
+ */
 function useBodyScrollLock(locked) {
+  const scrollYRef = useRef(0)
   useEffect(() => {
     if (!locked) return
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    scrollYRef.current = window.scrollY
+    const { body } = document
+    const previous = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    }
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollYRef.current}px`
+    body.style.left = '0'
+    body.style.right = '0'
+    body.style.width = '100%'
+    body.style.overflow = 'hidden'
     return () => {
-      document.body.style.overflow = previous
+      body.style.position = previous.position
+      body.style.top = previous.top
+      body.style.left = previous.left
+      body.style.right = previous.right
+      body.style.width = previous.width
+      body.style.overflow = previous.overflow
+      window.scrollTo(0, scrollYRef.current)
     }
   }, [locked])
 }
@@ -119,6 +147,10 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
  * type-specimen, then crystallises into a blurred, hairline-bordered surface
  * once the page scrolls. The page-based nav reads from the active i18n
  * content tree; active state matches the current pathname.
+ *
+ * The mobile drawer + backdrop are rendered through a body-level portal so
+ * they live outside the header's stacking context — keeping the nav reliably
+ * tappable at any scroll position.
  */
 export default function Header() {
   const { brand, nav, header } = useContent()
@@ -131,6 +163,11 @@ export default function Header() {
   useBodyScrollLock(menuOpen)
   useEscapeKey(menuOpen, () => setMenuOpen(false))
 
+  // Close the drawer automatically when the route changes (e.g. via Link).
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
   const closeMenu = () => setMenuOpen(false)
   const isActive = href => {
     const target = normalizePath(href.split('#')[0])
@@ -139,174 +176,208 @@ export default function Header() {
   }
 
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-sticky transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-df-out',
-        scrolled
-          ? 'border-b border-df-border bg-df-bg/80 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_rgba(0,0,0,0.7)] backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent'
-      )}
-    >
-      <Container size="xl">
-        <div
-          className={cn(
-            'relative flex items-center justify-between gap-4 transition-[height] duration-300 ease-df-out',
-            scrolled ? 'h-16 sm:h-[68px]' : 'h-20 sm:h-24'
-          )}
-        >
-          <Link
-            href="/"
-            aria-label={brand.fullName}
-            className="group/logo relative inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
-          >
-            <span
-              aria-hidden="true"
-              className="absolute -inset-3 -z-10 rounded-df-md bg-df-accent opacity-0 blur-2xl transition-opacity duration-500 ease-df-out group-hover/logo:opacity-30"
-            />
-            <img
-              src="/deluxfit-logo.png"
-              alt={brand.fullName}
-              width="946"
-              height="308"
-              className={cn(
-                'w-auto select-none [filter:invert(1)_hue-rotate(180deg)] transition-[height] duration-300 ease-df-out',
-                scrolled ? 'h-7 sm:h-8' : 'h-8 sm:h-10'
-              )}
-              draggable="false"
-            />
-          </Link>
-
-          <nav
-            aria-label={header.primaryNavLabel}
-            className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-7"
-          >
-            {nav.map(item => (
-              <NavLink
-                key={item.href}
-                href={item.href}
-                label={item.label}
-                active={isActive(item.href)}
-              />
-            ))}
-          </nav>
-
-          <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
-            <ClientLoginLink
-              iconOnly
-              label={header.clientLogin}
-              ariaLabel={header.clientLoginAria}
-            />
-            <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
-          </div>
-
-          <button
-            type="button"
-            aria-label={menuOpen ? header.closeMenu : header.openMenu}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen(open => !open)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
-          >
-            {menuOpen ? (
-              <X className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Menu className="h-5 w-5" aria-hidden="true" />
-            )}
-          </button>
-        </div>
-      </Container>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
-            <MotionButton
-              type="button"
-              aria-label={header.closeMenu}
-              onClick={closeMenu}
-              className="fixed inset-0 z-overlay bg-df-overlay backdrop-blur-md"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={BACKDROP_VARIANTS}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
-            />
-            <MotionDiv
-              role="dialog"
-              aria-modal="true"
-              aria-label={header.mobileDialogLabel}
-              className="fixed inset-y-0 right-0 z-modal flex w-full max-w-sm flex-col border-l border-df-border bg-df-bg-elevated/95 shadow-df-xl backdrop-blur-2xl"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={DRAWER_VARIANTS}
-              transition={prefersReducedMotion ? { duration: 0 } : DRAWER_TRANSITION}
-            >
-              <div className="flex items-center justify-between border-b border-df-border px-5 py-4">
-                <span className="font-display text-2xl font-400 uppercase tracking-tight text-df-text">
-                  {brand.name}
-                  <span className="text-df-accent">.</span>
-                </span>
-                <button
-                  type="button"
-                  aria-label={header.closeMenu}
-                  onClick={closeMenu}
-                  className="flex h-10 w-10 items-center justify-center rounded-df-sm border border-df-border-strong text-df-text transition-colors hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <div className="flex flex-1 flex-col overflow-y-auto px-5 py-6">
-                <nav aria-label={header.mobileNavLabel} className="flex flex-col">
-                  {nav.map(item => {
-                    const active = isActive(item.href)
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={closeMenu}
-                        aria-current={active ? 'page' : undefined}
-                        className={cn(
-                          'group/mlink flex items-center justify-between border-b border-df-border py-5 font-display text-2xl font-400 uppercase tracking-tight transition-colors duration-200 ease-df-out',
-                          active
-                            ? 'text-df-accent-bright'
-                            : 'text-df-text hover:text-df-accent-bright'
-                        )}
-                      >
-                        <span>{item.label}</span>
-                        <ArrowUpRight
-                          aria-hidden="true"
-                          className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:translate-x-1 group-hover/mlink:-translate-y-1 group-hover/mlink:text-df-accent"
-                        />
-                      </Link>
-                    )
-                  })}
-                </nav>
-
-                <div className="mt-8 flex flex-col gap-3">
-                  <PrimaryCta
-                    size="lg"
-                    block
-                    onClick={closeMenu}
-                    href={header.primaryCtaHref}
-                    label={header.primaryCta}
-                  />
-                  <ClientLoginLink
-                    block
-                    onClick={closeMenu}
-                    label={header.clientLogin}
-                    ariaLabel={header.clientLoginAria}
-                  />
-                </div>
-
-                <p className="mt-auto pt-10 text-[11px] font-600 uppercase tracking-[0.22em] text-df-text-faint">
-                  {brand.tagline}
-                </p>
-              </div>
-            </MotionDiv>
-          </MotionDiv>
+    <>
+      <header
+        className={cn(
+          // `transform-gpu` pins the header to its own compositor layer so the
+          // browser doesn't re-promote it mid-scroll (which can drop the first
+          // touch event on iOS Safari). We deliberately do NOT transition
+          // `backdrop-filter` — that transition can also drop touches on the
+          // 12px scroll-threshold crossover.
+          'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,border-color,box-shadow] duration-300 ease-df-out',
+          scrolled
+            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_rgba(0,0,0,0.7)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
+            : 'border-b border-transparent bg-transparent'
         )}
-      </AnimatePresence>
-    </header>
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      >
+        <Container size="xl">
+          <div
+            className={cn(
+              'relative flex items-center justify-between gap-3 transition-[height] duration-300 ease-df-out sm:gap-4',
+              scrolled ? 'h-14 sm:h-[68px]' : 'h-16 sm:h-24'
+            )}
+          >
+            <Link
+              href="/"
+              aria-label={brand.fullName}
+              className="group/logo relative inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute -inset-3 -z-10 rounded-df-md bg-df-accent opacity-0 blur-2xl transition-opacity duration-500 ease-df-out group-hover/logo:opacity-30"
+              />
+              <img
+                src="/deluxfit-logo.png"
+                alt={brand.fullName}
+                width="946"
+                height="308"
+                className={cn(
+                  'w-auto select-none [filter:invert(1)_hue-rotate(180deg)] transition-[height] duration-300 ease-df-out',
+                  scrolled ? 'h-6 sm:h-8' : 'h-7 sm:h-10'
+                )}
+                draggable="false"
+              />
+            </Link>
+
+            <nav
+              aria-label={header.primaryNavLabel}
+              className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-7"
+            >
+              {nav.map(item => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  label={item.label}
+                  active={isActive(item.href)}
+                />
+              ))}
+            </nav>
+
+            <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+              <ClientLoginLink
+                iconOnly
+                label={header.clientLogin}
+                ariaLabel={header.clientLoginAria}
+              />
+              <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
+            </div>
+
+            <button
+              type="button"
+              aria-label={menuOpen ? header.closeMenu : header.openMenu}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMenuOpen(open => !open)}
+              className="-mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
+            >
+              {menuOpen ? (
+                <X className="h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Menu className="h-5 w-5" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+        </Container>
+      </header>
+
+      <MobileNavPortal
+        open={menuOpen}
+        onClose={closeMenu}
+        nav={nav}
+        header={header}
+        brand={brand}
+        isActive={isActive}
+        prefersReducedMotion={prefersReducedMotion}
+      />
+    </>
+  )
+}
+
+/**
+ * MobileNavPortal — renders the slide-out drawer and its backdrop into a
+ * body-level portal so they're free of the header's stacking context, which
+ * is critical for touch responsiveness on mobile Safari at non-zero scroll.
+ */
+function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersReducedMotion }) {
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
+          <MotionButton
+            type="button"
+            aria-label={header.closeMenu}
+            onClick={onClose}
+            className="fixed inset-0 z-overlay bg-df-overlay [backdrop-filter:blur(8px)] [-webkit-backdrop-filter:blur(8px)]"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={BACKDROP_VARIANTS}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
+          />
+          <MotionDiv
+            role="dialog"
+            aria-modal="true"
+            aria-label={header.mobileDialogLabel}
+            className="fixed inset-y-0 right-0 z-modal flex w-[min(22rem,100vw)] flex-col border-l border-df-border bg-df-bg-elevated/95 shadow-df-xl [backdrop-filter:blur(28px)] [-webkit-backdrop-filter:blur(28px)]"
+            style={{
+              paddingTop: 'env(safe-area-inset-top)',
+              paddingBottom: 'env(safe-area-inset-bottom)',
+            }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={DRAWER_VARIANTS}
+            transition={prefersReducedMotion ? { duration: 0 } : DRAWER_TRANSITION}
+          >
+            <div className="flex items-center justify-between border-b border-df-border px-5 py-4">
+              <span className="font-display text-2xl font-400 uppercase tracking-tight text-df-text">
+                {brand.name}
+                <span className="text-df-accent">.</span>
+              </span>
+              <button
+                type="button"
+                aria-label={header.closeMenu}
+                onClick={onClose}
+                className="flex h-11 w-11 items-center justify-center rounded-df-sm border border-df-border-strong text-df-text transition-colors hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="flex flex-1 flex-col overflow-y-auto overscroll-contain px-5 py-6">
+              <nav aria-label={header.mobileNavLabel} className="flex flex-col">
+                {nav.map(item => {
+                  const active = isActive(item.href)
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={onClose}
+                      aria-current={active ? 'page' : undefined}
+                      className={cn(
+                        'group/mlink flex min-h-[3.5rem] items-center justify-between border-b border-df-border py-4 font-display text-2xl font-400 uppercase tracking-tight transition-colors duration-200 ease-df-out',
+                        active
+                          ? 'text-df-accent-bright'
+                          : 'text-df-text hover:text-df-accent-bright'
+                      )}
+                    >
+                      <span>{item.label}</span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:translate-x-1 group-hover/mlink:-translate-y-1 group-hover/mlink:text-df-accent"
+                      />
+                    </Link>
+                  )
+                })}
+              </nav>
+
+              <div className="mt-8 flex flex-col gap-3">
+                <PrimaryCta
+                  size="lg"
+                  block
+                  onClick={onClose}
+                  href={header.primaryCtaHref}
+                  label={header.primaryCta}
+                />
+                <ClientLoginLink
+                  block
+                  onClick={onClose}
+                  label={header.clientLogin}
+                  ariaLabel={header.clientLoginAria}
+                />
+              </div>
+
+              <p className="mt-auto pt-10 text-[11px] font-600 uppercase tracking-[0.22em] text-df-text-faint">
+                {brand.tagline}
+              </p>
+            </div>
+          </MotionDiv>
+        </MotionDiv>
+      )}
+    </AnimatePresence>,
+    document.body
   )
 }
