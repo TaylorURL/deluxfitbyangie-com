@@ -14,7 +14,7 @@ const CURRENT_YEAR = new Date().getFullYear()
 export default function Footer() {
   const { brand, footer, nav } = useContent()
   return (
-    <footer className="overflow-hidden border-t border-df-border bg-df-bg pt-16">
+    <footer className="overflow-hidden border-t border-df-border bg-df-bg pt-12 sm:pt-16">
       <Container size="xl">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
@@ -24,7 +24,7 @@ export default function Footer() {
                 alt={brand.fullName}
                 width="946"
                 height="308"
-                className="h-10 w-auto select-none [filter:invert(1)_hue-rotate(180deg)]"
+                className="h-8 w-auto select-none [filter:invert(1)_hue-rotate(180deg)] sm:h-10"
                 draggable="false"
               />
             </Link>
@@ -38,12 +38,15 @@ export default function Footer() {
             </div>
           </div>
 
-          <nav aria-label={footer.navLabel} className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3">
+          <nav
+            aria-label={footer.navLabel}
+            className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3"
+          >
             {nav.map(item => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-500 text-df-text-muted transition-colors hover:text-df-text"
+                className="flex min-h-11 items-center text-sm font-500 text-df-text-muted transition-colors hover:text-df-text"
               >
                 {item.label}
               </Link>
@@ -53,14 +56,14 @@ export default function Footer() {
 
         <div
           aria-hidden="true"
-          className="mt-14 select-none font-display text-[clamp(2.5rem,20vw,13rem)] font-400 uppercase leading-[0.78] tracking-tight text-df-surface-3"
+          className="mt-10 select-none font-display text-[clamp(2.5rem,22vw,13rem)] font-400 uppercase leading-[0.78] tracking-tight text-df-surface-3 sm:mt-14"
         >
           {brand.name}
           <span className="text-df-accent-deep">.</span>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-df-border py-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5 border-t border-df-border py-7 sm:flex-row sm:items-center sm:justify-between sm:py-8">
+          <div className="flex flex-col gap-3 sm:gap-4">
             <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">
               {footer.smallPrint}
             </p>

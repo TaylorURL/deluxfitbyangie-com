@@ -72,7 +72,7 @@ export default function OnlineCoachingApplicationForm() {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-7 shadow-df-lg sm:px-8 sm:py-9"
+      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={fields.name.label} error={errors.name}>
@@ -176,7 +176,7 @@ export default function OnlineCoachingApplicationForm() {
           type="checkbox"
           checked={values.consent}
           onChange={handleChange('consent')}
-          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-df-accent-bright"
+          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-df-accent-bright"
           required
         />
         <span>
@@ -187,7 +187,12 @@ export default function OnlineCoachingApplicationForm() {
         </span>
       </label>
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="mt-7">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={isSubmitting}
+        className="mt-7 w-full sm:w-auto"
+      >
         {isSubmitting ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

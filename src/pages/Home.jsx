@@ -105,14 +105,14 @@ export default function Home() {
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
 
-        <Container size="xl" className="pb-16 pt-32 sm:pb-20 sm:pt-40 lg:pb-24 lg:pt-48">
+        <Container size="xl" className="pb-14 pt-24 sm:pb-20 sm:pt-40 lg:pb-24 lg:pt-48">
           <span className="inline-flex items-center gap-2.5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
             <span className="h-1.5 w-1.5 rounded-df-full bg-df-accent" aria-hidden="true" />
             {hero.badge}
           </span>
 
           <MotionH1
-            className="mt-7 font-display text-[clamp(1.75rem,9vw,9rem)] font-400 uppercase leading-[0.86] tracking-[-0.01em] text-df-text"
+            className="mt-5 font-display text-[clamp(2.5rem,11vw,9rem)] font-400 uppercase leading-[0.86] tracking-[-0.01em] text-df-text sm:mt-7"
             variants={prefersReducedMotion ? undefined : LINE_STAGGER}
             initial={prefersReducedMotion ? false : 'hidden'}
             animate={prefersReducedMotion ? undefined : 'visible'}
@@ -133,13 +133,13 @@ export default function Home() {
             ))}
           </MotionH1>
 
-          <div className="mt-12 grid items-end gap-10 border-t border-df-border pt-10 sm:mt-16 lg:grid-cols-[1.4fr_1fr]">
+          <div className="mt-10 grid items-end gap-10 border-t border-df-border pt-8 sm:mt-16 sm:pt-10 lg:grid-cols-[1.4fr_1fr]">
             <div className="max-w-xl">
               <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
                 {hero.subhead}
               </p>
 
-              <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row">
                 <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href={hero.primaryCtaHref}>
                     {hero.primaryCta}
@@ -160,7 +160,7 @@ export default function Home() {
             </div>
 
             <MotionDiv
-              className="relative mx-auto w-full max-w-xs sm:max-w-sm lg:mx-0 lg:justify-self-end"
+              className="relative mx-auto w-full max-w-[18rem] sm:max-w-sm lg:mx-0 lg:justify-self-end"
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
@@ -170,8 +170,8 @@ export default function Home() {
                 alt={hero.imageAlt}
                 aspect="aspect-[4/5]"
               />
-              <div className="absolute -bottom-5 -left-3 rounded-df-md border border-df-glass-border bg-df-glass-fill px-5 py-3 backdrop-blur-xl sm:-left-5">
-                <div className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
+              <div className="absolute -bottom-4 left-2 rounded-df-md border border-df-glass-border bg-df-glass-fill px-4 py-2.5 backdrop-blur-xl sm:-bottom-5 sm:-left-5 sm:px-5 sm:py-3">
+                <div className="font-display text-[clamp(1.75rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
                   {hero.trust.pillarValue}
                 </div>
                 <div className="mt-1 text-[10px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
@@ -188,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* MEET ANGIE — intro band */}
-      <section className="overflow-hidden py-20 sm:py-28">
+      <section className="overflow-hidden py-16 sm:py-28">
         <Container size="lg">
           <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <Reveal className="relative order-last lg:order-first">
@@ -235,7 +235,7 @@ export default function Home() {
       <ProgramsGrid id="programs" highlightServiceId="coaching" />
 
       {/* WHAT IT LOOKS LIKE */}
-      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-20 sm:py-28">
+      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
@@ -252,7 +252,7 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-5">
             {transformationCallout.pillars.map(({ icon: Icon, title, description }, index) => (
               <Reveal key={title} delay={index * 0.06}>
                 <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
@@ -279,8 +279,8 @@ export default function Home() {
             ))}
           </div>
 
-          <Reveal delay={0.2} className="mt-12">
-            <Button asChild size="lg" variant="outline">
+          <Reveal delay={0.2} className="mt-10 sm:mt-12">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
               <Link href={transformationCallout.ctaHref}>
                 {transformationCallout.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -291,7 +291,7 @@ export default function Home() {
       </section>
 
       {/* SHOOT GALLERY — real brand photography */}
-      <section className="overflow-hidden py-20 sm:py-28">
+      <section className="overflow-hidden py-16 sm:py-28">
         <Container size="xl">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
@@ -309,14 +309,14 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-12">
+          <Reveal delay={0.1} className="mt-10 sm:mt-12">
             <PhotoGallery items={HOME_GALLERY} />
           </Reveal>
         </Container>
       </section>
 
       {/* CLOSING CTA */}
-      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-24 sm:py-36">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 sm:py-36">
         <img
           src="/brand/gym-back-squat-discipline.jpg"
           alt=""
@@ -344,10 +344,10 @@ export default function Home() {
               accent={closing.accent}
               className="mt-6 max-w-[20ch] text-[clamp(2.25rem,7vw,5.5rem)] leading-[0.92]"
             />
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg">
               {closing.subhead}
             </p>
-            <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={closing.primaryCtaHref}>
                   {closing.primaryCta}

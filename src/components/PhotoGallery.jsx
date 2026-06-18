@@ -13,7 +13,7 @@ export default function PhotoGallery({ items, className }) {
   return (
     <div
       className={cn(
-        'grid auto-rows-[200px] grid-cols-2 gap-3 sm:auto-rows-[260px] sm:gap-4 lg:grid-cols-4',
+        'grid auto-rows-[180px] grid-cols-2 gap-2.5 sm:auto-rows-[260px] sm:gap-4 lg:grid-cols-4',
         className
       )}
     >

@@ -15,13 +15,13 @@ import { Card, Reveal, Section } from '@deluxfit/ds'
 export default function IncludesGrid({ id, eyebrow, heading, accent, items = [] }) {
   return (
     <Section id={id} eyebrow={eyebrow} heading={heading} accent={accent}>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {items.map(({ icon: Icon, title, description }, index) => (
           <Reveal key={title} delay={index * 0.05}>
             <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-4 top-2 font-display text-6xl font-400 leading-none tabular-nums text-df-surface-3"
+                className="pointer-events-none absolute right-4 top-2 font-display text-5xl font-400 leading-none tabular-nums text-df-surface-3 sm:text-6xl"
               >
                 {String(index + 1).padStart(2, '0')}
               </span>

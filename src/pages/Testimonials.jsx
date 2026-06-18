@@ -50,8 +50,13 @@ export default function Testimonials() {
         </Reveal>
       </Container>
 
-      <Section index="01" eyebrow="Client stories" heading="What clients will say." accent="will say">
-        <div className="grid gap-5 lg:grid-cols-3">
+      <Section
+        index="01"
+        eyebrow="Client stories"
+        heading="What clients will say."
+        accent="will say"
+      >
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3">
           {testimonials.items.map(({ metric, quote, name, result, rating }, index) => (
             <Reveal key={`${name}-${index}`} delay={index * 0.06}>
               <Testimonial
@@ -76,7 +81,7 @@ export default function Testimonials() {
           <p className="text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
             {testimonials.galleryNote}
           </p>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {testimonials.gallery.map(({ label, alt }, index) => (
               <PhotoPlaceholder
                 key={`${label}-${index}`}
@@ -89,26 +94,26 @@ export default function Testimonials() {
         </Reveal>
       </Section>
 
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28">
+      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <SectionIndex>03</SectionIndex>
               <SectionEyebrow>{testimonials.hero.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
               text={testimonials.cta.heading}
               accent={testimonials.cta.accent}
-              className="mt-6 max-w-[20ch] text-[clamp(2rem,5vw,3.75rem)] leading-[0.95]"
+              className="mt-5 max-w-[20ch] text-[clamp(2rem,8vw,3.75rem)] leading-[0.95] sm:mt-6"
             />
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {testimonials.cta.subhead}
             </p>
-            <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={testimonials.cta.primary.href}>
                   {testimonials.cta.primary.label}

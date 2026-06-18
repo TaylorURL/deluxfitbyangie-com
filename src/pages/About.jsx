@@ -52,13 +52,13 @@ export default function About() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-32 sm:pt-40 lg:pt-48">
+      <section className="relative isolate overflow-hidden bg-df-bg pb-10 pt-24 sm:pb-12 sm:pt-40 lg:pt-48">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
         <Container size="xl">
-          <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+          <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
             <Reveal className="relative">
               <div
                 aria-hidden="true"
@@ -76,9 +76,9 @@ export default function About() {
               <SplitHeading
                 text={about.hero.heading}
                 accent={about.hero.accent}
-                className="mt-6 text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.95]"
+                className="mt-5 text-[clamp(2rem,8vw,4rem)] leading-[0.95] sm:mt-6"
               />
-              <p className="mt-6 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted">
+              <p className="mt-5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted sm:mt-6">
                 {about.hero.tagline}
               </p>
             </Reveal>
@@ -86,14 +86,14 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="border-y border-df-border bg-df-bg-elevated py-16 sm:py-20">
+      <section className="border-y border-df-border bg-df-bg-elevated py-12 sm:py-20">
         <Container size="md">
           <Reveal className="flex flex-col items-start">
             <SectionEyebrow>{about.mission.eyebrow}</SectionEyebrow>
             <SplitHeading
               text={about.mission.heading}
               accent={about.mission.accent}
-              className="mt-5 text-[clamp(2rem,6vw,3.75rem)] leading-[0.92]"
+              className="mt-4 text-[clamp(2rem,9vw,3.75rem)] leading-[0.92] sm:mt-5"
             />
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
               {about.mission.body}
@@ -195,26 +195,26 @@ export default function About() {
         </Reveal>
       </Section>
 
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28">
+      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <SectionIndex>05</SectionIndex>
               <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
               text={about.cta.heading}
               accent={about.cta.accent}
-              className="mt-6 max-w-[18ch] text-[clamp(2rem,5vw,3.75rem)] leading-[0.95]"
+              className="mt-5 max-w-[18ch] text-[clamp(2rem,8vw,3.75rem)] leading-[0.95] sm:mt-6"
             />
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {about.cta.subhead}
             </p>
-            <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={about.cta.primary.href}>
                   {about.cta.primary.label}

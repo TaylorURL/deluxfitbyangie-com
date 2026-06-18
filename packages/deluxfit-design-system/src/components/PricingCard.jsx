@@ -46,7 +46,7 @@ export const PricingCard = forwardRef(function PricingCard(
     <div
       ref={ref}
       className={cn(
-        'relative flex flex-col rounded-df-xl border p-7 transition-transform duration-300 ease-df-out sm:p-9',
+        'relative flex flex-col rounded-df-xl border p-6 transition-transform duration-300 ease-df-out sm:p-9',
         highlighted
           ? 'border-df-accent bg-df-surface-2 shadow-df-glow lg:scale-[1.04]'
           : 'border-df-border bg-df-surface hover:border-df-border-strong',
@@ -55,7 +55,7 @@ export const PricingCard = forwardRef(function PricingCard(
       {...props}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-7 sm:left-9">
+        <div className="absolute -top-3 left-6 sm:left-9">
           <Badge tone="accent" variant="solid" size="md" className="shadow-df-glow-soft">
             {badgeLabel}
           </Badge>
@@ -66,8 +66,8 @@ export const PricingCard = forwardRef(function PricingCard(
         {name}
       </h3>
 
-      <div className="mt-6 flex items-end gap-2 border-b border-df-border pb-7">
-        <span className="font-display text-[clamp(3.5rem,9vw,5.5rem)] font-400 leading-[0.82] tracking-tight tabular-nums text-df-text">
+      <div className="mt-5 flex items-end gap-2 border-b border-df-border pb-6 sm:mt-6 sm:pb-7">
+        <span className="font-display text-[clamp(3rem,12vw,5.5rem)] font-400 leading-[0.82] tracking-tight tabular-nums text-df-text">
           {price}
         </span>
         {period && <span className="pb-2 text-sm text-df-text-faint">{period}</span>}
