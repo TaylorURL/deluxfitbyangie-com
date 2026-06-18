@@ -46,7 +46,7 @@ export const PricingCard = forwardRef(function PricingCard(
     <div
       ref={ref}
       className={cn(
-        'relative flex flex-col rounded-df-xl border p-7 transition-transform duration-300 ease-df-out sm:p-9',
+        'relative flex flex-col rounded-df-xl border p-6 transition-transform duration-300 ease-df-out sm:p-9',
         highlighted
           ? 'border-df-accent bg-df-surface-2 shadow-df-glow lg:scale-[1.04]'
           : 'border-df-border bg-df-surface hover:border-df-border-strong',
