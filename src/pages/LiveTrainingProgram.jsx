@@ -39,6 +39,13 @@ export default function LiveTrainingProgram() {
         aside={<ServicePriceTile service={service} />}
       />
 
+      <PhotoBand
+        src="/brand/gym-battle-ropes.jpg"
+        alt="Angie throwing battle ropes during a live training session"
+        objectPosition="object-[50%_30%]"
+        height="tall"
+      />
+
       <IncludesGrid
         eyebrow={training.includesEyebrow}
         heading={training.includesHeading}
