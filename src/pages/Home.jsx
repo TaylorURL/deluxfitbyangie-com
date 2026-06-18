@@ -290,11 +290,48 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* SHOOT GALLERY — real brand photography */}
+      <section className="overflow-hidden py-20 sm:py-28">
+        <Container size="xl">
+          <Reveal className="flex flex-col items-start">
+            <div className="flex items-center gap-4">
+              <SectionIndex>04</SectionIndex>
+              <SectionEyebrow>In the gym</SectionEyebrow>
+            </div>
+            <SplitHeading
+              text="Real reps. Real grit."
+              accent="grit"
+              className="mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.95]"
+            />
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              Studio portraits and gym sessions from the DeluxFit shoot — the same energy
+              Angie brings to every program.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1} className="mt-12">
+            <PhotoGallery items={HOME_GALLERY} />
+          </Reveal>
+        </Container>
+      </section>
+
       {/* CLOSING CTA */}
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-24 sm:py-36">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-24 sm:py-36">
+        <img
+          src="/brand/gym-back-squat-discipline.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-40"
+        />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.26),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/80 to-df-bg"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.32),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
