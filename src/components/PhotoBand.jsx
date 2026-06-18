@@ -29,7 +29,9 @@ export default function PhotoBand({
       <div
         className={cn(
           'relative w-full',
-          height === 'tall' ? 'h-[60vh] min-h-[420px] sm:h-[70vh]' : 'h-[40vh] min-h-[280px] sm:h-[48vh]'
+          height === 'tall'
+            ? 'h-[50vh] min-h-[320px] sm:h-[70vh]'
+            : 'h-[34vh] min-h-[220px] sm:h-[48vh]'
         )}
       >
         <img
