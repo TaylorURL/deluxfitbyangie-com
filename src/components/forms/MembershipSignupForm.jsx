@@ -102,9 +102,8 @@ export default function MembershipSignupForm() {
       <Button
         type="submit"
         size="lg"
-        block
         disabled={status === STATUS.working}
-        className="mt-7 sm:w-auto"
+        className="mt-7 w-full sm:w-auto"
       >
         {status === STATUS.working ? (
           <>
