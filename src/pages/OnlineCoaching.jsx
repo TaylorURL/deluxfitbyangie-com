@@ -43,6 +43,12 @@ export default function OnlineCoaching() {
         aside={<ServicePriceTile service={service} />}
       />
 
+      <PhotoBand
+        src="/brand/gym-squat-rack-portrait.jpg"
+        alt="Angie at the squat rack in her training space"
+        objectPosition="object-[55%_30%]"
+      />
+
       <IncludesGrid
         eyebrow={coaching.includesEyebrow}
         heading={coaching.includesHeading}
