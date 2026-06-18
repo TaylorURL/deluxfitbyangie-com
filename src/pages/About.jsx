@@ -183,6 +183,18 @@ export default function About() {
         </div>
       </Section>
 
+      <Section
+        eyebrow="In session"
+        heading="How she trains."
+        accent="trains."
+        index="04"
+        containerSize="xl"
+      >
+        <Reveal>
+          <PhotoGallery items={ABOUT_GALLERY} />
+        </Reveal>
+      </Section>
+
       <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28">
         <div
           aria-hidden="true"
@@ -191,7 +203,7 @@ export default function About() {
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
-              <SectionIndex>04</SectionIndex>
+              <SectionIndex>05</SectionIndex>
               <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
