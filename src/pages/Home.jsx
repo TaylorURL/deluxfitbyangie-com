@@ -14,7 +14,53 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
+import PhotoGallery from '@/components/PhotoGallery'
 import ProgramsGrid from '@/components/ProgramsGrid'
+
+const HOME_GALLERY = [
+  {
+    src: '/brand/gym-battle-ropes.jpg',
+    alt: 'Angie driving battle ropes on the turf, pink kit, gym session',
+    span: 'wide',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-red-mat-seated.jpg',
+    alt: 'Angie seated on a crimson mat in a studio portrait',
+    span: 'tall',
+    objectPosition: 'object-[60%_35%]',
+  },
+  {
+    src: '/brand/gym-back-squat-discipline.jpg',
+    alt: 'Angie under the bar setting up a back squat in the rack',
+    span: 'regular',
+    objectPosition: 'object-[50%_45%]',
+  },
+  {
+    src: '/brand/studio-dumbbell-side-pose.jpg',
+    alt: 'Angie holding a dumbbell, step-up pose, studio lighting',
+    span: 'regular',
+    objectPosition: 'object-[55%_25%]',
+  },
+  {
+    src: '/brand/gym-dumbbell-deadlift.jpg',
+    alt: 'Angie mid-rep of a dumbbell Romanian deadlift in the gym',
+    span: 'regular',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-cobra-stretch.jpg',
+    alt: 'Angie in an upward stretch, studio session, dumbbells at her side',
+    span: 'wide',
+    objectPosition: 'object-[40%_40%]',
+  },
+  {
+    src: '/brand/gym-leg-press.jpg',
+    alt: 'Angie pressing through a heavy leg-press set',
+    span: 'wide',
+    objectPosition: 'object-[50%_35%]',
+  },
+]
 
 const MotionH1 = motion.h1
 const MotionSpan = motion.span
