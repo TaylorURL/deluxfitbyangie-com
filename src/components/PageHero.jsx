@@ -52,16 +52,16 @@ export default function PageHero({
               <SplitHeading
                 text={heading}
                 accent={accent}
-                className="mt-6 text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.92]"
+                className="mt-5 text-[clamp(2.25rem,9vw,5.5rem)] leading-[0.92] sm:mt-6"
               />
             )}
             {subhead && (
-              <p className="mt-7 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg">
                 {subhead}
               </p>
             )}
             {(primary || secondary) && (
-              <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
                 {primary && (
                   <Button asChild size="lg" className="w-full sm:w-auto">
                     <Link href={primary.href}>
