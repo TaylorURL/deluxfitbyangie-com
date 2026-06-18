@@ -66,8 +66,8 @@ export const PricingCard = forwardRef(function PricingCard(
         {name}
       </h3>
 
-      <div className="mt-6 flex items-end gap-2 border-b border-df-border pb-7">
-        <span className="font-display text-[clamp(3.5rem,9vw,5.5rem)] font-400 leading-[0.82] tracking-tight tabular-nums text-df-text">
+      <div className="mt-5 flex items-end gap-2 border-b border-df-border pb-6 sm:mt-6 sm:pb-7">
+        <span className="font-display text-[clamp(3rem,12vw,5.5rem)] font-400 leading-[0.82] tracking-tight tabular-nums text-df-text">
           {price}
         </span>
         {period && <span className="pb-2 text-sm text-df-text-faint">{period}</span>}
