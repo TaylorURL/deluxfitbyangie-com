@@ -81,7 +81,7 @@ export default function Testimonials() {
           <p className="text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
             {testimonials.galleryNote}
           </p>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {testimonials.gallery.map(({ label, alt }, index) => (
               <PhotoPlaceholder
                 key={`${label}-${index}`}
