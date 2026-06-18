@@ -336,7 +336,7 @@ export default function Home() {
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
-              <SectionIndex>04</SectionIndex>
+              <SectionIndex>05</SectionIndex>
               <SectionEyebrow>{closing.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
