@@ -196,7 +196,11 @@ export default function Home() {
                 aria-hidden="true"
                 className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
               />
-              <FramedPhoto src="/angie-coaching.png" alt={intro.imageAlt} aspect="aspect-[4/5]" />
+              <FramedPhoto
+                src="/brand/studio-kettlebell-portrait.jpg"
+                alt={intro.imageAlt}
+                aspect="aspect-[4/5]"
+              />
             </Reveal>
 
             <Reveal delay={0.1} className="flex flex-col items-start">
