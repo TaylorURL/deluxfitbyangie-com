@@ -181,7 +181,7 @@ export default function BookingCalendar({ service }) {
           ) : candidateSlots.length === 0 ? (
             <p className="text-sm text-df-text-faint">{booking.noSlots}</p>
           ) : (
-            <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-2.5">
               {candidateSlots.map(slot => {
                 const iso = slot.start.toISOString()
                 const taken = takenSlots.has(iso)
@@ -197,10 +197,13 @@ export default function BookingCalendar({ service }) {
                       if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
                     }}
                     className={cn(
-                      'rounded-df-sm border px-2 py-2.5 text-sm font-600 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
-                      taken && 'cursor-not-allowed border-df-border bg-df-surface-2 text-df-text-faint line-through',
+                      'flex min-h-11 items-center justify-center rounded-df-sm border px-2 py-2.5 text-sm font-600 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
+                      taken &&
+                        'cursor-not-allowed border-df-border bg-df-surface-2 text-df-text-faint line-through',
                       !taken && active && 'border-df-accent bg-df-accent text-df-on-accent',
-                      !taken && !active && 'border-df-border-input text-df-text hover:border-df-border-hover'
+                      !taken &&
+                        !active &&
+                        'border-df-border-input text-df-text hover:border-df-border-hover'
                     )}
                   >
                     {taken ? booking.slotTaken : slot.label}
