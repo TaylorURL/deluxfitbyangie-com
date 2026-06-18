@@ -316,7 +316,7 @@ export default function Home() {
       </section>
 
       {/* CLOSING CTA */}
-      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-24 sm:py-36">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 sm:py-36">
         <img
           src="/brand/gym-back-squat-discipline.jpg"
           alt=""
