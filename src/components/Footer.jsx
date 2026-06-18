@@ -70,6 +70,18 @@ export default function Footer() {
           </div>
           <LanguageSwitcher className="self-start sm:self-center" />
         </div>
+
+        <p className="pb-6 text-center text-[10px] text-df-text-faint">
+          Site made by{' '}
+          <a
+            href="https://taylorurl.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-df-text-faint/30 underline-offset-2 transition-colors hover:text-df-text-muted"
+          >
+            TaylorURL.com
+          </a>
+        </p>
       </Container>
     </footer>
   )
