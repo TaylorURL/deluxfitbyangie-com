@@ -21,7 +21,7 @@ export default function IncludesGrid({ id, eyebrow, heading, accent, items = [] 
             <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-4 top-2 font-display text-6xl font-400 leading-none tabular-nums text-df-surface-3"
+                className="pointer-events-none absolute right-4 top-2 font-display text-5xl font-400 leading-none tabular-nums text-df-surface-3 sm:text-6xl"
               >
                 {String(index + 1).padStart(2, '0')}
               </span>
