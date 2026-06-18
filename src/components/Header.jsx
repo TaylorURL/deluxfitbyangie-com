@@ -17,7 +17,7 @@ const MotionButton = motion.button
 const PORTAL_HREF = '/portal'
 
 const NAV_LINK_BASE =
-  'group/link relative inline-flex h-9 items-center px-1 text-[12px] font-700 uppercase tracking-[0.18em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg'
+  'group/link relative inline-flex h-9 shrink-0 items-center whitespace-nowrap px-1 text-[12px] font-700 uppercase tracking-[0.16em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg 2xl:tracking-[0.18em]'
 
 const DRAWER_TRANSITION = { type: 'tween', ease: [0.22, 1, 0.36, 1], duration: 0.42 }
 const DRAWER_VARIANTS = { hidden: { x: '100%' }, visible: { x: 0 } }
@@ -81,22 +81,24 @@ function NavLink({ href, label, active, onClick }) {
   )
 }
 
-function ClientLoginLink({ block = false, onClick, label, ariaLabel }) {
+function ClientLoginLink({ block = false, iconOnly = false, onClick, label, ariaLabel }) {
   return (
     <Link
       href={PORTAL_HREF}
       onClick={onClick}
       aria-label={ariaLabel}
       className={cn(
-        'group/login inline-flex items-center justify-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
-        block ? 'h-12 w-full text-[12px]' : 'h-10'
+        'group/login inline-flex shrink-0 items-center justify-center gap-2 rounded-df-sm border border-df-border-strong text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
+        block && 'h-12 w-full px-3.5 text-[12px]',
+        !block && iconOnly && 'h-10 w-10',
+        !block && !iconOnly && 'h-10 px-3.5'
       )}
     >
       <UserCircle
         aria-hidden="true"
         className="h-4 w-4 text-df-text-muted transition-colors duration-200 group-hover/login:text-df-accent-bright"
       />
-      {label}
+      {!iconOnly && <span>{label}</span>}
     </Link>
   )
 }
@@ -148,14 +150,14 @@ export default function Header() {
       <Container size="xl">
         <div
           className={cn(
-            'relative flex items-center justify-between transition-[height] duration-300 ease-df-out',
+            'relative flex items-center justify-between gap-4 transition-[height] duration-300 ease-df-out',
             scrolled ? 'h-16 sm:h-[68px]' : 'h-20 sm:h-24'
           )}
         >
           <Link
             href="/"
             aria-label={brand.fullName}
-            className="group/logo relative inline-flex items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+            className="group/logo relative inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
           >
             <span
               aria-hidden="true"
@@ -176,7 +178,7 @@ export default function Header() {
 
           <nav
             aria-label={header.primaryNavLabel}
-            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex lg:gap-7 xl:gap-9"
+            className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-7"
           >
             {nav.map(item => (
               <NavLink
@@ -188,8 +190,12 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2.5 lg:flex">
-            <ClientLoginLink label={header.clientLogin} ariaLabel={header.clientLoginAria} />
+          <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+            <ClientLoginLink
+              iconOnly
+              label={header.clientLogin}
+              ariaLabel={header.clientLoginAria}
+            />
             <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
           </div>
 
@@ -199,7 +205,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen(open => !open)}
-            className="flex h-11 w-11 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg lg:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
           >
             {menuOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -212,7 +218,7 @@ export default function Header() {
 
       <AnimatePresence>
         {menuOpen && (
-          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="lg:hidden">
+          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
             <MotionButton
               type="button"
               aria-label={header.closeMenu}
