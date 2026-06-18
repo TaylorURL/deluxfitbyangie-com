@@ -70,7 +70,7 @@ export const Section = forwardRef(function Section(
             >
               <div
                 className={cn(
-                  'flex items-center gap-4 sm:gap-6',
+                  'flex items-center gap-3 sm:gap-6',
                   centered && 'justify-center'
                 )}
               >
@@ -82,7 +82,7 @@ export const Section = forwardRef(function Section(
                   text={heading}
                   accent={accent}
                   className={cn(
-                    'mt-5 text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.92] sm:mt-7',
+                    'mt-4 text-[clamp(2rem,8vw,4.75rem)] leading-[0.92] sm:mt-7',
                     centered ? 'max-w-[18ch]' : 'max-w-[20ch]'
                   )}
                 />
@@ -90,7 +90,7 @@ export const Section = forwardRef(function Section(
               {subhead && (
                 <p
                   className={cn(
-                    'mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg',
+                    'mt-5 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg',
                     centered && 'mx-auto'
                   )}
                 >
@@ -99,7 +99,7 @@ export const Section = forwardRef(function Section(
               )}
             </Reveal>
           )}
-          <div className={cn(hasHeader && 'mt-14 sm:mt-20')}>{children}</div>
+          <div className={cn(hasHeader && 'mt-10 sm:mt-20')}>{children}</div>
         </Container>
       )}
     </Component>
