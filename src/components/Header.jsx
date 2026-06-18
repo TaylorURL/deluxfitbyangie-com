@@ -81,22 +81,24 @@ function NavLink({ href, label, active, onClick }) {
   )
 }
 
-function ClientLoginLink({ block = false, onClick, label, ariaLabel }) {
+function ClientLoginLink({ block = false, iconOnly = false, onClick, label, ariaLabel }) {
   return (
     <Link
       href={PORTAL_HREF}
       onClick={onClick}
       aria-label={ariaLabel}
       className={cn(
-        'group/login inline-flex items-center justify-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
-        block ? 'h-12 w-full text-[12px]' : 'h-10'
+        'group/login inline-flex shrink-0 items-center justify-center gap-2 rounded-df-sm border border-df-border-strong text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
+        block && 'h-12 w-full px-3.5 text-[12px]',
+        !block && iconOnly && 'h-10 w-10',
+        !block && !iconOnly && 'h-10 px-3.5'
       )}
     >
       <UserCircle
         aria-hidden="true"
         className="h-4 w-4 text-df-text-muted transition-colors duration-200 group-hover/login:text-df-accent-bright"
       />
-      {label}
+      {!iconOnly && <span>{label}</span>}
     </Link>
   )
 }
