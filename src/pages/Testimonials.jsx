@@ -12,6 +12,7 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import PhotoBand from '@/components/PhotoBand'
 import PhotoPlaceholder from '@/components/PhotoPlaceholder'
 
 /**
@@ -30,6 +31,12 @@ export default function Testimonials() {
         heading={testimonials.hero.heading}
         accent={testimonials.hero.accent}
         subhead={testimonials.hero.subhead}
+      />
+
+      <PhotoBand
+        src="/brand/studio-red-mat-seated.jpg"
+        alt="Angie seated on a crimson studio mat — the DeluxFit aesthetic"
+        objectPosition="object-[55%_35%]"
       />
 
       <Container size="lg">

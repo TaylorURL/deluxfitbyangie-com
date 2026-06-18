@@ -12,6 +12,7 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import PhotoBand from '@/components/PhotoBand'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import MembershipSignupForm from '@/components/forms/MembershipSignupForm'
@@ -41,6 +42,12 @@ export default function Membership() {
           href: membership.hero.secondaryCtaHref,
         }}
         aside={<ServicePriceTile service={service} />}
+      />
+
+      <PhotoBand
+        src="/brand/studio-step-up-dumbbell.jpg"
+        alt="Angie mid step-up with a dumbbell in the studio"
+        objectPosition="object-[45%_25%]"
       />
 
       <IncludesGrid

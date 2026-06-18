@@ -12,6 +12,35 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
+import PhotoBand from '@/components/PhotoBand'
+import PhotoGallery from '@/components/PhotoGallery'
+
+const ABOUT_GALLERY = [
+  {
+    src: '/brand/gym-squat-rack-portrait.jpg',
+    alt: 'Angie leaning on the Force USA squat rack between sets',
+    span: 'tall',
+    objectPosition: 'object-[55%_30%]',
+  },
+  {
+    src: '/brand/gym-lat-pulldown.jpg',
+    alt: 'Angie pulling through a lat pulldown set',
+    span: 'regular',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-back-pose.jpg',
+    alt: 'Angie in a posed standing stretch, studio session',
+    span: 'regular',
+    objectPosition: 'object-[55%_30%]',
+  },
+  {
+    src: '/brand/gym-barbell-squat.jpg',
+    alt: 'Angie pinned at the bottom of a barbell squat',
+    span: 'wide',
+    objectPosition: 'object-[50%_40%]',
+  },
+]
 
 /**
  * About — Angie's story page. Three editorial bands stack: story, credentials,
@@ -36,7 +65,7 @@ export default function About() {
                 className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
               />
               <FramedPhoto
-                src="/angie-coaching.png"
+                src="/brand/studio-seated-portrait.jpg"
                 alt={about.hero.imageAlt}
                 aspect="aspect-[4/5]"
               />
@@ -115,6 +144,13 @@ export default function About() {
         )}
       </Section>
 
+      <PhotoBand
+        src="/brand/gym-back-squat-discipline.jpg"
+        alt="Angie under the bar — discipline over excuses"
+        objectPosition="object-[40%_30%]"
+        height="short"
+      />
+
       <Section
         eyebrow={about.philosophy.eyebrow}
         heading={about.philosophy.heading}
@@ -147,6 +183,18 @@ export default function About() {
         </div>
       </Section>
 
+      <Section
+        eyebrow="In session"
+        heading="How she trains."
+        accent="trains."
+        index="04"
+        containerSize="xl"
+      >
+        <Reveal>
+          <PhotoGallery items={ABOUT_GALLERY} />
+        </Reveal>
+      </Section>
+
       <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28">
         <div
           aria-hidden="true"
@@ -155,7 +203,7 @@ export default function About() {
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
-              <SectionIndex>04</SectionIndex>
+              <SectionIndex>05</SectionIndex>
               <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading

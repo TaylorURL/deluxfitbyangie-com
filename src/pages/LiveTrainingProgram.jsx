@@ -13,6 +13,7 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import PhotoBand from '@/components/PhotoBand'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
@@ -36,6 +37,13 @@ export default function LiveTrainingProgram() {
         primary={{ label: training.hero.primaryCta, href: training.hero.primaryCtaHref }}
         secondary={{ label: training.hero.secondaryCta, href: training.hero.secondaryCtaHref }}
         aside={<ServicePriceTile service={service} />}
+      />
+
+      <PhotoBand
+        src="/brand/gym-battle-ropes.jpg"
+        alt="Angie throwing battle ropes during a live training session"
+        objectPosition="object-[50%_30%]"
+        height="tall"
       />
 
       <IncludesGrid
