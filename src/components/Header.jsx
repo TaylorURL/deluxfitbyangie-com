@@ -218,7 +218,7 @@ export default function Header() {
 
       <AnimatePresence>
         {menuOpen && (
-          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="lg:hidden">
+          <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
             <MotionButton
               type="button"
               aria-label={header.closeMenu}
