@@ -235,7 +235,7 @@ export default function Home() {
       <ProgramsGrid id="programs" highlightServiceId="coaching" />
 
       {/* WHAT IT LOOKS LIKE */}
-      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-20 sm:py-28">
+      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
