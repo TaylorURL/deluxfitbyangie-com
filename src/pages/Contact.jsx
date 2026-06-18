@@ -21,8 +21,13 @@ export default function Contact() {
         subhead={contact.hero.subhead}
       />
 
-      <Section index="01" eyebrow="Send a message" heading="Tell Angie what you’d like to talk about." accent="talk about">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+      <Section
+        index="01"
+        eyebrow="Send a message"
+        heading="Tell Angie what you’d like to talk about."
+        accent="talk about"
+      >
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           <Reveal>
             <ContactForm />
           </Reveal>
