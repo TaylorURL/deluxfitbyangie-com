@@ -259,7 +259,12 @@ export default function BookingCalendar({ service }) {
         </div>
       )}
 
-      <Button type="submit" size="lg" disabled={status === 'submitting'} className="mt-7">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={status === 'submitting'}
+        className="mt-7 w-full sm:w-auto"
+      >
         {status === 'submitting' ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
