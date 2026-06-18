@@ -6,7 +6,12 @@ import { SectionIndex } from '../components/SectionIndex'
 import { SplitHeading } from '../components/SplitHeading'
 import { Reveal } from '../components/Reveal'
 
-const SPACE = { sm: 'py-16', md: 'py-20 sm:py-28', lg: 'py-24 sm:py-36', xl: 'py-28 sm:py-44' }
+const SPACE = {
+  sm: 'py-12 sm:py-16',
+  md: 'py-16 sm:py-28',
+  lg: 'py-20 sm:py-36',
+  xl: 'py-24 sm:py-44',
+}
 
 /**
  * Section — a vertically-rhythmed page band on the shared "type specimen" grid.
