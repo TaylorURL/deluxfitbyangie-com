@@ -33,9 +33,9 @@ export default function Contact() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <aside className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-8 sm:px-8">
+            <aside className="rounded-df-2xl border border-df-border bg-df-surface p-6 sm:px-8 sm:py-8">
               <SectionEyebrow>{contact.socialEyebrow}</SectionEyebrow>
-              <h3 className="mt-5 font-display text-2xl font-400 uppercase tracking-[0.01em] text-df-text">
+              <h3 className="mt-4 font-display text-2xl font-400 uppercase tracking-[0.01em] text-df-text sm:mt-5">
                 {contact.socialHeading}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
@@ -50,8 +50,8 @@ export default function Contact() {
         </div>
       </Section>
 
-      <Container size="lg" className="pb-20">
-        <div className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-6 text-xs leading-relaxed text-df-text-faint sm:px-8 sm:py-7">
+      <Container size="lg" className="pb-16 sm:pb-20">
+        <div className="rounded-df-2xl border border-df-border bg-df-surface p-5 text-xs leading-relaxed text-df-text-faint sm:px-8 sm:py-7">
           Looking to sign up, apply for coaching, or book a 1-on-1 session? The fastest path is
           directly through the matching service page — those forms route straight to Angie.
         </div>
