@@ -21,48 +21,50 @@ export default function PortalShell({ children }) {
 
       <header className="border-b border-df-border">
         <Container size="xl">
-          <div className="flex h-20 items-center justify-between sm:h-24">
+          <div className="flex h-16 items-center justify-between gap-3 sm:h-24">
             <a
               href="/"
               aria-label={brand.fullName}
-              className="inline-flex items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+              className="inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
             >
               <img
                 src="/deluxfit-logo.png"
                 alt={brand.fullName}
                 width="946"
                 height="308"
-                className="h-9 w-auto select-none [filter:invert(1)_hue-rotate(180deg)] sm:h-10"
+                className="h-7 w-auto select-none [filter:invert(1)_hue-rotate(180deg)] sm:h-10"
                 draggable="false"
               />
             </a>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               {user && (
                 <button
                   type="button"
                   onClick={signOut}
-                  className="group inline-flex items-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 py-2.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+                  aria-label={portal.auth.signOut}
+                  className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-3.5 sm:tracking-[0.2em]"
                 >
                   <LogOut aria-hidden="true" className="h-4 w-4" />
-                  {portal.auth.signOut}
+                  <span className="hidden sm:inline">{portal.auth.signOut}</span>
                 </button>
               )}
               <a
                 href="/"
-                className="group inline-flex items-center gap-2 rounded-df-sm border border-df-border-strong px-3.5 py-2.5 text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+                aria-label={portal.backToSite}
+                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-3.5 sm:tracking-[0.2em]"
               >
                 <ArrowLeft
                   aria-hidden="true"
                   className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
                 />
-                {portal.backToSite}
+                <span className="hidden sm:inline">{portal.backToSite}</span>
               </a>
             </div>
           </div>
         </Container>
       </header>
 
-      <main className="flex-1 px-5 py-12 sm:py-16">{children}</main>
+      <main className="flex-1 px-5 py-10 sm:py-16">{children}</main>
 
       <footer className="border-t border-df-border">
         <Container size="xl">

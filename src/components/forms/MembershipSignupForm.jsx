@@ -67,7 +67,7 @@ export default function MembershipSignupForm() {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-7 shadow-df-lg sm:px-8 sm:py-9"
+      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" error={errors.name}>
@@ -99,7 +99,12 @@ export default function MembershipSignupForm() {
         <Input value={values.notes} onChange={handleChange('notes')} placeholder="Optional notes" />
       </Field>
 
-      <Button type="submit" size="lg" disabled={status === STATUS.working} className="mt-7">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={status === STATUS.working}
+        className="mt-7 w-full sm:w-auto"
+      >
         {status === STATUS.working ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

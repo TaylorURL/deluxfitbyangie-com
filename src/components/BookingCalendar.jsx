@@ -123,7 +123,7 @@ export default function BookingCalendar({ service }) {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface px-6 py-7 shadow-df-lg sm:px-8 sm:py-9"
+      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
     >
       {/* DATE */}
       <fieldset>
@@ -131,7 +131,7 @@ export default function BookingCalendar({ service }) {
           <CalendarDays className="h-4 w-4 text-df-accent-bright" aria-hidden="true" />
           {booking.selectDateLabel}
         </legend>
-        <div className="mt-3 flex gap-2.5 overflow-x-auto pb-2">
+        <div className="-mx-5 mt-3 flex gap-2.5 overflow-x-auto px-5 pb-2 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:px-0">
           {dates.map(date => {
             const key = toDateKey(date)
             const active = selectedDate && toDateKey(selectedDate) === key
@@ -146,7 +146,7 @@ export default function BookingCalendar({ service }) {
                   if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
                 }}
                 className={cn(
-                  'flex shrink-0 flex-col items-center rounded-df-md border px-3.5 py-2.5 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
+                  'flex min-h-[3.25rem] min-w-[3.75rem] shrink-0 flex-col items-center justify-center rounded-df-md border px-3.5 py-2.5 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
                   active
                     ? 'border-df-accent bg-df-accent text-df-on-accent'
                     : 'border-df-border-input text-df-text-muted hover:border-df-border-hover hover:text-df-text'
@@ -181,7 +181,7 @@ export default function BookingCalendar({ service }) {
           ) : candidateSlots.length === 0 ? (
             <p className="text-sm text-df-text-faint">{booking.noSlots}</p>
           ) : (
-            <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-2.5">
               {candidateSlots.map(slot => {
                 const iso = slot.start.toISOString()
                 const taken = takenSlots.has(iso)
@@ -197,10 +197,13 @@ export default function BookingCalendar({ service }) {
                       if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
                     }}
                     className={cn(
-                      'rounded-df-sm border px-2 py-2.5 text-sm font-600 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
-                      taken && 'cursor-not-allowed border-df-border bg-df-surface-2 text-df-text-faint line-through',
+                      'flex min-h-11 items-center justify-center rounded-df-sm border px-2 py-2.5 text-sm font-600 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
+                      taken &&
+                        'cursor-not-allowed border-df-border bg-df-surface-2 text-df-text-faint line-through',
                       !taken && active && 'border-df-accent bg-df-accent text-df-on-accent',
-                      !taken && !active && 'border-df-border-input text-df-text hover:border-df-border-hover'
+                      !taken &&
+                        !active &&
+                        'border-df-border-input text-df-text hover:border-df-border-hover'
                     )}
                   >
                     {taken ? booking.slotTaken : slot.label}
@@ -256,7 +259,12 @@ export default function BookingCalendar({ service }) {
         </div>
       )}
 
-      <Button type="submit" size="lg" disabled={status === 'submitting'} className="mt-7">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={status === 'submitting'}
+        className="mt-7 w-full sm:w-auto"
+      >
         {status === 'submitting' ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
