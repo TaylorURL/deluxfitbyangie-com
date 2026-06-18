@@ -33,6 +33,12 @@ export default function Testimonials() {
         subhead={testimonials.hero.subhead}
       />
 
+      <PhotoBand
+        src="/brand/studio-red-mat-seated.jpg"
+        alt="Angie seated on a crimson studio mat — the DeluxFit aesthetic"
+        objectPosition="object-[55%_35%]"
+      />
+
       <Container size="lg">
         <Reveal>
           <div className="flex items-start gap-3 rounded-df-md border border-df-border bg-df-surface-2/60 px-4 py-3.5">
