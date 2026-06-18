@@ -18,7 +18,7 @@ export const SectionIndex = forwardRef(function SectionIndex(
       ref={ref}
       aria-hidden="true"
       className={cn(
-        'font-display text-[clamp(2.25rem,5vw,3.75rem)] font-400 leading-none tracking-tight text-transparent [-webkit-text-stroke:1.5px_var(--df-accent)]',
+        'font-display text-[clamp(1.75rem,6vw,3.75rem)] font-400 leading-none tracking-tight text-transparent [-webkit-text-stroke:1.5px_var(--df-accent)]',
         className
       )}
       {...props}
