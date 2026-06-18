@@ -119,15 +119,15 @@ export default function Membership() {
 
 function ServicePriceTile({ service }) {
   return (
-    <div className="relative overflow-hidden rounded-df-2xl border border-df-border bg-df-surface/85 p-8 shadow-df-xl backdrop-blur-xl">
+    <div className="relative overflow-hidden rounded-df-2xl border border-df-border bg-df-surface/85 p-6 shadow-df-xl backdrop-blur-xl sm:p-8">
       <Badge tone="accent" variant="soft" size="md" className="w-fit">
         {service.eyebrow}
       </Badge>
-      <p className="mt-5 font-display text-xl font-400 uppercase tracking-[0.02em] text-df-text-muted">
+      <p className="mt-4 font-display text-xl font-400 uppercase tracking-[0.02em] text-df-text-muted sm:mt-5">
         {service.name}
       </p>
-      <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-6">
-        <span className="font-display text-[clamp(3rem,8vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text">
+      <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-5 sm:pb-6">
+        <span className="font-display text-[clamp(2.75rem,11vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text">
           {service.price}
         </span>
         <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
