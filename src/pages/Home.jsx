@@ -344,10 +344,10 @@ export default function Home() {
               accent={closing.accent}
               className="mt-6 max-w-[20ch] text-[clamp(2.25rem,7vw,5.5rem)] leading-[0.92]"
             />
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg">
               {closing.subhead}
             </p>
-            <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={closing.primaryCtaHref}>
                   {closing.primaryCta}
