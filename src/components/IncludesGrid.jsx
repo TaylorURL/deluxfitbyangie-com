@@ -15,7 +15,7 @@ import { Card, Reveal, Section } from '@deluxfit/ds'
 export default function IncludesGrid({ id, eyebrow, heading, accent, items = [] }) {
   return (
     <Section id={id} eyebrow={eyebrow} heading={heading} accent={accent}>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {items.map(({ icon: Icon, title, description }, index) => (
           <Reveal key={title} delay={index * 0.05}>
             <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
