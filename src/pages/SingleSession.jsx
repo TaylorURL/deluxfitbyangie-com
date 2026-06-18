@@ -67,7 +67,7 @@ export default function SingleSession() {
 
       <section
         id={session.bookSection.id}
-        className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-20 sm:py-28"
+        className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28"
       >
         <div
           aria-hidden="true"
@@ -75,21 +75,21 @@ export default function SingleSession() {
         />
         <Container size="md">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <SectionIndex>02</SectionIndex>
               <SectionEyebrow>{session.bookSection.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
               text={session.bookSection.heading}
               accent={session.bookSection.accent}
-              className="mt-6 text-[clamp(2rem,5vw,3.5rem)] leading-[0.95]"
+              className="mt-5 text-[clamp(2rem,8vw,3.5rem)] leading-[0.95] sm:mt-6"
             />
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {session.bookSection.body}
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-10">
+          <Reveal delay={0.1} className="mt-8 sm:mt-10">
             <BookingCalendar service="single_session" />
           </Reveal>
         </Container>
