@@ -176,7 +176,7 @@ export default function OnlineCoachingApplicationForm() {
           type="checkbox"
           checked={values.consent}
           onChange={handleChange('consent')}
-          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-df-accent-bright"
+          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-df-accent-bright"
           required
         />
         <span>
