@@ -133,13 +133,13 @@ export default function Home() {
             ))}
           </MotionH1>
 
-          <div className="mt-12 grid items-end gap-10 border-t border-df-border pt-10 sm:mt-16 lg:grid-cols-[1.4fr_1fr]">
+          <div className="mt-10 grid items-end gap-10 border-t border-df-border pt-8 sm:mt-16 sm:pt-10 lg:grid-cols-[1.4fr_1fr]">
             <div className="max-w-xl">
               <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
                 {hero.subhead}
               </p>
 
-              <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row">
                 <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href={hero.primaryCtaHref}>
                     {hero.primaryCta}
