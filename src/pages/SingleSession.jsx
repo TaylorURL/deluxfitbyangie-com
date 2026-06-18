@@ -37,6 +37,12 @@ export default function SingleSession() {
         aside={<ServicePriceTile service={service} />}
       />
 
+      <PhotoBand
+        src="/brand/studio-dumbbell-side-pose.jpg"
+        alt="Angie set up at a single-session studio drill with a dumbbell"
+        objectPosition="object-[55%_25%]"
+      />
+
       <Section
         eyebrow={session.perfectForEyebrow}
         heading={session.perfectForHeading}
