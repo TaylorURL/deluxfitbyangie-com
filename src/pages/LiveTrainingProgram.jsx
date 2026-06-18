@@ -13,6 +13,7 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import PhotoBand from '@/components/PhotoBand'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
