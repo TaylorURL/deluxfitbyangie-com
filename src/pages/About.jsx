@@ -144,6 +144,13 @@ export default function About() {
         )}
       </Section>
 
+      <PhotoBand
+        src="/brand/gym-back-squat-discipline.jpg"
+        alt="Angie under the bar — discipline over excuses"
+        objectPosition="object-[40%_30%]"
+        height="short"
+      />
+
       <Section
         eyebrow={about.philosophy.eyebrow}
         heading={about.philosophy.heading}
