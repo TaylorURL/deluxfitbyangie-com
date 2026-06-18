@@ -38,8 +38,8 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
         ))}
       </div>
 
-      <Reveal delay={0.3} className="mt-10">
-        <div className="flex flex-col gap-4 rounded-df-xl border border-df-border bg-df-surface px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+      <Reveal delay={0.3} className="mt-8 sm:mt-10">
+        <div className="flex flex-col gap-4 rounded-df-xl border border-df-border bg-df-surface p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div className="flex flex-col gap-1.5">
             <span className="inline-flex w-fit items-center gap-2">
               <Badge tone="neutral" variant="outline" size="sm">
