@@ -13,6 +13,7 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import PhotoBand from '@/components/PhotoBand'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
 
@@ -34,6 +35,12 @@ export default function SingleSession() {
         primary={{ label: session.hero.primaryCta, href: session.hero.primaryCtaHref }}
         secondary={{ label: session.hero.secondaryCta, href: session.hero.secondaryCtaHref }}
         aside={<ServicePriceTile service={service} />}
+      />
+
+      <PhotoBand
+        src="/brand/studio-dumbbell-side-pose.jpg"
+        alt="Angie set up at a single-session studio drill with a dumbbell"
+        objectPosition="object-[55%_25%]"
       />
 
       <Section

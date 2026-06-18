@@ -14,7 +14,53 @@ import {
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
+import PhotoGallery from '@/components/PhotoGallery'
 import ProgramsGrid from '@/components/ProgramsGrid'
+
+const HOME_GALLERY = [
+  {
+    src: '/brand/gym-battle-ropes.jpg',
+    alt: 'Angie driving battle ropes on the turf, pink kit, gym session',
+    span: 'wide',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-red-mat-seated.jpg',
+    alt: 'Angie seated on a crimson mat in a studio portrait',
+    span: 'tall',
+    objectPosition: 'object-[60%_35%]',
+  },
+  {
+    src: '/brand/gym-back-squat-discipline.jpg',
+    alt: 'Angie under the bar setting up a back squat in the rack',
+    span: 'regular',
+    objectPosition: 'object-[50%_45%]',
+  },
+  {
+    src: '/brand/studio-dumbbell-side-pose.jpg',
+    alt: 'Angie holding a dumbbell, step-up pose, studio lighting',
+    span: 'regular',
+    objectPosition: 'object-[55%_25%]',
+  },
+  {
+    src: '/brand/gym-dumbbell-deadlift.jpg',
+    alt: 'Angie mid-rep of a dumbbell Romanian deadlift in the gym',
+    span: 'regular',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-cobra-stretch.jpg',
+    alt: 'Angie in an upward stretch, studio session, dumbbells at her side',
+    span: 'wide',
+    objectPosition: 'object-[40%_40%]',
+  },
+  {
+    src: '/brand/gym-leg-press.jpg',
+    alt: 'Angie pressing through a heavy leg-press set',
+    span: 'wide',
+    objectPosition: 'object-[50%_35%]',
+  },
+]
 
 const MotionH1 = motion.h1
 const MotionSpan = motion.span
@@ -119,7 +165,11 @@ export default function Home() {
               animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
             >
-              <FramedPhoto src="/angie-squat.png" alt={hero.imageAlt} aspect="aspect-[4/5]" />
+              <FramedPhoto
+                src="/brand/studio-portrait-dumbbells.jpg"
+                alt={hero.imageAlt}
+                aspect="aspect-[4/5]"
+              />
               <div className="absolute -bottom-5 -left-3 rounded-df-md border border-df-glass-border bg-df-glass-fill px-5 py-3 backdrop-blur-xl sm:-left-5">
                 <div className="font-display text-[clamp(2rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
                   {hero.trust.pillarValue}
@@ -146,7 +196,11 @@ export default function Home() {
                 aria-hidden="true"
                 className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
               />
-              <FramedPhoto src="/angie-coaching.png" alt={intro.imageAlt} aspect="aspect-[4/5]" />
+              <FramedPhoto
+                src="/brand/studio-kettlebell-portrait.jpg"
+                alt={intro.imageAlt}
+                aspect="aspect-[4/5]"
+              />
             </Reveal>
 
             <Reveal delay={0.1} className="flex flex-col items-start">
@@ -236,16 +290,53 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* SHOOT GALLERY — real brand photography */}
+      <section className="overflow-hidden py-20 sm:py-28">
+        <Container size="xl">
+          <Reveal className="flex flex-col items-start">
+            <div className="flex items-center gap-4">
+              <SectionIndex>04</SectionIndex>
+              <SectionEyebrow>In the gym</SectionEyebrow>
+            </div>
+            <SplitHeading
+              text="Real reps. Real grit."
+              accent="grit"
+              className="mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.95]"
+            />
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              Studio portraits and gym sessions from the DeluxFit shoot — the same energy
+              Angie brings to every program.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1} className="mt-12">
+            <PhotoGallery items={HOME_GALLERY} />
+          </Reveal>
+        </Container>
+      </section>
+
       {/* CLOSING CTA */}
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-24 sm:py-36">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-24 sm:py-36">
+        <img
+          src="/brand/gym-back-squat-discipline.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-40"
+        />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.26),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/80 to-df-bg"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.32),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
-              <SectionIndex>04</SectionIndex>
+              <SectionIndex>05</SectionIndex>
               <SectionEyebrow>{closing.eyebrow}</SectionEyebrow>
             </div>
             <SplitHeading
