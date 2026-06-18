@@ -309,7 +309,7 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-12">
+          <Reveal delay={0.1} className="mt-10 sm:mt-12">
             <PhotoGallery items={HOME_GALLERY} />
           </Reveal>
         </Container>
