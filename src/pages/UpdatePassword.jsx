@@ -5,7 +5,7 @@ import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
 import { useLocation } from '@/router'
-import { roleLandingPath } from '@/auth/ProtectedRoute'
+import { roleLandingPath } from '@/auth/roles'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
 /**
