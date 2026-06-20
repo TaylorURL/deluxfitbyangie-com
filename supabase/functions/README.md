@@ -1,7 +1,7 @@
 # Edge functions
 
 Deno TypeScript edge functions for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Each function lives in its own folder and is a
+(ref `wmqwcnpiewfujmxaivvy`). Each function lives in its own folder and is a
 standard `Deno.serve` handler that:
 
 1. answers the `OPTIONS` CORS preflight,
@@ -25,7 +25,7 @@ Shared CORS headers and the `json()` response helper live in
 ## Deploying
 
 ```bash
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Deploy all functions
 supabase functions deploy create-booking
@@ -77,7 +77,7 @@ supabase secrets set \
 ## Stripe webhook setup
 
 Point a Stripe webhook endpoint at
-`https://gujgtjqqurildqurpffh.functions.supabase.co/stripe-webhook` and subscribe
+`https://wmqwcnpiewfujmxaivvy.functions.supabase.co/stripe-webhook` and subscribe
 to `checkout.session.completed`, `customer.subscription.updated`, and
 `customer.subscription.deleted`. Copy the signing secret into
 `STRIPE_WEBHOOK_SECRET`.

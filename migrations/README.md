@@ -1,7 +1,7 @@
 # Database migrations
 
 Raw, append-only SQL DDL for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Files are numbered and applied in order. Never edit
+(ref `wmqwcnpiewfujmxaivvy`). Files are numbered and applied in order. Never edit
 an already-applied migration — add a new `NNNN_*.sql` file instead.
 
 ## Files
@@ -19,7 +19,7 @@ Pick whichever path fits your workflow.
 
 ```bash
 # One-time link
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Apply this file against the linked project (or local stack)
 supabase db execute --file migrations/0001_init.sql
