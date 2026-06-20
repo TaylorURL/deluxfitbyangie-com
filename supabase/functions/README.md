@@ -32,6 +32,7 @@ supabase link --project-ref wmqwcnpiewfujmxaivvy
 supabase functions deploy create-booking
 supabase functions deploy send-message
 supabase functions deploy log-progress
+supabase functions deploy invite-user
 supabase functions deploy create-checkout
 
 # The webhook receives unauthenticated calls from Stripe — disable JWT verify.
