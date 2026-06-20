@@ -208,6 +208,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const currentPath = normalizePath(pathname)
+  const navbarTone = useNavbarTone('dark', pathname)
+  const isLightTone = navbarTone === 'light'
 
   useBodyScrollLock(menuOpen)
   useEscapeKey(menuOpen, () => setMenuOpen(false))
@@ -227,15 +229,19 @@ export default function Header() {
   return (
     <>
       <header
+        data-navbar
+        data-theme={navbarTone}
         className={cn(
           // `transform-gpu` pins the header to its own compositor layer so the
           // browser doesn't re-promote it mid-scroll (which can drop the first
           // touch event on iOS Safari). We deliberately do NOT transition
           // `backdrop-filter` — that transition can also drop touches on the
-          // 12px scroll-threshold crossover.
-          'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,border-color,box-shadow] duration-300 ease-df-out',
+          // 12px scroll-threshold crossover. `color` is in the transition list
+          // so descendant text smoothly fades between tones as the navbar's
+          // `data-theme` flips at section boundaries.
+          'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,color,border-color,box-shadow] duration-200 ease-df-out',
           scrolled
-            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_rgba(0,0,0,0.7)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
+            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_var(--df-shadow-key)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
             : 'border-b border-transparent bg-transparent'
         )}
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
