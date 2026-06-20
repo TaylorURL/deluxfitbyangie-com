@@ -268,8 +268,15 @@ export default function Header() {
                 width="946"
                 height="308"
                 className={cn(
-                  'w-auto select-none [filter:invert(1)_hue-rotate(180deg)] transition-[height] duration-300 ease-df-out',
-                  scrolled ? 'h-6 sm:h-8' : 'h-7 sm:h-10'
+                  // The source PNG is black text + red accent on transparent.
+                  // Over dark sections we invert (white + red); over light we
+                  // leave it untouched (black + red). Both states use the same
+                  // filter function list so the interpolation is smooth.
+                  'w-auto select-none transition-[height,filter] duration-200 ease-df-out',
+                  scrolled ? 'h-6 sm:h-8' : 'h-7 sm:h-10',
+                  isLightTone
+                    ? '[filter:invert(0)_hue-rotate(0deg)]'
+                    : '[filter:invert(1)_hue-rotate(180deg)]'
                 )}
                 draggable="false"
               />
