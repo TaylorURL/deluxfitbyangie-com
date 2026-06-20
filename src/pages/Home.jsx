@@ -99,7 +99,12 @@ export default function Home() {
 
   return (
     <>
-      <section id="top" className="relative isolate overflow-hidden bg-df-bg">
+      {/* HERO — strongest brand moment, kept on the dark panel */}
+      <section
+        id="top"
+        data-theme="dark"
+        className="relative isolate overflow-hidden bg-df-bg text-df-text"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,rgba(225,29,42,0.16),transparent_60%)]"
@@ -187,8 +192,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MEET ANGIE — intro band */}
-      <section className="overflow-hidden py-16 sm:py-28">
+      {/* MEET ANGIE — light editorial panel, anduril-style hard cut from the hero */}
+      <section data-theme="light" className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28">
         <Container size="lg">
           <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <Reveal className="relative order-last lg:order-first">
@@ -234,8 +239,11 @@ export default function Home() {
       {/* PROGRAMS — three services + coming-soon teaser */}
       <ProgramsGrid id="programs" highlightServiceId="coaching" />
 
-      {/* WHAT IT LOOKS LIKE */}
-      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 sm:py-28">
+      {/* WHAT IT LOOKS LIKE — light value panel between dark programs + dark gallery */}
+      <section
+        data-theme="light"
+        className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 text-df-text sm:py-28"
+      >
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
@@ -290,8 +298,11 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* SHOOT GALLERY — real brand photography */}
-      <section className="overflow-hidden py-16 sm:py-28">
+      {/* SHOOT GALLERY — dark panel so the photography reads cinematic */}
+      <section
+        data-theme="dark"
+        className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28"
+      >
         <Container size="xl">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
@@ -315,23 +326,26 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CLOSING CTA */}
-      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 sm:py-36">
+      {/* CLOSING CTA — light finale, then footer (dark) provides the brand bookend */}
+      <section
+        data-theme="light"
+        className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 text-df-text sm:py-36"
+      >
         <img
           src="/brand/gym-back-squat-discipline.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-40"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-15 [filter:grayscale(0.9)_contrast(1.05)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/80 to-df-bg"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/85 to-df-bg"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.32),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(189,21,33,0.22),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
