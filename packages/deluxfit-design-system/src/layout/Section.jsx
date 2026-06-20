@@ -13,12 +13,21 @@ const SPACE = {
   xl: 'py-24 sm:py-44',
 }
 
+const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
+
 /**
  * Section — a vertically-rhythmed page band on the shared "type specimen" grid.
  * When `heading`/`eyebrow` is supplied it renders an editorial, left-aligned
  * header: an oversized outlined index numeral as type furniture, the crimson
  * eyebrow, a giant condensed headline (with one phrase accented in Fraunces
  * italic), and a measured subhead. Pass `bare` for fully custom content.
+ *
+ * `tone` switches the section's surface context (dark / light / gray) by
+ * scoping the `--df-*` tokens to this element via `data-theme`. All children
+ * resolve from semantic tokens, so the brand red, text, borders, and shadows
+ * flip together with no per-section hardcoding — the anduril-style alternation
+ * pattern. When `tone` is set, the section also paints its `bg-df-bg` so the
+ * panel is fully self-contained and hard-cuts cleanly against the neighbors.
  *
  * @param {object} props
  * @param {'sm'|'md'|'lg'|'xl'} [props.space='lg']
@@ -29,6 +38,7 @@ const SPACE = {
  * @param {React.ReactNode} [props.subhead]
  * @param {'left'|'center'} [props.align='left']
  * @param {boolean} [props.bare] - skip the inner Container/header entirely
+ * @param {'dark'|'light'|'gray'} [props.tone] - section surface context
  */
 export const Section = forwardRef(function Section(
   {
@@ -42,6 +52,7 @@ export const Section = forwardRef(function Section(
     align = 'left',
     containerSize = 'lg',
     bare = false,
+    tone,
     children,
     as: Component = 'section',
     ...props
@@ -50,11 +61,18 @@ export const Section = forwardRef(function Section(
 ) {
   const hasHeader = Boolean(eyebrow || heading || subhead)
   const centered = align === 'center'
+  const themeAttr = tone ? TONE_THEME[tone] : undefined
 
   return (
     <Component
       ref={ref}
-      className={cn('relative overflow-hidden', SPACE[space] ?? SPACE.lg, className)}
+      data-theme={themeAttr}
+      className={cn(
+        'relative overflow-hidden',
+        themeAttr && 'bg-df-bg text-df-text',
+        SPACE[space] ?? SPACE.lg,
+        className
+      )}
       {...props}
     >
       {bare ? (

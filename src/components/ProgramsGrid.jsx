@@ -21,6 +21,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
   return (
     <Section
       id={id}
+      tone="dark"
       eyebrow={programs.eyebrow}
       heading={programs.heading}
       accent={programs.accent}
