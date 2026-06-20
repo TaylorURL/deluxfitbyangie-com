@@ -1,0 +1,113 @@
+import { ArrowLeft, LogOut } from 'lucide-react'
+import { Container, cn } from '@deluxfit/ds'
+import { Link, useLocation } from '@/router'
+import { useAuth } from '@/auth/useAuth'
+import { ADMIN_ROUTES, matchAdminRoute } from './routes'
+
+/**
+ * AdminShell — the standalone chrome for the role-gated backend at /admin.
+ * Sidebar nav on the left (collapses to a wrap on mobile), the matched
+ * sub-route in the main slot. A header carries the brand mark, the signed-in
+ * staff identity, and sign-out / back-to-site.
+ */
+export default function AdminShell() {
+  const { pathname } = useLocation()
+  const { user, profile, signOut } = useAuth()
+  const active = matchAdminRoute(pathname)
+  const ActiveComponent = active.component
+  const ActiveIcon = active.icon
+
+  return (
+    <div className="relative isolate flex min-h-screen flex-col overflow-hidden bg-df-bg">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_45%_at_50%_-10%,rgba(225,29,42,0.14),transparent_65%)]"
+      />
+
+      <header className="border-b border-df-border">
+        <Container size="xl">
+          <div className="flex h-16 items-center justify-between gap-3 sm:h-20">
+            <Link
+              href="/admin"
+              aria-label="DeluxFit admin"
+              className="inline-flex shrink-0 items-center gap-3 rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+            >
+              <img
+                src="/deluxfit-logo.png"
+                alt=""
+                width="946"
+                height="308"
+                className="h-7 w-auto select-none [filter:invert(1)_hue-rotate(180deg)] sm:h-8"
+                draggable="false"
+              />
+              <span className="hidden text-[10px] font-700 uppercase tracking-[0.28em] text-df-text-muted sm:inline">
+                Admin
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <span className="hidden text-[11px] font-600 uppercase tracking-[0.18em] text-df-text-faint sm:inline">
+                {profile?.full_name || user?.email || 'Staff'}
+              </span>
+              <button
+                type="button"
+                onClick={signOut}
+                aria-label="Sign out"
+                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+              >
+                <LogOut aria-hidden="true" className="h-4 w-4" />
+                <span className="hidden sm:inline">Sign out</span>
+              </button>
+              <Link
+                href="/"
+                aria-label="Back to site"
+                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
+              >
+                <ArrowLeft aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                <span className="hidden sm:inline">Site</span>
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </header>
+
+      <Container size="xl">
+        <div className="grid gap-8 py-10 lg:grid-cols-[240px_1fr] lg:py-14">
+          <nav aria-label="Admin navigation" className="flex flex-wrap gap-2 lg:flex-col">
+            {ADMIN_ROUTES.map(route => {
+              const Icon = route.icon
+              const isActive = route.path === active.path
+              return (
+                <Link
+                  key={route.path}
+                  href={route.path}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={cn(
+                    'inline-flex items-center gap-2.5 rounded-df-sm border px-3.5 py-2.5 text-[12px] font-700 uppercase tracking-[0.14em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright lg:w-full',
+                    isActive
+                      ? 'border-df-accent bg-df-accent-soft text-df-accent-bright'
+                      : 'border-transparent text-df-text-muted hover:bg-df-surface-2 hover:text-df-text'
+                  )}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {route.label}
+                </Link>
+              )
+            })}
+          </nav>
+
+          <main className="min-w-0">
+            <header className="mb-8 flex items-center gap-3">
+              <ActiveIcon className="h-6 w-6 text-df-accent" aria-hidden="true" />
+              <h1 className="font-display text-3xl font-400 uppercase leading-none tracking-tight text-df-text sm:text-4xl">
+                {active.label}
+                <span className="text-df-accent">.</span>
+              </h1>
+            </header>
+            <ActiveComponent />
+          </main>
+        </div>
+      </Container>
+    </div>
+  )
+}

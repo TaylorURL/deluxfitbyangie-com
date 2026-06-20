@@ -2,15 +2,31 @@ import { useEffect } from 'react'
 import ClientPortal from './portal/ClientPortal'
 import DevUpload from './components/DevUpload'
 import SiteShell from './components/SiteShell'
+import AdminApp from './admin/AdminApp'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import ResetPassword from './pages/ResetPassword'
+import UpdatePassword from './pages/UpdatePassword'
 import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
 import { useContent } from './i18n'
 
 /**
  * Standalone routes — these render outside the SiteShell because they own
  * their own chrome (header + footer treatment).
+ *
+ * `/admin` matches by prefix (the matcher uses startsWith) so every
+ * `/admin/*` sub-route lands inside AdminApp, which gates access on
+ * `profiles.role = 'staff'` via ProtectedRoute. The auth pages
+ * (/login, /signup, /reset-password, /update-password) carry their own
+ * AuthShell — same back-to-site treatment, no SiteShell chrome.
  */
 const STANDALONE_ROUTES = [
   { path: '/portal', component: ClientPortal },
+  { path: '/admin', component: AdminApp },
+  { path: '/login', component: Login },
+  { path: '/signup', component: Signup },
+  { path: '/reset-password', component: ResetPassword },
+  { path: '/update-password', component: UpdatePassword },
   { path: '/dev-upload', component: DevUpload },
 ]
 
