@@ -347,7 +347,14 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersR
   return createPortal(
     <AnimatePresence>
       {open && (
-        <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
+        <MotionDiv
+          key="mobile-navigation"
+          id="mobile-navigation"
+          // Pin the drawer to the dark tone so its surface tokens are
+          // deterministic — the page's adaptive navbar tone never bleeds in.
+          data-theme="dark"
+          className="xl:hidden"
+        >
           <MotionButton
             type="button"
             aria-label={header.closeMenu}
