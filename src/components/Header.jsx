@@ -35,6 +35,55 @@ function useScrolled(threshold = 12) {
   return scrolled
 }
 
+const NAVBAR_TONES = new Set(['dark', 'light', 'gray'])
+
+/**
+ * useNavbarTone — resolves the tone of whatever toned section currently sits
+ * under the fixed navbar, by hit-testing every `[data-theme]` panel against a
+ * probe line through the middle of the navbar's height band. Reuses the same
+ * source of truth the page already declares (the anduril-style alternating
+ * sections) so we never re-detect colors from pixels. Re-runs on scroll,
+ * resize, and route change.
+ */
+function useNavbarTone(defaultTone, pathname) {
+  const [tone, setTone] = useState(defaultTone)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let pending = false
+    const probe = () => {
+      pending = false
+      const navbar = document.querySelector('[data-navbar]')
+      if (!navbar) return
+      const navRect = navbar.getBoundingClientRect()
+      const probeY = navRect.top + navRect.height / 2
+      const sections = document.querySelectorAll('[data-theme]')
+      let next = defaultTone
+      for (const el of sections) {
+        if (navbar.contains(el) || el === navbar) continue
+        const rect = el.getBoundingClientRect()
+        if (rect.top <= probeY && rect.bottom > probeY) {
+          const value = el.getAttribute('data-theme')
+          if (NAVBAR_TONES.has(value)) next = value
+        }
+      }
+      setTone(prev => (prev === next ? prev : next))
+    }
+    const onScroll = () => {
+      if (pending) return
+      pending = true
+      requestAnimationFrame(probe)
+    }
+    probe()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [defaultTone, pathname])
+  return tone
+}
+
 /**
  * iOS-safe body scroll lock. Plain `overflow: hidden` does not stop momentum
  * scroll on mobile Safari, and toggling it can leave the page jumped to top
