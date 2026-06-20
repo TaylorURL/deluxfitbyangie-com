@@ -19,7 +19,7 @@ Pick whichever path fits your workflow.
 
 ```bash
 # One-time link
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Apply this file against the linked project (or local stack)
 supabase db execute --file migrations/0001_init.sql
