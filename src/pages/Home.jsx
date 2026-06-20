@@ -326,23 +326,26 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CLOSING CTA */}
-      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 sm:py-36">
+      {/* CLOSING CTA — light finale, then footer (dark) provides the brand bookend */}
+      <section
+        data-theme="light"
+        className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 text-df-text sm:py-36"
+      >
         <img
           src="/brand/gym-back-squat-discipline.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-40"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-15 [filter:grayscale(0.9)_contrast(1.05)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/80 to-df-bg"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg via-df-bg/85 to-df-bg"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.32),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(189,21,33,0.22),transparent_70%)]"
         />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
