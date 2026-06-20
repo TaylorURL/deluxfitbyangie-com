@@ -13,10 +13,10 @@ import { createClient } from '@supabase/supabase-js'
  * require dashboard env wiring; an env override is still honoured when present.
  */
 export const SUPABASE_URL =
-  import.meta.env?.VITE_SUPABASE_URL || 'https://gujgtjqqurildqurpffh.supabase.co'
+  import.meta.env?.VITE_SUPABASE_URL || 'https://wmqwcnpiewfujmxaivvy.supabase.co'
 export const SUPABASE_ANON_KEY =
   import.meta.env?.VITE_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1amd0anFxdXJpbGRxdXJwZmZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MTkxOTAsImV4cCI6MjA3OTQ5NTE5MH0.9jd6izem9wvp9RgYvlzgLhjSAiRxfsCfTxuIQHOunZc'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtcXdjbnBpZXdmdWpteGFpdnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5MTM0MDYsImV4cCI6MjA5NzQ4OTQwNn0.ZDECuBgZPSTgetCNIx_rWeBaYL47SOmehbkwyH_vBgA'
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
