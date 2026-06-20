@@ -99,7 +99,12 @@ export default function Home() {
 
   return (
     <>
-      <section id="top" className="relative isolate overflow-hidden bg-df-bg">
+      {/* HERO — strongest brand moment, kept on the dark panel */}
+      <section
+        id="top"
+        data-theme="dark"
+        className="relative isolate overflow-hidden bg-df-bg text-df-text"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,rgba(225,29,42,0.16),transparent_60%)]"
