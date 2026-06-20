@@ -35,6 +35,55 @@ function useScrolled(threshold = 12) {
   return scrolled
 }
 
+const NAVBAR_TONES = new Set(['dark', 'light', 'gray'])
+
+/**
+ * useNavbarTone — resolves the tone of whatever toned section currently sits
+ * under the fixed navbar, by hit-testing every `[data-theme]` panel against a
+ * probe line through the middle of the navbar's height band. Reuses the same
+ * source of truth the page already declares (the anduril-style alternating
+ * sections) so we never re-detect colors from pixels. Re-runs on scroll,
+ * resize, and route change.
+ */
+function useNavbarTone(defaultTone, pathname) {
+  const [tone, setTone] = useState(defaultTone)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let pending = false
+    const probe = () => {
+      pending = false
+      const navbar = document.querySelector('[data-navbar]')
+      if (!navbar) return
+      const navRect = navbar.getBoundingClientRect()
+      const probeY = navRect.top + navRect.height / 2
+      const sections = document.querySelectorAll('[data-theme]')
+      let next = defaultTone
+      for (const el of sections) {
+        if (navbar.contains(el) || el === navbar) continue
+        const rect = el.getBoundingClientRect()
+        if (rect.top <= probeY && rect.bottom > probeY) {
+          const value = el.getAttribute('data-theme')
+          if (NAVBAR_TONES.has(value)) next = value
+        }
+      }
+      setTone(prev => (prev === next ? prev : next))
+    }
+    const onScroll = () => {
+      if (pending) return
+      pending = true
+      requestAnimationFrame(probe)
+    }
+    probe()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [defaultTone, pathname])
+  return tone
+}
+
 /**
  * iOS-safe body scroll lock. Plain `overflow: hidden` does not stop momentum
  * scroll on mobile Safari, and toggling it can leave the page jumped to top
@@ -159,6 +208,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const currentPath = normalizePath(pathname)
+  const navbarTone = useNavbarTone('dark', pathname)
+  const isLightTone = navbarTone === 'light'
 
   useBodyScrollLock(menuOpen)
   useEscapeKey(menuOpen, () => setMenuOpen(false))
@@ -178,15 +229,19 @@ export default function Header() {
   return (
     <>
       <header
+        data-navbar
+        data-theme={navbarTone}
         className={cn(
           // `transform-gpu` pins the header to its own compositor layer so the
           // browser doesn't re-promote it mid-scroll (which can drop the first
           // touch event on iOS Safari). We deliberately do NOT transition
           // `backdrop-filter` — that transition can also drop touches on the
-          // 12px scroll-threshold crossover.
-          'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,border-color,box-shadow] duration-300 ease-df-out',
+          // 12px scroll-threshold crossover. `color` is in the transition list
+          // so descendant text smoothly fades between tones as the navbar's
+          // `data-theme` flips at section boundaries.
+          'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,color,border-color,box-shadow] duration-200 ease-df-out',
           scrolled
-            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_rgba(0,0,0,0.7)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
+            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_var(--df-shadow-key)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
             : 'border-b border-transparent bg-transparent'
         )}
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -213,8 +268,15 @@ export default function Header() {
                 width="946"
                 height="308"
                 className={cn(
-                  'w-auto select-none [filter:invert(1)_hue-rotate(180deg)] transition-[height] duration-300 ease-df-out',
-                  scrolled ? 'h-6 sm:h-8' : 'h-7 sm:h-10'
+                  // The source PNG is black text + red accent on transparent.
+                  // Over dark sections we invert (white + red); over light we
+                  // leave it untouched (black + red). Both states use the same
+                  // filter function list so the interpolation is smooth.
+                  'w-auto select-none transition-[height,filter] duration-200 ease-df-out',
+                  scrolled ? 'h-6 sm:h-8' : 'h-7 sm:h-10',
+                  isLightTone
+                    ? '[filter:invert(0)_hue-rotate(0deg)]'
+                    : '[filter:invert(1)_hue-rotate(180deg)]'
                 )}
                 draggable="false"
               />
@@ -285,7 +347,14 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersR
   return createPortal(
     <AnimatePresence>
       {open && (
-        <MotionDiv key="mobile-navigation" id="mobile-navigation" className="xl:hidden">
+        <MotionDiv
+          key="mobile-navigation"
+          id="mobile-navigation"
+          // Pin the drawer to the dark tone so its surface tokens are
+          // deterministic — the page's adaptive navbar tone never bleeds in.
+          data-theme="dark"
+          className="xl:hidden"
+        >
           <MotionButton
             type="button"
             aria-label={header.closeMenu}
