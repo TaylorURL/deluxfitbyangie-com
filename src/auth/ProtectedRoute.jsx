@@ -1,17 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from '@/router'
 import { useAuth } from './useAuth'
-
-/**
- * Default landing path for a signed-in user, by role. Staff land on /admin;
- * clients land on /portal. Unknown / not-yet-loaded roles default to /portal
- * (the safer surface — it shows an empty state instead of leaking admin
- * scaffolding for a half-loaded session).
- */
-export function roleLandingPath(role) {
-  if (role === 'staff') return '/admin'
-  return '/portal'
-}
+import { roleLandingPath } from './roles'
 
 /**
  * ProtectedRoute — gate a route by auth state and role.
