@@ -77,7 +77,7 @@ supabase secrets set \
 ## Stripe webhook setup
 
 Point a Stripe webhook endpoint at
-`https://gujgtjqqurildqurpffh.functions.supabase.co/stripe-webhook` and subscribe
+`https://wmqwcnpiewfujmxaivvy.functions.supabase.co/stripe-webhook` and subscribe
 to `checkout.session.completed`, `customer.subscription.updated`, and
 `customer.subscription.deleted`. Copy the signing secret into
 `STRIPE_WEBHOOK_SECRET`.
