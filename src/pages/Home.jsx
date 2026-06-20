@@ -298,8 +298,11 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* SHOOT GALLERY — real brand photography */}
-      <section className="overflow-hidden py-16 sm:py-28">
+      {/* SHOOT GALLERY — dark panel so the photography reads cinematic */}
+      <section
+        data-theme="dark"
+        className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28"
+      >
         <Container size="xl">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
