@@ -239,8 +239,11 @@ export default function Home() {
       {/* PROGRAMS — three services + coming-soon teaser */}
       <ProgramsGrid id="programs" highlightServiceId="coaching" />
 
-      {/* WHAT IT LOOKS LIKE */}
-      <section className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 sm:py-28">
+      {/* WHAT IT LOOKS LIKE — light value panel between dark programs + dark gallery */}
+      <section
+        data-theme="light"
+        className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 text-df-text sm:py-28"
+      >
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
