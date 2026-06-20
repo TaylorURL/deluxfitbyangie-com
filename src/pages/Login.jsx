@@ -4,7 +4,7 @@ import { Button, Field, Input } from '@deluxfit/ds'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
-import { roleLandingPath } from '@/auth/ProtectedRoute'
+import { roleLandingPath } from '@/auth/roles'
 import { useLocation } from '@/router'
 import { FormError } from '@/components/forms/FormFeedback'
 
