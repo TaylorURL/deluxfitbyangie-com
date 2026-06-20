@@ -1,7 +1,7 @@
 # Database migrations
 
 Raw, append-only SQL DDL for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Files are numbered and applied in order. Never edit
+(ref `wmqwcnpiewfujmxaivvy`). Files are numbered and applied in order. Never edit
 an already-applied migration — add a new `NNNN_*.sql` file instead.
 
 ## Files
