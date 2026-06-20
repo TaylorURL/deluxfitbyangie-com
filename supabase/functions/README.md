@@ -1,7 +1,7 @@
 # Edge functions
 
 Deno TypeScript edge functions for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Each function lives in its own folder and is a
+(ref `wmqwcnpiewfujmxaivvy`). Each function lives in its own folder and is a
 standard `Deno.serve` handler that:
 
 1. answers the `OPTIONS` CORS preflight,
