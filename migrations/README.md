@@ -1,7 +1,7 @@
 # Database migrations
 
 Raw, append-only SQL DDL for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Files are numbered and applied in order. Never edit
+(ref `wmqwcnpiewfujmxaivvy`). Files are numbered and applied in order. Never edit
 an already-applied migration — add a new `NNNN_*.sql` file instead.
 
 ## Files
@@ -10,6 +10,15 @@ an already-applied migration — add a new `NNNN_*.sql` file instead.
   `progress_entries`, `bookings`, `conversations`, `messages`, `content_items`;
   the `handle_new_user()` signup trigger, the `has_entitlement()` access check,
   the `booking_slots_taken` view, RLS policies and indexes.
+- `0002_storage.sql` — private `message-attachments` bucket + per-user folder
+  RLS policies for the portal Messages tab.
+- `0003_auth_roles.sql` — `profiles.role` column (`'staff' | 'client'`,
+  defaults to `'client'`), the `public.is_staff(uid)` helper, a
+  `profiles_select_staff` RLS policy so staff can read every profile,
+  column-level UPDATE grants so authenticated users can update their own
+  `full_name`/`email` but never their own `role`, and an updated
+  `handle_new_user()` that honours an invited `role` claim on
+  `raw_user_meta_data` (set server-side by the `invite-user` edge function).
 
 ## Applying
 
@@ -19,7 +28,7 @@ Pick whichever path fits your workflow.
 
 ```bash
 # One-time link
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Apply this file against the linked project (or local stack)
 supabase db execute --file migrations/0001_init.sql

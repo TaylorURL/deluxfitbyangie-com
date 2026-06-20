@@ -1,7 +1,7 @@
 -- =============================================================================
 -- DeluxFit by Angie — Initial schema
 -- Migration: 0001_init.sql
--- Project ref: gujgtjqqurildqurpffh
+-- Project ref: wmqwcnpiewfujmxaivvy
 --
 -- Conventions:
 --   * All PKs are uuid via gen_random_uuid() (pgcrypto).

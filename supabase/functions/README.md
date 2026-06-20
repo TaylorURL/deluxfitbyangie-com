@@ -1,7 +1,7 @@
 # Edge functions
 
 Deno TypeScript edge functions for the DeluxFit by Angie Supabase project
-(ref `gujgtjqqurildqurpffh`). Each function lives in its own folder and is a
+(ref `wmqwcnpiewfujmxaivvy`). Each function lives in its own folder and is a
 standard `Deno.serve` handler that:
 
 1. answers the `OPTIONS` CORS preflight,
@@ -19,18 +19,20 @@ Shared CORS headers and the `json()` response helper live in
 | `create-booking`  | optional    | Insert a booking; `slot_end = slotStart + 60min`; returns `409 { code:'slot_taken' }` on a double-book (partial unique index, PG `23505`). Sends a Resend confirmation email if `RESEND_API_KEY` is set. |
 | `send-message`    | required    | Upsert the caller's conversation, insert a `sender='client'` message. |
 | `log-progress`    | required    | Insert a `progress_entries` row for the caller. |
+| `invite-user`     | required    | Staff-only. Sends a Supabase Auth invite email for `{ email, fullName?, role }` (role ∈ `'client'`/`'staff'`). Validates the caller's `profiles.role = 'staff'` server-side, then calls `supabase.auth.admin.inviteUserByEmail` with `data.role` set so the `handle_new_user()` trigger stamps the right role. The frontend never writes roles or creates users directly — it only invokes this. |
 | `create-checkout` | optional    | Create a Stripe Checkout Session (subscription for membership/coaching, payment for sessions). Returns `{ configured:false }` if Stripe env is unset — never fakes a charge. |
 | `stripe-webhook`  | Stripe sig  | Verifies `Stripe-Signature` (Web Crypto HMAC-SHA256) and upserts `memberships` on `checkout.session.completed` / `customer.subscription.updated|deleted`. Returns `{ configured:false }` if `STRIPE_WEBHOOK_SECRET` is unset. |
 
 ## Deploying
 
 ```bash
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Deploy all functions
 supabase functions deploy create-booking
 supabase functions deploy send-message
 supabase functions deploy log-progress
+supabase functions deploy invite-user
 supabase functions deploy create-checkout
 
 # The webhook receives unauthenticated calls from Stripe — disable JWT verify.
@@ -77,7 +79,7 @@ supabase secrets set \
 ## Stripe webhook setup
 
 Point a Stripe webhook endpoint at
-`https://gujgtjqqurildqurpffh.functions.supabase.co/stripe-webhook` and subscribe
+`https://wmqwcnpiewfujmxaivvy.functions.supabase.co/stripe-webhook` and subscribe
 to `checkout.session.completed`, `customer.subscription.updated`, and
 `customer.subscription.deleted`. Copy the signing secret into
 `STRIPE_WEBHOOK_SECRET`.
