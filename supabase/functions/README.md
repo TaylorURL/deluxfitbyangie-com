@@ -25,7 +25,7 @@ Shared CORS headers and the `json()` response helper live in
 ## Deploying
 
 ```bash
-supabase link --project-ref gujgtjqqurildqurpffh
+supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Deploy all functions
 supabase functions deploy create-booking
