@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
 /**
- * Sunday's public Supabase project — anon key is shipped intentionally.
+ * DeluxFit's public Supabase project — anon key is shipped intentionally.
  *
  * The member portal uses Supabase Auth, so the client persists sessions and
  * auto-refreshes tokens. Privileged writes (bookings, messages, progress,
