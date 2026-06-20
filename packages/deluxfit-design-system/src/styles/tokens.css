@@ -128,6 +128,118 @@
   --df-glass-border: rgba(255, 255, 255, 0.1);
 }
 
+/* ---- Light theme --------------------------------------------------------- */
+/* Used on alternating panels (the anduril-style hard-cut pattern). The red
+   shifts a half-stop deeper so it stays AA-readable on a near-white surface
+   without losing its identity. */
+[data-theme='light'] {
+  --df-bg: #faf8f5;
+  --df-bg-elevated: #f1ede7;
+  --df-surface: #ffffff;
+  --df-surface-2: #f5f1ec;
+  --df-surface-3: #e8e3dc;
+
+  --df-border: rgba(15, 15, 15, 0.10);
+  --df-border-strong: rgba(15, 15, 15, 0.18);
+  --df-border-input: rgba(15, 15, 15, 0.26);
+  --df-border-hover: rgba(189, 21, 33, 0.55);
+
+  --df-text: #131314;
+  --df-text-muted: #4a4744;
+  --df-text-faint: #807a76;
+
+  --df-red-50: #fff1f2;
+  --df-red-100: #ffdfe1;
+  --df-red-200: #ffc4c8;
+  --df-red-300: #ff9aa2;
+  --df-red-400: #fb5663;
+  --df-red-500: #f01f2d;
+  --df-red-600: #e11d2a;
+  --df-red-700: #bd1521;
+  --df-red-800: #9c141e;
+  --df-red-900: #81151d;
+  --df-red-950: #47070c;
+
+  /* Deeper red — accent stays brand red but moves toward red-700/800 so red
+     text on cream passes AA. `accent-bright` is the "text accent" token, so on
+     light it resolves to a more legible, slightly darker red, not a brighter
+     one (semantic role, not literal lightness). */
+  --df-accent: #bd1521;
+  --df-accent-bright: #9c141e;
+  --df-accent-deep: #81151d;
+  --df-accent-soft: rgba(189, 21, 33, 0.10);
+  --df-accent-softer: rgba(189, 21, 33, 0.06);
+  --df-on-accent: #ffffff;
+
+  --df-positive: #047857;
+  --df-positive-soft: rgba(4, 120, 87, 0.12);
+  --df-warning: #b45309;
+  --df-warning-soft: rgba(180, 83, 9, 0.12);
+  --df-danger: #be123c;
+  --df-danger-soft: rgba(190, 18, 60, 0.12);
+
+  --df-overlay: rgba(255, 255, 255, 0.78);
+  --df-glass-fill: rgba(255, 255, 255, 0.72);
+  --df-glass-border: rgba(15, 15, 15, 0.10);
+
+  /* Lift shadows so elevation reads against a light bg without smudging. */
+  --df-shadow-ambient: rgba(15, 15, 15, 0.10);
+  --df-shadow-key: rgba(15, 15, 15, 0.08);
+  --df-shadow-glow: 0 0 0 1px rgba(189, 21, 33, 0.45),
+    0 18px 60px -12px rgba(189, 21, 33, 0.32);
+  --df-shadow-glow-soft: 0 14px 50px -16px rgba(189, 21, 33, 0.28);
+}
+
+/* ---- Gray theme ---------------------------------------------------------- */
+/* Mid-tone neutral surface — useful for sections that want a quieter brand
+   moment than the true-black hero but more weight than a light panel. */
+[data-theme='gray'] {
+  --df-bg: #2a2a2e;
+  --df-bg-elevated: #33333a;
+  --df-surface: #3a3a42;
+  --df-surface-2: #45454d;
+  --df-surface-3: #54545d;
+
+  --df-border: rgba(255, 255, 255, 0.12);
+  --df-border-strong: rgba(255, 255, 255, 0.20);
+  --df-border-input: rgba(255, 255, 255, 0.28);
+  --df-border-hover: rgba(225, 29, 42, 0.55);
+
+  --df-text: #f2f0ee;
+  --df-text-muted: #b8b4b2;
+  --df-text-faint: #8a8682;
+
+  --df-red-50: #fff1f2;
+  --df-red-100: #ffdfe1;
+  --df-red-200: #ffc4c8;
+  --df-red-300: #ff9aa2;
+  --df-red-400: #fb5663;
+  --df-red-500: #f01f2d;
+  --df-red-600: #e11d2a;
+  --df-red-700: #bd1521;
+  --df-red-800: #9c141e;
+  --df-red-900: #81151d;
+  --df-red-950: #47070c;
+
+  --df-accent: #e11d2a;
+  --df-accent-bright: #fb3645;
+  --df-accent-deep: #bd1521;
+  --df-accent-soft: rgba(225, 29, 42, 0.16);
+  --df-accent-softer: rgba(225, 29, 42, 0.10);
+  --df-on-accent: #ffffff;
+
+  --df-positive: #34d399;
+  --df-positive-soft: rgba(52, 211, 153, 0.14);
+  --df-warning: #fbbf24;
+  --df-warning-soft: rgba(251, 191, 36, 0.14);
+  --df-danger: #f43f5e;
+  --df-danger-soft: rgba(244, 63, 94, 0.14);
+
+  --df-overlay: rgba(0, 0, 0, 0.65);
+  --df-glass-fill: rgba(58, 58, 66, 0.72);
+  --df-glass-border: rgba(255, 255, 255, 0.12);
+}
+
 /* ---- Base element resets bound to tokens --------------------------------- */
 .df-root {
   background-color: var(--df-bg);
