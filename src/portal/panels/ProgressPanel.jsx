@@ -211,7 +211,7 @@ export default function ProgressPanel({ progress, reloadProgress }) {
               {progress.map(entry => (
                 <tr
                   key={entry.id}
-                  className="border-b border-df-border text-df-text-muted last:border-0"
+                  className="border-b border-df-border text-df-text-muted transition-colors duration-150 ease-df-out last:border-0 hover:bg-df-surface/40"
                 >
                   <td className="px-4 py-3 text-df-text">{entry.entry_date}</td>
                   <td className="px-4 py-3">{entry.weight ?? '—'}</td>
