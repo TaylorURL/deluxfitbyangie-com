@@ -1,3 +1,9 @@
+/* eslint-disable react-refresh/only-export-components --
+ * This is the admin primitives module: it intentionally co-locates a few tiny
+ * formatters (fmtDate/fmtDateTime/clientLabel) and the useAsyncData hook with
+ * the primitive components that use them. The react-refresh rule only affects
+ * HMR ergonomics in dev, not correctness, and splitting four one-liners into a
+ * separate module would hurt cohesion for no real benefit. */
 import { useCallback, useEffect, useState } from 'react'
 import { Badge, Card, Select } from '@deluxfit/ds'
 
