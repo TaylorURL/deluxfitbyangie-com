@@ -18,6 +18,9 @@ const MotionButton = motion.button
  */
 const PORTAL_HREF = '/portal'
 
+/** Staff-only backend. The link is gated on the signed-in role being 'staff'. */
+const ADMIN_HREF = '/admin'
+
 const NAV_LINK_BASE =
   'group/link relative inline-flex h-9 shrink-0 items-center whitespace-nowrap px-1 text-[12px] font-700 uppercase tracking-[0.16em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg 2xl:tracking-[0.18em]'
 
