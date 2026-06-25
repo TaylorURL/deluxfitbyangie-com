@@ -1,14 +1,59 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Loader2, Paperclip, Send } from 'lucide-react'
 import { Button, Textarea, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
-import { sendMessage, uploadAttachment } from '@/lib/portalApi'
+import { getSignedUrl, sendMessage, uploadAttachment } from '@/lib/portalApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const formatTime = iso =>
   new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+
+const isVideo = path => /\.(mp4|webm|mov)$/i.test(path || '')
+
+/** Attachment — resolves a message attachment's signed URL lazily. Coach video
+ * feedback renders inline; everything else is a "View attachment" link. */
+function Attachment({ message, label }) {
+  const [url, setUrl] = useState(null)
+  const path = message.attachment_path
+  const bucket = message.attachment_bucket || 'message-attachments'
+
+  useEffect(() => {
+    let active = true
+    getSignedUrl(bucket, path).then(resolved => {
+      if (active) setUrl(resolved)
+    })
+    return () => {
+      active = false
+    }
+  }, [bucket, path])
+
+  if (!url) {
+    return (
+      <span className="mt-1 block text-xs opacity-80">
+        <Paperclip className="mr-1 inline h-3 w-3" aria-hidden="true" />
+        {path.split('/').pop()}
+      </span>
+    )
+  }
+
+  if (isVideo(path)) {
+    return <video controls src={url} className="mt-2 max-w-full rounded-df-md" />
+  }
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-1 block text-xs underline opacity-80 hover:opacity-100"
+    >
+      <Paperclip className="mr-1 inline h-3 w-3" aria-hidden="true" />
+      {label}
+    </a>
+  )
+}
 
 /**
  * MessagesPanel — the in-platform messaging thread with Angie. This is the only
