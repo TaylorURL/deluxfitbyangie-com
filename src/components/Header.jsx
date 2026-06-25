@@ -358,6 +358,7 @@ export default function Header() {
         nav={nav}
         header={header}
         brand={brand}
+        isStaff={isStaff}
         isActive={isActive}
         prefersReducedMotion={prefersReducedMotion}
       />
