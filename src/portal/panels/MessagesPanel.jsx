@@ -80,7 +80,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
   if (!entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.messages} title={copy.title} />
         <EmptyState
           body={copy.gatedBody}
           ctaLabel={portal.plan.emptyCta}
@@ -111,7 +111,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
 
   return (
     <section>
-      <PanelHeading title={copy.title} intro={copy.intro} />
+      <PanelHeading eyebrow={portal.nav.messages} title={copy.title} intro={copy.intro} />
 
       <div className="bg-df-surface/60 flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border p-5">
         {messages.length === 0 ? (

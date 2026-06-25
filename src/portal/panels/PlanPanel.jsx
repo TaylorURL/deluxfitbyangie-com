@@ -13,7 +13,7 @@ export default function PlanPanel({ plans, entitlements }) {
 
   return (
     <section>
-      <PanelHeading title={copy.title} />
+      <PanelHeading eyebrow={portal.nav.plan} title={copy.title} />
       {plans.length === 0 ? (
         <EmptyState
           title={entitlements.hasCoaching ? undefined : copy.gatedTitle}

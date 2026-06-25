@@ -131,7 +131,7 @@ export default function BookingCalendar({ service }) {
           <CalendarDays className="h-4 w-4 text-df-accent-bright" aria-hidden="true" />
           {booking.selectDateLabel}
         </legend>
-        <div className="-mx-5 mt-3 flex gap-2.5 overflow-x-auto px-5 pb-2 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:px-0">
+        <div className="mt-3 flex flex-wrap gap-2 sm:gap-2.5">
           {dates.map(date => {
             const key = toDateKey(date)
             const active = selectedDate && toDateKey(selectedDate) === key
@@ -146,7 +146,7 @@ export default function BookingCalendar({ service }) {
                   if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
                 }}
                 className={cn(
-                  'flex min-h-[3.25rem] min-w-[3.75rem] shrink-0 flex-col items-center justify-center rounded-df-md border px-3.5 py-2.5 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
+                  'flex min-h-[3.25rem] min-w-[3.75rem] flex-col items-center justify-center rounded-df-md border px-3.5 py-2.5 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
                   active
                     ? 'border-df-accent bg-df-accent text-df-on-accent'
                     : 'border-df-border-input text-df-text-muted hover:border-df-border-hover hover:text-df-text'
