@@ -995,6 +995,7 @@ const en = {
       sending: 'Sending…',
       empty: 'No messages yet. Say hello to start the conversation.',
       attach: 'Attach file',
+      viewAttachment: 'View attachment',
       coachName: 'Angie',
       youName: 'You',
       gatedBody: 'Direct messaging is available to active coaching clients.',
