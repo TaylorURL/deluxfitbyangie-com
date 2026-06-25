@@ -968,6 +968,26 @@ const es = {
       categoryNutrition: 'Nutrición',
       categoryEducation: 'Educación',
       locked: 'Bloqueado',
+      open: 'Abrir',
+      opening: 'Abriendo…',
+    },
+    nutrition: {
+      title: 'Nutrición',
+      intro: 'Tus objetivos de calorías, estructura de comidas y recursos personalizados de Angie.',
+      empty:
+        'Aún no se ha escrito una guía de nutrición. Angie la construye en torno a tus objetivos cuando empiezas el coaching.',
+      gatedTitle: 'La guía de nutrición es parte del coaching',
+      gatedBody:
+        'Tu plan de nutrición personalizado aparece aquí cuando eres clienta activa de coaching.',
+      gatedCta: 'Aplicar a coaching',
+      caloriesLabel: 'Calorías diarias',
+      proteinLabel: 'Proteína',
+      carbsLabel: 'Carbohidratos',
+      fatLabel: 'Grasa',
+      mealsTitle: 'Estructura de comidas',
+      resourcesTitle: 'Recursos',
+      notesTitle: 'Notas de Angie',
+      grams: 'g',
     },
     loading: 'Cargando…',
     offlineNotice:
