@@ -49,9 +49,6 @@ const TILES = [
   },
 ]
 
-/** Routes surfaced as quick-jump cards — every entry except the dashboard itself. */
-const QUICK_LINKS = ADMIN_ROUTES.filter(route => route.path !== '/admin')
-
 /**
  * AdminDashboard — the landing page after a staff sign-in: a welcome banner,
  * at-a-glance business metrics computed live from the admin reads, and quick
@@ -61,6 +58,10 @@ export default function AdminDashboard() {
   const { profile, user } = useAuth()
   const greetingName = profile?.full_name || user?.email || 'Coach'
   const { data, loading, error } = useAsyncData(loadMetrics, [], null)
+
+  // Computed in the body (not at module scope) to avoid a TDZ crash from the
+  // routes.js ↔ AdminDashboard circular import. Every route except the dashboard.
+  const quickLinks = ADMIN_ROUTES.filter(route => route.path !== '/admin')
 
   return (
     <div className="grid gap-8">
