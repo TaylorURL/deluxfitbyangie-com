@@ -177,30 +177,34 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
         <Tile>
           <TileLabel icon={Flame}>{copy.todaysFuel}</TileLabel>
           {nutrition ? (
-            <div className="mt-4 flex-1">
-              <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
-                {nutrition.calorie_target ?? '—'}
-              </p>
-              <p className="mt-1.5 text-[10px] font-700 uppercase tracking-[0.16em] text-df-text-faint">
-                {copy.kcal}
-              </p>
-              {macros.some(macro => macro.value != null) && (
-                <dl className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-df-border pt-3">
-                  {macros.map(macro => (
-                    <div key={macro.label} className="flex items-baseline gap-1">
-                      <dt className="text-[10px] font-700 uppercase tracking-[0.12em] text-df-text-faint">
-                        {macro.label}
-                      </dt>
-                      <dd className="text-sm font-600 tabular-nums text-df-text">
-                        {macro.value ?? '—'}
-                        {macro.value != null ? portal.nutrition.grams : ''}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              <JumpLink href="#nutrition">{copy.viewNutrition}</JumpLink>
-            </div>
+            <>
+              <div className="mt-4 flex-1">
+                <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
+                  {nutrition.calorie_target ?? '—'}
+                </p>
+                <p className="mt-1.5 text-[10px] font-700 uppercase tracking-[0.16em] text-df-text-faint">
+                  {copy.kcal}
+                </p>
+                {macros.some(macro => macro.value != null) && (
+                  <dl className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-df-border pt-3">
+                    {macros.map(macro => (
+                      <div key={macro.label} className="flex items-baseline gap-1">
+                        <dt className="text-[10px] font-700 uppercase tracking-[0.12em] text-df-text-faint">
+                          {macro.label}
+                        </dt>
+                        <dd className="text-sm font-600 tabular-nums text-df-text">
+                          {macro.value ?? '—'}
+                          {macro.value != null ? portal.nutrition.grams : ''}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
+              <div className="mt-4">
+                <JumpLink href="#nutrition">{copy.viewNutrition}</JumpLink>
+              </div>
+            </>
           ) : (
             <p className="mt-4 flex-1 text-sm leading-relaxed text-df-text-muted">
               {hasCoaching ? copy.noFuel : copy.planLocked}
@@ -212,26 +216,32 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
         <Tile>
           <TileLabel icon={LineChart}>{copy.latestWeight}</TileLabel>
           {latestWeight != null ? (
-            <div className="mt-4 flex-1">
-              <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
-                {latestWeight}
-                <span className="ml-1 text-sm text-df-text-muted">lb</span>
-              </p>
-              {trend.length >= 2 ? (
-                <div className="mt-4">
-                  <Sparkline values={trend} height={36} />
-                </div>
-              ) : (
-                <p className="mt-3 text-xs text-df-text-faint">
-                  {progress.length} {copy.entries}
+            <>
+              <div className="mt-4 flex-1">
+                <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
+                  {latestWeight}
+                  <span className="ml-1 text-sm text-df-text-muted">lb</span>
                 </p>
-              )}
-              <JumpLink href="#progress">{copy.viewProgress}</JumpLink>
-            </div>
+                {trend.length >= 2 ? (
+                  <div className="mt-4">
+                    <Sparkline values={trend} height={36} />
+                  </div>
+                ) : (
+                  <p className="mt-3 text-xs text-df-text-faint">
+                    {progress.length} {copy.entries}
+                  </p>
+                )}
+              </div>
+              <div className="mt-4">
+                <JumpLink href="#progress">{copy.viewProgress}</JumpLink>
+              </div>
+            </>
           ) : (
             <div className="mt-4 flex-1">
               <p className="text-sm leading-relaxed text-df-text-muted">{copy.noProgress}</p>
-              <JumpLink href="#progress">{copy.startTracking}</JumpLink>
+              <div className="mt-4">
+                <JumpLink href="#progress">{copy.startTracking}</JumpLink>
+              </div>
             </div>
           )}
         </Tile>
