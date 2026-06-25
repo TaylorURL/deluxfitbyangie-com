@@ -325,6 +325,7 @@ export default function Header() {
             </nav>
 
             <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+              {isStaff && <AdminLink label={header.admin} ariaLabel={header.adminAria} />}
               <ClientLoginLink
                 iconOnly
                 label={header.clientLogin}
