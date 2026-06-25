@@ -109,10 +109,10 @@ export default function PortalDashboard() {
                   aria-current={isActive ? 'page' : undefined}
                   onClick={() => setActive(id)}
                   className={cn(
-                    'group inline-flex min-h-11 items-center gap-3 rounded-df-sm border px-3.5 py-2.5 text-left text-[12px] font-700 uppercase tracking-[0.14em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg active:translate-y-px lg:w-full lg:border-l-2',
+                    'group inline-flex min-h-11 items-center gap-3 rounded-df-sm border px-3.5 py-2.5 text-left text-[12px] font-700 uppercase tracking-[0.14em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg active:translate-y-px lg:w-full',
                     isActive
-                      ? 'border-df-accent bg-df-accent-soft text-df-accent-bright lg:border-l-df-accent'
-                      : 'border-transparent text-df-text-muted hover:bg-df-surface-2 hover:text-df-text lg:border-l-df-border'
+                      ? 'border-df-accent bg-df-accent-soft text-df-accent-bright'
+                      : 'border-transparent text-df-text-muted hover:bg-df-surface-2 hover:text-df-text'
                   )}
                 >
                   <span
