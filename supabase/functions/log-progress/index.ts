@@ -1,6 +1,7 @@
 // log-progress
-// POST { entryDate, weight?, bodyFat?, notes?, photoPath? }
+// POST { entryDate, weight?, bodyFat?, notes?, photoPath?, measurements? }
 // Auth REQUIRED. Inserts a progress_entries row for the calling user.
+// `measurements` is a free-form { label: value } map (e.g. { waist: 30 }).
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
