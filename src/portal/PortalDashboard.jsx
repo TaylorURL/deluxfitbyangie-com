@@ -1,18 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   Apple,
   CalendarClock,
   LayoutDashboard,
   Library as LibraryIcon,
   LineChart,
-  Loader2,
   MessageSquare,
   ClipboardList,
 } from 'lucide-react'
-import { Badge, Container, cn } from '@deluxfit/ds'
+import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import { usePortalData } from './usePortalData'
+import PortalCommandBar from './PortalCommandBar'
+import TodayHero from './TodayHero'
 import OverviewPanel from './panels/OverviewPanel'
 import PlanPanel from './panels/PlanPanel'
 import ProgressPanel from './panels/ProgressPanel'
@@ -21,26 +22,71 @@ import MessagesPanel from './panels/MessagesPanel'
 import LibraryPanel from './panels/LibraryPanel'
 import NutritionPanel from './panels/NutritionPanel'
 
-const TABS = [
-  { id: 'overview', icon: LayoutDashboard },
-  { id: 'plan', icon: ClipboardList },
-  { id: 'progress', icon: LineChart },
-  { id: 'nutrition', icon: Apple },
-  { id: 'bookings', icon: CalendarClock },
-  { id: 'messages', icon: MessageSquare },
-  { id: 'library', icon: LibraryIcon },
+/** The seven dashboard regions, in scroll order. Each maps a nav chip to an
+ * anchored <section> rendered below — the panels keep their own data + actions. */
+const SECTIONS = [
+  { id: 'overview', icon: LayoutDashboard, Panel: OverviewPanel },
+  { id: 'plan', icon: ClipboardList, Panel: PlanPanel },
+  { id: 'progress', icon: LineChart, Panel: ProgressPanel },
+  { id: 'nutrition', icon: Apple, Panel: NutritionPanel },
+  { id: 'bookings', icon: CalendarClock, Panel: BookingsPanel },
+  { id: 'messages', icon: MessageSquare, Panel: MessagesPanel },
+  { id: 'library', icon: LibraryIcon, Panel: LibraryPanel },
 ]
 
+/** PortalLoadingSkeleton — a considered loading state that mirrors the dashboard
+ * silhouette (identity bar, hero bento, first region) instead of a bare spinner. */
+function PortalLoadingSkeleton({ label }) {
+  return (
+    <div role="status" aria-live="polite" className="animate-df-fade-up">
+      <span className="sr-only">{label}</span>
+      <div className="flex items-center gap-3.5 border-b border-df-border pb-6">
+        <div className="h-12 w-12 shrink-0 animate-pulse rounded-df-md bg-df-surface-2" />
+        <div className="flex flex-col gap-2">
+          <div className="h-2.5 w-24 animate-pulse rounded-df-full bg-df-surface-2" />
+          <div className="h-6 w-48 animate-pulse rounded-df-sm bg-df-surface-2" />
+        </div>
+      </div>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div className="h-52 animate-pulse rounded-df-lg bg-df-surface-2 sm:col-span-2 lg:col-span-2 lg:row-span-2" />
+        <div className="h-24 animate-pulse rounded-df-lg bg-df-surface sm:col-span-2" />
+        <div className="h-32 animate-pulse rounded-df-lg bg-df-surface" />
+        <div className="h-32 animate-pulse rounded-df-lg bg-df-surface" />
+      </div>
+      <div className="mt-14 h-64 animate-pulse rounded-df-lg bg-df-surface" />
+    </div>
+  )
+}
+
 /**
- * PortalDashboard — the authenticated client dashboard. Loads the member's data
- * once and renders the active tab. Each panel is responsible for its own
- * mutations (progress entries, messages) and reloads via the data hook.
+ * PortalDashboard — the authenticated member dashboard. Loads the member's data
+ * once, then presents it as a two-tier layout: a command bar (identity + sticky
+ * section nav), an always-live "Today" hero, and the seven panels as anchored
+ * scroll regions. A scrollspy keeps the nav in sync with the region in view.
+ * Each panel still owns its own data loading + mutations via the shared hook.
  */
 export default function PortalDashboard() {
   const { portal } = useContent()
   const { user } = useAuth()
   const data = usePortalData()
-  const [active, setActive] = useState('overview')
+  const [activeId, setActiveId] = useState(SECTIONS[0].id)
+  const sectionRefs = useRef({})
+
+  // Scrollspy — reflect the region nearest the top of the viewport in the nav.
+  useEffect(() => {
+    if (data.loading) return undefined
+    const observer = new IntersectionObserver(
+      entries => {
+        const inView = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (inView[0]) setActiveId(inView[0].target.id)
+      },
+      { rootMargin: '-25% 0px -65% 0px', threshold: [0, 0.5, 1] }
+    )
+    Object.values(sectionRefs.current).forEach(node => node && observer.observe(node))
+    return () => observer.disconnect()
+  }, [data.loading])
 
   const sharedProps = {
     user,
@@ -58,106 +104,45 @@ export default function PortalDashboard() {
 
   const displayName = data.profile?.full_name || user?.email || ''
   const monogram = (displayName.trim()[0] || '·').toUpperCase()
-  const { hasMembership, hasCoaching } = data.entitlements
+
+  if (data.loading) {
+    return (
+      <Container size="xl">
+        <PortalLoadingSkeleton label={portal.loading} />
+      </Container>
+    )
+  }
 
   return (
     <Container size="xl">
-      <div className="grid gap-8 lg:grid-cols-[260px_1fr] lg:gap-10">
-        <aside className="lg:sticky lg:top-8 lg:self-start">
-          <div className="flex items-center gap-3.5 rounded-df-lg border border-df-border bg-df-surface px-4 py-4">
-            <span
-              aria-hidden="true"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-md bg-df-accent-soft font-display text-xl font-400 leading-none text-df-accent-bright"
-            >
-              {monogram}
-            </span>
-            <div className="min-w-0">
-              <p className="text-[10px] font-700 uppercase tracking-[0.2em] text-df-text-faint">
-                {portal.brandLockup}
-              </p>
-              <p className="truncate font-display text-lg font-400 uppercase leading-tight tracking-tight text-df-text">
-                {displayName}
-              </p>
-            </div>
-          </div>
+      <PortalCommandBar
+        sections={SECTIONS}
+        activeId={activeId}
+        displayName={displayName}
+        monogram={monogram}
+        entitlements={data.entitlements}
+      />
 
-          {(hasMembership || hasCoaching) && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {hasMembership && (
-                <Badge tone="positive" variant="soft" size="sm">
-                  {portal.overview.membershipStatus}
-                </Badge>
-              )}
-              {hasCoaching && (
-                <Badge tone="accent" variant="soft" size="sm">
-                  {portal.overview.coachingStatus}
-                </Badge>
-              )}
-            </div>
-          )}
+      <TodayHero
+        bookings={data.bookings}
+        plans={data.plans}
+        nutrition={data.nutrition}
+        progress={data.progress}
+        entitlements={data.entitlements}
+      />
 
-          <nav
-            aria-label={portal.brandLockup}
-            className="mt-5 flex flex-wrap gap-2 lg:mt-6 lg:flex-col lg:gap-1.5"
+      <div className="mt-14 space-y-16 sm:mt-16 sm:space-y-24">
+        {SECTIONS.map(({ id, Panel }) => (
+          <section
+            key={id}
+            id={id}
+            ref={node => (sectionRefs.current[id] = node)}
+            aria-label={portal.nav[id]}
+            className="scroll-mt-24"
           >
-            {TABS.map(({ id, icon: Icon }, index) => {
-              const isActive = active === id
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  aria-current={isActive ? 'page' : undefined}
-                  onClick={() => setActive(id)}
-                  className={cn(
-                    'group inline-flex min-h-11 items-center gap-3 rounded-df-sm border px-3.5 py-2.5 text-left text-[12px] font-700 uppercase tracking-[0.14em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg active:translate-y-px lg:w-full',
-                    isActive
-                      ? 'border-df-accent bg-df-accent-soft text-df-accent-bright'
-                      : 'border-transparent text-df-text-muted hover:bg-df-surface-2 hover:text-df-text'
-                  )}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'hidden font-display text-base font-400 leading-none tabular-nums transition-colors duration-200 ease-df-out lg:block',
-                      isActive
-                        ? 'text-df-accent-bright'
-                        : 'text-transparent [-webkit-text-stroke:1px_var(--df-text-faint)] group-hover:[-webkit-text-stroke:1px_var(--df-accent)]'
-                    )}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="truncate">{portal.nav[id]}</span>
-                </button>
-              )
-            })}
-          </nav>
-        </aside>
-
-        <div className="min-w-0">
-          {data.loading ? (
-            <div
-              role="status"
-              aria-live="polite"
-              className="flex flex-col items-center justify-center gap-4 py-24 text-center"
-            >
-              <Loader2 className="h-6 w-6 animate-spin text-df-accent-bright" aria-hidden="true" />
-              <p className="text-[11px] font-700 uppercase tracking-[0.2em] text-df-text-faint">
-                {portal.loading}
-              </p>
-            </div>
-          ) : (
-            <div key={active} className="animate-df-fade-up">
-              {active === 'overview' && <OverviewPanel {...sharedProps} />}
-              {active === 'plan' && <PlanPanel {...sharedProps} />}
-              {active === 'progress' && <ProgressPanel {...sharedProps} />}
-              {active === 'nutrition' && <NutritionPanel {...sharedProps} />}
-              {active === 'bookings' && <BookingsPanel {...sharedProps} />}
-              {active === 'messages' && <MessagesPanel {...sharedProps} />}
-              {active === 'library' && <LibraryPanel {...sharedProps} />}
-            </div>
-          )}
-        </div>
+            <Panel {...sharedProps} />
+          </section>
+        ))}
       </div>
     </Container>
   )
