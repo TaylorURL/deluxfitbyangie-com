@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Apple,
   CalendarClock,
   LayoutDashboard,
   Library as LibraryIcon,
