@@ -2,8 +2,17 @@ import { useState } from 'react'
 import { Loader2, Send } from 'lucide-react'
 import { Button, Card, Field, Input, Select } from '@deluxfit/ds'
 import { inviteUser } from '@/lib/inviteApi'
+import { listStaff } from '@/lib/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
-import PlaceholderPanel from '../components/PlaceholderPanel'
+import {
+  SectionCard,
+  SectionHeading,
+  AdminEmpty,
+  AdminLoading,
+  clientLabel,
+  fmtDate,
+  useAsyncData,
+} from '../components/AdminPrimitives'
 
 /**
  * AdminStaff — surfaces the working invite flow plus a placeholder for the
