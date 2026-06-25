@@ -90,13 +90,16 @@ export default function ProgressPanel({ progress, reloadProgress }) {
 
   return (
     <section>
-      <div className="mb-7 flex items-end justify-between gap-4">
-        <PanelHeading title={copy.title} />
-        <Button type="button" variant="outline" size="md" onClick={() => setOpen(o => !o)}>
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          {copy.addEntry}
-        </Button>
-      </div>
+      <PanelHeading
+        eyebrow={portal.nav.progress}
+        title={copy.title}
+        actions={
+          <Button type="button" variant="outline" size="md" onClick={() => setOpen(o => !o)}>
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            {copy.addEntry}
+          </Button>
+        }
+      />
 
       {trend.length >= 2 && (
         <Card variant="surface" className="mb-6">
