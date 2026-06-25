@@ -125,15 +125,47 @@ export default function AdminStaff() {
         {status === 'error' && <FormError body={errorBody} />}
       </Card>
 
-      <PlaceholderPanel
-        eyebrow="Coming soon"
-        description="List of staff members and pending invitations, with resend / revoke actions."
-        comingSoon={[
-          'All staff profiles with last sign-in',
-          'Pending invitations with resend and revoke',
-          'Promote / demote between client and staff (staff-only)',
-        ]}
-      />
+      <StaffList />
     </div>
+  )
+}
+
+/** The current staff roster — every profile with role='staff'. */
+function StaffList() {
+  const { data: staff, loading, error } = useAsyncData(listStaff, [], [])
+
+  return (
+    <SectionCard>
+      <SectionHeading
+        eyebrow="Team"
+        title="Staff."
+        intro="Everyone with admin access. Invite more above."
+      />
+
+      <div className="mt-6">
+        {loading ? (
+          <AdminLoading label="Loading staff…" />
+        ) : error ? (
+          <FormError body={error} />
+        ) : staff.length === 0 ? (
+          <AdminEmpty body="No staff members yet." />
+        ) : (
+          <div className="flex flex-col gap-3">
+            {staff.map(member => (
+              <div
+                key={member.id}
+                className="flex flex-wrap items-center justify-between gap-4 rounded-df-lg border border-df-border bg-df-surface-2 px-5 py-4"
+              >
+                <div className="min-w-0">
+                  <p className="font-600 text-df-text">{clientLabel(member)}</p>
+                  {member.email && <p className="mt-1 text-sm text-df-text-muted">{member.email}</p>}
+                </div>
+                <p className="text-sm text-df-text-faint">Since {fmtDate(member.created_at)}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </SectionCard>
   )
 }
