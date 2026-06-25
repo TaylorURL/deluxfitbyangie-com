@@ -54,7 +54,10 @@ export default function AdminReview() {
         <ClientDetail clientId={selected} emphasis="review" />
       ) : (
         <SectionCard>
-          <AdminEmpty body="Choose a client above to start their monthly review." />
+          <AdminEmpty
+            title="No client selected"
+            body="Choose a client above to start their monthly review."
+          />
         </SectionCard>
       )}
     </div>

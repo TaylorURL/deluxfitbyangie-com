@@ -1,4 +1,4 @@
-import { ArrowLeft, LogOut } from 'lucide-react'
+import { ArrowLeft, LogOut, ShieldCheck } from 'lucide-react'
 import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
@@ -9,8 +9,8 @@ import { useAuth } from '@/auth/useAuth'
  * and a thin footer. Shared by the auth screen and the dashboard.
  */
 export default function PortalShell({ children }) {
-  const { brand, portal } = useContent()
-  const { user, signOut } = useAuth()
+  const { brand, portal, header } = useContent()
+  const { user, isStaff, signOut } = useAuth()
 
   return (
     <div className="relative isolate flex min-h-screen flex-col overflow-hidden bg-df-bg">
@@ -37,6 +37,16 @@ export default function PortalShell({ children }) {
               />
             </a>
             <div className="flex items-center gap-2 sm:gap-2.5">
+              {isStaff && (
+                <a
+                  href="/admin"
+                  aria-label={header.adminAria}
+                  className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-accent bg-df-accent-softer px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-accent-bright transition-colors hover:bg-df-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-3.5 sm:tracking-[0.2em]"
+                >
+                  <ShieldCheck aria-hidden="true" className="h-4 w-4" />
+                  <span className="hidden sm:inline">{header.admin}</span>
+                </a>
+              )}
               {user && (
                 <button
                   type="button"

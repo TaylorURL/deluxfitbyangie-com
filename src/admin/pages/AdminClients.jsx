@@ -100,7 +100,10 @@ export default function AdminClients() {
             <ClientDetail clientId={selected} emphasis="manage" />
           ) : (
             <SectionCard>
-              <AdminEmpty body="Select a client from the list to open their coaching hub." />
+              <AdminEmpty
+                title="No client selected"
+                body="Select a client from the list to open their coaching hub."
+              />
             </SectionCard>
           )}
         </div>
