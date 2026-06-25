@@ -63,7 +63,7 @@ function PortalLoadingSkeleton({ label }) {
  * once, then presents it as a two-tier layout: a command bar (identity + sticky
  * section nav), an always-live "Today" hero, and the seven panels as anchored
  * scroll regions. A scrollspy keeps the nav in sync with the region in view.
- * Each panel still owns its own data + mutations via the shared data hook.
+ * Each panel still owns its own data loading + mutations via the shared hook.
  */
 export default function PortalDashboard() {
   const { portal } = useContent()
