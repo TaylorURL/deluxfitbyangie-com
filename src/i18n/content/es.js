@@ -883,6 +883,7 @@ const es = {
       overview: 'Resumen',
       plan: 'Mi Plan',
       progress: 'Progreso',
+      nutrition: 'Nutrición',
       bookings: 'Sesiones',
       messages: 'Mensajes',
       library: 'Biblioteca',
