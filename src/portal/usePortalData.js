@@ -7,6 +7,7 @@ import {
   getContentItems,
   getMemberships,
   getMessages,
+  getNutritionPlan,
   getPlans,
   getProfile,
   getProgressEntries,
@@ -31,19 +32,22 @@ export function usePortalData() {
     bookings: [],
     messages: [],
     content: [],
+    nutrition: null,
   })
 
   const loadAll = useCallback(async () => {
     if (!userId) return
-    const [profile, memberships, plans, progress, bookings, messages, content] = await Promise.all([
-      getProfile(userId),
-      getMemberships(userId),
-      getPlans(userId),
-      getProgressEntries(userId),
-      getBookings(userId),
-      getMessages(userId),
-      getContentItems(locale),
-    ])
+    const [profile, memberships, plans, progress, bookings, messages, content, nutrition] =
+      await Promise.all([
+        getProfile(userId),
+        getMemberships(userId),
+        getPlans(userId),
+        getProgressEntries(userId),
+        getBookings(userId),
+        getMessages(userId),
+        getContentItems(locale),
+        getNutritionPlan(userId),
+      ])
     setState({
       loading: false,
       profile,
@@ -53,6 +57,7 @@ export function usePortalData() {
       bookings,
       messages,
       content,
+      nutrition,
     })
   }, [userId, locale])
 

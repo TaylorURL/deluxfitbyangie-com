@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Apple,
   CalendarClock,
   LayoutDashboard,
   Library as LibraryIcon,
@@ -17,11 +18,13 @@ import ProgressPanel from './panels/ProgressPanel'
 import BookingsPanel from './panels/BookingsPanel'
 import MessagesPanel from './panels/MessagesPanel'
 import LibraryPanel from './panels/LibraryPanel'
+import NutritionPanel from './panels/NutritionPanel'
 
 const TABS = [
   { id: 'overview', icon: LayoutDashboard },
   { id: 'plan', icon: ClipboardList },
   { id: 'progress', icon: LineChart },
+  { id: 'nutrition', icon: Apple },
   { id: 'bookings', icon: CalendarClock },
   { id: 'messages', icon: MessageSquare },
   { id: 'library', icon: LibraryIcon },
@@ -44,6 +47,7 @@ export default function PortalDashboard() {
     entitlements: data.entitlements,
     plans: data.plans,
     progress: data.progress,
+    nutrition: data.nutrition,
     bookings: data.bookings,
     messages: data.messages,
     content: data.content,
@@ -82,6 +86,7 @@ export default function PortalDashboard() {
               {active === 'overview' && <OverviewPanel {...sharedProps} />}
               {active === 'plan' && <PlanPanel {...sharedProps} />}
               {active === 'progress' && <ProgressPanel {...sharedProps} />}
+              {active === 'nutrition' && <NutritionPanel {...sharedProps} />}
               {active === 'bookings' && <BookingsPanel {...sharedProps} />}
               {active === 'messages' && <MessagesPanel {...sharedProps} />}
               {active === 'library' && <LibraryPanel {...sharedProps} />}

@@ -1,6 +1,7 @@
 // log-progress
-// POST { entryDate, weight?, bodyFat?, notes?, photoPath? }
+// POST { entryDate, weight?, bodyFat?, notes?, photoPath?, measurements? }
 // Auth REQUIRED. Inserts a progress_entries row for the calling user.
+// `measurements` is a free-form { label: value } map (e.g. { waist: 30 }).
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
@@ -37,6 +38,7 @@ Deno.serve(async (req) => {
     bodyFat?: number;
     notes?: string;
     photoPath?: string;
+    measurements?: Record<string, unknown>;
   };
   try {
     payload = await req.json();
@@ -44,7 +46,7 @@ Deno.serve(async (req) => {
     return json({ ok: false, error: "Invalid JSON body" }, 400);
   }
 
-  const { entryDate, weight, bodyFat, notes, photoPath } = payload;
+  const { entryDate, weight, bodyFat, notes, photoPath, measurements } = payload;
   if (!entryDate) {
     return json({ ok: false, error: "Missing entryDate" }, 400);
   }
@@ -58,6 +60,7 @@ Deno.serve(async (req) => {
       body_fat: bodyFat ?? null,
       notes: notes ?? null,
       photo_path: photoPath ?? null,
+      measurements: measurements && typeof measurements === "object" ? measurements : {},
     })
     .select()
     .single();

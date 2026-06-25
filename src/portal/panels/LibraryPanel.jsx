@@ -1,10 +1,88 @@
 import { useState } from 'react'
-import { BookOpen, FileText, PlayCircle } from 'lucide-react'
-import { Badge, Card, cn } from '@deluxfit/ds'
+import { BookOpen, ExternalLink, FileText, Loader2, PlayCircle } from 'lucide-react'
+import { Badge, Button, Card, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { getSignedUrl } from '@/lib/portalApi'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const MEDIA_ICON = { video: PlayCircle, article: BookOpen, pdf: FileText }
+
+/** A single library card. External-url items are plain links; private
+ * media_path items resolve a short-lived signed URL on demand. */
+function LibraryCard({ item, copy, coachingLabel }) {
+  const [opening, setOpening] = useState(false)
+  const Icon = MEDIA_ICON[item.media_type] ?? PlayCircle
+
+  const handleOpen = async () => {
+    setOpening(true)
+    try {
+      const url = await getSignedUrl('library-media', item.media_path)
+      if (url) window.open(url, '_blank', 'noopener,noreferrer')
+    } finally {
+      setOpening(false)
+    }
+  }
+
+  const inner = (
+    <Card variant="surface" interactive={!!item.url} className="flex h-full flex-col">
+      <div className="flex items-center justify-between">
+        <span
+          className="flex h-10 w-10 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
+          aria-hidden="true"
+        >
+          <Icon className="h-5 w-5" />
+        </span>
+        {item.access_level === 'coaching' && (
+          <Badge tone="accent" variant="outline" size="sm">
+            {coachingLabel}
+          </Badge>
+        )}
+      </div>
+      <h3 className="font-400 mt-4 font-display text-lg uppercase tracking-[0.01em] text-df-text">
+        {item.title}
+      </h3>
+      {item.description && (
+        <p className="mt-2 text-sm leading-relaxed text-df-text-muted">{item.description}</p>
+      )}
+      {!item.url && item.media_path && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleOpen}
+          disabled={opening}
+          className="mt-4 self-start"
+        >
+          {opening ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              {copy.opening}
+            </>
+          ) : (
+            <>
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              {copy.open}
+            </>
+          )}
+        </Button>
+      )}
+    </Card>
+  )
+
+  if (item.url) {
+    return (
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block focus-visible:outline-none"
+      >
+        {inner}
+      </a>
+    )
+  }
+  return inner
+}
 
 /**
  * LibraryPanel — the gated content library (workouts, nutrition, education).
@@ -65,40 +143,14 @@ export default function LibraryPanel({ content, entitlements }) {
         <EmptyState body={copy.empty} />
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map(item => {
-            const Icon = MEDIA_ICON[item.media_type] ?? PlayCircle
-            return (
-              <a
-                key={item.id}
-                href={item.url || '#'}
-                target={item.url ? '_blank' : undefined}
-                rel={item.url ? 'noopener noreferrer' : undefined}
-                className="group block focus-visible:outline-none"
-              >
-                <Card variant="surface" interactive className="flex h-full flex-col">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="flex h-10 w-10 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
-                      aria-hidden="true"
-                    >
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    {item.access_level === 'coaching' && (
-                      <Badge tone="accent" variant="outline" size="sm">
-                        {portal.overview.coachingStatus}
-                      </Badge>
-                    )}
-                  </div>
-                  <h3 className="mt-4 font-display text-lg font-400 uppercase tracking-[0.01em] text-df-text">
-                    {item.title}
-                  </h3>
-                  {item.description && (
-                    <p className="mt-2 text-sm leading-relaxed text-df-text-muted">{item.description}</p>
-                  )}
-                </Card>
-              </a>
-            )
-          })}
+          {visible.map(item => (
+            <LibraryCard
+              key={item.id}
+              item={item}
+              copy={copy}
+              coachingLabel={portal.overview.coachingStatus}
+            />
+          ))}
         </div>
       )}
     </section>

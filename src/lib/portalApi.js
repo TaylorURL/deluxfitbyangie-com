@@ -24,12 +24,18 @@ export const getProfile = userId =>
 
 /** Active/known entitlement rows (membership + coaching). */
 export const getMemberships = userId =>
-  safeSelect(supabase.from('memberships').select('*').eq('user_id', userId)).then(rows => rows ?? [])
+  safeSelect(supabase.from('memberships').select('*').eq('user_id', userId)).then(
+    rows => rows ?? []
+  )
 
 /** Assigned personalized plans, newest first. */
 export const getPlans = userId =>
   safeSelect(
-    supabase.from('plans').select('*').eq('user_id', userId).order('created_at', { ascending: false })
+    supabase
+      .from('plans')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
   ).then(rows => rows ?? [])
 
 /** Progress entries, newest first. */
@@ -67,7 +73,7 @@ export const getMessages = async userId => {
   ).then(rows => rows ?? [])
 }
 
-/** Content library items the user is entitled to (RLS does the gating). */
+/** Content library items the user is entitled to or assigned (RLS does the gating). */
 export const getContentItems = locale =>
   safeSelect(
     supabase
@@ -76,6 +82,19 @@ export const getContentItems = locale =>
       .eq('locale', locale)
       .order('sort', { ascending: true })
   ).then(rows => rows ?? [])
+
+/** The client's active personalized nutrition plan (newest active first). */
+export const getNutritionPlan = userId =>
+  safeSelect(
+    supabase
+      .from('nutrition_plans')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+  )
 
 /* -------------------------------------------------------------------------- */
 /*  Mutations — all routed through edge functions (never direct table writes)  */
@@ -108,6 +127,32 @@ export async function uploadAttachment(userId, file) {
   const { error } = await supabase.storage.from('message-attachments').upload(path, file)
   if (error) throw new Error(error.message || 'Upload failed.')
   return path
+}
+
+/** Upload a progress photo to the client's own folder and return its path. */
+export async function uploadProgressPhoto(userId, file) {
+  const path = `${userId}/${Date.now()}-${file.name}`
+  const { error } = await supabase.storage.from('progress-photos').upload(path, file)
+  if (error) throw new Error(error.message || 'Photo upload failed.')
+  return path
+}
+
+/**
+ * Resolve a short-lived signed URL for a private storage object via the
+ * `signed-url` edge function, which authorizes the caller before signing.
+ * Returns null on failure so callers can degrade gracefully.
+ */
+export async function getSignedUrl(bucket, path) {
+  if (!path) return null
+  try {
+    const { data, error } = await supabase.functions.invoke('signed-url', {
+      body: { bucket, path },
+    })
+    if (error || data?.ok === false) return null
+    return data?.url ?? null
+  } catch {
+    return null
+  }
 }
 
 /**
