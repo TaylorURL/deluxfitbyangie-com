@@ -46,7 +46,8 @@ export default function BookingsPanel({ bookings }) {
         .filter(group => group.rows.length > 0)
         .map(group => (
           <div key={group.label} className="mb-8">
-            <p className="mb-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-faint">
+            <p className="mb-4 inline-flex items-center gap-2.5 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
+              <span aria-hidden="true" className="h-px w-6 bg-df-accent" />
               {group.label}
             </p>
             <div className="flex flex-col gap-3">
