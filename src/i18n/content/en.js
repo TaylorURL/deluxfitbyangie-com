@@ -198,6 +198,8 @@ const en = {
     primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Client Login',
     clientLoginAria: 'Client login portal',
+    admin: 'Admin',
+    adminAria: 'Open the admin console',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     primaryNavLabel: 'Primary',
