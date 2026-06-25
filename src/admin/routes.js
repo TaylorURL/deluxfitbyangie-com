@@ -1,17 +1,21 @@
 import {
   LayoutDashboard,
   Users,
+  ClipboardCheck,
   CalendarClock,
   Library as LibraryIcon,
   ClipboardList,
+  Apple,
   CreditCard,
   ShieldCheck,
 } from 'lucide-react'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminClients from './pages/AdminClients'
+import AdminReview from './pages/AdminReview'
 import AdminBookings from './pages/AdminBookings'
 import AdminContent from './pages/AdminContent'
 import AdminPlans from './pages/AdminPlans'
+import AdminNutrition from './pages/AdminNutrition'
 import AdminMemberships from './pages/AdminMemberships'
 import AdminStaff from './pages/AdminStaff'
 
