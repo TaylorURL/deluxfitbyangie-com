@@ -191,6 +191,8 @@ const es = {
     primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Acceso Clientes',
     clientLoginAria: 'Portal de acceso para clientes',
+    admin: 'Admin',
+    adminAria: 'Abrir el panel de administración',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
     primaryNavLabel: 'Principal',

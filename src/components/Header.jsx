@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
+import { Menu, X, UserCircle, ArrowUpRight, ShieldCheck } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { useAuth } from '@/auth/useAuth'
 import { Link, useLocation, normalizePath } from '@/router'
 
 const MotionDiv = motion.div
@@ -16,6 +17,9 @@ const MotionButton = motion.button
  * URL and the rest of the navbar wiring stays as-is.
  */
 const PORTAL_HREF = '/portal'
+
+/** Staff-only backend. The link is gated on the signed-in role being 'staff'. */
+const ADMIN_HREF = '/admin'
 
 const NAV_LINK_BASE =
   'group/link relative inline-flex h-9 shrink-0 items-center whitespace-nowrap px-1 text-[12px] font-700 uppercase tracking-[0.16em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg 2xl:tracking-[0.18em]'
@@ -180,6 +184,29 @@ function ClientLoginLink({ block = false, iconOnly = false, onClick, label, aria
   )
 }
 
+/**
+ * AdminLink — staff-only shortcut to the role-gated backend. Shares the
+ * ClientLoginLink chrome (border + uppercase + tracking) but reads as an
+ * accent-tinted "Admin" pill with a shield so it's clearly distinct. Callers
+ * gate it on `isStaff`; it never renders for clients or logged-out visitors.
+ */
+function AdminLink({ block = false, onClick, label, ariaLabel }) {
+  return (
+    <Link
+      href={ADMIN_HREF}
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className={cn(
+        'group/admin inline-flex shrink-0 items-center justify-center gap-2 rounded-df-sm border border-df-accent bg-df-accent-softer text-[11px] font-700 uppercase tracking-[0.2em] text-df-accent-bright transition-colors duration-200 ease-df-out hover:bg-df-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
+        block ? 'h-12 w-full px-3.5 text-[12px]' : 'h-10 px-3.5'
+      )}
+    >
+      <ShieldCheck aria-hidden="true" className="h-4 w-4" />
+      <span>{label}</span>
+    </Link>
+  )
+}
+
 function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
   return (
     <Button asChild size={size} block={block} onClick={onClick}>
@@ -203,6 +230,7 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
  */
 export default function Header() {
   const { brand, nav, header } = useContent()
+  const { isStaff } = useAuth()
   const { pathname } = useLocation()
   const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -297,6 +325,7 @@ export default function Header() {
             </nav>
 
             <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
+              {isStaff && <AdminLink label={header.admin} ariaLabel={header.adminAria} />}
               <ClientLoginLink
                 iconOnly
                 label={header.clientLogin}
@@ -329,6 +358,7 @@ export default function Header() {
         nav={nav}
         header={header}
         brand={brand}
+        isStaff={isStaff}
         isActive={isActive}
         prefersReducedMotion={prefersReducedMotion}
       />
@@ -341,7 +371,7 @@ export default function Header() {
  * body-level portal so they're free of the header's stacking context, which
  * is critical for touch responsiveness on mobile Safari at non-zero scroll.
  */
-function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersReducedMotion }) {
+function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive, prefersReducedMotion }) {
   if (typeof document === 'undefined') return null
 
   return createPortal(
@@ -431,6 +461,14 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersR
                   href={header.primaryCtaHref}
                   label={header.primaryCta}
                 />
+                {isStaff && (
+                  <AdminLink
+                    block
+                    onClick={onClose}
+                    label={header.admin}
+                    ariaLabel={header.adminAria}
+                  />
+                )}
                 <ClientLoginLink
                   block
                   onClick={onClose}
