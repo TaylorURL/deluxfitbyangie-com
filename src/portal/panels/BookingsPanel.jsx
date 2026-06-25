@@ -30,7 +30,7 @@ export default function BookingsPanel({ bookings }) {
   if (bookings.length === 0) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.bookings} title={copy.title} />
         <EmptyState body={copy.empty} ctaLabel={copy.bookCta} ctaHref="/single-session#book" />
       </section>
     )
