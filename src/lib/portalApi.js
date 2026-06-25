@@ -67,7 +67,7 @@ export const getMessages = async userId => {
   ).then(rows => rows ?? [])
 }
 
-/** Content library items the user is entitled to (RLS does the gating). */
+/** Content library items the user is entitled to or assigned (RLS does the gating). */
 export const getContentItems = locale =>
   safeSelect(
     supabase
@@ -76,6 +76,19 @@ export const getContentItems = locale =>
       .eq('locale', locale)
       .order('sort', { ascending: true })
   ).then(rows => rows ?? [])
+
+/** The client's active personalized nutrition plan (newest active first). */
+export const getNutritionPlan = userId =>
+  safeSelect(
+    supabase
+      .from('nutrition_plans')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+  )
 
 /* -------------------------------------------------------------------------- */
 /*  Mutations — all routed through edge functions (never direct table writes)  */
