@@ -123,6 +123,32 @@ export async function uploadAttachment(userId, file) {
   return path
 }
 
+/** Upload a progress photo to the client's own folder and return its path. */
+export async function uploadProgressPhoto(userId, file) {
+  const path = `${userId}/${Date.now()}-${file.name}`
+  const { error } = await supabase.storage.from('progress-photos').upload(path, file)
+  if (error) throw new Error(error.message || 'Photo upload failed.')
+  return path
+}
+
+/**
+ * Resolve a short-lived signed URL for a private storage object via the
+ * `signed-url` edge function, which authorizes the caller before signing.
+ * Returns null on failure so callers can degrade gracefully.
+ */
+export async function getSignedUrl(bucket, path) {
+  if (!path) return null
+  try {
+    const { data, error } = await supabase.functions.invoke('signed-url', {
+      body: { bucket, path },
+    })
+    if (error || data?.ok === false) return null
+    return data?.url ?? null
+  } catch {
+    return null
+  }
+}
+
 /**
  * Derive entitlement booleans from membership rows. Coaching implies access to
  * membership-level (general) content too.
