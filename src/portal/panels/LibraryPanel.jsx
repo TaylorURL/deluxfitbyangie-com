@@ -97,7 +97,7 @@ export default function LibraryPanel({ content, entitlements }) {
   if (!entitlements.hasMembership && !entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.library} title={copy.title} />
         <EmptyState
           title={copy.gatedTitle}
           body={copy.gatedBody}
