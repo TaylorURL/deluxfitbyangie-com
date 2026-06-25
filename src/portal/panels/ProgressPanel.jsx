@@ -90,13 +90,16 @@ export default function ProgressPanel({ progress, reloadProgress }) {
 
   return (
     <section>
-      <div className="mb-7 flex items-end justify-between gap-4">
-        <PanelHeading title={copy.title} />
-        <Button type="button" variant="outline" size="md" onClick={() => setOpen(o => !o)}>
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          {copy.addEntry}
-        </Button>
-      </div>
+      <PanelHeading
+        eyebrow={portal.nav.progress}
+        title={copy.title}
+        actions={
+          <Button type="button" variant="outline" size="md" onClick={() => setOpen(o => !o)}>
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            {copy.addEntry}
+          </Button>
+        }
+      />
 
       {trend.length >= 2 && (
         <Card variant="surface" className="mb-6">
@@ -208,7 +211,7 @@ export default function ProgressPanel({ progress, reloadProgress }) {
               {progress.map(entry => (
                 <tr
                   key={entry.id}
-                  className="border-b border-df-border text-df-text-muted last:border-0"
+                  className="border-b border-df-border text-df-text-muted transition-colors duration-150 ease-df-out last:border-0 hover:bg-df-surface/40"
                 >
                   <td className="px-4 py-3 text-df-text">{entry.entry_date}</td>
                   <td className="px-4 py-3">{entry.weight ?? '—'}</td>

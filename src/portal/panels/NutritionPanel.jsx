@@ -15,7 +15,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
   if (!entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} />
         <EmptyState
           title={copy.gatedTitle}
           body={copy.gatedBody}
@@ -29,7 +29,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
   if (!nutrition) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} />
         <EmptyState body={copy.empty} />
       </section>
     )
@@ -46,7 +46,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
 
   return (
     <section>
-      <PanelHeading title={copy.title} intro={copy.intro} />
+      <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} intro={copy.intro} />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {macros.map(macro => (
