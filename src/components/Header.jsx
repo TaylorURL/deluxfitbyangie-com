@@ -230,6 +230,7 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
  */
 export default function Header() {
   const { brand, nav, header } = useContent()
+  const { isStaff } = useAuth()
   const { pathname } = useLocation()
   const scrolled = useScrolled()
   const [menuOpen, setMenuOpen] = useState(false)
