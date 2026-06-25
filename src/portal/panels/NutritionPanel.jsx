@@ -15,7 +15,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
   if (!entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} />
         <EmptyState
           title={copy.gatedTitle}
           body={copy.gatedBody}
@@ -29,7 +29,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
   if (!nutrition) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} />
         <EmptyState body={copy.empty} />
       </section>
     )
