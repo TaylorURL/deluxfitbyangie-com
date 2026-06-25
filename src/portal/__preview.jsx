@@ -2,6 +2,7 @@
 // mock data (no Supabase). Delete after screenshotting.
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '../index.css'
 import { LanguageProvider } from '@/i18n'
 import { AuthContext } from '@/auth/useAuth'
 import PortalShell from './PortalShell'
