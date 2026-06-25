@@ -2,8 +2,17 @@ import { useState } from 'react'
 import { Loader2, Send } from 'lucide-react'
 import { Button, Card, Field, Input, Select } from '@deluxfit/ds'
 import { inviteUser } from '@/lib/inviteApi'
+import { listStaff } from '@/lib/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
-import PlaceholderPanel from '../components/PlaceholderPanel'
+import {
+  SectionCard,
+  SectionHeading,
+  AdminEmpty,
+  AdminLoading,
+  clientLabel,
+  fmtDate,
+  useAsyncData,
+} from '../components/AdminPrimitives'
 
 /**
  * AdminStaff — surfaces the working invite flow plus a placeholder for the
@@ -54,13 +63,13 @@ export default function AdminStaff() {
     <div className="grid gap-6">
       <Card variant="elevated" padded>
         <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">Invite</p>
-        <h2 className="mt-3 font-display text-2xl font-400 uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+        <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
           Send an invite.
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
           Invites are brokered through the <code className="text-df-text">invite-user</code> edge
-          function. The recipient gets a Supabase Auth email; their profile is created with the
-          role you pick here.
+          function. The recipient gets a Supabase Auth email; their profile is created with the role
+          you pick here.
         </p>
 
         <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -116,15 +125,49 @@ export default function AdminStaff() {
         {status === 'error' && <FormError body={errorBody} />}
       </Card>
 
-      <PlaceholderPanel
-        eyebrow="Coming soon"
-        description="List of staff members and pending invitations, with resend / revoke actions."
-        comingSoon={[
-          'All staff profiles with last sign-in',
-          'Pending invitations with resend and revoke',
-          'Promote / demote between client and staff (staff-only)',
-        ]}
-      />
+      <StaffList />
     </div>
+  )
+}
+
+/** The current staff roster — every profile with role='staff'. */
+function StaffList() {
+  const { data: staff, loading, error } = useAsyncData(listStaff, [], [])
+
+  return (
+    <SectionCard>
+      <SectionHeading
+        eyebrow="Team"
+        title="Staff."
+        intro="Everyone with admin access. Invite more above."
+      />
+
+      <div className="mt-6">
+        {loading ? (
+          <AdminLoading label="Loading staff…" />
+        ) : error ? (
+          <FormError body={error} />
+        ) : staff.length === 0 ? (
+          <AdminEmpty body="No staff members yet." />
+        ) : (
+          <div className="flex flex-col gap-3">
+            {staff.map(member => (
+              <div
+                key={member.id}
+                className="flex flex-wrap items-center justify-between gap-4 rounded-df-lg border border-df-border bg-df-surface-2 px-5 py-4"
+              >
+                <div className="min-w-0">
+                  <p className="font-600 text-df-text">{clientLabel(member)}</p>
+                  {member.email && (
+                    <p className="mt-1 text-sm text-df-text-muted">{member.email}</p>
+                  )}
+                </div>
+                <p className="text-sm text-df-text-faint">Since {fmtDate(member.created_at)}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </SectionCard>
   )
 }

@@ -9,19 +9,36 @@ standard `Deno.serve` handler that:
 3. derives the calling user from the `Authorization: Bearer <jwt>` header via
    `supabase.auth.getUser(jwt)` when auth is needed.
 
-Shared CORS headers and the `json()` response helper live in
-`_shared/cors.ts`.
+Shared CORS headers and the `json()` response helper live in `_shared/cors.ts`.
+Shared auth helpers (`serviceClient`, `requireUser`, `requireStaff`) live in
+`_shared/auth.ts` — the coach/admin functions use `requireStaff` to enforce
+`profiles.role = 'staff'` server-side before any write.
 
 ## Functions
+
+### Client / public
 
 | Function          | Auth        | Purpose |
 |-------------------|-------------|---------|
 | `create-booking`  | optional    | Insert a booking; `slot_end = slotStart + 60min`; returns `409 { code:'slot_taken' }` on a double-book (partial unique index, PG `23505`). Sends a Resend confirmation email if `RESEND_API_KEY` is set. |
 | `send-message`    | required    | Upsert the caller's conversation, insert a `sender='client'` message. |
-| `log-progress`    | required    | Insert a `progress_entries` row for the caller. |
-| `invite-user`     | required    | Staff-only. Sends a Supabase Auth invite email for `{ email, fullName?, role }` (role ∈ `'client'`/`'staff'`). Validates the caller's `profiles.role = 'staff'` server-side, then calls `supabase.auth.admin.inviteUserByEmail` with `data.role` set so the `handle_new_user()` trigger stamps the right role. The frontend never writes roles or creates users directly — it only invokes this. |
+| `log-progress`    | required    | Insert a `progress_entries` row for the caller (weight, body fat, notes, photo path, and free-form `measurements`). |
+| `signed-url`      | required    | Media-access broker. Returns a short-lived signed URL for a private object only if the caller may see it: staff → any; client → own upload, an attachment on a message in their conversation, or library media assigned/entitled to them. |
 | `create-checkout` | optional    | Create a Stripe Checkout Session (subscription for membership/coaching, payment for sessions). Returns `{ configured:false }` if Stripe env is unset — never fakes a charge. |
 | `stripe-webhook`  | Stripe sig  | Verifies `Stripe-Signature` (Web Crypto HMAC-SHA256) and upserts `memberships` on `checkout.session.completed` / `customer.subscription.updated|deleted`. Returns `{ configured:false }` if `STRIPE_WEBHOOK_SECRET` is unset. |
+
+### Coach / admin (all `requireStaff`)
+
+| Function            | Purpose |
+|---------------------|---------|
+| `invite-user`       | Sends a Supabase Auth invite email for `{ email, fullName?, role }` (role ∈ `'client'`/`'staff'`), pre-stamping `data.role` so `handle_new_user()` records the right role. The frontend never writes roles or creates users directly. |
+| `upsert-plan`       | Create / update / delete a client's workout program (`plans` row). |
+| `upsert-nutrition`  | Create / update / delete a client's nutrition plan (`nutrition_plans` row). |
+| `upsert-content`    | Create / update / delete a `content_items` row and sync its per-client `content_assignments`. |
+| `upload-media`      | Multipart upload of coach media (library videos/PDFs, message video feedback) to the private `library-media` bucket; returns `{ bucket, path }`. |
+| `coach-message`     | Insert a `sender='coach'` message into a client's conversation (creating it if needed); supports a `library-media` attachment for video feedback. |
+| `update-membership` | Manually upsert / delete a client's `memberships` row (the manual override alongside the Stripe webhook). |
+| `update-booking`    | Set a booking's status (`pending` / `confirmed` / `canceled`). |
 
 ## Deploying
 
@@ -29,11 +46,11 @@ Shared CORS headers and the `json()` response helper live in
 supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Deploy all functions
-supabase functions deploy create-booking
-supabase functions deploy send-message
-supabase functions deploy log-progress
-supabase functions deploy invite-user
-supabase functions deploy create-checkout
+for fn in create-booking send-message log-progress signed-url invite-user \
+          create-checkout upsert-plan upsert-nutrition upsert-content \
+          upload-media coach-message update-membership update-booking; do
+  supabase functions deploy "$fn"
+done
 
 # The webhook receives unauthenticated calls from Stripe — disable JWT verify.
 supabase functions deploy stripe-webhook --no-verify-jwt

@@ -1,17 +1,21 @@
 import {
   LayoutDashboard,
   Users,
+  ClipboardCheck,
   CalendarClock,
   Library as LibraryIcon,
   ClipboardList,
+  Apple,
   CreditCard,
   ShieldCheck,
 } from 'lucide-react'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminClients from './pages/AdminClients'
+import AdminReview from './pages/AdminReview'
 import AdminBookings from './pages/AdminBookings'
 import AdminContent from './pages/AdminContent'
 import AdminPlans from './pages/AdminPlans'
+import AdminNutrition from './pages/AdminNutrition'
 import AdminMemberships from './pages/AdminMemberships'
 import AdminStaff from './pages/AdminStaff'
 
@@ -25,12 +29,25 @@ import AdminStaff from './pages/AdminStaff'
  * navigation can be validated end-to-end before the CRUD work lands.
  */
 export const ADMIN_ROUTES = [
-  { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, component: AdminDashboard, exact: true },
+  {
+    path: '/admin',
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+    component: AdminDashboard,
+    exact: true,
+  },
   { path: '/admin/clients', label: 'Clients', icon: Users, component: AdminClients },
+  { path: '/admin/review', label: 'Monthly Review', icon: ClipboardCheck, component: AdminReview },
   { path: '/admin/bookings', label: 'Bookings', icon: CalendarClock, component: AdminBookings },
   { path: '/admin/content', label: 'Content', icon: LibraryIcon, component: AdminContent },
   { path: '/admin/plans', label: 'Plans', icon: ClipboardList, component: AdminPlans },
-  { path: '/admin/memberships', label: 'Memberships', icon: CreditCard, component: AdminMemberships },
+  { path: '/admin/nutrition', label: 'Nutrition', icon: Apple, component: AdminNutrition },
+  {
+    path: '/admin/memberships',
+    label: 'Memberships',
+    icon: CreditCard,
+    component: AdminMemberships,
+  },
   { path: '/admin/staff', label: 'Staff', icon: ShieldCheck, component: AdminStaff },
 ]
 

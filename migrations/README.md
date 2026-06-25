@@ -19,6 +19,27 @@ an already-applied migration — add a new `NNNN_*.sql` file instead.
   `full_name`/`email` but never their own `role`, and an updated
   `handle_new_user()` that honours an invited `role` claim on
   `raw_user_meta_data` (set server-side by the `invite-user` edge function).
+- `0004_nutrition.sql` — `nutrition_plans` (per-client calorie/macro targets,
+  meal-structure suggestions, educational resources, notes). RLS: select-own +
+  select-staff; writes are service-role only (the `upsert-nutrition` function).
+- `0005_coach_access.sql` — coach (staff) read access + supporting columns:
+  `*_select_staff` RLS policies on `memberships`, `plans`, `progress_entries`,
+  `bookings`, `conversations`, `messages` so the admin panel can read every
+  client's rows; `content_assignments` (assign library items to specific
+  clients) with a widened `content_items` SELECT policy; `content_items.media_path`;
+  `progress_entries.measurements jsonb`; `messages.attachment_bucket`; and the
+  private `progress-photos` + `library-media` storage buckets with per-user and
+  staff RLS.
+
+### Verification
+
+- `verify_rls_isolation.sql` — a non-destructive, transaction-wrapped test that
+  seeds two throwaway clients, impersonates one (via the `request.jwt.claims`
+  GUC that `auth.uid()` reads), and asserts that client sees ONLY their own rows
+  across every per-client table — then `ROLLBACK`s. Prints
+  `RLS ISOLATION: ALL CHECKS PASSED` on success; raises an exception naming the
+  leaking table otherwise. Run with
+  `psql "$SUPABASE_DB_URL" -f migrations/verify_rls_isolation.sql`.
 
 ## Applying
 
