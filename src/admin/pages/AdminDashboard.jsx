@@ -106,7 +106,7 @@ export default function AdminDashboard() {
           Quick jump
         </p>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {QUICK_LINKS.map(route => {
+          {quickLinks.map(route => {
             const Icon = route.icon
             return (
               <Link
