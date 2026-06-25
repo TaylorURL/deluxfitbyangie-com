@@ -371,7 +371,7 @@ export default function Header() {
  * body-level portal so they're free of the header's stacking context, which
  * is critical for touch responsiveness on mobile Safari at non-zero scroll.
  */
-function MobileNavPortal({ open, onClose, nav, header, brand, isActive, prefersReducedMotion }) {
+function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive, prefersReducedMotion }) {
   if (typeof document === 'undefined') return null
 
   return createPortal(
