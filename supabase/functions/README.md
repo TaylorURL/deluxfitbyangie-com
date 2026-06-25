@@ -46,11 +46,11 @@ Shared auth helpers (`serviceClient`, `requireUser`, `requireStaff`) live in
 supabase link --project-ref wmqwcnpiewfujmxaivvy
 
 # Deploy all functions
-supabase functions deploy create-booking
-supabase functions deploy send-message
-supabase functions deploy log-progress
-supabase functions deploy invite-user
-supabase functions deploy create-checkout
+for fn in create-booking send-message log-progress signed-url invite-user \
+          create-checkout upsert-plan upsert-nutrition upsert-content \
+          upload-media coach-message update-membership update-booking; do
+  supabase functions deploy "$fn"
+done
 
 # The webhook receives unauthenticated calls from Stripe — disable JWT verify.
 supabase functions deploy stripe-webhook --no-verify-jwt
