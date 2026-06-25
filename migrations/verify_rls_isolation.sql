@@ -31,18 +31,24 @@ declare
   n int;
 begin
   -- --- Seed two auth users; the handle_new_user trigger creates profiles. ----
-  insert into auth.users (id, email, raw_user_meta_data, created_at)
+  -- aud/role/instance_id are included so the insert satisfies auth.users' shape.
+  insert into auth.users (instance_id, id, aud, role, email, raw_user_meta_data, created_at)
   values
-    (uid_a, 'rls-test-a@example.com', '{"full_name":"Client A","role":"client"}'::jsonb, now()),
-    (uid_b, 'rls-test-b@example.com', '{"full_name":"Client B","role":"client"}'::jsonb, now());
+    ('00000000-0000-0000-0000-000000000000', uid_a, 'authenticated', 'authenticated',
+     'rls-test-a@example.com', '{"full_name":"Client A","role":"client"}'::jsonb, now()),
+    ('00000000-0000-0000-0000-000000000000', uid_b, 'authenticated', 'authenticated',
+     'rls-test-b@example.com', '{"full_name":"Client B","role":"client"}'::jsonb, now());
 
   insert into public.plans (user_id, title) values (uid_a, 'A plan'), (uid_b, 'B plan');
   insert into public.progress_entries (user_id, entry_date, weight)
     values (uid_a, current_date, 150), (uid_b, current_date, 160);
   insert into public.nutrition_plans (user_id, calorie_target)
     values (uid_a, 1800), (uid_b, 2000);
+  -- Distinct products: A is membership-only, B is coaching. This keeps the
+  -- content test meaningful — A lacks coaching entitlement, so B's coaching
+  -- library item is invisible to A unless explicitly assigned (it isn't).
   insert into public.memberships (user_id, product, status)
-    values (uid_a, 'coaching', 'active'), (uid_b, 'coaching', 'active');
+    values (uid_a, 'membership', 'active'), (uid_b, 'coaching', 'active');
 
   insert into public.conversations (user_id) values (uid_a) returning id into conv_a;
   insert into public.conversations (user_id) values (uid_b) returning id into conv_b;

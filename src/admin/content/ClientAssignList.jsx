@@ -8,14 +8,14 @@ import { clientLabel } from '../components/AdminPrimitives'
 export default function ClientAssignList({ clients, selected, onToggle, onClear, disabled }) {
   if (!clients.length) {
     return (
-      <p className="rounded-df-md border border-dashed border-df-border-strong bg-df-surface/60 px-4 py-6 text-center text-sm text-df-text-muted">
+      <p className="bg-df-surface/60 rounded-df-md border border-dashed border-df-border-strong px-4 py-6 text-center text-sm text-df-text-muted">
         No clients yet. Invite clients first to assign content to them.
       </p>
     )
   }
 
   return (
-    <div className="rounded-df-md border border-df-border bg-df-surface-2/40">
+    <div className="bg-df-surface-2/40 rounded-df-md border border-df-border">
       <div className="flex items-center justify-between border-b border-df-border px-3 py-2">
         <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
           {selected.size} selected
@@ -47,7 +47,9 @@ export default function ClientAssignList({ clients, selected, onToggle, onClear,
                     {clientLabel(client)}
                   </span>
                   {client.email ? (
-                    <span className="block truncate text-xs text-df-text-faint">{client.email}</span>
+                    <span className="block truncate text-xs text-df-text-faint">
+                      {client.email}
+                    </span>
                   ) : null}
                 </span>
               </label>

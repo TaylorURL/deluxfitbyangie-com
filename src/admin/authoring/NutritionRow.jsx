@@ -25,7 +25,7 @@ export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
         'flex flex-col gap-4 rounded-df-md border p-4',
         isActive
           ? 'border-df-accent/40 bg-df-accent-soft/40'
-          : 'border-df-border bg-df-surface-2/50'
+          : 'bg-df-surface-2/50 border-df-border'
       )}
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -38,7 +38,7 @@ export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
           </span>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="truncate font-display text-base font-400 uppercase tracking-[0.01em] text-df-text">
+              <p className="font-400 truncate font-display text-base uppercase tracking-[0.01em] text-df-text">
                 {plan.title || 'Untitled plan'}
               </p>
               <StatusBadge status={plan.status} />

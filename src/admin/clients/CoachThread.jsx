@@ -36,7 +36,11 @@ function CoachAttachment({ bucket, path }) {
   }
   if (isVideo(path)) {
     return (
-      <video controls src={url} className="mt-2 w-full max-w-xs rounded-df-md border border-df-border" />
+      <video
+        controls
+        src={url}
+        className="mt-2 w-full max-w-xs rounded-df-md border border-df-border"
+      />
     )
   }
   return (
@@ -98,7 +102,7 @@ export default function CoachThread({ clientId, messages, reload }) {
 
   return (
     <div>
-      <div className="flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border bg-df-surface/60 p-5">
+      <div className="bg-df-surface/60 flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border p-5">
         {thread.length === 0 ? (
           <p className="py-8 text-center text-sm text-df-text-faint">
             No messages yet. Start the conversation below.

@@ -18,7 +18,7 @@ export default function RepeatableSection({
   disabled,
 }) {
   return (
-    <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2/40 p-4">
+    <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
           {title}
@@ -33,7 +33,7 @@ export default function RepeatableSection({
         {rows.map((row, index) => (
           <div
             key={index}
-            className="grid gap-4 rounded-df-sm border border-df-border bg-df-surface/40 p-3 sm:grid-cols-3"
+            className="bg-df-surface/40 grid gap-4 rounded-df-sm border border-df-border p-3 sm:grid-cols-3"
           >
             {renderRow(row, index)}
             <div className="sm:col-span-3 sm:flex sm:justify-end">

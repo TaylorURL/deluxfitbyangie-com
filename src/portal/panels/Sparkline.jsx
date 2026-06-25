@@ -18,7 +18,9 @@ export default function Sparkline({ values, width = 280, height = 48 }) {
     return [x, y]
   })
 
-  const path = points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ')
+  const path = points
+    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`)
+    .join(' ')
   const [lastX, lastY] = points[points.length - 1]
 
   return (
@@ -31,7 +33,14 @@ export default function Sparkline({ values, width = 280, height = 48 }) {
       aria-hidden="true"
       className="text-df-accent-bright"
     >
-      <path d={path} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={path}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <circle cx={lastX} cy={lastY} r="3" fill="currentColor" />
     </svg>
   )

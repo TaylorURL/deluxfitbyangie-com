@@ -1,12 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Loader2, Plus, Save, X } from 'lucide-react'
 import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
-import {
-  deleteNutrition,
-  getClientNutrition,
-  listClients,
-  saveNutrition,
-} from '@/lib/adminApi'
+import { deleteNutrition, getClientNutrition, listClients, saveNutrition } from '@/lib/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -72,11 +67,11 @@ const toNumberOrUndefined = value => {
 }
 
 export default function AdminNutrition() {
-  const { data: clients, loading: clientsLoading, error: clientsError } = useAsyncData(
-    listClients,
-    [],
-    []
-  )
+  const {
+    data: clients,
+    loading: clientsLoading,
+    error: clientsError,
+  } = useAsyncData(listClients, [], [])
 
   const [clientId, setClientId] = useState('')
   const {
@@ -198,7 +193,6 @@ export default function AdminNutrition() {
   }
 
   const handleDelete = async plan => {
-    // eslint-disable-next-line no-alert
     if (!window.confirm(`Delete “${plan.title || 'this plan'}”? This cannot be undone.`)) return
     setBusyId(plan.id)
     setFormError(null)

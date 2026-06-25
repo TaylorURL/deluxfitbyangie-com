@@ -24,12 +24,18 @@ export const getProfile = userId =>
 
 /** Active/known entitlement rows (membership + coaching). */
 export const getMemberships = userId =>
-  safeSelect(supabase.from('memberships').select('*').eq('user_id', userId)).then(rows => rows ?? [])
+  safeSelect(supabase.from('memberships').select('*').eq('user_id', userId)).then(
+    rows => rows ?? []
+  )
 
 /** Assigned personalized plans, newest first. */
 export const getPlans = userId =>
   safeSelect(
-    supabase.from('plans').select('*').eq('user_id', userId).order('created_at', { ascending: false })
+    supabase
+      .from('plans')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
   ).then(rows => rows ?? [])
 
 /** Progress entries, newest first. */

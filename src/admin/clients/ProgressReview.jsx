@@ -38,7 +38,9 @@ function PhotoThumb({ path, label }) {
   }
 
   if (!url) {
-    return <div className="h-20 w-20 shrink-0 animate-pulse rounded-df-md border border-df-border bg-df-surface-2" />
+    return (
+      <div className="h-20 w-20 shrink-0 animate-pulse rounded-df-md border border-df-border bg-df-surface-2" />
+    )
   }
 
   return (
@@ -68,7 +70,9 @@ function WeightSparkline({ points }) {
     const y = height - ((p.weight - min) / span) * (height - 8) - 4
     return [x, y]
   })
-  const d = coords.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ')
+  const d = coords
+    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`)
+    .join(' ')
   const [lastX, lastY] = coords[coords.length - 1]
   return (
     <svg
@@ -107,7 +111,9 @@ export default function ProgressReview({ progress }) {
     <div className="grid gap-6">
       {weighted.length >= 2 && (
         <div>
-          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">Weight trend</p>
+          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+            Weight trend
+          </p>
           <div className="mt-2">
             <WeightSparkline points={weighted} />
           </div>
@@ -116,11 +122,15 @@ export default function ProgressReview({ progress }) {
 
       <div className="grid gap-3">
         {recent.map(entry => {
-          const measurements = entry.measurements && typeof entry.measurements === 'object'
-            ? Object.entries(entry.measurements)
-            : []
+          const measurements =
+            entry.measurements && typeof entry.measurements === 'object'
+              ? Object.entries(entry.measurements)
+              : []
           return (
-            <div key={entry.id} className="rounded-df-lg border border-df-border bg-df-surface/60 px-4 py-3">
+            <div
+              key={entry.id}
+              className="bg-df-surface/60 rounded-df-lg border border-df-border px-4 py-3"
+            >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <span className="text-sm font-600 text-df-text">{fmtDate(entry.entry_date)}</span>
                 <span className="text-sm text-df-text-muted">
@@ -147,7 +157,9 @@ export default function ProgressReview({ progress }) {
 
       {withPhotos.length > 0 && (
         <div>
-          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">Photos</p>
+          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+            Photos
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {withPhotos.map(entry => (
               <PhotoThumb

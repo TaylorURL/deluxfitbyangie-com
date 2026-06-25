@@ -26,13 +26,7 @@ import {
  * adminApi helpers; the frontend never touches Supabase tables directly.
  */
 
-const PROGRAM_SUGGESTIONS = [
-  'Weight Loss',
-  'Muscle Gain',
-  'Glute Growth',
-  'Strength',
-  'Beginner',
-]
+const PROGRAM_SUGGESTIONS = ['Weight Loss', 'Muscle Gain', 'Glute Growth', 'Strength', 'Beginner']
 
 const emptyDraft = () => ({
   id: null,
@@ -61,11 +55,11 @@ const weeksFromSchedule = schedule =>
     .map(title => ({ title }))
 
 export default function AdminPlans() {
-  const { data: clients, loading: clientsLoading, error: clientsError } = useAsyncData(
-    listClients,
-    [],
-    []
-  )
+  const {
+    data: clients,
+    loading: clientsLoading,
+    error: clientsError,
+  } = useAsyncData(listClients, [], [])
 
   const [clientId, setClientId] = useState('')
   const {
@@ -156,7 +150,6 @@ export default function AdminPlans() {
   }
 
   const handleDelete = async plan => {
-    // eslint-disable-next-line no-alert
     if (!window.confirm(`Delete “${plan.title}”? This cannot be undone.`)) return
     setBusyId(plan.id)
     setFormError(null)
@@ -337,7 +330,7 @@ function PlanRow({ plan, onEdit, onDelete, busy }) {
   const weeks = Array.isArray(plan.content?.weeks) ? plan.content.weeks : []
 
   return (
-    <li className="flex flex-col gap-4 rounded-df-md border border-df-border bg-df-surface-2/50 p-4">
+    <li className="bg-df-surface-2/50 flex flex-col gap-4 rounded-df-md border border-df-border p-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 gap-3">
           <span
@@ -348,7 +341,7 @@ function PlanRow({ plan, onEdit, onDelete, busy }) {
           </span>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="truncate font-display text-base font-400 uppercase tracking-[0.01em] text-df-text">
+              <p className="font-400 truncate font-display text-base uppercase tracking-[0.01em] text-df-text">
                 {plan.title}
               </p>
               <StatusBadge status={plan.status} />
@@ -379,10 +372,7 @@ function PlanRow({ plan, onEdit, onDelete, busy }) {
       {weeks.length > 0 && (
         <ul className="grid gap-2 border-t border-df-border pt-3">
           {weeks.map((week, index) => (
-            <li
-              key={index}
-              className="flex items-start gap-3 text-sm text-df-text-muted"
-            >
+            <li key={index} className="flex items-start gap-3 text-sm text-df-text-muted">
               <span className="font-display text-base text-df-accent-bright">
                 {String(index + 1).padStart(2, '0')}
               </span>

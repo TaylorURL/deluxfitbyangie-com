@@ -28,9 +28,7 @@ export default function AdminClients() {
     const list = clients ?? []
     const q = query.trim().toLowerCase()
     if (!q) return list
-    return list.filter(c =>
-      `${c.full_name ?? ''} ${c.email ?? ''}`.toLowerCase().includes(q)
-    )
+    return list.filter(c => `${c.full_name ?? ''} ${c.email ?? ''}`.toLowerCase().includes(q))
   }, [clients, query])
 
   return (
@@ -83,7 +81,9 @@ export default function AdminClients() {
                       {clientLabel(client)}
                     </span>
                     {client.email && (
-                      <span className="block truncate text-xs text-df-text-muted">{client.email}</span>
+                      <span className="block truncate text-xs text-df-text-muted">
+                        {client.email}
+                      </span>
                     )}
                     <span className="block text-[10px] uppercase tracking-[0.14em] text-df-text-faint">
                       Since {fmtDate(client.created_at)}

@@ -19,8 +19,10 @@ const loadMetrics = async () => {
 
   return {
     clients: clients.length,
-    coachingSeats: memberships.filter(m => m.product === 'coaching' && m.status === 'active').length,
-    activeMemberships: memberships.filter(m => m.product === 'membership' && m.status === 'active').length,
+    coachingSeats: memberships.filter(m => m.product === 'coaching' && m.status === 'active')
+      .length,
+    activeMemberships: memberships.filter(m => m.product === 'membership' && m.status === 'active')
+      .length,
     upcomingBookings: bookings.filter(b => {
       const start = new Date(b.slot_start).getTime()
       return start >= now && start <= weekEnd && b.status !== 'canceled'
@@ -48,7 +50,7 @@ export default function AdminDashboard() {
     <div className="grid gap-6">
       <Card variant="elevated" padded>
         <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">Welcome</p>
-        <p className="mt-3 font-display text-2xl font-400 uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+        <p className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
           Hi, {greetingName}.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
@@ -77,7 +79,7 @@ export default function AdminDashboard() {
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </span>
               </div>
-              <p className="mt-4 font-display text-4xl font-400 leading-none text-df-text">
+              <p className="font-400 mt-4 font-display text-4xl leading-none text-df-text">
                 {data?.[key] ?? 0}
               </p>
             </Card>

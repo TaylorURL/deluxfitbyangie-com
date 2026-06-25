@@ -1,22 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
-import {
-  CheckCircle2,
-  FileUp,
-  Loader2,
-  Plus,
-  Save,
-  Upload,
-  Users,
-  X,
-} from 'lucide-react'
+import { CheckCircle2, FileUp, Loader2, Plus, Save, Upload, Users, X } from 'lucide-react'
 import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
-import {
-  deleteContent,
-  listClients,
-  listContent,
-  saveContent,
-  uploadMedia,
-} from '@/lib/adminApi'
+import { deleteContent, listClients, listContent, saveContent, uploadMedia } from '@/lib/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -45,12 +30,7 @@ import {
  * `uploadMedia`. The frontend never touches Supabase tables directly.
  */
 export default function AdminContent() {
-  const {
-    data: items,
-    loading,
-    error,
-    reload,
-  } = useAsyncData(() => listContent('en'), [], [])
+  const { data: items, loading, error, reload } = useAsyncData(() => listContent('en'), [], [])
   const { data: clients } = useAsyncData(listClients, [], [])
 
   const [draft, setDraft] = useState(null)
@@ -171,9 +151,7 @@ export default function AdminContent() {
       if (assigning) payload.assignedUserIds = [...assigned]
 
       const saved = await saveContent(payload)
-      setSuccess(
-        `“${saved?.title || payload.title}” ${isEditing ? 'updated' : 'created'}.`
-      )
+      setSuccess(`“${saved?.title || payload.title}” ${isEditing ? 'updated' : 'created'}.`)
       resetForm()
       reload()
     } catch (saveError) {
@@ -183,7 +161,6 @@ export default function AdminContent() {
   }
 
   const handleDelete = async item => {
-    // eslint-disable-next-line no-alert
     if (!window.confirm(`Delete “${item.title}”? This cannot be undone.`)) return
     setBusyId(item.id)
     setFormError(null)
@@ -292,7 +269,7 @@ export default function AdminContent() {
               />
             </Field>
 
-            <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2/40 p-4">
+            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
               <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
                 Media source
               </p>
@@ -323,12 +300,15 @@ export default function AdminContent() {
                   type="file"
                   onChange={handleFileChange}
                   disabled={isWorking}
-                  className="block w-full cursor-pointer rounded-df-md border border-df-border-input bg-df-surface-2/60 text-sm text-df-text-muted file:mr-4 file:cursor-pointer file:border-0 file:bg-df-surface-3 file:px-4 file:py-2.5 file:text-[11px] file:font-700 file:uppercase file:tracking-[0.18em] file:text-df-text hover:file:bg-df-accent-soft hover:file:text-df-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
+                  className="bg-df-surface-2/60 block w-full cursor-pointer rounded-df-md border border-df-border-input text-sm text-df-text-muted file:mr-4 file:cursor-pointer file:border-0 file:bg-df-surface-3 file:px-4 file:py-2.5 file:text-[11px] file:font-700 file:uppercase file:tracking-[0.18em] file:text-df-text hover:file:bg-df-accent-soft hover:file:text-df-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
                 />
                 {pickedFile ? (
-                  <p className="mt-2 flex items-center justify-between gap-3 rounded-df-sm border border-df-border bg-df-surface-2/60 px-3 py-2 text-xs text-df-text">
+                  <p className="bg-df-surface-2/60 mt-2 flex items-center justify-between gap-3 rounded-df-sm border border-df-border px-3 py-2 text-xs text-df-text">
                     <span className="inline-flex min-w-0 items-center gap-2">
-                      <FileUp className="h-4 w-4 shrink-0 text-df-accent-bright" aria-hidden="true" />
+                      <FileUp
+                        className="h-4 w-4 shrink-0 text-df-accent-bright"
+                        aria-hidden="true"
+                      />
                       <span className="truncate font-600">{pickedFile.name}</span>
                     </span>
                     <button
@@ -354,7 +334,7 @@ export default function AdminContent() {
               </div>
             </div>
 
-            <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2/40 p-4">
+            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
               <div className="flex items-center justify-between">
                 <p className="inline-flex items-center gap-2 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
                   <Users className="h-4 w-4" aria-hidden="true" />

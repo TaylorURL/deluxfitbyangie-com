@@ -35,7 +35,9 @@ function Section({ title, intro, children }) {
   return (
     <SectionCard>
       <div className="mb-5">
-        <h3 className="font-display text-lg font-400 uppercase tracking-tight text-df-text">{title}</h3>
+        <h3 className="font-400 font-display text-lg uppercase tracking-tight text-df-text">
+          {title}
+        </h3>
         {intro && <p className="mt-1.5 text-sm leading-relaxed text-df-text-muted">{intro}</p>}
       </div>
       {children}
@@ -51,7 +53,7 @@ function MembershipSummary({ memberships }) {
       {list.map(m => (
         <div
           key={m.id}
-          className="flex flex-wrap items-center justify-between gap-2 rounded-df-lg border border-df-border bg-df-surface/60 px-4 py-3"
+          className="bg-df-surface/60 flex flex-wrap items-center justify-between gap-2 rounded-df-lg border border-df-border px-4 py-3"
         >
           <div className="flex items-center gap-2">
             <Badge tone="accent" variant="soft" size="sm">
@@ -60,7 +62,9 @@ function MembershipSummary({ memberships }) {
             <StatusBadge status={m.status} />
           </div>
           {m.current_period_end && (
-            <span className="text-xs text-df-text-faint">Renews {fmtDate(m.current_period_end)}</span>
+            <span className="text-xs text-df-text-faint">
+              Renews {fmtDate(m.current_period_end)}
+            </span>
           )}
         </div>
       ))}
@@ -84,7 +88,7 @@ function BookingsList({ bookings }) {
         </thead>
         <tbody>
           {list.map(b => (
-            <tr key={b.id} className="border-b border-df-border last:border-0 text-df-text-muted">
+            <tr key={b.id} className="border-b border-df-border text-df-text-muted last:border-0">
               <td className="px-4 py-3 text-df-text">{SERVICE_LABEL[b.service] ?? b.service}</td>
               <td className="px-4 py-3">{fmtDateTime(b.slot_start)}</td>
               <td className="px-4 py-3">{b.training_focus ?? '—'}</td>
@@ -120,7 +124,16 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
             getClientMessages(clientId),
             getClientAssignments(clientId),
           ]).then(
-            ([profile, memberships, plans, nutrition, progress, bookings, messages, assignments]) => ({
+            ([
+              profile,
+              memberships,
+              plans,
+              nutrition,
+              progress,
+              bookings,
+              messages,
+              assignments,
+            ]) => ({
               profile,
               memberships,
               plans,
@@ -154,7 +167,7 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
     <SectionCard>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="font-display text-2xl font-400 uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+          <h2 className="font-400 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
             {clientLabel(profile)}
           </h2>
           {profile.email && <p className="mt-1 text-sm text-df-text-muted">{profile.email}</p>}
@@ -177,7 +190,10 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   )
 
   const progressSection = (
-    <Section title="Progress review" intro="Weight trend, recent entries, measurements, and photos.">
+    <Section
+      title="Progress review"
+      intro="Weight trend, recent entries, measurements, and photos."
+    >
       <ProgressReview progress={progress} />
     </Section>
   )
@@ -216,8 +232,22 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   // program editors. emphasis="manage" leads with the program editors.
   const ordered =
     emphasis === 'review'
-      ? [progressSection, threadSection, planSection, nutritionSection, bookingsSection, membershipsSection]
-      : [planSection, nutritionSection, progressSection, threadSection, bookingsSection, membershipsSection]
+      ? [
+          progressSection,
+          threadSection,
+          planSection,
+          nutritionSection,
+          bookingsSection,
+          membershipsSection,
+        ]
+      : [
+          planSection,
+          nutritionSection,
+          progressSection,
+          threadSection,
+          bookingsSection,
+          membershipsSection,
+        ]
 
   return (
     <div className="grid gap-6">

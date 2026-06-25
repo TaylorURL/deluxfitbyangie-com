@@ -63,13 +63,13 @@ export default function AdminStaff() {
     <div className="grid gap-6">
       <Card variant="elevated" padded>
         <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">Invite</p>
-        <h2 className="mt-3 font-display text-2xl font-400 uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+        <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
           Send an invite.
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
           Invites are brokered through the <code className="text-df-text">invite-user</code> edge
-          function. The recipient gets a Supabase Auth email; their profile is created with the
-          role you pick here.
+          function. The recipient gets a Supabase Auth email; their profile is created with the role
+          you pick here.
         </p>
 
         <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -158,7 +158,9 @@ function StaffList() {
               >
                 <div className="min-w-0">
                   <p className="font-600 text-df-text">{clientLabel(member)}</p>
-                  {member.email && <p className="mt-1 text-sm text-df-text-muted">{member.email}</p>}
+                  {member.email && (
+                    <p className="mt-1 text-sm text-df-text-muted">{member.email}</p>
+                  )}
                 </div>
                 <p className="text-sm text-df-text-faint">Since {fmtDate(member.created_at)}</p>
               </div>

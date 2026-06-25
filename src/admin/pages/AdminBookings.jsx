@@ -74,7 +74,11 @@ export default function AdminBookings() {
     const canceling = busyId === `${booking.id}:canceled`
     const busy = confirming || canceling
     return (
-      <Card key={booking.id} variant="surface" className="flex flex-wrap items-center justify-between gap-4">
+      <Card
+        key={booking.id}
+        variant="surface"
+        className="flex flex-wrap items-center justify-between gap-4"
+      >
         <div className="min-w-0">
           <p className="font-600 text-df-text">{nameFor(booking)}</p>
           <p className="mt-1 text-sm text-df-text-muted">

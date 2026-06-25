@@ -158,10 +158,12 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
       {!current ? (
         <AdminEmpty body="No nutrition plan yet for this client." />
       ) : (
-        <div className="rounded-df-lg border border-df-border bg-df-surface/60 px-4 py-4">
+        <div className="bg-df-surface/60 rounded-df-lg border border-df-border px-4 py-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-600 text-df-text">{current.title || 'Nutrition plan'}</span>
+              <span className="text-sm font-600 text-df-text">
+                {current.title || 'Nutrition plan'}
+              </span>
               <StatusBadge status={current.status} />
             </div>
             <div className="flex shrink-0 gap-1">
@@ -193,16 +195,24 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
 
           <div className="mt-3 flex flex-wrap gap-1.5">
             {current.calorie_target != null && (
-              <Badge tone="accent" variant="soft" size="sm">{current.calorie_target} kcal</Badge>
+              <Badge tone="accent" variant="soft" size="sm">
+                {current.calorie_target} kcal
+              </Badge>
             )}
             {current.protein_g != null && (
-              <Badge tone="neutral" variant="outline" size="sm">P {current.protein_g}g</Badge>
+              <Badge tone="neutral" variant="outline" size="sm">
+                P {current.protein_g}g
+              </Badge>
             )}
             {current.carbs_g != null && (
-              <Badge tone="neutral" variant="outline" size="sm">C {current.carbs_g}g</Badge>
+              <Badge tone="neutral" variant="outline" size="sm">
+                C {current.carbs_g}g
+              </Badge>
             )}
             {current.fat_g != null && (
-              <Badge tone="neutral" variant="outline" size="sm">F {current.fat_g}g</Badge>
+              <Badge tone="neutral" variant="outline" size="sm">
+                F {current.fat_g}g
+              </Badge>
             )}
           </div>
 
@@ -247,7 +257,13 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
               <p className="text-sm font-600 text-df-text">
                 {form.id ? 'Edit nutrition plan' : 'New nutrition plan'}
               </p>
-              <Button type="button" variant="ghost" size="sm" onClick={closeForm} aria-label="Close form">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={closeForm}
+                aria-label="Close form"
+              >
                 <X className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>
@@ -258,32 +274,78 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
 
             <div className="grid gap-5 sm:grid-cols-4">
               <Field label="Calories">
-                <Input type="number" inputMode="numeric" value={form.calorieTarget} onChange={set('calorieTarget')} placeholder="2200" />
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={form.calorieTarget}
+                  onChange={set('calorieTarget')}
+                  placeholder="2200"
+                />
               </Field>
               <Field label="Protein (g)">
-                <Input type="number" inputMode="numeric" value={form.proteinG} onChange={set('proteinG')} placeholder="180" />
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={form.proteinG}
+                  onChange={set('proteinG')}
+                  placeholder="180"
+                />
               </Field>
               <Field label="Carbs (g)">
-                <Input type="number" inputMode="numeric" value={form.carbsG} onChange={set('carbsG')} placeholder="220" />
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={form.carbsG}
+                  onChange={set('carbsG')}
+                  placeholder="220"
+                />
               </Field>
               <Field label="Fat (g)">
-                <Input type="number" inputMode="numeric" value={form.fatG} onChange={set('fatG')} placeholder="60" />
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={form.fatG}
+                  onChange={set('fatG')}
+                  placeholder="60"
+                />
               </Field>
             </div>
 
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">Meal structure</p>
-                <Button type="button" variant="ghost" size="sm" onClick={addRow('mealStructure', { meal: '', suggestion: '' })}>
+                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+                  Meal structure
+                </p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={addRow('mealStructure', { meal: '', suggestion: '' })}
+                >
                   <Plus className="h-4 w-4" aria-hidden="true" />
                   Add meal
                 </Button>
               </div>
               {form.mealStructure.map((row, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <Input value={row.meal} onChange={setRow('mealStructure', i, 'meal')} placeholder="Breakfast" className="sm:max-w-[10rem]" />
-                  <Input value={row.suggestion} onChange={setRow('mealStructure', i, 'suggestion')} placeholder="Oats + whey + berries" />
-                  <Button type="button" variant="ghost" size="sm" onClick={removeRow('mealStructure', i)} aria-label="Remove meal">
+                  <Input
+                    value={row.meal}
+                    onChange={setRow('mealStructure', i, 'meal')}
+                    placeholder="Breakfast"
+                    className="sm:max-w-[10rem]"
+                  />
+                  <Input
+                    value={row.suggestion}
+                    onChange={setRow('mealStructure', i, 'suggestion')}
+                    placeholder="Oats + whey + berries"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={removeRow('mealStructure', i)}
+                    aria-label="Remove meal"
+                  >
                     <Trash2 className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
@@ -292,17 +354,40 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
 
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">Resources</p>
-                <Button type="button" variant="ghost" size="sm" onClick={addRow('resources', { label: '', url: '' })}>
+                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+                  Resources
+                </p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={addRow('resources', { label: '', url: '' })}
+                >
                   <Plus className="h-4 w-4" aria-hidden="true" />
                   Add resource
                 </Button>
               </div>
               {form.resources.map((row, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <Input value={row.label} onChange={setRow('resources', i, 'label')} placeholder="Grocery list" className="sm:max-w-[10rem]" />
-                  <Input type="url" value={row.url} onChange={setRow('resources', i, 'url')} placeholder="https://…" />
-                  <Button type="button" variant="ghost" size="sm" onClick={removeRow('resources', i)} aria-label="Remove resource">
+                  <Input
+                    value={row.label}
+                    onChange={setRow('resources', i, 'label')}
+                    placeholder="Grocery list"
+                    className="sm:max-w-[10rem]"
+                  />
+                  <Input
+                    type="url"
+                    value={row.url}
+                    onChange={setRow('resources', i, 'url')}
+                    placeholder="https://…"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={removeRow('resources', i)}
+                    aria-label="Remove resource"
+                  >
                     <Trash2 className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>

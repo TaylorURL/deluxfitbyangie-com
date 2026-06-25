@@ -54,7 +54,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
             <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
               {macro.label}
             </p>
-            <p className="mt-2 font-display text-3xl font-400 text-df-text">
+            <p className="font-400 mt-2 font-display text-3xl text-df-text">
               {macro.value ?? '—'}
               {macro.value != null && macro.unit ? (
                 <span className="ml-1 text-base text-df-text-muted">{macro.unit}</span>
@@ -66,7 +66,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
 
       {meals.length > 0 && (
         <Card variant="surface" className="mt-6">
-          <h3 className="font-display text-xl font-400 uppercase tracking-[0.01em] text-df-text">
+          <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
             {copy.mealsTitle}
           </h3>
           <ul className="mt-4 flex flex-col gap-2">
@@ -87,7 +87,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
 
       {resources.length > 0 && (
         <Card variant="surface" className="mt-6">
-          <h3 className="font-display text-xl font-400 uppercase tracking-[0.01em] text-df-text">
+          <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
             {copy.resourcesTitle}
           </h3>
           <ul className="mt-4 flex flex-col gap-2">
@@ -110,7 +110,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
 
       {nutrition.notes && (
         <Card variant="surface" className="mt-6">
-          <h3 className="font-display text-xl font-400 uppercase tracking-[0.01em] text-df-text">
+          <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
             {copy.notesTitle}
           </h3>
           <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-df-text-muted">

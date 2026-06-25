@@ -38,7 +38,7 @@ function LibraryCard({ item, copy, coachingLabel }) {
           </Badge>
         )}
       </div>
-      <h3 className="mt-4 font-display text-lg font-400 uppercase tracking-[0.01em] text-df-text">
+      <h3 className="font-400 mt-4 font-display text-lg uppercase tracking-[0.01em] text-df-text">
         {item.title}
       </h3>
       {item.description && (

@@ -8,7 +8,12 @@ import { FormError } from '@/components/forms/FormFeedback'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const formatTime = iso =>
-  new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+  new Date(iso).toLocaleString([], {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
 
 const isVideo = path => /\.(mp4|webm|mov)$/i.test(path || '')
 
@@ -76,7 +81,11 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
     return (
       <section>
         <PanelHeading title={copy.title} />
-        <EmptyState body={copy.gatedBody} ctaLabel={portal.plan.emptyCta} ctaHref="/online-coaching#apply" />
+        <EmptyState
+          body={copy.gatedBody}
+          ctaLabel={portal.plan.emptyCta}
+          ctaHref="/online-coaching#apply"
+        />
       </section>
     )
   }
@@ -104,7 +113,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
     <section>
       <PanelHeading title={copy.title} intro={copy.intro} />
 
-      <div className="flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border bg-df-surface/60 p-5">
+      <div className="bg-df-surface/60 flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border p-5">
         {messages.length === 0 ? (
           <p className="py-8 text-center text-sm text-df-text-faint">{copy.empty}</p>
         ) : (

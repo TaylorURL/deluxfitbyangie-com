@@ -57,7 +57,11 @@ export default function AdminMemberships() {
 
   const handleRemove = async membership => {
     const name = clientLabel(clientMap.get(membership.user_id))
-    if (!window.confirm(`Remove the ${PRODUCT_LABEL[membership.product] ?? membership.product} for ${name}?`))
+    if (
+      !window.confirm(
+        `Remove the ${PRODUCT_LABEL[membership.product] ?? membership.product} for ${name}?`
+      )
+    )
       return
     setBusyKey(`${membership.id}:remove`)
     setWriteError(null)
@@ -232,7 +236,10 @@ function GrantForm({ clients, onSaved }) {
 
       {state === 'saved' && (
         <div className="mt-5">
-          <FormSuccess heading="Membership saved" body="The membership record was created or updated." />
+          <FormSuccess
+            heading="Membership saved"
+            body="The membership record was created or updated."
+          />
         </div>
       )}
       {state === 'error' && <FormError body={errorBody} />}

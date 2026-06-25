@@ -29,7 +29,7 @@ export function SectionHeading({ eyebrow, title, intro }) {
       {eyebrow && (
         <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">{eyebrow}</p>
       )}
-      <h2 className="mt-3 font-display text-2xl font-400 uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+      <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
         {title}
       </h2>
       {intro && <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{intro}</p>}
@@ -40,7 +40,7 @@ export function SectionHeading({ eyebrow, title, intro }) {
 /** A dashed empty-state row for lists with no rows yet. */
 export function AdminEmpty({ body }) {
   return (
-    <div className="rounded-df-lg border border-dashed border-df-border-strong bg-df-surface/60 px-5 py-10 text-center text-sm text-df-text-muted">
+    <div className="bg-df-surface/60 rounded-df-lg border border-dashed border-df-border-strong px-5 py-10 text-center text-sm text-df-text-muted">
       {body}
     </div>
   )
@@ -138,8 +138,10 @@ export function useAsyncData(loader, deps, initial = null) {
     setState(prev => ({ ...prev, loading: true, error: null }))
     run()
       .then(data => active && setState({ data, loading: false, error: null }))
-      .catch(error =>
-        active && setState({ data: initial, loading: false, error: error?.message || 'Failed to load.' })
+      .catch(
+        error =>
+          active &&
+          setState({ data: initial, loading: false, error: error?.message || 'Failed to load.' })
       )
     return () => {
       active = false

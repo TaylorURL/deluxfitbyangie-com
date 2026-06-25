@@ -18,7 +18,7 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
   const hasUrl = Boolean(item.url)
 
   return (
-    <li className="flex flex-col gap-4 rounded-df-md border border-df-border bg-df-surface-2/50 p-4 sm:flex-row sm:items-center">
+    <li className="bg-df-surface-2/50 flex flex-col gap-4 rounded-df-md border border-df-border p-4 sm:flex-row sm:items-center">
       <span
         aria-hidden="true"
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
@@ -28,7 +28,7 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
 
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <p className="truncate font-display text-base font-400 uppercase tracking-[0.01em] text-df-text">
+          <p className="font-400 truncate font-display text-base uppercase tracking-[0.01em] text-df-text">
             {item.title}
           </p>
           <Badge tone="neutral" variant="soft" size="sm">

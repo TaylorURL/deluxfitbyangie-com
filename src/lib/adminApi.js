@@ -123,12 +123,9 @@ export const getClientMessages = async userId => {
 }
 
 export const getClientAssignments = userId =>
-  rows(
-    supabase
-      .from('content_assignments')
-      .select('content_id')
-      .eq('user_id', userId)
-  ).then(list => list.map(row => row.content_id))
+  rows(supabase.from('content_assignments').select('content_id').eq('user_id', userId)).then(list =>
+    list.map(row => row.content_id)
+  )
 
 /* -------------------------------------------------------------------------- */
 /*  Library / bookings / memberships (cross-client reads)                       */
@@ -144,20 +141,10 @@ export const listContent = (locale = 'en') =>
   )
 
 export const listAllBookings = () =>
-  rows(
-    supabase
-      .from('bookings')
-      .select('*')
-      .order('slot_start', { ascending: false })
-  )
+  rows(supabase.from('bookings').select('*').order('slot_start', { ascending: false }))
 
 export const listAllMemberships = () =>
-  rows(
-    supabase
-      .from('memberships')
-      .select('*')
-      .order('updated_at', { ascending: false })
-  )
+  rows(supabase.from('memberships').select('*').order('updated_at', { ascending: false }))
 
 /* -------------------------------------------------------------------------- */
 /*  Writes — all via staff-only edge functions                                  */
@@ -174,7 +161,8 @@ export const deleteContent = id => invoke('upsert-content', { id, delete: true }
 
 export const sendCoachMessage = payload => invoke('coach-message', payload).then(d => d.message)
 
-export const saveMembership = payload => invoke('update-membership', payload).then(d => d.membership)
+export const saveMembership = payload =>
+  invoke('update-membership', payload).then(d => d.membership)
 export const removeMembership = ({ userId, product }) =>
   invoke('update-membership', { userId, product, delete: true })
 

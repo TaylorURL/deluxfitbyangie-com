@@ -127,7 +127,7 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
           {list.map(plan => (
             <div
               key={plan.id}
-              className="flex items-start justify-between gap-3 rounded-df-lg border border-df-border bg-df-surface/60 px-4 py-3"
+              className="bg-df-surface/60 flex items-start justify-between gap-3 rounded-df-lg border border-df-border px-4 py-3"
             >
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
@@ -138,7 +138,9 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
                   <p className="mt-1 text-sm leading-relaxed text-df-text-muted">{plan.summary}</p>
                 )}
                 <p className="mt-1 text-xs text-df-text-faint">
-                  {Array.isArray(plan.content?.weeks) ? `${plan.content.weeks.length} weeks · ` : ''}
+                  {Array.isArray(plan.content?.weeks)
+                    ? `${plan.content.weeks.length} weeks · `
+                    : ''}
                   {fmtDate(plan.created_at)}
                 </p>
               </div>
@@ -177,13 +179,23 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
           <form onSubmit={handleSave} className="grid gap-5">
             <div className="flex items-center justify-between">
               <p className="text-sm font-600 text-df-text">{form.id ? 'Edit plan' : 'New plan'}</p>
-              <Button type="button" variant="ghost" size="sm" onClick={closeForm} aria-label="Close form">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={closeForm}
+                aria-label="Close form"
+              >
                 <X className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label="Title" className="sm:col-span-2">
-                <Input value={form.title} onChange={set('title')} placeholder="12-Week Strength Block" />
+                <Input
+                  value={form.title}
+                  onChange={set('title')}
+                  placeholder="12-Week Strength Block"
+                />
               </Field>
               <Field label="Status">
                 <Select value={form.status} onChange={set('status')}>
