@@ -80,7 +80,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
   if (!entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading title={copy.title} />
+        <PanelHeading eyebrow={portal.nav.messages} title={copy.title} />
         <EmptyState
           body={copy.gatedBody}
           ctaLabel={portal.plan.emptyCta}
