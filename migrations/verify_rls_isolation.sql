@@ -29,9 +29,6 @@ declare
   content_a uuid;
   content_b uuid;
   n int;
-
-  -- Re-usable assertion: run `query` as client A and require it to equal `want`.
-  procedure_placeholder int; -- (no-op; plpgsql has no nested procs, inline below)
 begin
   -- --- Seed two auth users; the handle_new_user trigger creates profiles. ----
   insert into auth.users (id, email, raw_user_meta_data, created_at)
