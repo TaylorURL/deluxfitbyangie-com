@@ -118,7 +118,7 @@ export default function LibraryPanel({ content, entitlements }) {
 
   return (
     <section>
-      <PanelHeading title={copy.title} intro={copy.intro} />
+      <PanelHeading eyebrow={portal.nav.library} title={copy.title} intro={copy.intro} />
 
       <div className="mb-6 flex flex-wrap gap-2">
         {filters.map(filter => (
