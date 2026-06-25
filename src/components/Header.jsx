@@ -461,6 +461,14 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
                   href={header.primaryCtaHref}
                   label={header.primaryCta}
                 />
+                {isStaff && (
+                  <AdminLink
+                    block
+                    onClick={onClose}
+                    label={header.admin}
+                    ariaLabel={header.adminAria}
+                  />
+                )}
                 <ClientLoginLink
                   block
                   onClick={onClose}
