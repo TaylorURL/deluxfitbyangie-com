@@ -7,6 +7,7 @@ import {
   getContentItems,
   getMemberships,
   getMessages,
+  getNutritionPlan,
   getPlans,
   getProfile,
   getProgressEntries,
