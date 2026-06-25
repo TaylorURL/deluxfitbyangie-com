@@ -46,7 +46,7 @@ export default function NutritionPanel({ nutrition, entitlements }) {
 
   return (
     <section>
-      <PanelHeading title={copy.title} intro={copy.intro} />
+      <PanelHeading eyebrow={portal.nav.nutrition} title={copy.title} intro={copy.intro} />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {macros.map(macro => (
