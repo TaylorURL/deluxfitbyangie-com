@@ -951,6 +951,7 @@ const es = {
       sending: 'Enviando…',
       empty: 'Aún no hay mensajes. Saluda para empezar la conversación.',
       attach: 'Adjuntar archivo',
+      viewAttachment: 'Ver adjunto',
       coachName: 'Angie',
       youName: 'Tú',
       gatedBody: 'La mensajería directa está disponible para clientes activos de coaching.',
