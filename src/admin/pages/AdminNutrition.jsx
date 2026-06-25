@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { Loader2, Pencil, Plus, Save, Trash2, Utensils, X } from 'lucide-react'
-import { Badge, Button, Field, Input, Select, Textarea, cn } from '@deluxfit/ds'
+import { Loader2, Plus, Save, X } from 'lucide-react'
+import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
 import {
   deleteNutrition,
   getClientNutrition,
@@ -14,11 +14,11 @@ import {
   ClientSelect,
   SectionCard,
   SectionHeading,
-  StatusBadge,
   clientLabel,
-  fmtDate,
   useAsyncData,
 } from '../components/AdminPrimitives'
+import RepeatableSection from '../authoring/RepeatableSection'
+import NutritionRow from '../authoring/NutritionRow'
 
 /**
  * AdminNutrition — nutrition authoring. The coach picks a client, then reads
