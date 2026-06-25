@@ -9,8 +9,8 @@ import { useAuth } from '@/auth/useAuth'
  * and a thin footer. Shared by the auth screen and the dashboard.
  */
 export default function PortalShell({ children }) {
-  const { brand, portal } = useContent()
-  const { user, signOut } = useAuth()
+  const { brand, portal, header } = useContent()
+  const { user, isStaff, signOut } = useAuth()
 
   return (
     <div className="relative isolate flex min-h-screen flex-col overflow-hidden bg-df-bg">
