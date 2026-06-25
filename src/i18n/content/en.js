@@ -927,6 +927,7 @@ const en = {
       overview: 'Overview',
       plan: 'My Plan',
       progress: 'Progress',
+      nutrition: 'Nutrition',
       bookings: 'Sessions',
       messages: 'Messages',
       library: 'Library',
