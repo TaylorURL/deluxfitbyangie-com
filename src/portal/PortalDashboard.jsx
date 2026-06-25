@@ -86,6 +86,7 @@ export default function PortalDashboard() {
               {active === 'overview' && <OverviewPanel {...sharedProps} />}
               {active === 'plan' && <PlanPanel {...sharedProps} />}
               {active === 'progress' && <ProgressPanel {...sharedProps} />}
+              {active === 'nutrition' && <NutritionPanel {...sharedProps} />}
               {active === 'bookings' && <BookingsPanel {...sharedProps} />}
               {active === 'messages' && <MessagesPanel {...sharedProps} />}
               {active === 'library' && <LibraryPanel {...sharedProps} />}
