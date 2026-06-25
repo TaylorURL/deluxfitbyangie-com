@@ -128,7 +128,7 @@ export default function LibraryPanel({ content, entitlements }) {
             aria-pressed={category === filter.id}
             onClick={() => setCategory(filter.id)}
             className={cn(
-              'rounded-df-full border px-3.5 py-1.5 text-[11px] font-700 uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright',
+              'inline-flex min-h-11 items-center rounded-df-full border px-4 text-[11px] font-700 uppercase tracking-[0.16em] transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg active:translate-y-px',
               category === filter.id
                 ? 'border-df-accent bg-df-accent text-df-on-accent'
                 : 'border-df-border-strong text-df-text-muted hover:border-df-border-hover hover:text-df-text'
