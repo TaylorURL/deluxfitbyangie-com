@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Menu, X, UserCircle, ArrowUpRight } from 'lucide-react'
+import { Menu, X, UserCircle, ArrowUpRight, ShieldCheck } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Button, Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { useAuth } from '@/auth/useAuth'
 import { Link, useLocation, normalizePath } from '@/router'
 
 const MotionDiv = motion.div
