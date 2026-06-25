@@ -5,7 +5,8 @@
  * HMR ergonomics in dev, not correctness, and splitting four one-liners into a
  * separate module would hurt cohesion for no real benefit. */
 import { useCallback, useEffect, useState } from 'react'
-import { Badge, Card, Select } from '@deluxfit/ds'
+import { Inbox, Loader2 } from 'lucide-react'
+import { Badge, Card, Select, cn } from '@deluxfit/ds'
 
 /**
  * Shared building blocks for the admin pages — keeps every CRUD surface visually
