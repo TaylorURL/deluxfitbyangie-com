@@ -125,10 +125,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
                 >
                   {message.body}
                   {message.attachment_path && (
-                    <span className="mt-1 block text-xs opacity-80">
-                      <Paperclip className="mr-1 inline h-3 w-3" aria-hidden="true" />
-                      {message.attachment_path.split('/').pop()}
-                    </span>
+                    <Attachment message={message} label={copy.viewAttachment} />
                   )}
                 </div>
                 <span className="mt-1 text-[10px] uppercase tracking-[0.14em] text-df-text-faint">
