@@ -47,6 +47,7 @@ export default function PortalDashboard() {
     entitlements: data.entitlements,
     plans: data.plans,
     progress: data.progress,
+    nutrition: data.nutrition,
     bookings: data.bookings,
     messages: data.messages,
     content: data.content,
