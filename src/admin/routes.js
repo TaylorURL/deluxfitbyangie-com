@@ -31,9 +31,11 @@ import AdminStaff from './pages/AdminStaff'
 export const ADMIN_ROUTES = [
   { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, component: AdminDashboard, exact: true },
   { path: '/admin/clients', label: 'Clients', icon: Users, component: AdminClients },
+  { path: '/admin/review', label: 'Monthly Review', icon: ClipboardCheck, component: AdminReview },
   { path: '/admin/bookings', label: 'Bookings', icon: CalendarClock, component: AdminBookings },
   { path: '/admin/content', label: 'Content', icon: LibraryIcon, component: AdminContent },
   { path: '/admin/plans', label: 'Plans', icon: ClipboardList, component: AdminPlans },
+  { path: '/admin/nutrition', label: 'Nutrition', icon: Apple, component: AdminNutrition },
   { path: '/admin/memberships', label: 'Memberships', icon: CreditCard, component: AdminMemberships },
   { path: '/admin/staff', label: 'Staff', icon: ShieldCheck, component: AdminStaff },
 ]
