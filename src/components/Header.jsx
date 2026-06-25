@@ -184,6 +184,29 @@ function ClientLoginLink({ block = false, iconOnly = false, onClick, label, aria
   )
 }
 
+/**
+ * AdminLink — staff-only shortcut to the role-gated backend. Shares the
+ * ClientLoginLink chrome (border + uppercase + tracking) but reads as an
+ * accent-tinted "Admin" pill with a shield so it's clearly distinct. Callers
+ * gate it on `isStaff`; it never renders for clients or logged-out visitors.
+ */
+function AdminLink({ block = false, onClick, label, ariaLabel }) {
+  return (
+    <Link
+      href={ADMIN_HREF}
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className={cn(
+        'group/admin inline-flex shrink-0 items-center justify-center gap-2 rounded-df-sm border border-df-accent bg-df-accent-softer text-[11px] font-700 uppercase tracking-[0.2em] text-df-accent-bright transition-colors duration-200 ease-df-out hover:bg-df-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
+        block ? 'h-12 w-full px-3.5 text-[12px]' : 'h-10 px-3.5'
+      )}
+    >
+      <ShieldCheck aria-hidden="true" className="h-4 w-4" />
+      <span>{label}</span>
+    </Link>
+  )
+}
+
 function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
   return (
     <Button asChild size={size} block={block} onClick={onClick}>
