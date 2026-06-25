@@ -18,11 +18,13 @@ import ProgressPanel from './panels/ProgressPanel'
 import BookingsPanel from './panels/BookingsPanel'
 import MessagesPanel from './panels/MessagesPanel'
 import LibraryPanel from './panels/LibraryPanel'
+import NutritionPanel from './panels/NutritionPanel'
 
 const TABS = [
   { id: 'overview', icon: LayoutDashboard },
   { id: 'plan', icon: ClipboardList },
   { id: 'progress', icon: LineChart },
+  { id: 'nutrition', icon: Apple },
   { id: 'bookings', icon: CalendarClock },
   { id: 'messages', icon: MessageSquare },
   { id: 'library', icon: LibraryIcon },
