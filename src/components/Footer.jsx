@@ -74,17 +74,16 @@ export default function Footer() {
           <LanguageSwitcher className="self-start sm:self-center" />
         </div>
 
-        <p className="pb-6 text-center text-[10px] text-df-text-faint">
-          Site made by{' '}
+        <div className="flex justify-center py-3 sm:py-4">
           <a
-            href="https://taylorurl.com"
+            href="https://www.taylorurl.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-df-text-faint/30 underline-offset-2 transition-colors hover:text-df-text-muted"
+            className="group text-xs tracking-wide text-df-text-muted transition-colors duration-150 hover:text-df-accent-bright focus-visible:rounded-sm focus-visible:text-df-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
           >
-            TaylorURL.com
+            Built by <span className="font-600">TaylorURL</span>
           </a>
-        </p>
+        </div>
       </Container>
     </footer>
   )
