@@ -7,20 +7,22 @@
 
 <h1 align="center">DeluxFit by Angie</h1>
 
+<p align="center"><b>Direct-sale funnel, member portal, and coach dashboard for certified personal trainer Angie.</b></p>
 <p align="center">
-  Discipline over excuses. The direct-sale funnel, member portal, and coach dashboard for
-  certified personal trainer Angie — memberships, online coaching, and live 1-on-1 training.<br>
+  Discipline over excuses — memberships, online coaching, and live 1-on-1 training.<br />
   <a href="https://deluxfitbyangie-com.vercel.app">deluxfitbyangie-com.vercel.app</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 19">
-  <img src="https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 7">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3">
-  <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase">
-  <img src="https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe">
-  <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
+  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
+  <img src="https://img.shields.io/badge/Supabase-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Stripe-e11d2a?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
+  <img src="https://img.shields.io/badge/Vercel-e11d2a?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
+
+<br />
 
 <p align="center">
   <img src="public/brand/studio-portrait-dumbbells.jpg" alt="Studio training portrait" width="240">
