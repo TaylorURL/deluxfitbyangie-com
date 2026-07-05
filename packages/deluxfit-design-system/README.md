@@ -19,7 +19,7 @@
 
 ## Why @deluxfit/ds
 
-The whole site — funnel, portal, and coach dashboard — is drawn from one visual language: true blacks and charcoals, an aggressive crimson accent, off-white text, a heavy condensed display face (Oswald) for headlines, and a clean sans (Inter) for body. `@deluxfit/ds` is that language made importable. It exposes tokens as CSS variables and a Tailwind preset, ships accessible `cva`-based components, and is aliased to source in the app — so a change to a token or component shows up everywhere with no publish and no build.
+The whole site — funnel, portal, and coach dashboard — is drawn from one visual language: true blacks and charcoals, an aggressive crimson accent, off-white text, an ultra-condensed display face (Anton) for headlines, a high-contrast serif (Fraunces, set in italic) for accent phrases, and a clean sans (Inter) for body. `@deluxfit/ds` is that language made importable. It exposes tokens as CSS variables and a Tailwind preset, ships accessible `cva`-based components, and is aliased to source in the app — so a change to a token or component shows up everywhere with no publish and no build.
 
 ## Usage
 
@@ -50,7 +50,7 @@ Tokens are the single source of truth, exposed two ways:
 | Semantic   | `text-df-positive`, `text-df-warning`, `text-df-danger` |
 | Radii      | `rounded-df-sm` … `rounded-df-2xl`, `rounded-df-full` |
 | Shadows    | `shadow-df-md`, `shadow-df-lg`, `shadow-df-glow` (signature red glow) |
-| Fonts      | `font-display` (Oswald), `font-sans` (Inter) |
+| Fonts      | `font-display` (Anton), `font-accent` (Fraunces, italic), `font-sans` (Inter) |
 | Motion     | `ease-df-out`, `ease-df-spring`, `animate-df-fade-up`, `animate-df-marquee` |
 
 ## Components
