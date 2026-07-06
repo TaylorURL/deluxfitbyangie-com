@@ -16,12 +16,12 @@
 </p>
 
 <p align="center">
-  <a href="https://deluxfitbyangie-com.vercel.app"><img src="https://img.shields.io/badge/Live-deluxfitbyangie--com.vercel.app-e11d2a?style=for-the-badge&logo=vercel&logoColor=white" alt="Live site" /></a>
-  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
-  <img src="https://img.shields.io/badge/Supabase-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Stripe-e11d2a?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
+  <a href="https://deluxfitbyangie-com.vercel.app"><img src="https://img.shields.io/badge/Live-deluxfitbyangie--com.vercel.app-2563eb?style=for-the-badge&logo=vercel&logoColor=white" alt="Live site" /></a>
+  <img src="https://img.shields.io/badge/React-19-2563eb?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-7-2563eb?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-2563eb?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
+  <img src="https://img.shields.io/badge/Supabase-2563eb?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Stripe-2563eb?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
 </p>
 
 <br />

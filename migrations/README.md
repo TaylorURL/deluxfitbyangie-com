@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Supabase-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/PostgreSQL-RLS-e11d2a?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL RLS" />
-  <img src="https://img.shields.io/badge/project-wmqwcnpiewfujmxaivvy-e11d2a?style=for-the-badge" alt="Project ref" />
+  <img src="https://img.shields.io/badge/Supabase-2563eb?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/PostgreSQL-RLS-2563eb?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL RLS" />
+  <img src="https://img.shields.io/badge/project-wmqwcnpiewfujmxaivvy-2563eb?style=for-the-badge" alt="Project ref" />
 </p>
 
 <br />
