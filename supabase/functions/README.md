@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Deno-runtime-e11d2a?style=for-the-badge&logo=deno&logoColor=white" alt="Deno" />
-  <img src="https://img.shields.io/badge/Supabase-Edge_Functions-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Edge Functions" />
-  <img src="https://img.shields.io/badge/Stripe-server--side-e11d2a?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
-  <img src="https://img.shields.io/badge/project-wmqwcnpiewfujmxaivvy-e11d2a?style=for-the-badge" alt="Project ref" />
+  <img src="https://img.shields.io/badge/Deno-runtime-2563eb?style=for-the-badge&logo=deno&logoColor=white" alt="Deno" />
+  <img src="https://img.shields.io/badge/Supabase-Edge_Functions-2563eb?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Edge Functions" />
+  <img src="https://img.shields.io/badge/Stripe-server--side-2563eb?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
+  <img src="https://img.shields.io/badge/project-wmqwcnpiewfujmxaivvy-2563eb?style=for-the-badge" alt="Project ref" />
 </p>
 
 <br />

@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-preset-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind preset" />
-  <img src="https://img.shields.io/badge/Radix_UI-accordion-e11d2a?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix UI" />
-  <img src="https://img.shields.io/badge/private-UNLICENSED-e11d2a?style=for-the-badge" alt="Private / UNLICENSED" />
+  <img src="https://img.shields.io/badge/React-19-2563eb?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-preset-2563eb?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind preset" />
+  <img src="https://img.shields.io/badge/Radix_UI-accordion-2563eb?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix UI" />
+  <img src="https://img.shields.io/badge/private-UNLICENSED-2563eb?style=for-the-badge" alt="Private / UNLICENSED" />
 </p>
 
 <br />
