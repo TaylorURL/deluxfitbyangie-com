@@ -24,6 +24,11 @@ reading another's rows. These files are the append-only record of that perimeter
 numbered and applied in order; **never edit an already-applied migration — add a new
 `NNNN_*.sql` file instead.**
 
+> **Note** — the `.sql` files are gitignored (`*.sql` in the repo's `.gitignore`), so this
+> README is the version-controlled record of the migration set. The SQL itself lives beside
+> this folder locally and is applied straight to Supabase (CLI, `psql`, or the dashboard SQL
+> editor); a fresh clone contains this document, not the files it describes.
+
 ## Files
 
 | File | What it adds |
