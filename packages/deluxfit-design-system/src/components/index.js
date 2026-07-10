@@ -8,9 +8,6 @@ export { StatBlock } from './StatBlock'
 export { Testimonial } from './Testimonial'
 export { PricingCard } from './PricingCard'
 
-// Disclosure
-export { Accordion, FaqItem } from './Accordion'
-
 // Forms
 export { Input, inputVariants } from './Input'
 export { Textarea, textareaVariants } from './Textarea'
@@ -24,4 +21,4 @@ export { SplitHeading } from './SplitHeading'
 export { Marquee } from './Marquee'
 
 // Motion
-export { Reveal, revealVariants, staggerContainer } from './Reveal'
+export { Reveal } from './Reveal'

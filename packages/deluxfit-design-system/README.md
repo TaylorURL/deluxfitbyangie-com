@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-2563eb?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-preset-2563eb?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind preset" />
-  <img src="https://img.shields.io/badge/Radix_UI-accordion-2563eb?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix UI" />
+  <img src="https://img.shields.io/badge/Radix_UI-slot-2563eb?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix UI" />
   <img src="https://img.shields.io/badge/private-UNLICENSED-2563eb?style=for-the-badge" alt="Private / UNLICENSED" />
 </p>
 
@@ -65,7 +65,6 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   "Most Popular" state (red glow + scale), and an anchor CTA that opens a Stripe link.
 - **Testimonial** — quote, star rating, avatar (monogram fallback), name, result.
 - **StatBlock** — oversized metric + label, optional accent color.
-- **Accordion / FaqItem** — Radix accordion wrapper for the FAQ.
 - **Input / Textarea / Select + Field** — form controls with a labelled, a11y-wired wrapper.
 - **SectionEyebrow / SectionIndex / SplitHeading** — uppercase kickers, numbered index labels,
   and split display headings for section headers.
@@ -81,8 +80,8 @@ All components are `cva`-based, composable, accessible, and theme-bound.
 ## Motion
 
 `Reveal` fades + lifts children into view once on scroll and honors
-`prefers-reduced-motion`. `revealVariants` / `staggerContainer` are exported for hand-tuned
-Framer Motion sequences.
+`prefers-reduced-motion`. The `delay` prop offsets the entrance for hand-tuned
+sequencing.
 
 ## Exports
 

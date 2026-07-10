@@ -3,24 +3,6 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '../lib/cn'
 
 /**
- * Motion variants for reveal-on-scroll. Exported so sections can stagger
- * children with a shared vocabulary.
- */
-export const revealVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-export const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-}
-
-/**
  * Reveal — fades + lifts its children into view once on scroll. Honors
  * `prefers-reduced-motion` by rendering statically. `delay` offsets the entrance
  * for hand-tuned sequencing; `as` lets callers pick the semantic element.

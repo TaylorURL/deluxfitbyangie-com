@@ -5,15 +5,8 @@ import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import { getSignedUrl, sendMessage, uploadAttachment } from '@/lib/portalApi'
 import { FormError } from '@/components/forms/FormFeedback'
+import { formatDateTime } from '@/lib/datetime'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
-
-const formatTime = iso =>
-  new Date(iso).toLocaleString([], {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  })
 
 const isVideo = path => /\.(mp4|webm|mov)$/i.test(path || '')
 
@@ -138,7 +131,8 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
                   )}
                 </div>
                 <span className="mt-1 text-[10px] uppercase tracking-[0.14em] text-df-text-faint">
-                  {fromClient ? copy.youName : copy.coachName} · {formatTime(message.created_at)}
+                  {fromClient ? copy.youName : copy.coachName} ·{' '}
+                  {formatDateTime(message.created_at)}
                 </span>
               </div>
             )

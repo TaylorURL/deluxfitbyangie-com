@@ -11,14 +11,6 @@ import { supabase } from '@/config/supabase'
  * @typedef {'membership'|'coaching'|'single_session'|'live_program'} CheckoutProduct
  */
 
-/** Maps a service id from the content tree to its Stripe checkout product. */
-export const SERVICE_TO_PRODUCT = {
-  membership: 'membership',
-  coaching: 'coaching',
-  'single-session': 'single_session',
-  'live-program': 'live_program',
-}
-
 /**
  * Start a Stripe Checkout session and redirect the browser to it.
  *

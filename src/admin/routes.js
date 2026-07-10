@@ -20,13 +20,9 @@ import AdminMemberships from './pages/AdminMemberships'
 import AdminStaff from './pages/AdminStaff'
 
 /**
- * ADMIN_ROUTES — the role-gated backend nav. Each entry is a sub-path under
- * `/admin`. The shell renders the matching component in the main slot and
- * highlights the matching sidebar item.
- *
- * Most pages are intentionally stubs in this foundation pass — they wire into
- * the nav and ship a titled empty state so the layout, role guard, and
- * navigation can be validated end-to-end before the CRUD work lands.
+ * ADMIN_ROUTES — the role-gated backend nav. Each entry maps a sidebar item to
+ * its management page under `/admin`. The shell renders the matching component
+ * in the main slot and highlights the matching sidebar item.
  */
 export const ADMIN_ROUTES = [
   {
