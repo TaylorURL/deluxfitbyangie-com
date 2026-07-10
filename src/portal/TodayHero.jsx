@@ -2,6 +2,7 @@ import { ArrowRight, ArrowUpRight, Calendar, ClipboardList, Flame, LineChart } f
 import { Badge, Button, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
+import { formatDateTime } from '@/lib/datetime'
 import Sparkline from './panels/Sparkline'
 
 const SERVICE_LABEL = {
@@ -10,7 +11,7 @@ const SERVICE_LABEL = {
 }
 
 const formatSlot = iso =>
-  new Date(iso).toLocaleString([], {
+  formatDateTime(iso, {
     weekday: 'long',
     month: 'short',
     day: 'numeric',
@@ -119,7 +120,7 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
 
           {nextSession ? (
             <div className="mt-5 flex-1">
-              <p className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-400 uppercase leading-[0.95] tracking-tight text-df-text">
+              <p className="font-400 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] uppercase leading-[0.95] tracking-tight text-df-text">
                 {formatSlot(nextSession.slot_start)}
               </p>
               <p className="mt-3 text-sm text-df-text-muted">
@@ -152,7 +153,7 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
           </div>
           {plan ? (
             <div className="mt-4 flex-1">
-              <p className="font-display text-xl font-400 uppercase leading-tight tracking-[0.01em] text-df-text">
+              <p className="font-400 font-display text-xl uppercase leading-tight tracking-[0.01em] text-df-text">
                 {plan.title}
               </p>
               {planWeeks > 0 && (
@@ -179,7 +180,7 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
           {nutrition ? (
             <>
               <div className="mt-4 flex-1">
-                <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
+                <p className="font-400 font-display text-3xl leading-none tracking-tight text-df-text">
                   {nutrition.calorie_target ?? '—'}
                 </p>
                 <p className="mt-1.5 text-[10px] font-700 uppercase tracking-[0.16em] text-df-text-faint">
@@ -218,7 +219,7 @@ export default function TodayHero({ bookings, plans, nutrition, progress, entitl
           {latestWeight != null ? (
             <>
               <div className="mt-4 flex-1">
-                <p className="font-display text-3xl font-400 leading-none tracking-tight text-df-text">
+                <p className="font-400 font-display text-3xl leading-none tracking-tight text-df-text">
                   {latestWeight}
                   <span className="ml-1 text-sm text-df-text-muted">lb</span>
                 </p>

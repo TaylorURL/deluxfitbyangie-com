@@ -16,8 +16,6 @@ export const LOCALES = {
   es: { code: 'es', label: 'ES', name: 'Español', content: es },
 }
 
-export const LOCALE_CODES = Object.keys(LOCALES)
-
 export function isSupportedLocale(code) {
   return Object.prototype.hasOwnProperty.call(LOCALES, code)
 }

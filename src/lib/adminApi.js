@@ -1,4 +1,5 @@
 import { supabase } from '@/config/supabase'
+import { invokeOk, resolveSignedUrl } from '@/lib/functions'
 
 /**
  * ADMIN API — the coach/staff data layer.
@@ -23,21 +24,7 @@ const one = async query => {
 }
 
 /** Invoke a staff edge function and unwrap the { ok, ... } envelope. */
-async function invoke(fn, body) {
-  const { data, error } = await supabase.functions.invoke(fn, { body })
-  if (error) {
-    // Surface the function's JSON error body when present.
-    try {
-      const parsed = await error.context?.json?.()
-      if (parsed?.error) throw new Error(parsed.error)
-    } catch (inner) {
-      if (inner instanceof Error && inner.message) throw inner
-    }
-    throw new Error(error.message || `${fn} failed`)
-  }
-  if (data?.ok === false) throw new Error(data.error || `${fn} failed`)
-  return data
-}
+const invoke = (fn, body) => invokeOk(fn, body)
 
 /* -------------------------------------------------------------------------- */
 /*  People                                                                      */
@@ -178,30 +165,9 @@ export async function uploadMedia(file, prefix = 'library') {
   const form = new FormData()
   form.append('file', file, file.name)
   form.append('prefix', prefix)
-  const { data, error } = await supabase.functions.invoke('upload-media', { body: form })
-  if (error) {
-    try {
-      const parsed = await error.context?.json?.()
-      if (parsed?.error) throw new Error(parsed.error)
-    } catch (inner) {
-      if (inner instanceof Error && inner.message) throw inner
-    }
-    throw new Error(error.message || 'Upload failed')
-  }
-  if (data?.ok === false) throw new Error(data.error || 'Upload failed')
+  const data = await invokeOk('upload-media', form, 'Upload failed')
   return { bucket: data.bucket, path: data.path }
 }
 
 /** Resolve a signed URL for a private object (shared broker with the portal). */
-export async function signedUrl(bucket, path) {
-  if (!path) return null
-  try {
-    const { data, error } = await supabase.functions.invoke('signed-url', {
-      body: { bucket, path },
-    })
-    if (error || data?.ok === false) return null
-    return data?.url ?? null
-  } catch {
-    return null
-  }
-}
+export const signedUrl = resolveSignedUrl

@@ -58,5 +58,3 @@ export function useFormSubmission(formKey) {
     reset,
   }
 }
-
-export { STATUS as FORM_STATUS }

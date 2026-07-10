@@ -1,5 +1,6 @@
 import { Badge, Card } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { formatDateTime } from '@/lib/datetime'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const SERVICE_LABEL = {
@@ -8,7 +9,7 @@ const SERVICE_LABEL = {
 }
 
 const formatSlot = iso =>
-  new Date(iso).toLocaleString([], {
+  formatDateTime(iso, {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
@@ -24,8 +25,12 @@ export default function BookingsPanel({ bookings }) {
   const { portal } = useContent()
   const copy = portal.bookings
   const now = Date.now()
-  const upcoming = bookings.filter(b => new Date(b.slot_start).getTime() >= now && b.status !== 'canceled')
-  const past = bookings.filter(b => new Date(b.slot_start).getTime() < now || b.status === 'canceled')
+  const upcoming = bookings.filter(
+    b => new Date(b.slot_start).getTime() >= now && b.status !== 'canceled'
+  )
+  const past = bookings.filter(
+    b => new Date(b.slot_start).getTime() < now || b.status === 'canceled'
+  )
 
   if (bookings.length === 0) {
     return (
@@ -52,7 +57,11 @@ export default function BookingsPanel({ bookings }) {
             </p>
             <div className="flex flex-col gap-3">
               {group.rows.map(booking => (
-                <Card key={booking.id} variant="surface" className="flex items-center justify-between gap-4">
+                <Card
+                  key={booking.id}
+                  variant="surface"
+                  className="flex items-center justify-between gap-4"
+                >
                   <div>
                     <p className="font-600 text-df-text">{formatSlot(booking.slot_start)}</p>
                     <p className="mt-1 text-sm text-df-text-muted">

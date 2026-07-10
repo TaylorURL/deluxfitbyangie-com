@@ -12,6 +12,7 @@ import {
   ClientSelect,
   clientLabel,
   fmtDate,
+  mapById,
   useAsyncData,
 } from '../components/AdminPrimitives'
 
@@ -36,11 +37,7 @@ export default function AdminMemberships() {
   const [busyKey, setBusyKey] = useState(null)
   const [writeError, setWriteError] = useState(null)
 
-  const clientMap = useMemo(() => {
-    const map = new Map()
-    for (const client of clients) map.set(client.id, client)
-    return map
-  }, [clients])
+  const clientMap = useMemo(() => mapById(clients), [clients])
 
   const handleStatus = async (membership, status) => {
     setBusyKey(`${membership.id}:status`)

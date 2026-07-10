@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ImageOff } from 'lucide-react'
 import { Badge } from '@deluxfit/ds'
 import { signedUrl } from '@/lib/adminApi'
+import { buildSparkline } from '@/lib/sparkline'
 import { AdminEmpty, fmtDate } from '../components/AdminPrimitives'
 
 /**
@@ -60,20 +61,11 @@ function WeightSparkline({ points }) {
   if (points.length < 2) return null
   const width = 220
   const height = 48
-  const values = points.map(p => p.weight)
-  const min = Math.min(...values)
-  const max = Math.max(...values)
-  const span = max - min || 1
-  const step = width / (points.length - 1)
-  const coords = points.map((p, i) => {
-    const x = i * step
-    const y = height - ((p.weight - min) / span) * (height - 8) - 4
-    return [x, y]
-  })
-  const d = coords
-    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`)
-    .join(' ')
-  const [lastX, lastY] = coords[coords.length - 1]
+  const { line, last } = buildSparkline(
+    points.map(p => p.weight),
+    { width, height }
+  )
+  const [lastX, lastY] = last
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -81,7 +73,13 @@ function WeightSparkline({ points }) {
       role="img"
       aria-label="Weight trend"
     >
-      <path d={d} fill="none" stroke="currentColor" strokeWidth="1.75" className="text-df-accent" />
+      <path
+        d={line}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        className="text-df-accent"
+      />
       <circle cx={lastX} cy={lastY} r="2.75" className="fill-df-accent-bright" />
     </svg>
   )

@@ -7,6 +7,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Inbox, Loader2 } from 'lucide-react'
 import { Badge, Card, Select, cn } from '@deluxfit/ds'
+import { formatDate, formatDateTime } from '@/lib/datetime'
 
 /**
  * Shared building blocks for the admin pages — keeps every CRUD surface visually
@@ -36,7 +37,9 @@ export function SectionHeading({ eyebrow, title, intro }) {
       <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
         {title}
       </h2>
-      {intro && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-df-text-muted">{intro}</p>}
+      {intro && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-df-text-muted">{intro}</p>
+      )}
     </div>
   )
 }
@@ -60,7 +63,9 @@ export function AdminEmpty({ body, title, icon: Icon = Inbox }) {
             {title}
           </p>
         )}
-        <p className={cn('text-sm leading-relaxed text-df-text-muted', title && 'mt-1.5')}>{body}</p>
+        <p className={cn('text-sm leading-relaxed text-df-text-muted', title && 'mt-1.5')}>
+          {body}
+        </p>
       </div>
     </div>
   )
@@ -93,14 +98,16 @@ export function MetricTile({ label, value, icon: Icon, hint }) {
         className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-df-full bg-df-accent-softer opacity-0 blur-2xl transition-opacity duration-300 ease-df-out group-hover:opacity-100"
       />
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-text-faint">{label}</p>
+        <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-text-faint">
+          {label}
+        </p>
         {Icon && (
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright">
             <Icon className="h-4 w-4" aria-hidden="true" />
           </span>
         )}
       </div>
-      <p className="font-400 mt-4 font-display text-4xl leading-none tabular-nums text-df-text">
+      <p className="font-400 mt-4 font-display text-4xl tabular-nums leading-none text-df-text">
         {value}
       </p>
       {hint && <p className="mt-2 text-xs text-df-text-muted">{hint}</p>}
@@ -149,20 +156,11 @@ export function ClientSelect({ clients, value, onChange, placeholder = 'Select a
   )
 }
 
-export const fmtDate = value =>
-  value
-    ? new Date(value).toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' })
-    : '—'
+export const fmtDate = formatDate
+export const fmtDateTime = formatDateTime
 
-export const fmtDateTime = value =>
-  value
-    ? new Date(value).toLocaleString([], {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-      })
-    : '—'
+/** Index an array of `{ id }` records into a Map keyed by id, for O(1) lookups. */
+export const mapById = items => new Map((items ?? []).map(item => [item.id, item]))
 
 /**
  * useAsyncData — run an async loader and expose { data, loading, error, reload }.
