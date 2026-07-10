@@ -17,7 +17,6 @@
     "node": "22.x"
   },
   "dependencies": {
-    "@radix-ui/react-accordion": "^1.2.4",
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.45.4",
     "class-variance-authority": "^0.7.1",

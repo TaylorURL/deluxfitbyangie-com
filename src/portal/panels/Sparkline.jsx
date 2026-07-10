@@ -1,3 +1,5 @@
+import { buildSparkline } from '@/lib/sparkline'
+
 /**
  * Sparkline — a tiny inline SVG line chart for a series of numbers, oldest to
  * newest. Used for the progress weight trend: a crimson stroke over a soft area
@@ -6,23 +8,8 @@
 export default function Sparkline({ values, width = 280, height = 48 }) {
   if (!Array.isArray(values) || values.length < 2) return null
 
-  const min = Math.min(...values)
-  const max = Math.max(...values)
-  const span = max - min || 1
-  const stepX = width / (values.length - 1)
-  const pad = 4
-
-  const points = values.map((value, index) => {
-    const x = index * stepX
-    const y = pad + (1 - (value - min) / span) * (height - pad * 2)
-    return [x, y]
-  })
-
-  const line = points
-    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`)
-    .join(' ')
-  const area = `${line} L${width},${height} L0,${height} Z`
-  const [lastX, lastY] = points[points.length - 1]
+  const { line, area, last } = buildSparkline(values, { width, height })
+  const [lastX, lastY] = last
 
   return (
     <svg

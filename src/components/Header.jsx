@@ -11,10 +11,9 @@ const MotionDiv = motion.div
 const MotionButton = motion.button
 
 /**
- * PORTAL ENTRY POINT — temporary destination for the "Client Login" affordance.
- * The route renders a branded "coming soon" placeholder until the real member
- * portal ships; when it does, repoint this constant to the production portal
- * URL and the rest of the navbar wiring stays as-is.
+ * Client portal entry — the "Client Login" affordance routes here. The portal
+ * is gated by ProtectedRoute; unauthenticated visitors bounce to
+ * /login?next=/portal.
  */
 const PORTAL_HREF = '/portal'
 
@@ -269,7 +268,7 @@ export default function Header() {
           // `data-theme` flips at section boundaries.
           'fixed inset-x-0 top-0 z-sticky transform-gpu transition-[background-color,color,border-color,box-shadow] duration-200 ease-df-out',
           scrolled
-            ? 'border-b border-df-border bg-df-bg/85 shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_var(--df-shadow-key)] [backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]'
+            ? 'bg-df-bg/85 border-b border-df-border shadow-[0_1px_0_rgba(225,29,42,0.18),0_18px_40px_-22px_var(--df-shadow-key)] [-webkit-backdrop-filter:blur(20px)] [backdrop-filter:blur(20px)]'
             : 'border-b border-transparent bg-transparent'
         )}
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -340,7 +339,7 @@ export default function Header() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               onClick={() => setMenuOpen(open => !open)}
-              className="-mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong bg-df-surface/40 text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
+              className="bg-df-surface/40 -mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-df-sm border border-df-border-strong text-df-text transition-colors duration-200 ease-df-out hover:border-df-border-hover hover:bg-df-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg xl:hidden"
             >
               {menuOpen ? (
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -371,7 +370,16 @@ export default function Header() {
  * body-level portal so they're free of the header's stacking context, which
  * is critical for touch responsiveness on mobile Safari at non-zero scroll.
  */
-function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive, prefersReducedMotion }) {
+function MobileNavPortal({
+  open,
+  onClose,
+  nav,
+  header,
+  brand,
+  isStaff,
+  isActive,
+  prefersReducedMotion,
+}) {
   if (typeof document === 'undefined') return null
 
   return createPortal(
@@ -389,7 +397,7 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
             type="button"
             aria-label={header.closeMenu}
             onClick={onClose}
-            className="fixed inset-0 z-overlay bg-df-overlay [backdrop-filter:blur(8px)] [-webkit-backdrop-filter:blur(8px)]"
+            className="fixed inset-0 z-overlay bg-df-overlay [-webkit-backdrop-filter:blur(8px)] [backdrop-filter:blur(8px)]"
             initial="hidden"
             animate="visible"
             exit="hidden"
@@ -400,7 +408,7 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
             role="dialog"
             aria-modal="true"
             aria-label={header.mobileDialogLabel}
-            className="fixed inset-y-0 right-0 z-modal flex w-[min(22rem,100vw)] flex-col border-l border-df-border bg-df-bg-elevated/95 shadow-df-xl [backdrop-filter:blur(28px)] [-webkit-backdrop-filter:blur(28px)]"
+            className="bg-df-bg-elevated/95 fixed inset-y-0 right-0 z-modal flex w-[min(22rem,100vw)] flex-col border-l border-df-border shadow-df-xl [-webkit-backdrop-filter:blur(28px)] [backdrop-filter:blur(28px)]"
             style={{
               paddingTop: 'env(safe-area-inset-top)',
               paddingBottom: 'env(safe-area-inset-bottom)',
@@ -412,7 +420,7 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
             transition={prefersReducedMotion ? { duration: 0 } : DRAWER_TRANSITION}
           >
             <div className="flex items-center justify-between border-b border-df-border px-5 py-4">
-              <span className="font-display text-2xl font-400 uppercase tracking-tight text-df-text">
+              <span className="font-400 font-display text-2xl uppercase tracking-tight text-df-text">
                 {brand.name}
                 <span className="text-df-accent">.</span>
               </span>
@@ -437,7 +445,7 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
                       onClick={onClose}
                       aria-current={active ? 'page' : undefined}
                       className={cn(
-                        'group/mlink flex min-h-[3.5rem] items-center justify-between border-b border-df-border py-4 font-display text-2xl font-400 uppercase tracking-tight transition-colors duration-200 ease-df-out',
+                        'group/mlink font-400 flex min-h-[3.5rem] items-center justify-between border-b border-df-border py-4 font-display text-2xl uppercase tracking-tight transition-colors duration-200 ease-df-out',
                         active
                           ? 'text-df-accent-bright'
                           : 'text-df-text hover:text-df-accent-bright'
@@ -446,7 +454,7 @@ function MobileNavPortal({ open, onClose, nav, header, brand, isStaff, isActive,
                       <span>{item.label}</span>
                       <ArrowUpRight
                         aria-hidden="true"
-                        className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:translate-x-1 group-hover/mlink:-translate-y-1 group-hover/mlink:text-df-accent"
+                        className="h-6 w-6 text-df-text-faint transition-all duration-300 ease-df-out group-hover/mlink:-translate-y-1 group-hover/mlink:translate-x-1 group-hover/mlink:text-df-accent"
                       />
                     </Link>
                   )

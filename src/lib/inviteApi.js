@@ -1,4 +1,4 @@
-import { supabase } from '@/config/supabase'
+import { invokeOk } from '@/lib/functions'
 
 /**
  * Invite a user to DeluxFit via the staff-only `invite-user` edge function.
@@ -14,10 +14,10 @@ import { supabase } from '@/config/supabase'
  * @returns {Promise<{ id?: string, email?: string, role: 'client' | 'staff' }>}
  */
 export async function inviteUser({ email, fullName, role }) {
-  const { data, error } = await supabase.functions.invoke('invite-user', {
-    body: { email, fullName, role },
-  })
-  if (error) throw new Error(error.message || 'Could not send the invite.')
-  if (data?.ok === false) throw new Error(data.error || 'Could not send the invite.')
+  const data = await invokeOk(
+    'invite-user',
+    { email, fullName, role },
+    'Could not send the invite.'
+  )
   return data?.user
 }

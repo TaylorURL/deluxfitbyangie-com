@@ -22,10 +22,8 @@ const BUSINESS_HOURS = {
   6: [8, 9, 10, 11], // Saturday — morning only
 }
 
-export const SESSION_MINUTES = 60
-
 /** Number of days ahead (from today) that are open for booking. */
-export const BOOKING_WINDOW_DAYS = 28
+const BOOKING_WINDOW_DAYS = 28
 
 /** Format a Date as a local `YYYY-MM-DD` key (no timezone drift). */
 export function toDateKey(date) {

@@ -1,4 +1,5 @@
 import { supabase } from '@/config/supabase'
+import { invokeOk, resolveSignedUrl } from '@/lib/functions'
 
 /**
  * PORTAL API — RLS-scoped reads + edge-function-backed writes for the member
@@ -102,19 +103,17 @@ export const getNutritionPlan = userId =>
 
 /** Insert a progress entry via the `log-progress` edge function. */
 export async function logProgress(entry) {
-  const { data, error } = await supabase.functions.invoke('log-progress', { body: entry })
-  if (error) throw new Error(error.message || 'Could not save your entry.')
-  if (data?.ok === false) throw new Error(data.error || 'Could not save your entry.')
+  const data = await invokeOk('log-progress', entry, 'Could not save your entry.')
   return data?.entry
 }
 
 /** Send a message to Angie via the `send-message` edge function. */
 export async function sendMessage({ body, attachmentPath }) {
-  const { data, error } = await supabase.functions.invoke('send-message', {
-    body: { body, attachmentPath },
-  })
-  if (error) throw new Error(error.message || 'Could not send your message.')
-  if (data?.ok === false) throw new Error(data.error || 'Could not send your message.')
+  const data = await invokeOk(
+    'send-message',
+    { body, attachmentPath },
+    'Could not send your message.'
+  )
   return data?.message
 }
 
@@ -137,23 +136,8 @@ export async function uploadProgressPhoto(userId, file) {
   return path
 }
 
-/**
- * Resolve a short-lived signed URL for a private storage object via the
- * `signed-url` edge function, which authorizes the caller before signing.
- * Returns null on failure so callers can degrade gracefully.
- */
-export async function getSignedUrl(bucket, path) {
-  if (!path) return null
-  try {
-    const { data, error } = await supabase.functions.invoke('signed-url', {
-      body: { bucket, path },
-    })
-    if (error || data?.ok === false) return null
-    return data?.url ?? null
-  } catch {
-    return null
-  }
-}
+/** Resolve a short-lived signed URL for a private storage object (shared broker with the admin panel). */
+export const getSignedUrl = resolveSignedUrl
 
 /**
  * Derive entitlement booleans from membership rows. Coaching implies access to
