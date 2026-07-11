@@ -1,7 +1,6 @@
 import { ArrowRight, Check } from 'lucide-react'
 import {
   Button,
-  Card,
   Container,
   Reveal,
   Section,
@@ -14,6 +13,8 @@ import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
 import PhotoBand from '@/components/PhotoBand'
 import PhotoGallery from '@/components/PhotoGallery'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { ShinyText, DecryptedText, SpotlightCard } from '@/components/reactbits'
 
 const ABOUT_GALLERY = [
   {
@@ -57,6 +58,8 @@ export default function About() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
+        {/* React Bits Aurora — ambient crimson drift behind Angie's story. */}
+        <AnimatedBackdrop variant="aurora" opacity={0.4} />
         <Container size="xl">
           <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
             <Reveal className="relative">
@@ -72,14 +75,23 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={0.1} className="flex flex-col items-start">
-              <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
+              <SectionEyebrow>
+                <ShinyText text={about.hero.eyebrow} color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
               <SplitHeading
                 text={about.hero.heading}
                 accent={about.hero.accent}
                 className="mt-5 text-[clamp(2rem,8vw,4rem)] leading-[0.95] sm:mt-6"
               />
               <p className="mt-5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted sm:mt-6">
-                {about.hero.tagline}
+                <DecryptedText
+                  text={about.hero.tagline}
+                  animateOn="view"
+                  sequential
+                  revealDirection="start"
+                  speed={38}
+                  useOriginalCharsOnly
+                />
               </p>
             </Reveal>
           </div>
@@ -159,8 +171,11 @@ export default function About() {
       >
         <div className="grid gap-5 lg:grid-cols-3">
           {about.philosophy.pillars.map(({ icon: Icon, title, description }, index) => (
-            <Reveal key={title} delay={index * 0.06}>
-              <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
+            <Reveal key={title} delay={index * 0.06} className="flex">
+              <SpotlightCard
+                spotlightColor="rgba(225,29,42,0.15)"
+                className="flex h-full w-full flex-col !rounded-df-lg !border-df-border !bg-df-surface !p-6 sm:!p-8"
+              >
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute right-4 top-2 font-display text-6xl font-400 leading-none tabular-nums text-df-surface-3"
@@ -177,7 +192,7 @@ export default function About() {
                   {title}
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-df-text-muted">{description}</p>
-              </Card>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>
@@ -195,16 +210,20 @@ export default function About() {
         </Reveal>
       </Section>
 
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
         />
+        {/* React Bits Particles — a quiet crimson field under the closing CTA. */}
+        <AnimatedBackdrop variant="particles" opacity={0.45} />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-3 sm:gap-4">
               <SectionIndex>05</SectionIndex>
-              <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
+              <SectionEyebrow>
+                <ShinyText text={about.hero.eyebrow} color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
             </div>
             <SplitHeading
               text={about.cta.heading}

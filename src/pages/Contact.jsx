@@ -3,6 +3,7 @@ import { useContent } from '@/i18n'
 import PageHero from '@/components/PageHero'
 import ContactForm from '@/components/forms/ContactForm'
 import SocialLinks from '@/components/SocialLinks'
+import { ShinyText, SpotlightCard } from '@/components/reactbits'
 
 /**
  * Contact — message form on the left, social channels on the right. Form
@@ -33,8 +34,13 @@ export default function Contact() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <aside className="rounded-df-2xl border border-df-border bg-df-surface p-6 sm:px-8 sm:py-8">
-              <SectionEyebrow>{contact.socialEyebrow}</SectionEyebrow>
+            <SpotlightCard
+              spotlightColor="rgba(225,29,42,0.16)"
+              className="!rounded-df-2xl !border-df-border !bg-df-surface !p-6 sm:!px-8 sm:!py-8"
+            >
+              <SectionEyebrow>
+                <ShinyText text={contact.socialEyebrow} color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
               <h3 className="mt-4 font-display text-2xl font-400 uppercase tracking-[0.01em] text-df-text sm:mt-5">
                 {contact.socialHeading}
               </h3>
@@ -45,7 +51,7 @@ export default function Contact() {
               <div className="mt-6">
                 <SocialLinks />
               </div>
-            </aside>
+            </SpotlightCard>
           </Reveal>
         </div>
       </Section>

@@ -17,6 +17,10 @@ export default defineConfig({
       output: {
         manualChunks: {
           'framer-motion': ['framer-motion'],
+          // The React Bits WebGL backdrops (Aurora / Particles / Threads) pull
+          // in ogl; keep it in its own long-lived chunk so it caches apart from
+          // app code and doesn't bloat the main bundle.
+          ogl: ['ogl'],
         },
       },
     },

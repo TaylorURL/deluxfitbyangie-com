@@ -2,7 +2,6 @@ import { ArrowRight, Check } from 'lucide-react'
 import {
   Badge,
   Button,
-  Card,
   Container,
   Reveal,
   Section,
@@ -16,6 +15,8 @@ import PageHero from '@/components/PageHero'
 import PhotoBand from '@/components/PhotoBand'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
+import AnimatedPrice from '@/components/AnimatedPrice'
+import { SpotlightCard } from '@/components/reactbits'
 
 /**
  * SingleSession — Service 03: the one-time $75 Single Live Training Session.
@@ -50,8 +51,11 @@ export default function SingleSession() {
       >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {session.perfectFor.map(({ icon: Icon, title }, index) => (
-            <Reveal key={title} delay={index * 0.05}>
-              <Card variant="surface" className="flex h-full items-start gap-4">
+            <Reveal key={title} delay={index * 0.05} className="flex">
+              <SpotlightCard
+                spotlightColor="rgba(225,29,42,0.15)"
+                className="flex h-full w-full items-start gap-4 !rounded-df-lg !border-df-border !bg-df-surface !p-6 sm:!p-8"
+              >
                 <span
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
                   aria-hidden="true"
@@ -59,7 +63,7 @@ export default function SingleSession() {
                   <Icon className="h-5 w-5" strokeWidth={2} />
                 </span>
                 <p className="pt-1.5 text-[15px] font-600 leading-snug text-df-text">{title}</p>
-              </Card>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>
@@ -102,7 +106,10 @@ export default function SingleSession() {
 
 function ServicePriceTile({ service }) {
   return (
-    <div className="relative overflow-hidden rounded-df-2xl border border-df-border bg-df-surface/85 p-6 shadow-df-xl backdrop-blur-xl sm:p-8">
+    <SpotlightCard
+      spotlightColor="rgba(225,29,42,0.16)"
+      className="!rounded-df-2xl !border-df-border !bg-df-surface/85 !p-6 shadow-df-xl backdrop-blur-xl sm:!p-8"
+    >
       <Badge tone="accent" variant="soft" size="md" className="w-fit">
         {service.eyebrow}
       </Badge>
@@ -110,9 +117,10 @@ function ServicePriceTile({ service }) {
         {service.name}
       </p>
       <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-5 sm:pb-6">
-        <span className="font-display text-[clamp(2.75rem,11vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text">
-          {service.price}
-        </span>
+        <AnimatedPrice
+          value={service.price}
+          className="font-display text-[clamp(2.75rem,11vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text"
+        />
         <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
       </div>
       <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
@@ -137,6 +145,6 @@ function ServicePriceTile({ service }) {
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </Button>
-    </div>
+    </SpotlightCard>
   )
 }
