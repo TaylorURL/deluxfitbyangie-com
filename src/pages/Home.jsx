@@ -16,6 +16,8 @@ import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
 import PhotoGallery from '@/components/PhotoGallery'
 import ProgramsGrid from '@/components/ProgramsGrid'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { ShinyText, GradientText } from '@/components/reactbits'
 
 const HOME_GALLERY = [
   {
@@ -109,11 +111,13 @@ export default function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,rgba(225,29,42,0.16),transparent_60%)]"
         />
+        {/* React Bits Aurora — a live crimson aurora drifts behind the wordmark. */}
+        <AnimatedBackdrop variant="aurora" opacity={0.45} />
 
         <Container size="xl" className="pb-14 pt-24 sm:pb-20 sm:pt-40 lg:pb-24 lg:pt-48">
           <span className="inline-flex items-center gap-2.5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
             <span className="h-1.5 w-1.5 rounded-df-full bg-df-accent" aria-hidden="true" />
-            {hero.badge}
+            <ShinyText text={hero.badge} color="#c81a27" shineColor="#ff8b95" speed={4} />
           </span>
 
           <MotionH1
@@ -176,9 +180,14 @@ export default function Home() {
                 aspect="aspect-[4/5]"
               />
               <div className="absolute -bottom-4 left-2 rounded-df-md border border-df-glass-border bg-df-glass-fill px-4 py-2.5 backdrop-blur-xl sm:-bottom-5 sm:-left-5 sm:px-5 sm:py-3">
-                <div className="font-display text-[clamp(1.75rem,5vw,3rem)] font-400 leading-none tabular-nums text-df-accent-bright">
+                {/* React Bits GradientText — the headline stat glows in animated crimson. */}
+                <GradientText
+                  colors={['#fb3645', '#e11d2a', '#ff8b95', '#e11d2a']}
+                  animationSpeed={6}
+                  className="!mx-0 font-display text-[clamp(1.75rem,5vw,3rem)] font-400 leading-none tabular-nums"
+                >
                   {hero.trust.pillarValue}
-                </div>
+                </GradientText>
                 <div className="mt-1 text-[10px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
                   {hero.trust.pillarLabel}
                 </div>
@@ -301,13 +310,17 @@ export default function Home() {
       {/* SHOOT GALLERY — dark panel so the photography reads cinematic */}
       <section
         data-theme="dark"
-        className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28"
+        className="relative isolate overflow-hidden bg-df-bg py-16 text-df-text sm:py-28"
       >
+        {/* React Bits Particles — a slow crimson particle field behind the shoot. */}
+        <AnimatedBackdrop variant="particles" opacity={0.5} />
         <Container size="xl">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-4">
               <SectionIndex>04</SectionIndex>
-              <SectionEyebrow>In the gym</SectionEyebrow>
+              <SectionEyebrow>
+                <ShinyText text="In the gym" color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
             </div>
             <SplitHeading
               text="Real reps. Real grit."

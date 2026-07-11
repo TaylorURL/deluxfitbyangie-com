@@ -51,6 +51,17 @@ export default defineConfig([
       'react-refresh/only-export-components': 'off',
     },
   },
+  // Vendored React Bits components (reactbits.dev) — third-party library source
+  // we own but do not hand-maintain. Exempt from HMR-only-component and from the
+  // no-unused-vars false positive on JSX-only `motion.*` usage (this project has
+  // no eslint-plugin-react, so `jsx-uses-vars` isn't available to mark it used).
+  {
+    files: ['src/components/reactbits/**/*.{js,jsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'no-unused-vars': 'off',
+    },
+  },
   // Node-consumed config files (CommonJS presets + Vite config) run outside the
   // browser, so expose Node globals like `module`, `require`, and `__dirname`.
   {

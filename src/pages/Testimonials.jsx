@@ -14,6 +14,8 @@ import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
 import PhotoBand from '@/components/PhotoBand'
 import PhotoPlaceholder from '@/components/PhotoPlaceholder'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { ShinyText, ScrollVelocity } from '@/components/reactbits'
 
 /**
  * Testimonials — client success stories and before/after photos. Real client
@@ -49,6 +51,20 @@ export default function Testimonials() {
           </div>
         </Reveal>
       </Container>
+
+      {/* React Bits ScrollVelocity — a ghosted brand mantra that reacts to scroll. */}
+      <div
+        data-theme="dark"
+        className="mt-12 overflow-hidden border-y border-df-border bg-df-bg-elevated py-6 sm:mt-16 sm:py-8"
+      >
+        <ScrollVelocity
+          texts={['Real results — Real grit — ', 'Discipline over excuses — ']}
+          velocity={55}
+          numCopies={5}
+          className="text-df-surface-3"
+          scrollerClassName="!font-display !text-3xl !font-400 !uppercase !tracking-tight md:!text-5xl"
+        />
+      </div>
 
       <Section
         index="01"
@@ -94,16 +110,20 @@ export default function Testimonials() {
         </Reveal>
       </Section>
 
-      <section className="relative overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
+      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg-elevated py-16 sm:py-28">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,rgba(225,29,42,0.22),transparent_70%)]"
         />
+        {/* React Bits Particles — a soft crimson field under the closing CTA. */}
+        <AnimatedBackdrop variant="particles" opacity={0.45} />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
             <div className="flex items-center gap-3 sm:gap-4">
               <SectionIndex>03</SectionIndex>
-              <SectionEyebrow>{testimonials.hero.eyebrow}</SectionEyebrow>
+              <SectionEyebrow>
+                <ShinyText text={testimonials.hero.eyebrow} color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
             </div>
             <SplitHeading
               text={testimonials.cta.heading}

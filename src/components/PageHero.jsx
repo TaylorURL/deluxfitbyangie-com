@@ -7,11 +7,17 @@ import {
   SplitHeading,
 } from '@deluxfit/ds'
 import { Link } from '@/router'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { ShinyText, BlurText } from '@/components/reactbits'
 
 /**
  * PageHero — the editorial top band reused by every routed page. A crimson
  * eyebrow, an oversized SplitHeading, an optional subhead, and up to two CTAs
  * presented as design-system Buttons routed through the SPA <Link>.
+ *
+ * React Bits woven in: an Aurora backdrop drifts behind the type (its static
+ * crimson gradient stays as the reduced-motion fallback), the eyebrow shimmers
+ * with ShinyText, and the subhead resolves word-by-word with BlurText.
  *
  * @param {object} props
  * @param {string} props.eyebrow
@@ -38,6 +44,7 @@ export default function PageHero({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,rgba(225,29,42,0.16),transparent_60%)]"
       />
+      <AnimatedBackdrop variant="aurora" opacity={0.4} />
       <Container size="xl">
         <div
           className={
@@ -47,7 +54,11 @@ export default function PageHero({
           }
         >
           <Reveal className="flex max-w-3xl flex-col items-start">
-            {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
+            {eyebrow && (
+              <SectionEyebrow>
+                <ShinyText text={eyebrow} color="#c81a27" shineColor="#ff8b95" speed={4} />
+              </SectionEyebrow>
+            )}
             {heading && (
               <SplitHeading
                 text={heading}
@@ -56,9 +67,12 @@ export default function PageHero({
               />
             )}
             {subhead && (
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg">
-                {subhead}
-              </p>
+              <BlurText
+                text={subhead}
+                animateBy="words"
+                delay={60}
+                className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg"
+              />
             )}
             {(primary || secondary) && (
               <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">

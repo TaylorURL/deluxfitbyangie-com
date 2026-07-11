@@ -17,6 +17,8 @@ import PhotoBand from '@/components/PhotoBand'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
+import AnimatedPrice from '@/components/AnimatedPrice'
+import { SpotlightCard } from '@/components/reactbits'
 
 /**
  * LiveTrainingProgram — Service 04: the ongoing $50/session Live Online
@@ -62,10 +64,21 @@ export default function LiveTrainingProgram() {
       >
         <Reveal>
           <div className="grid grid-cols-1 gap-y-8 border-t border-df-border pt-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:pt-10 lg:grid-cols-3">
-            <StatBlock value={service.price} label="per session" size="giant" align="left" accent />
-            <StatBlock value="3" label="sessions / week recommended" size="giant" align="left" />
             <StatBlock
-              value="$150"
+              value={<AnimatedPrice value={service.price} />}
+              label="per session"
+              size="giant"
+              align="left"
+              accent
+            />
+            <StatBlock
+              value={<AnimatedPrice value="3" />}
+              label="sessions / week recommended"
+              size="giant"
+              align="left"
+            />
+            <StatBlock
+              value={<AnimatedPrice value="$150" />}
               label="per week at 3 sessions"
               size="giant"
               align="left"
@@ -115,7 +128,10 @@ export default function LiveTrainingProgram() {
 
 function ServicePriceTile({ service }) {
   return (
-    <div className="relative overflow-hidden rounded-df-2xl border border-df-border bg-df-surface/85 p-6 shadow-df-xl backdrop-blur-xl sm:p-8">
+    <SpotlightCard
+      spotlightColor="rgba(225,29,42,0.16)"
+      className="!rounded-df-2xl !border-df-border !bg-df-surface/85 !p-6 shadow-df-xl backdrop-blur-xl sm:!p-8"
+    >
       <Badge tone="accent" variant="soft" size="md" className="w-fit">
         {service.eyebrow}
       </Badge>
@@ -123,9 +139,10 @@ function ServicePriceTile({ service }) {
         {service.name}
       </p>
       <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-5 sm:pb-6">
-        <span className="font-display text-[clamp(2.75rem,11vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text">
-          {service.price}
-        </span>
+        <AnimatedPrice
+          value={service.price}
+          className="font-display text-[clamp(2.75rem,11vw,4.5rem)] font-400 leading-[0.82] tabular-nums text-df-text"
+        />
         <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
       </div>
       <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
@@ -150,6 +167,6 @@ function ServicePriceTile({ service }) {
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </Button>
-    </div>
+    </SpotlightCard>
   )
 }

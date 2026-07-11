@@ -1,5 +1,7 @@
 import { Badge, PricingCard, Reveal, Section } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { SpotlightCard } from '@/components/reactbits'
 
 /**
  * ProgramsGrid — the four bookable/active services + the in-person "coming
@@ -27,6 +29,9 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
       accent={programs.accent}
       subhead={programs.subhead}
     >
+      {/* React Bits Particles — a drifting crimson field behind the grid. */}
+      <AnimatedBackdrop variant="particles" opacity={0.5} />
+
       <div className="grid items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
         {ordered.map((service, index) => (
           <Reveal key={service.id} delay={index * 0.06} className="flex">
@@ -40,7 +45,10 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
       </div>
 
       <Reveal delay={0.3} className="mt-8 sm:mt-10">
-        <div className="flex flex-col gap-4 rounded-df-xl border border-df-border bg-df-surface p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <SpotlightCard
+          spotlightColor="rgba(225,29,42,0.18)"
+          className="flex flex-col gap-4 !rounded-df-xl !border-df-border !bg-df-surface !p-5 sm:flex-row sm:items-center sm:justify-between sm:!p-6"
+        >
           <div className="flex flex-col gap-1.5">
             <span className="inline-flex w-fit items-center gap-2">
               <Badge tone="neutral" variant="outline" size="sm">
@@ -63,7 +71,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
               {inPerson.eyebrow}
             </p>
           </div>
-        </div>
+        </SpotlightCard>
       </Reveal>
     </Section>
   )
