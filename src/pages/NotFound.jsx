@@ -1,10 +1,13 @@
 import { ArrowLeft } from 'lucide-react'
-import { Button, Container, Reveal, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
+import { Container, Reveal, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
 import { Link } from '@/router'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { DecryptedText, StarBorder } from '@/components/reactbits'
 
 /**
  * NotFound — branded 404 view rendered when the SPA router can't match the
- * current pathname.
+ * current pathname. React Bits: an Aurora backdrop drifts behind the type, the
+ * eyebrow decrypts into place, and the CTA carries an animated StarBorder.
  */
 export default function NotFound() {
   return (
@@ -13,9 +16,19 @@ export default function NotFound() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_45%_at_50%_-10%,rgba(225,29,42,0.22),transparent_65%)]"
       />
+      <AnimatedBackdrop variant="aurora" opacity={0.4} />
       <Container size="md">
         <Reveal className="flex flex-col items-start">
-          <SectionEyebrow>404</SectionEyebrow>
+          <SectionEyebrow>
+            <DecryptedText
+              text="404 · Page not found"
+              animateOn="view"
+              sequential
+              revealDirection="start"
+              speed={40}
+              useOriginalCharsOnly
+            />
+          </SectionEyebrow>
           <SplitHeading
             text="Page not found."
             accent="not found"
@@ -25,12 +38,18 @@ export default function NotFound() {
             The page you’re looking for doesn’t exist. Head back to the home page and try the
             navigation from there.
           </p>
-          <Button asChild size="lg" className="mt-10">
-            <Link href="/">
+          <StarBorder
+            as={Link}
+            href="/"
+            color="#fb3645"
+            speed="5s"
+            className="mt-10 font-700 uppercase tracking-[0.16em]"
+          >
+            <span className="inline-flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back to home
-            </Link>
-          </Button>
+            </span>
+          </StarBorder>
         </Reveal>
       </Container>
     </section>

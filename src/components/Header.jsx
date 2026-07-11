@@ -6,6 +6,7 @@ import { Button, Container, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import { Link, useLocation, normalizePath } from '@/router'
+import { Magnet } from '@/components/reactbits'
 
 const MotionDiv = motion.div
 const MotionButton = motion.button
@@ -330,7 +331,10 @@ export default function Header() {
                 label={header.clientLogin}
                 ariaLabel={header.clientLoginAria}
               />
-              <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
+              {/* React Bits Magnet — the primary CTA leans toward the cursor. */}
+              <Magnet padding={70} magnetStrength={4}>
+                <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
+              </Magnet>
             </div>
 
             <button

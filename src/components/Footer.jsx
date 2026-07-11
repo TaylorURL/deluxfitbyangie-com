@@ -3,6 +3,7 @@ import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import LanguageSwitcher from './LanguageSwitcher'
 import SocialLinks from './SocialLinks'
+import { ShinyText } from '@/components/reactbits'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -28,8 +29,8 @@ export default function Footer() {
                 draggable="false"
               />
             </Link>
-            <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.24em] text-df-accent-bright">
-              {brand.slogan}
+            <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.24em]">
+              <ShinyText text={brand.slogan} color="#c81a27" shineColor="#ff8b95" speed={4} />
             </p>
             <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
 
