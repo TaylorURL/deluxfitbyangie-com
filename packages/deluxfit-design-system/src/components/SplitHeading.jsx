@@ -3,7 +3,7 @@ import { cn } from '../lib/cn'
 
 /**
  * @param {object} props
- * @param {string} props.text - the full heading copy (from site.js)
+ * @param {string} props.text - the full heading copy
  * @param {string} [props.accent] - the substring to set in italic serif
  * @param {string} [props.as='h2'] - heading element
  */
