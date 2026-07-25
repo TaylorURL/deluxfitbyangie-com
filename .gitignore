@@ -3,7 +3,17 @@ dist
 .env
 .env.local
 .DS_Store
+
+# Secrets and local tooling state — never commit
+.env.*
+!.env.example
+.claude/
 .idea/
 .vscode/
+.fleet/
 *.iml
-*.sql
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
