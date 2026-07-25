@@ -2,10 +2,6 @@ import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 
 /**
- * Marquee / LogoStrip — a continuously scrolling row of items (logos, "as seen
- * in" labels, result tags). The track is duplicated so the loop is seamless;
- * it pauses on hover and freezes entirely under reduced-motion.
- *
  * @param {object} props
  * @param {React.ReactNode[]} props.items
  */

@@ -17,10 +17,6 @@ const formatSlot = iso =>
     minute: '2-digit',
   })
 
-/**
- * BookingsPanel — the client's booked live sessions, split into upcoming and
- * past, with a link back to booking when empty.
- */
 export default function BookingsPanel({ bookings }) {
   const { portal } = useContent()
   const copy = portal.bookings

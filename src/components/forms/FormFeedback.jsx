@@ -1,8 +1,5 @@
 import { AlertCircle, CheckCircle2 } from 'lucide-react'
 
-/**
- * Success/error feedback panels shared by every marketing form on the site.
- */
 export function FormSuccess({ heading, body }) {
   return (
     <div

@@ -16,12 +16,6 @@ const WEEKDAY = { weekday: 'short' }
 const MONTH_DAY = { month: 'short', day: 'numeric' }
 
 /**
- * BookingCalendar — the live booking surface for the Single Session ($75) and
- * the Live Online Personal Training Program ($50). The client picks a date, a
- * time, a training focus, and a fitness goal; the booking is written by the
- * `create-booking` edge function and the database enforces single-occupancy, so
- * a double-book attempt fails closed.
- *
  * @param {object} props
  * @param {'single_session'|'live_program'} props.service
  */

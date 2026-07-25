@@ -22,9 +22,6 @@ export const FORM_ENDPOINT = null
 const ARTIFICIAL_LATENCY_MS = 650
 
 /**
- * Submit a form payload. Returns a promise that resolves once the submission
- * has been accepted (or rejects with an Error on transport failure).
- *
  * @param {string} formKey - short identifier for which form is submitting
  *   (e.g. 'online-coaching-application', 'one-on-one-booking', 'contact')
  * @param {Record<string, unknown>} payload - the captured form values

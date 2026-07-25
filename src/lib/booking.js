@@ -1,8 +1,6 @@
 import { supabase } from '@/config/supabase'
 
 /**
- * BOOKING — availability generation + booking creation for the live services.
- *
  * Candidate slots are generated client-side from Angie's standing business
  * hours (cheap, no round-trip). Already-booked slots are read from the
  * `booking_slots_taken` view (start times only, no PII) so taken times can be
@@ -88,8 +86,6 @@ export async function fetchTakenSlots(fromDate, toDate) {
 }
 
 /**
- * Create a booking through the edge function.
- *
  * @param {{ service: 'single_session'|'live_program', slotStart: Date,
  *   trainingFocus: string, fitnessGoal: string, guestName?: string,
  *   guestEmail?: string }} input

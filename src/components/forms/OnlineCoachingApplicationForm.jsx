@@ -19,12 +19,6 @@ const INITIAL_VALUES = {
   consent: false,
 }
 
-/**
- * OnlineCoachingApplicationForm — the intake form for personalized online
- * coaching. Captures the data Angie needs to write the initial program and
- * decide if the program is the right fit. No payment is taken here; the brief
- * is explicit that this is an APPLICATION, not a checkout.
- */
 export default function OnlineCoachingApplicationForm() {
   const { coaching } = useContent()
   const fields = coaching.application.fields

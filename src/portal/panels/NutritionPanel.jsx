@@ -3,11 +3,6 @@ import { Card } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
-/**
- * NutritionPanel — the client's personalized nutrition plan (a coaching
- * benefit). Read-only: calorie/macro targets, meal structure, resource links,
- * and notes from Angie. Gated behind active coaching.
- */
 export default function NutritionPanel({ nutrition, entitlements }) {
   const { portal } = useContent()
   const copy = portal.nutrition

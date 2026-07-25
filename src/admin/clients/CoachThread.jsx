@@ -7,10 +7,8 @@ import { fmtDateTime } from '../components/AdminPrimitives'
 
 const isVideo = path => /\.(mp4|webm|mov|m4v)$/i.test(path || '')
 
-/**
- * CoachAttachment — resolves a signed URL for a coach message attachment and
- * renders it inline (video) or as a download link. Fetches its own URL lazily.
- */
+// Each attachment resolves its own signed URL lazily, so a thread with many
+// attachments doesn't block on one batch request.
 function CoachAttachment({ bucket, path }) {
   const [url, setUrl] = useState(null)
 
@@ -56,13 +54,6 @@ function CoachAttachment({ bucket, path }) {
   )
 }
 
-/**
- * CoachThread — the coach side of the in-platform two-way messaging. The coach
- * is "you" (right-aligned), the client is left-aligned. The reply box supports
- * an optional video/file attachment uploaded to the private library-media
- * bucket. All sends route through the coach-message edge function; the thread
- * reloads afterwards. No phone numbers — messaging is in-platform only.
- */
 export default function CoachThread({ clientId, messages, reload }) {
   const thread = messages ?? []
   const fileInputRef = useRef(null)

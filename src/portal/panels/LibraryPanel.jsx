@@ -85,7 +85,6 @@ function LibraryCard({ item, copy, coachingLabel }) {
 }
 
 /**
- * LibraryPanel — the gated content library (workouts, nutrition, education).
  * RLS already filters rows to what the user is entitled to; when the user has
  * no entitlement at all, we show the gated upsell instead of an empty grid.
  */

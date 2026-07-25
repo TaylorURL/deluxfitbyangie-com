@@ -7,12 +7,6 @@ import AuthCard from '@/auth/AuthCard'
 import { useLocation } from '@/router'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
-/**
- * Signup — public client sign-up. Always provisions a `client` role; staff
- * provisioning is invite-only via the `invite-user` edge function. After
- * signup, the auth listener picks up the new session and the redirect effect
- * sends them to /portal.
- */
 export default function Signup() {
   const { signUp, user, role, profileLoading } = useAuth()
   const { navigate } = useLocation()

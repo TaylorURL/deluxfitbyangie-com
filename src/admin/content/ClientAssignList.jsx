@@ -1,10 +1,8 @@
 import { Button } from '@deluxfit/ds'
 import { clientLabel } from '../components/AdminPrimitives'
 
-/**
- * A scrollable checkbox list of clients used to pick who can view a library
- * item directly (per-client assignment), independent of their entitlement.
- */
+// Per-client assignment is independent of entitlement — a client picked here
+// can view the item regardless of what they've paid for.
 export default function ClientAssignList({ clients, selected, onToggle, onClear, disabled }) {
   if (!clients.length) {
     return (

@@ -16,7 +16,6 @@ const SPACE = {
 const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
 
 /**
- * Section — a vertically-rhythmed page band on the shared "type specimen" grid.
  * When `heading`/`eyebrow` is supplied it renders an editorial, left-aligned
  * header: an oversized outlined index numeral as type furniture, the crimson
  * eyebrow, a giant condensed headline (with one phrase accented in Fraunces

@@ -4,12 +4,6 @@ import { Link, useLocation } from '@/router'
 import { useAuth } from '@/auth/useAuth'
 import { ADMIN_ROUTES, matchAdminRoute } from './routes'
 
-/**
- * AdminShell — the standalone chrome for the role-gated backend at /admin.
- * A blurred, hairline-bordered header carries the brand mark, the signed-in
- * staff identity, and sign-out / back-to-site. A sticky sidebar rail drives the
- * sub-routes; the matched page header + component fill the main slot.
- */
 export default function AdminShell() {
   const { pathname } = useLocation()
   const { user, profile, signOut } = useAuth()

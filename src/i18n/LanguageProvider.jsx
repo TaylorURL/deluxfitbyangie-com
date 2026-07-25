@@ -32,10 +32,6 @@ function detectInitialLocale() {
   return DEFAULT_LOCALE
 }
 
-/**
- * LanguageProvider — owns the active locale, persists it, syncs <html lang>,
- * and exposes the active content tree plus a setter to the rest of the app.
- */
 export default function LanguageProvider({ children }) {
   const [locale, setLocaleState] = useState(detectInitialLocale)
 

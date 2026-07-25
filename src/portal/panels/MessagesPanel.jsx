@@ -53,12 +53,6 @@ function Attachment({ message, label }) {
   )
 }
 
-/**
- * MessagesPanel — the in-platform messaging thread with Angie. This is the only
- * channel for coaching communication; the 72-business-hour expectation is set
- * in copy. Sends route through the `send-message` edge function. Gated to
- * active coaching clients.
- */
 export default function MessagesPanel({ messages, entitlements, reloadMessages }) {
   const { portal } = useContent()
   const copy = portal.messages

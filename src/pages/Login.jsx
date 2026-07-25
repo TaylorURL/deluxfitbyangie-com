@@ -8,12 +8,6 @@ import { roleLandingPath } from '@/auth/roles'
 import { useLocation } from '@/router'
 import { FormError } from '@/components/forms/FormFeedback'
 
-/**
- * Login — single email/password sign-in surface. After auth succeeds, the
- * AuthProvider loads the profile (with its role) and this page redirects to
- * either /admin or /portal — or honours a `?next=` param when it points to a
- * route the user's role can actually reach.
- */
 export default function Login() {
   const { signIn, user, role, profileLoading } = useAuth()
   const { navigate } = useLocation()

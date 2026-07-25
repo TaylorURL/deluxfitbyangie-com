@@ -4,11 +4,6 @@ import { Link } from '@/router'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
 import { DecryptedText, StarBorder } from '@/components/reactbits'
 
-/**
- * NotFound — branded 404 view rendered when the SPA router can't match the
- * current pathname. React Bits: an Aurora backdrop drifts behind the type, the
- * eyebrow decrypts into place, and the CTA carries an animated StarBorder.
- */
 export default function NotFound() {
   return (
     <section className="relative isolate overflow-hidden bg-df-bg py-32 sm:py-44">

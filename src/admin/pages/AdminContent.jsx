@@ -21,10 +21,6 @@ import {
 } from '../content/contentMeta'
 
 /**
- * AdminContent — the content library admin where the coach uploads videos,
- * PDFs, and exercise instructions (or links external URLs), gates them by
- * access level, and assigns items directly to individual clients.
- *
  * Every write goes through the staff-only `upsert-content` edge function via
  * the adminApi helpers; uploads land in the private `library-media` bucket via
  * `uploadMedia`. The frontend never touches Supabase tables directly.

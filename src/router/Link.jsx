@@ -3,14 +3,6 @@ import { useLocation } from './useLocation'
 
 const EXTERNAL_PATTERN = /^([a-z][a-z0-9+.-]*:|\/\/|mailto:|tel:)/i
 
-/**
- * Link — a thin anchor wrapper that delegates SPA navigation to the local
- * History API while keeping standard anchor semantics for keyboard, copy-link,
- * and right-click. External URLs (anything with a scheme or starting with `//`,
- * `mailto:`, `tel:`), in-page hashes on the current pathname, and modified
- * clicks (cmd/ctrl/shift/alt/middle-click) all fall through to default browser
- * behavior.
- */
 export const Link = forwardRef(function Link(
   { href, onClick, target, replace = false, children, ...props },
   ref

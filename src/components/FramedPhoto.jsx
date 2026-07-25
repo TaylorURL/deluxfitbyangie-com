@@ -1,11 +1,6 @@
 import { cn } from '@deluxfit/ds'
 
 /**
- * FramedPhoto — on-brand frame for real photography (hero, about, etc.). Mirrors
- * the rounded/bordered surface treatment of PhotoPlaceholder so swapping a real
- * image in keeps the same architectural feel, plus a subtle red glow inset and
- * top-edge gradient that lifts the subject without obscuring it.
- *
  * @param {object} props
  * @param {string} props.src - image source path
  * @param {string} props.alt - accessible image description

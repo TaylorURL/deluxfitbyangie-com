@@ -20,11 +20,6 @@ import BookingCalendar from '@/components/BookingCalendar'
 import AnimatedPrice from '@/components/AnimatedPrice'
 import { SpotlightCard } from '@/components/reactbits'
 
-/**
- * LiveTrainingProgram — Service 04: the ongoing $50/session Live Online
- * Personal Training Program over Zoom. Hero + includes grid + frequency
- * recommendation + the live booking calendar.
- */
 export default function LiveTrainingProgram() {
   const { training, services } = useContent()
   const service = services.liveProgram

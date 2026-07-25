@@ -86,13 +86,6 @@ const HOME_MARQUEE = [
   'Home or gym',
 ]
 
-/**
- * Home — the public landing page. The hero introduces Angie and the brand at
- * type-specimen scale, the intro humanizes her, the programs grid is the
- * primary conversion surface (linking out to the three service pages and
- * teasing the in-person coming-soon), and a closing CTA band routes to the
- * coaching application and 1-on-1 booking.
- */
 export default function Home() {
   const { home } = useContent()
   const { hero, intro, transformationCallout, closing } = home

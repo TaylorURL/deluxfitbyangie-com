@@ -16,12 +16,6 @@ import {
 } from '../components/AdminPrimitives'
 
 /**
- * AdminPlans — workout program authoring. The coach picks a client, then
- * reads and authors that client's personalized training plans. Program types
- * (Weight Loss, Muscle Gain, Glute Growth, Strength, Beginner…) are NOT
- * hardcoded — they're whatever the coach types as the plan title; the common
- * ones are offered only as datalist suggestions.
- *
  * Every write goes through the staff-only `upsert-plan` edge function via the
  * adminApi helpers; the frontend never touches Supabase tables directly.
  */
@@ -325,7 +319,6 @@ export default function AdminPlans() {
   )
 }
 
-/** A single training program rendered as a row with its weeks and actions. */
 function PlanRow({ plan, onEdit, onDelete, busy }) {
   const weeks = Array.isArray(plan.content?.weeks) ? plan.content.weeks : []
 

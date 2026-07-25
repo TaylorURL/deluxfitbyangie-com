@@ -16,10 +16,6 @@ import RepeatableSection from '../authoring/RepeatableSection'
 import NutritionRow from '../authoring/NutritionRow'
 
 /**
- * AdminNutrition — nutrition authoring. The coach picks a client, then reads
- * and authors that client's nutrition plans: macro targets, a repeatable meal
- * structure, helpful resource links, and notes.
- *
  * Every write goes through the staff-only `upsert-nutrition` edge function via
  * the adminApi helpers; the frontend never touches Supabase tables directly.
  */

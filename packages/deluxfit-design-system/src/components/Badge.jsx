@@ -2,11 +2,6 @@ import { forwardRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
-/**
- * Badge / Pill — a compact eyebrow or status chip. `tone` carries semantic
- * color; `variant` switches between a soft tinted fill, a solid fill, and an
- * outline.
- */
 const badgeVariants = cva(
   'inline-flex items-center gap-1.5 whitespace-nowrap rounded-df-full font-semibold uppercase tracking-wider leading-none',
   {

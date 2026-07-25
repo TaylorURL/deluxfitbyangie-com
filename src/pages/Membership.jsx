@@ -19,11 +19,6 @@ import MembershipSignupForm from '@/components/forms/MembershipSignupForm'
 import AnimatedPrice from '@/components/AnimatedPrice'
 import { SpotlightCard } from '@/components/reactbits'
 
-/**
- * Membership — the $14.99/month self-guided fitness membership. Hero +
- * includes grid + best-for band + sign-up section + cross-link to the other
- * programs.
- */
 export default function Membership() {
   const { membership, services } = useContent()
   const service = services.membership

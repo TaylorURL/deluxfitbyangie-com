@@ -2,11 +2,6 @@ import { ArrowLeft } from 'lucide-react'
 import { Container } from '@deluxfit/ds'
 import { Link } from '@/router'
 
-/**
- * AuthShell — the chrome shared by /login, /signup, /reset-password, and
- * /update-password. Same red-glow header treatment as PortalShell but stripped
- * down: just a logo, a back-to-site link, and the centered auth card slot.
- */
 export default function AuthShell({ children }) {
   return (
     <div className="relative isolate flex min-h-screen flex-col overflow-hidden bg-df-bg">

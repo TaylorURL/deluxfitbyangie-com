@@ -9,13 +9,7 @@ import { Inbox, Loader2 } from 'lucide-react'
 import { Badge, Card, Select, cn } from '@deluxfit/ds'
 import { formatDate, formatDateTime } from '@/lib/datetime'
 
-/**
- * Shared building blocks for the admin pages — keeps every CRUD surface visually
- * and behaviourally consistent (loading, empty, status, client picker) so the
- * pages stay focused on their own data flow.
- */
 
-/** A bordered section card matching the admin form/list surfaces. */
 export function SectionCard({ children, className }) {
   return (
     <Card variant="elevated" padded className={className}>
@@ -24,7 +18,6 @@ export function SectionCard({ children, className }) {
   )
 }
 
-/** Eyebrow + title block used at the top of an admin section card. */
 export function SectionHeading({ eyebrow, title, intro }) {
   return (
     <div>
@@ -44,10 +37,6 @@ export function SectionHeading({ eyebrow, title, intro }) {
   )
 }
 
-/**
- * A considered empty state: a tinted icon medallion, an optional headline, and
- * supporting copy on a dashed surface. Used across every admin list/detail slot.
- */
 export function AdminEmpty({ body, title, icon: Icon = Inbox }) {
   return (
     <div className="bg-df-surface/60 flex flex-col items-center gap-4 rounded-df-lg border border-dashed border-df-border-strong px-6 py-12 text-center">
@@ -71,7 +60,6 @@ export function AdminEmpty({ body, title, icon: Icon = Inbox }) {
   )
 }
 
-/** Inline loading line with a brand spinner. */
 export function AdminLoading({ label = 'Loading…' }) {
   return (
     <p className="flex items-center justify-center gap-2.5 py-10 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-faint">
@@ -81,11 +69,6 @@ export function AdminLoading({ label = 'Loading…' }) {
   )
 }
 
-/**
- * MetricTile — a single at-a-glance stat: a label, an icon medallion, the
- * headline figure, and an optional supporting line. The visual anchor of the
- * dashboard; kept here so the treatment stays identical everywhere it's reused.
- */
 export function MetricTile({ label, value, icon: Icon, hint }) {
   return (
     <Card
@@ -125,7 +108,6 @@ const STATUS_TONE = {
   archived: 'neutral',
 }
 
-/** A status chip whose colour reflects the membership/booking status. */
 export function StatusBadge({ status }) {
   if (!status) return null
   return (
@@ -135,11 +117,9 @@ export function StatusBadge({ status }) {
   )
 }
 
-/** Human label for a client profile row. */
 export const clientLabel = client =>
   client?.full_name || client?.email || client?.id?.slice(0, 8) || 'Client'
 
-/** A native-styled client picker built on the DS Select. */
 export function ClientSelect({ clients, value, onChange, placeholder = 'Select a client…', id }) {
   return (
     <Select id={id} value={value ?? ''} onChange={event => onChange(event.target.value)}>
@@ -163,9 +143,6 @@ export const fmtDateTime = formatDateTime
 export const mapById = items => new Map((items ?? []).map(item => [item.id, item]))
 
 /**
- * useAsyncData — run an async loader and expose { data, loading, error, reload }.
- * Re-runs when any dependency changes; ignores stale resolutions on unmount.
- *
  * @template T
  * @param {() => Promise<T>} loader
  * @param {unknown[]} deps

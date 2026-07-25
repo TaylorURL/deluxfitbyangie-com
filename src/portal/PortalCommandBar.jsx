@@ -1,13 +1,6 @@
 import { Badge, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 
-/**
- * PortalCommandBar — the dashboard's top tier: a member identity block (monogram,
- * name, entitlement tier) and a sticky horizontal section nav that drives the
- * anchored scroll regions below. Replaces the old numbered left rail; the active
- * region is tracked by the parent via scrollspy and reflected here with
- * `aria-current`.
- */
 export default function PortalCommandBar({ sections, activeId, displayName, monogram, entitlements }) {
   const { portal } = useContent()
   const { hasMembership, hasCoaching } = entitlements

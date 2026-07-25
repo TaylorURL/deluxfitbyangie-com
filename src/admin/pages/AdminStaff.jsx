@@ -15,7 +15,6 @@ import {
 } from '../components/AdminPrimitives'
 
 /**
- * AdminStaff — surfaces the working invite flow plus the current staff roster.
  * Every invite goes through the
  * `invite-user` edge function, which validates that the caller's profile has
  * role='staff' before sending the Supabase Auth invite email.

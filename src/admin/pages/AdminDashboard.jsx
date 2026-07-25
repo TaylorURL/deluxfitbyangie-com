@@ -49,11 +49,6 @@ const TILES = [
   },
 ]
 
-/**
- * AdminDashboard — the landing page after a staff sign-in: a welcome banner,
- * at-a-glance business metrics computed live from the admin reads, and quick
- * jumps into every management surface.
- */
 export default function AdminDashboard() {
   const { profile, user } = useAuth()
   const greetingName = profile?.full_name || user?.email || 'Coach'
