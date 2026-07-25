@@ -2,10 +2,6 @@ import { cloneElement, forwardRef, isValidElement, useId } from 'react'
 import { cn } from '../lib/cn'
 
 /**
- * Field — a labelled form-control wrapper. Generates an id, associates the label
- * and helper/error text, and clones the single child control with that wiring so
- * markup stays accessible without per-call boilerplate.
- *
  * @param {object} props
  * @param {string} props.label
  * @param {string} [props.helper]

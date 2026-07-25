@@ -1,10 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 
-/**
- * SectionEyebrow — a small uppercase kicker above a section heading, with a
- * short red rule for the athletic accent.
- */
 export const SectionEyebrow = forwardRef(function SectionEyebrow(
   { className, children, ...props },
   ref

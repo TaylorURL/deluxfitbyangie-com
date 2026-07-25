@@ -22,11 +22,6 @@ const SERVICE_LABEL = {
 
 const loadBookings = () => Promise.all([listAllBookings(), listClients()])
 
-/**
- * AdminBookings — every booking across all clients, split into upcoming and
- * past by slot_start, with Confirm / Cancel actions brokered through the
- * staff-only `update-booking` edge function.
- */
 export default function AdminBookings() {
   const { data, loading, error, reload } = useAsyncData(loadBookings, [], [[], []])
   const [bookings, clients] = data ?? [[], []]

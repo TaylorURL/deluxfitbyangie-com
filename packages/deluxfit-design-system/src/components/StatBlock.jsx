@@ -7,10 +7,6 @@ const VALUE_SIZE = {
 }
 
 /**
- * StatBlock — an oversized numeral paired with a label, the visual anchor of the
- * proof strips. `size="giant"` renders the program stats as hero-scale graphics;
- * numerals are tabular so a row of figures stays optically aligned.
- *
  * @param {object} props
  * @param {string} props.value - the headline number (e.g. "500+")
  * @param {string} props.label - what the number measures

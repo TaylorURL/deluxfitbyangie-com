@@ -3,11 +3,6 @@ import { Container } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 
-/**
- * PortalShell — the standalone chrome for the client portal: branded header
- * with a back-to-site link (and sign-out when authenticated), the page body,
- * and a thin footer. Shared by the auth screen and the dashboard.
- */
 export default function PortalShell({ children }) {
   const { brand, portal, header } = useContent()
   const { user, isStaff, signOut } = useAuth()

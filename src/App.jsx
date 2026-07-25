@@ -122,9 +122,6 @@ function useGlobalLinkInterception(navigate) {
 }
 
 /**
- * App — the DeluxFit by Angie site. Renders one of three branches:
- *
- *   1. Standalone routes (`/portal`, `/dev-upload`) — their own chrome.
  *   2. A SPA route in `src/router/routes.js` — rendered inside SiteShell.
  *   3. Anything else — a branded 404, also inside SiteShell.
  */

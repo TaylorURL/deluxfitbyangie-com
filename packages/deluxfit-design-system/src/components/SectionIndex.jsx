@@ -2,10 +2,6 @@ import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 
 /**
- * SectionIndex — the oversized, crimson-outlined section numeral that recurs
- * across the site as type furniture (01 → 09). Purely decorative: hidden from
- * assistive tech so the visible numbering never competes with the heading.
- *
  * The outline is drawn with `-webkit-text-stroke` (referencing the accent
  * token) so the glyph reads as structure, not a filled label.
  */

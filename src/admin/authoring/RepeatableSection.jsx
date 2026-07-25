@@ -1,11 +1,8 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { Button } from '@deluxfit/ds'
 
-/**
- * A labelled block of repeatable rows with add / remove controls. The caller
- * owns the row data and renders each row's fields via `renderRow(row, index)`;
- * this component only handles the layout, the add button, and per-row removal.
- */
+// The caller owns the row data; this only handles layout, the add button, and
+// per-row removal.
 export default function RepeatableSection({
   title,
   helper,

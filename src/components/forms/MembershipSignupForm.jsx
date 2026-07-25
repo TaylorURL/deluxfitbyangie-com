@@ -8,7 +8,6 @@ import { FormError, FormSuccess } from './FormFeedback'
 const STATUS = { idle: 'idle', working: 'working', success: 'success', error: 'error' }
 
 /**
- * MembershipSignupForm — the $14.99/month membership signup on /membership.
  * Captures the basics, then sends the visitor to Stripe Checkout for the
  * recurring subscription. If Stripe isn't configured yet, the intent is
  * recorded and a clear "payments coming online" notice is shown — never a fake

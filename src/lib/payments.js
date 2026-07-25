@@ -1,8 +1,6 @@
 import { supabase } from '@/config/supabase'
 
 /**
- * PAYMENTS — Stripe checkout via the `create-checkout` edge function.
- *
  * The browser never talks to Stripe directly. It invokes the edge function,
  * which owns the secret key and price IDs. When Stripe keys are missing the
  * function returns `{ configured: false }` — we surface that honestly instead
@@ -12,8 +10,6 @@ import { supabase } from '@/config/supabase'
  */
 
 /**
- * Start a Stripe Checkout session and redirect the browser to it.
- *
  * @param {CheckoutProduct} product
  * @param {{ quantity?: number, bookingId?: string }} [options]
  * @returns {Promise<{ status: 'redirecting' } | { status: 'unconfigured', message: string }>}

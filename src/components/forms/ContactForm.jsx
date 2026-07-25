@@ -7,10 +7,6 @@ import { FormError, FormSuccess } from './FormFeedback'
 
 const INITIAL_VALUES = { name: '', email: '', topic: '', message: '' }
 
-/**
- * ContactForm — the general-purpose contact form on /contact. The topic
- * select keeps inbound messages sortable on the receiving end.
- */
 export default function ContactForm() {
   const { contact } = useContent()
   const fields = contact.form.fields

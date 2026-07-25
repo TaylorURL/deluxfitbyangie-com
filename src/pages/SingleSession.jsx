@@ -19,7 +19,6 @@ import AnimatedPrice from '@/components/AnimatedPrice'
 import { SpotlightCard } from '@/components/reactbits'
 
 /**
- * SingleSession — Service 03: the one-time $75 Single Live Training Session.
  * Hero + "perfect for" grid + session details + the live booking calendar.
  */
 export default function SingleSession() {

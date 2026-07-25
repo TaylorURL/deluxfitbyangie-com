@@ -2,10 +2,6 @@ import { ImageIcon } from 'lucide-react'
 import { cn } from '@deluxfit/ds'
 
 /**
- * PhotoPlaceholder — an on-brand frame standing in for a real photo until Angie
- * swaps one in. Renders a labelled gradient surface with a subtle red glow so
- * gallery/about sections read as finished even with placeholder content.
- *
  * @param {object} props
  * @param {string} props.label - caption shown inside the frame
  * @param {string} props.alt - accessible description of the intended image

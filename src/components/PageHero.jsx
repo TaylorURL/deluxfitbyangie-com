@@ -11,14 +11,6 @@ import AnimatedBackdrop from '@/components/AnimatedBackdrop'
 import { ShinyText, BlurText } from '@/components/reactbits'
 
 /**
- * PageHero — the editorial top band reused by every routed page. A crimson
- * eyebrow, an oversized SplitHeading, an optional subhead, and up to two CTAs
- * presented as design-system Buttons routed through the SPA <Link>.
- *
- * React Bits woven in: an Aurora backdrop drifts behind the type (its static
- * crimson gradient stays as the reduced-motion fallback), the eyebrow shimmers
- * with ShinyText, and the subhead resolves word-by-word with BlurText.
- *
  * @param {object} props
  * @param {string} props.eyebrow
  * @param {string} props.heading

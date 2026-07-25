@@ -2,13 +2,6 @@ import { useReducedMotion } from 'framer-motion'
 import { Aurora, Particles, Threads } from '@/components/reactbits'
 
 /**
- * AnimatedBackdrop — a brand-tuned wrapper around the React Bits WebGL
- * backdrops (Aurora / Particles / Threads). It fixes the crimson palette so
- * every animated panel reads as one voice, pins the canvas behind content
- * (`absolute inset-0 -z-10`, non-interactive), and — critically — renders
- * nothing under `prefers-reduced-motion`, letting the section's own static
- * gradient carry the moment instead.
- *
  * @param {object} props
  * @param {'aurora'|'particles'|'threads'} [props.variant='aurora']
  * @param {string} [props.className] - extra classes on the positioning layer

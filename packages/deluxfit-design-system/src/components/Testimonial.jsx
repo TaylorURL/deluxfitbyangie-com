@@ -4,11 +4,6 @@ import { cn } from '../lib/cn'
 import { Card } from './Card'
 
 /**
- * Testimonial — a client pull-quote led by an oversized result metric. The
- * metric is the type anchor (condensed crimson display); the quote is set in the
- * couture Fraunces italic for warmth. The avatar falls back to an initial
- * monogram so the card renders cleanly with placeholder data.
- *
  * @param {object} props
  * @param {string} props.quote
  * @param {string} props.name

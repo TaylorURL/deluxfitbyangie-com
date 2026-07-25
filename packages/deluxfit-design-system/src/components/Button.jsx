@@ -4,8 +4,6 @@ import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
 /**
- * Button — the system's primary action element.
- *
  * Variants bind to `--df-*` tokens so the red/black theme stays consistent.
  * `asChild` swaps the underlying element for Radix Slot composition — use it to
  * apply Button styling to an anchor (e.g. a Stripe checkout link) while keeping

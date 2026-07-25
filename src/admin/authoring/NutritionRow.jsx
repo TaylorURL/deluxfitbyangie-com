@@ -2,12 +2,6 @@ import { Pencil, Trash2, Utensils } from 'lucide-react'
 import { Badge, Button, cn } from '@deluxfit/ds'
 import { StatusBadge, fmtDate } from '../components/AdminPrimitives'
 
-/**
- * A single nutrition plan rendered as a list row — macro badges, meal
- * structure, notes, and resource links — with edit / delete actions. Active
- * plans are visually highlighted so the coach can spot the live plan at a
- * glance.
- */
 export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
   const isActive = plan.status === 'active'
   const macros = [

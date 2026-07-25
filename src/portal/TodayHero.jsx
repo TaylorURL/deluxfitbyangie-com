@@ -61,13 +61,6 @@ function Tile({ className, dominant = false, children }) {
   )
 }
 
-/**
- * TodayHero — the always-live "at a glance" strip that opens the dashboard. It
- * is a presentational composition over data the portal already loads: the next
- * booked session (the page's hero CTA is booking), the current plan, today's
- * nutrition target, and the latest progress reading. No data is fetched here and
- * no mutations fire — deep detail lives in the anchored sections below.
- */
 export default function TodayHero({ bookings, plans, nutrition, progress, entitlements }) {
   const { portal } = useContent()
   const copy = portal.hero

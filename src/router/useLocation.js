@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 /**
- * useLocation — a tiny path-only location hook. We don't ship react-router for
- * this funnel; the SPA is small enough that a single state tied to the History
- * API is plenty.
- *
  * Returns the current pathname + hash and a `navigate(href)` setter that uses
  * pushState so back/forward keep working.
  */

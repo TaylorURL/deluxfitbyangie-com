@@ -3,10 +3,6 @@ import { Card } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { EmptyState, PanelHeading, StatusPill } from './PanelPrimitives'
 
-/**
- * OverviewPanel — the dashboard landing tab: a greeting plus entitlement status
- * for the membership and coaching products.
- */
 export default function OverviewPanel({ profile, entitlements, user }) {
   const { portal } = useContent()
   const copy = portal.overview

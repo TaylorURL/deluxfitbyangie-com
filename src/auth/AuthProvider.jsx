@@ -3,9 +3,6 @@ import { supabase } from '@/config/supabase'
 import { AuthContext } from './useAuth'
 
 /**
- * AuthProvider — owns the Supabase Auth session AND the signed-in user's
- * profile row (so the rest of the app can branch on role without re-querying).
- *
  * Session lifecycle:
  *   * Hydrated once on mount via getSession().
  *   * Kept in sync with onAuthStateChange().

@@ -1,10 +1,5 @@
 import { Link } from '@/router'
 
-/**
- * AuthCard — the surface shared by every auth page. A glass card with a big
- * display title (with the signature red dot), an optional subtitle, the form
- * slot, and an optional footer link row underneath.
- */
 export default function AuthCard({ title, subtitle, children, footerLinks }) {
   return (
     <div className="rounded-df-2xl border border-df-border bg-df-surface/85 p-8 shadow-df-xl backdrop-blur-xl sm:p-10">

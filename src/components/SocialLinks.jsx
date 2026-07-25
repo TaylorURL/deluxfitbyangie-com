@@ -12,10 +12,6 @@ function TikTokGlyph({ className }) {
   )
 }
 
-/**
- * SocialLinks — the canonical row of social channels. Used in the contact
- * page sidebar and the footer.
- */
 export default function SocialLinks({ size = 'md' }) {
   const { footer } = useContent()
   const buttonSize = size === 'sm' ? 'h-10 w-10' : 'h-11 w-11'

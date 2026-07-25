@@ -21,8 +21,6 @@ const textToWeeks = text =>
     .map(title => ({ title }))
 
 /**
- * PlanQuickEditor — self-contained per-client training plan editor. Lists the
- * client's plans with edit/delete, and an inline form to create or update one.
  * Each line in the "weeks" textarea becomes a content.weeks entry { title }.
  * Writes go through savePlan / deletePlan, then the parent reloads.
  */

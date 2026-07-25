@@ -3,7 +3,6 @@ import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
 /**
- * Textarea — a multi-line text field bound to the same DS tokens as Input.
  * Pairs with <Field> for label + helper/error wrapping.
  */
 const textareaVariants = cva(

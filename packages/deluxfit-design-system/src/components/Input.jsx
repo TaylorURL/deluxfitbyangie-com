@@ -2,10 +2,6 @@ import { forwardRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
-/**
- * Input — a single-line text/email field bound to DS tokens. Pairs with
- * <Field> for a label + helper/error wrapper.
- */
 const inputVariants = cva(
   [
     'w-full rounded-df-sm border bg-df-surface-2 px-4 text-df-text placeholder:text-df-text-faint',

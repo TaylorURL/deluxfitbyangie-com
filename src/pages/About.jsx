@@ -43,11 +43,6 @@ const ABOUT_GALLERY = [
   },
 ]
 
-/**
- * About — Angie's story page. Three editorial bands stack: story, credentials,
- * and coaching philosophy, closed by a CTA band routing back into the service
- * pages.
- */
 export default function About() {
   const { about } = useContent()
 

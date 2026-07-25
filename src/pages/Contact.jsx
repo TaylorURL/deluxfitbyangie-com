@@ -5,11 +5,6 @@ import ContactForm from '@/components/forms/ContactForm'
 import SocialLinks from '@/components/SocialLinks'
 import { ShinyText, SpotlightCard } from '@/components/reactbits'
 
-/**
- * Contact — message form on the left, social channels on the right. Form
- * submissions route through the shared `submitForm` helper (see
- * `src/lib/formSubmission.js` for the production-endpoint TODO).
- */
 export default function Contact() {
   const { contact } = useContent()
 

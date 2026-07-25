@@ -184,12 +184,8 @@ function ClientLoginLink({ block = false, iconOnly = false, onClick, label, aria
   )
 }
 
-/**
- * AdminLink — staff-only shortcut to the role-gated backend. Shares the
- * ClientLoginLink chrome (border + uppercase + tracking) but reads as an
- * accent-tinted "Admin" pill with a shield so it's clearly distinct. Callers
- * gate it on `isStaff`; it never renders for clients or logged-out visitors.
- */
+// Callers gate this on `isStaff` — it must never render for clients or
+// logged-out visitors.
 function AdminLink({ block = false, onClick, label, ariaLabel }) {
   return (
     <Link
@@ -219,11 +215,6 @@ function PrimaryCta({ size = 'sm', block = false, onClick, href, label }) {
 }
 
 /**
- * Header — the DeluxFit branded site chrome. Sits transparent over the hero
- * type-specimen, then crystallises into a blurred, hairline-bordered surface
- * once the page scrolls. The page-based nav reads from the active i18n
- * content tree; active state matches the current pathname.
- *
  * The mobile drawer + backdrop are rendered through a body-level portal so
  * they live outside the header's stacking context — keeping the nav reliably
  * tappable at any scroll position.
@@ -331,8 +322,7 @@ export default function Header() {
                 label={header.clientLogin}
                 ariaLabel={header.clientLoginAria}
               />
-              {/* React Bits Magnet — the primary CTA leans toward the cursor. */}
-              <Magnet padding={70} magnetStrength={4}>
+                            <Magnet padding={70} magnetStrength={4}>
                 <PrimaryCta href={header.primaryCtaHref} label={header.primaryCta} />
               </Magnet>
             </div>

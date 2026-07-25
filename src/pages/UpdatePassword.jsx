@@ -8,12 +8,6 @@ import { useLocation } from '@/router'
 import { roleLandingPath } from '@/auth/roles'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
-/**
- * UpdatePassword — set a new password. Used by both the password-reset flow
- * and the staff-invite flow: Supabase puts the user in a temporary session
- * the moment they click the magic link, so we can just call updateUser({
- * password }) from a normal authenticated context.
- */
 export default function UpdatePassword() {
   const { updatePassword, role } = useAuth()
   const { navigate } = useLocation()

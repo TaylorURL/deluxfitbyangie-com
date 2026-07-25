@@ -1,6 +1,5 @@
 import { BookOpen, FileText, PlayCircle } from 'lucide-react'
 
-/** Shared option lists + display metadata for the content library admin. */
 
 export const CATEGORY_OPTIONS = [
   { value: 'workout', label: 'Workout' },

@@ -5,11 +5,8 @@ import { signedUrl } from '@/lib/adminApi'
 import { buildSparkline } from '@/lib/sparkline'
 import { AdminEmpty, fmtDate } from '../components/AdminPrimitives'
 
-/**
- * PhotoThumb — lazily resolves its own signed URL for a private progress photo
- * and renders a thumbnail. Falls back to a placeholder if the URL can't be
- * resolved. Each instance fetches independently so the strip is non-blocking.
- */
+// Each thumb resolves its own signed URL independently, so one slow or failed
+// photo never holds up the rest of the strip.
 function PhotoThumb({ path, label }) {
   const [url, setUrl] = useState(null)
   const [failed, setFailed] = useState(false)
@@ -85,11 +82,6 @@ function WeightSparkline({ points }) {
   )
 }
 
-/**
- * ProgressReview — read-only review of a client's progress: a weight sparkline,
- * the most recent entries (weight / body fat / measurements as chips), and a
- * photo strip resolving private signed URLs lazily.
- */
 export default function ProgressReview({ progress }) {
   const entries = progress ?? []
   if (entries.length === 0) {

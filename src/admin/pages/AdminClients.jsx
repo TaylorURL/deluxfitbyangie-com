@@ -14,11 +14,6 @@ import {
 } from '../components/AdminPrimitives'
 import ClientDetail from '../clients/ClientDetail'
 
-/**
- * AdminClients — the client hub. A searchable list of every client on the left;
- * selecting one renders the full ClientDetail surface (emphasis="manage") on
- * the right, where the coach can review progress and update the program.
- */
 export default function AdminClients() {
   const { data: clients, loading, error } = useAsyncData(listClients, [], [])
   const [selected, setSelected] = useState(null)
