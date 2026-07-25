@@ -116,6 +116,14 @@ flowchart TD
 - **The design system is consumed from source.** `packages/deluxfit-design-system` is aliased as `@deluxfit/ds` with no build step; `--df-*` CSS variables are mirrored into Tailwind by `tailwind-preset.cjs`, and `data-theme` re-scopes them on any subtree.
 - **Migrations are append-only.** `migrations/` holds ordered SQL DDL for the schema, RLS policies, and storage buckets, plus a transaction-wrapped `verify_rls_isolation.sql` self-test.
 
+## Deeper docs
+
+| Document | Covers |
+| :--- | :--- |
+| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md) | The append-only migration set, what each file adds, and the RLS isolation self-test. |
+| [`supabase/functions/EDGE_FUNCTIONS.md`](supabase/functions/EDGE_FUNCTIONS.md) | Every edge function, its auth gate, deploy commands, and required secrets. |
+| [`packages/deluxfit-design-system/DESIGN_SYSTEM.md`](packages/deluxfit-design-system/DESIGN_SYSTEM.md) | `--df-*` tokens, the Tailwind preset, and the component catalog. |
+
 ## Project structure
 
 ```
@@ -125,7 +133,7 @@ deluxfitbyangie-com/
 │   └── deluxfit-logo.png          Wordmark used across the app
 ├── docs/logo-dark.png             Dark-scheme wordmark
 ├── migrations/                    Ordered SQL DDL, RLS policies, RLS self-test
-├── supabase/functions/            15 Deno edge functions (service role)
+├── supabase/functions/            13 Deno edge functions (service role)
 ├── packages/
 │   └── deluxfit-design-system/    In-repo DS — --df-* tokens, Tailwind preset, components
 ├── src/
