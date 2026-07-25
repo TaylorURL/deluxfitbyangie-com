@@ -25,7 +25,7 @@ numbered and applied in order; **never edit an already-applied migration — add
 `NNNN_*.sql` file instead.**
 
 > **Note** — the `.sql` files are gitignored (`*.sql` in the repo's `.gitignore`), so this
-> README is the version-controlled record of the migration set. The SQL itself lives beside
+> document is the version-controlled record of the migration set. The SQL itself lives beside
 > this folder locally and is applied straight to Supabase (CLI, `psql`, or the dashboard SQL
 > editor); a fresh clone contains this document, not the files it describes.
 
@@ -85,7 +85,7 @@ Paste the file contents into the dashboard SQL editor and run.
   `drop policy if exists` before each `create policy`, and `create index if not exists`.
 - **RLS on every table** — client access is read-only ("select own"); all sensitive writes
   happen in edge functions using the service-role key, which bypasses RLS. See
-  [`supabase/functions/README.md`](../supabase/functions/README.md).
+  [`supabase/functions/EDGE_FUNCTIONS.md`](../supabase/functions/EDGE_FUNCTIONS.md).
 - **`pgcrypto` enabled** — for `gen_random_uuid()`.
 
 <br />
