@@ -3,19 +3,13 @@ import { createContext, useContext } from 'react'
 /**
  * @typedef {object} SundayAnalyticsApi
  * @property {(name: string, props?: Record<string, unknown>) => void} track
- *   Reserved for future custom events. Exposed in v1 but intentionally a no-op
- *   — the ingest pipeline only stores pageviews for now (YAGNI).
+ *   Currently a no-op — only pageviews reach the ingest pipeline.
  */
 
 /** @type {import('react').Context<SundayAnalyticsApi | null>} */
 export const SundayAnalyticsContext = createContext(null)
 
-/**
- * Access the analytics API. Returns a `track()` function reserved for future
- * custom events. Must be called inside a <SundayAnalyticsProvider>.
- *
- * @returns {SundayAnalyticsApi}
- */
+/** @returns {SundayAnalyticsApi} */
 export function useSundayAnalytics() {
   const api = useContext(SundayAnalyticsContext)
   if (!api) {

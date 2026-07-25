@@ -3,7 +3,6 @@ import { useContent } from '@/i18n'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 /**
- * PlanPanel — the client's assigned personalized plans (a coaching benefit).
  * Plans are gated behind active coaching; otherwise the empty/gated state
  * routes the client to apply.
  */

@@ -2,11 +2,6 @@ import { forwardRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '../lib/cn'
 
-/**
- * Reveal — fades + lifts its children into view once on scroll. Honors
- * `prefers-reduced-motion` by rendering statically. `delay` offsets the entrance
- * for hand-tuned sequencing; `as` lets callers pick the semantic element.
- */
 export const Reveal = forwardRef(function Reveal(
   { className, children, delay = 0, y = 24, as = 'div', once = true, amount = 0.3, ...props },
   ref

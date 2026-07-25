@@ -6,11 +6,6 @@ import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
-/**
- * ResetPassword — request a password-reset email. Supabase mails a link that
- * lands the user on /update-password where they set a new password using the
- * recovery session it creates.
- */
 export default function ResetPassword() {
   const { requestPasswordReset } = useAuth()
   const [email, setEmail] = useState('')

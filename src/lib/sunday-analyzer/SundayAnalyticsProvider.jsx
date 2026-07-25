@@ -6,16 +6,12 @@ import { sendHit } from './transport'
 import { subscribeToRouteChanges } from './history'
 
 /**
- * SundayAnalyticsProvider — drop-in, router-agnostic pageview tracking.
- *
- * Auto-tracks a pageview on mount and on every History API navigation
- * (pushState / replaceState / popstate). Cookieless: a session id lives in
- * sessionStorage and rolls after 30 minutes of inactivity. Hits are sent via
- * navigator.sendBeacon with a fetch keepalive fallback.
+ * Router-agnostic pageview tracking: mounting is enough, no route hook needed.
+ * Cookieless — the session id lives in sessionStorage, never a cookie.
  *
  * @param {object} props
  * @param {string} props.siteKey - public site key from analytics_sites
- * @param {string} [props.apiUrl] - ingest endpoint; defaults to Sunday Analyzer's hosted function
+ * @param {string} [props.apiUrl] - ingest endpoint; defaults to the hosted function
  * @param {import('react').ReactNode} props.children
  */
 export function SundayAnalyticsProvider({ siteKey, apiUrl = DEFAULT_API_URL, children }) {
@@ -37,8 +33,8 @@ export function SundayAnalyticsProvider({ siteKey, apiUrl = DEFAULT_API_URL, chi
     return subscribeToRouteChanges(trackPageview)
   }, [siteKey, apiUrl])
 
-  // Reserved custom-event API. v1 stores pageviews only, so track() is an
-  // intentional no-op exposed for forward-compatibility.
+  // Deliberate no-op: the ingest pipeline only stores pageviews, but consumers
+  // can wire up track() calls now without breaking when custom events land.
   const track = useCallback(() => {}, [])
 
   const api = useMemo(() => ({ track }), [track])

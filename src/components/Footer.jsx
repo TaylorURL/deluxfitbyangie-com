@@ -7,11 +7,6 @@ import { ShinyText } from '@/components/reactbits'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
-/**
- * Footer — closing navigation, social channels, a ghosted oversized wordmark
- * as a final type-specimen flourish, and the legal disclaimer. The nav links
- * mirror the page list in i18n content so adding a route is a one-edit job.
- */
 export default function Footer() {
   const { brand, footer, nav } = useContent()
   return (

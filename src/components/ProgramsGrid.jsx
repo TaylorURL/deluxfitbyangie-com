@@ -3,13 +3,6 @@ import { useContent } from '@/i18n'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
 import { SpotlightCard } from '@/components/reactbits'
 
-/**
- * ProgramsGrid — the four bookable/active services + the in-person "coming
- * soon" teaser. On the Home page this is the central comparison band; on
- * individual service pages it acts as the "compare programs" footer. Pricing
- * strings come from `services` in the i18n content tree and follow the client
- * spec verbatim.
- */
 export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
   const { programs, services, inPerson } = useContent()
   const ordered = [
@@ -29,8 +22,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
       accent={programs.accent}
       subhead={programs.subhead}
     >
-      {/* React Bits Particles — a drifting crimson field behind the grid. */}
-      <AnimatedBackdrop variant="particles" opacity={0.5} />
+            <AnimatedBackdrop variant="particles" opacity={0.5} />
 
       <div className="grid items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
         {ordered.map((service, index) => (

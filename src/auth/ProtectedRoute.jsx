@@ -4,8 +4,6 @@ import { useAuth } from './useAuth'
 import { roleLandingPath } from './roles'
 
 /**
- * ProtectedRoute — gate a route by auth state and role.
- *
  * @param {object} props
  * @param {React.ReactNode} props.children - rendered when access is allowed
  * @param {Array<'staff' | 'client'>} [props.allow] - roles that may enter.

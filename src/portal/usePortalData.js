@@ -13,11 +13,6 @@ import {
   getProgressEntries,
 } from '@/lib/portalApi'
 
-/**
- * usePortalData — loads everything the dashboard needs for the signed-in user
- * in one pass and exposes per-collection reloaders so a panel can refresh after
- * a mutation (new progress entry, sent message) without a full reload.
- */
 export function usePortalData() {
   const { user } = useAuth()
   const { locale } = useLanguage()

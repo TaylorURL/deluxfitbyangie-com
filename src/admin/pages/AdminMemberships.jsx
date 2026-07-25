@@ -26,11 +26,6 @@ const PRODUCT_LABEL = {
 
 const loadMemberships = () => Promise.all([listAllMemberships(), listClients()])
 
-/**
- * AdminMemberships — every membership/coaching record across all clients, with
- * manual status changes, removal, and a small grant form. All writes go through
- * the staff-only `update-membership` edge function via adminApi.
- */
 export default function AdminMemberships() {
   const { data, loading, error, reload } = useAsyncData(loadMemberships, [], [[], []])
   const [memberships, clients] = data ?? [[], []]
@@ -156,7 +151,6 @@ export default function AdminMemberships() {
   )
 }
 
-/** A small form to grant or create a membership for a chosen client. */
 function GrantForm({ clients, onSaved }) {
   const [userId, setUserId] = useState('')
   const [product, setProduct] = useState('membership')

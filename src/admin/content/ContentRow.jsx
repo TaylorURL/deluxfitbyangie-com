@@ -8,10 +8,6 @@ import {
   mediaTypeLabel,
 } from './contentMeta'
 
-/**
- * A single content-library item rendered as a row inside the list card, with
- * its title, taxonomy badges, media source, and edit / delete actions.
- */
 export default function ContentRow({ item, onEdit, onDelete, busy }) {
   const Icon = MEDIA_ICON[item.media_type] ?? MEDIA_ICON.video
   const hasUpload = Boolean(item.media_path)

@@ -4,10 +4,6 @@ import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
 /**
- * Select — a native <select> styled to match Input/Textarea. Pairs with
- * <Field> for label + helper/error wrapping. The chevron is a decorative
- * lucide glyph layered over the native control.
- *
  * Children are the option list (use <option> nodes); pass a `placeholder`
  * to render a disabled-selected first option.
  */

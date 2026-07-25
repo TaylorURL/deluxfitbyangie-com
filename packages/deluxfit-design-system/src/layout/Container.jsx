@@ -10,8 +10,6 @@ const WIDTH = {
 }
 
 /**
- * Container — centers content and caps its width with responsive gutters.
- *
  * @param {object} props
  * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size='lg']
  */

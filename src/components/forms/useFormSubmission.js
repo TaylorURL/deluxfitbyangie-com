@@ -9,9 +9,7 @@ const STATUS = {
 }
 
 /**
- * useFormSubmission — shared form state machine used by every marketing form
- * on the site (membership signup, online coaching application, 1-on-1
- * booking, contact). Returns:
+ * Returns:
  *
  *   {
  *     status,           // 'idle' | 'submitting' | 'success' | 'error'

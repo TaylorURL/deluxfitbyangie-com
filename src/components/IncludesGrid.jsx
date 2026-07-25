@@ -2,10 +2,6 @@ import { Reveal, Section } from '@deluxfit/ds'
 import { SpotlightCard } from '@/components/reactbits'
 
 /**
- * IncludesGrid — the shared "what's included" grid used on every service page.
- * Each item is an icon-led card with a ghosted index numeral as type
- * furniture, matching the visual rhythm of the rest of the system.
- *
  * @param {object} props
  * @param {string} props.eyebrow
  * @param {string} props.heading

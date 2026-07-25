@@ -2,12 +2,6 @@ import { useReducedMotion } from 'framer-motion'
 import { CountUp } from '@/components/reactbits'
 
 /**
- * AnimatedPrice — renders a price string (e.g. "$14.99", "$150",
- * "Starting at $75") with its numeric portion counting up via the React Bits
- * CountUp component when it scrolls into view. Any non-numeric prefix ("$",
- * "Starting at $") and suffix are preserved verbatim so the brand's exact
- * pricing copy is never altered — only the number animates.
- *
  * Under `prefers-reduced-motion`, or when no number is found, it renders the
  * original string statically.
  *

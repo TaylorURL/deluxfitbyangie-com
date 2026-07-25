@@ -1,8 +1,6 @@
 import { cn } from '@deluxfit/ds'
 
 /**
- * PhotoBand — full-bleed editorial photo strip used between page sections to
- * carry the real photo shoot into routed pages without redoing their layout.
  * Renders the image with a fixed aspect ratio, a dark scrim, and a hairline
  * top/bottom border so it reads as part of the existing dark surface stack.
  *

@@ -161,10 +161,6 @@ function buildEntry(file) {
   }
 }
 
-/**
- * DevUpload — content-intake page where the site owner and team upload
- * high-quality photos and videos for use on the DeluxFit website.
- */
 export default function DevUpload() {
   const [entries, setEntries] = useState([])
   const [clientName, setClientName] = useState('')

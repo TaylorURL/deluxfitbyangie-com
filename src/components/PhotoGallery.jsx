@@ -1,7 +1,6 @@
 import { cn } from '@deluxfit/ds'
 
 /**
- * PhotoGallery — responsive editorial grid for the real DeluxFit photography.
  * Renders an asymmetric, masonry-style layout that mixes tall portraits with
  * wider action stills, each framed with the same hairline border treatment as
  * FramedPhoto so the gallery feels native to the design system.

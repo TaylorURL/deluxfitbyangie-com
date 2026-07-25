@@ -2,11 +2,6 @@ import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 
 /**
- * SplitHeading — renders a heading string in the condensed Anton display face
- * with exactly one phrase set in the couture Fraunces italic (crimson). This is
- * the single source of the "one accented phrase per heading" rule, shared by the
- * Section header and every hand-built band so the whole site reads as one voice.
- *
  * @param {object} props
  * @param {string} props.text - the full heading copy (from site.js)
  * @param {string} [props.accent] - the substring to set in italic serif

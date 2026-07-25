@@ -29,12 +29,6 @@ const numOrUndef = value => {
   return Number.isFinite(n) ? n : undefined
 }
 
-/**
- * NutritionQuickEditor — shows the client's current nutrition plan (macros,
- * meal structure, resources, notes) and an inline form to create or update one
- * via saveNutrition. Meal structure and resources are repeatable rows. Writes
- * route through the edge function; the parent reloads afterwards.
- */
 export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
   const list = nutrition ?? []
   const current = list[0] ?? null

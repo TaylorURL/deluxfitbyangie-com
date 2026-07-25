@@ -1,10 +1,5 @@
 import { buildSparkline } from '@/lib/sparkline'
 
-/**
- * Sparkline — a tiny inline SVG line chart for a series of numbers, oldest to
- * newest. Used for the progress weight trend: a crimson stroke over a soft area
- * fade with a marked latest point. Renders nothing for fewer than two points.
- */
 export default function Sparkline({ values, width = 280, height = 48 }) {
   if (!Array.isArray(values) || values.length < 2) return null
 

@@ -19,10 +19,6 @@ import OnlineCoachingApplicationForm from '@/components/forms/OnlineCoachingAppl
 import AnimatedPrice from '@/components/AnimatedPrice'
 import { SpotlightCard } from '@/components/reactbits'
 
-/**
- * OnlineCoaching — the $150/month personalized online coaching page. Hero +
- * includes grid + client responsibilities + best-for + the application form.
- */
 export default function OnlineCoaching() {
   const { coaching, services } = useContent()
   const service = services.coaching

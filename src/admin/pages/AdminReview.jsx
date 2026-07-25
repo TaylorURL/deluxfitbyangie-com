@@ -12,12 +12,6 @@ import {
 } from '../components/AdminPrimitives'
 import ClientDetail from '../clients/ClientDetail'
 
-/**
- * AdminReview — the Monthly Review surface. Pick a client, then review their
- * progress, photos, and measurements and update the program in one place. It
- * reuses ClientDetail (emphasis="review") so review and program edits live
- * side by side.
- */
 export default function AdminReview() {
   const { data: clients, loading, error } = useAsyncData(listClients, [], [])
   const [selected, setSelected] = useState('')

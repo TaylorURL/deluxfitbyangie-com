@@ -5,9 +5,6 @@ import { Badge } from './Badge'
 import { Button } from './Button'
 
 /**
- * PricingCard — a single coaching tier. The `highlighted` ("Most Popular") state
- * scales up, swaps to a red-glow border, and reads as the recommended choice.
- *
  * The CTA renders as an anchor (via Button `asChild`). When `ctaHref` is an
  * internal path (starts with `/` or `#`) the link stays in the SPA and
  * navigates via the host's anchor handling. External URLs (Stripe Payment

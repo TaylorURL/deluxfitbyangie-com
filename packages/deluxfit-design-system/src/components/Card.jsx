@@ -2,10 +2,6 @@ import { forwardRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
-/**
- * Card — an elevated charcoal surface. `variant` controls the base treatment;
- * `interactive` adds a hover lift + red border for clickable cards.
- */
 const cardVariants = cva('rounded-df-lg border transition-colors duration-200 ease-df-out', {
   variants: {
     variant: {

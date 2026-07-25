@@ -30,7 +30,6 @@ const SERVICE_LABEL = {
   live_program: 'Live program',
 }
 
-/** A small titled wrapper so each section card reads consistently. */
 function Section({ title, intro, children }) {
   return (
     <SectionCard>
@@ -103,13 +102,6 @@ function BookingsList({ bookings }) {
   )
 }
 
-/**
- * ClientDetail — the rich per-client coaching surface, reused by the Clients
- * hub (emphasis="manage") and the Monthly Review (emphasis="review"). One
- * loader fetches everything in parallel so a single reload refreshes the whole
- * view after any write. The emphasis only changes section ordering — the coach
- * can both review and update the program from either entry point.
- */
 export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   const { data, loading, error, reload } = useAsyncData(
     () =>

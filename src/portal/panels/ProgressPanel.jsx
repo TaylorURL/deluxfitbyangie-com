@@ -23,11 +23,6 @@ const emptyEntry = () => ({
   thighs: '',
 })
 
-/**
- * ProgressPanel — log and review progress entries. New entries (with optional
- * body measurements and a progress photo) are written by the `log-progress`
- * edge function (never a direct table write), then the list reloads.
- */
 export default function ProgressPanel({ progress, reloadProgress }) {
   const { portal } = useContent()
   const copy = portal.progress

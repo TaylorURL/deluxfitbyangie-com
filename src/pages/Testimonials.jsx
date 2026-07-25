@@ -17,12 +17,6 @@ import PhotoPlaceholder from '@/components/PhotoPlaceholder'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
 import { ShinyText, ScrollVelocity } from '@/components/reactbits'
 
-/**
- * Testimonials — client success stories and before/after photos. Real client
- * content lands here as Angie's clients complete their programs. Until then
- * every card is a clearly-labelled placeholder so the page never implies
- * results that haven't happened yet.
- */
 export default function Testimonials() {
   const { testimonials } = useContent()
 

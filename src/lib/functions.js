@@ -7,11 +7,6 @@ import { supabase } from '@/config/supabase'
  */
 
 /**
- * Invoke an edge function and unwrap its `{ ok, error, ... }` envelope. Throws a
- * clean Error on transport failure or an `ok: false` body, surfacing the
- * function's JSON error message when it sends one. Returns the raw data object
- * on success.
- *
  * @param {string} name - the edge function name (e.g. 'log-progress')
  * @param {unknown} body - the request body (JSON or FormData)
  * @param {string} [fallbackMessage] - error text when the server sends none
