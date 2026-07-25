@@ -1,21 +1,18 @@
-/* =============================================================================
-   FORM SUBMISSION — stub helper for the application + contact + booking forms
-   -----------------------------------------------------------------------------
-   The DeluxFit funnel currently has ONE production backend integration: the
-   `deluxfit-intake` Supabase edge function, which only accepts FormData with a
-   file. There is no live JSON endpoint for marketing form submissions yet.
-
-   ⚠️  TODO — POINT THESE FORMS AT A REAL ENDPOINT.
-   When the backend is ready, replace `FORM_ENDPOINT` below with the production
-   URL (or a Supabase edge function name + supabase.functions.invoke) and the
-   forms across the site will start delivering submissions. Until then, this
-   helper simulates a successful submit so the UI flows end-to-end.
-   ========================================================================== */
+/*
+ * Backs the application, contact and booking forms. Nothing here reaches a
+ * server yet: the only live backend integration is the `deluxfit-intake` edge
+ * function, which takes FormData with a file attached and so can't carry these
+ * JSON payloads.
+ *
+ * Until an endpoint exists this simulates a successful submit, which keeps the
+ * whole funnel clickable end-to-end but means real submissions are dropped on
+ * the floor. Anything relying on these forms actually delivering is broken
+ * until FORM_ENDPOINT is set.
+ */
 
 /**
- * Set to a real endpoint URL (e.g. `/api/intake` or a Supabase function URL)
- * to start delivering submissions. While `null`, submissions are accepted
- * locally without leaving the browser.
+ * Point at a real endpoint URL (or a Supabase function URL) to start
+ * delivering submissions. While `null`, nothing leaves the browser.
  */
 export const FORM_ENDPOINT = null
 
@@ -34,7 +31,6 @@ export async function submitForm(formKey, payload) {
   }
 
   if (!FORM_ENDPOINT) {
-    // TODO: wire to backend. See the comment block above.
     if (typeof console !== 'undefined') {
       console.info(`[deluxfit] ${formKey} submission (no endpoint configured)`, body)
     }
