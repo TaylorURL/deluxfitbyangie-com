@@ -119,7 +119,6 @@ export default function BookingCalendar({ service }) {
       onSubmit={handleSubmit}
       className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
     >
-      {/* DATE */}
       <fieldset>
         <legend className="flex items-center gap-2 text-xs font-600 uppercase tracking-wider text-df-text-muted">
           <CalendarDays className="h-4 w-4 text-df-accent-bright" aria-hidden="true" />
@@ -158,7 +157,6 @@ export default function BookingCalendar({ service }) {
         </div>
       </fieldset>
 
-      {/* TIME */}
       <fieldset className="mt-6">
         <legend className="flex items-center gap-2 text-xs font-600 uppercase tracking-wider text-df-text-muted">
           <Clock className="h-4 w-4 text-df-accent-bright" aria-hidden="true" />
@@ -210,7 +208,6 @@ export default function BookingCalendar({ service }) {
         {errors.slot && <p className="mt-2 text-xs text-df-danger">{errors.slot}</p>}
       </fieldset>
 
-      {/* FOCUS + GOAL */}
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <Field label={booking.trainingFocusLabel} error={errors.focus}>
           <Select
@@ -230,7 +227,6 @@ export default function BookingCalendar({ service }) {
         </Field>
       </div>
 
-      {/* GUEST DETAILS */}
       {isGuest && (
         <div className="mt-5 grid gap-5 sm:grid-cols-2">
           <Field label={booking.nameLabel} error={errors.name}>

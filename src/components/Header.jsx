@@ -45,8 +45,8 @@ const NAVBAR_TONES = new Set(['dark', 'light', 'gray'])
  * useNavbarTone — resolves the tone of whatever toned section currently sits
  * under the fixed navbar, by hit-testing every `[data-theme]` panel against a
  * probe line through the middle of the navbar's height band. Reuses the same
- * source of truth the page already declares (the anduril-style alternating
- * sections) so we never re-detect colors from pixels. Re-runs on scroll,
+ * source of truth the page already declares (the alternating toned sections)
+ * so we never re-detect colors from pixels. Re-runs on scroll,
  * resize, and route change.
  */
 function useNavbarTone(defaultTone, pathname) {

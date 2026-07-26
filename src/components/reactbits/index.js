@@ -1,11 +1,11 @@
-/* =============================================================================
-   React Bits — vendored animated component library (reactbits.dev)
-   -----------------------------------------------------------------------------
-   React Bits ships shadcn-style: each component is pulled from the registry at
-   https://reactbits.dev/r/<Name>-JS-TW.json and lives in-tree as source we own,
-   rather than as an opaque npm dependency. These are the JS + Tailwind variants.
-
-   Two adaptations were applied at install time:
+/*
+ * React Bits — vendored animated component library (reactbits.dev)
+ *
+ * React Bits ships shadcn-style: each component is pulled from the registry at
+ * https://reactbits.dev/r/<Name>-JS-TW.json and lives in-tree as source we own,
+ * rather than as an opaque npm dependency. These are the JS + Tailwind variants.
+ *
+ * Two adaptations were applied at install time:
      - `motion/react` imports were rewritten to `framer-motion` (the same
        library, already a project dependency — no second animation runtime).
      - The WebGL backdrops (Aurora / Particles / Threads) depend on `ogl`.
@@ -14,7 +14,7 @@
    Everything is re-exported here under a single, named surface so pages import
    from '@/components/reactbits'. Consumers gate the motion-heavy pieces behind
    `useReducedMotion()` to honor the OS preference, exactly like the DS does.
-   ========================================================================== */
+ */
 
 // Text animations
 export { default as ShinyText } from './ShinyText'

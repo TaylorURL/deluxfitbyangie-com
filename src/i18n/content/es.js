@@ -1,19 +1,17 @@
-/* =============================================================================
-   DELUXFIT BY ANGIE — CONTENIDO EN ESPAÑOL (es)
-   -----------------------------------------------------------------------------
-   Equivalente en español del árbol en `./en.js`. Precios, características y
-   lenguaje de servicio respetan EXACTAMENTE el modelo de negocio finalizado:
-
-     1. Membresía Delux Fit              — $14.99 / mes  (general, NO personalizado)
-     2. Coaching Online Personalizado    — $150 / mes
-     3. Sesión de Entrenamiento en Vivo   — $75 / sesión (45–60 min, prueba única)
-     4. Programa de Entrenamiento en Vivo — $50 / sesión (continuo, Zoom)
-     5. Entrenamiento Presencial Futuro   — Desde $75 / sesión — MUY PRONTO
-
-   Los servicios 3 y 4 son DOS productos distintos: el #3 es una sesión de
-   prueba única de $75, el #4 es el programa continuo de $50/sesión. Cada clave
-   aquí debe existir en `./en.js`.
-   ========================================================================== */
+/*
+ * Equivalente en espanol del arbol en `./en.js`. Los precios y los nombres de
+ * los servicios son la copia del negocio, no formato que se pueda ajustar:
+ *
+ *   1. Membresia Delux Fit               - $14.99 / mes, general (no personalizado)
+ *   2. Coaching Online Personalizado     - $150 / mes
+ *   3. Sesion de Entrenamiento en Vivo   - $75, una sesion de prueba de 45-60 min
+ *   4. Programa de Entrenamiento en Vivo - $50 / sesion, continuo, por Zoom
+ *   5. Entrenamiento Presencial          - desde $75 / sesion, aun sin lanzar
+ *
+ * Los servicios 3 y 4 son productos distintos y no se unifican a proposito: el
+ * 3 es la prueba unica, el 4 el programa continuo. Cada clave de `./en.js` debe
+ * existir aqui o el sitio en espanol muestra huecos.
+ */
 
 import {
   Dumbbell,

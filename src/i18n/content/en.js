@@ -1,21 +1,17 @@
-/* =============================================================================
-   DELUXFIT BY ANGIE — ENGLISH CONTENT (en)
-   -----------------------------------------------------------------------------
-   The active English content tree for the multi-page DeluxFit site. Pricing,
-   features, and service language follow the client's FINALIZED business model
-   VERBATIM:
-
-     1. Delux Fit Membership            — $14.99 / month   (general, NOT personalized)
-     2. Personalized Online Coaching    — $150 / month
-     3. Single Live Training Session    — $75 / session (45–60 min, one-time trial)
-     4. Live Online Personal Training   — $50 / session (ongoing program, Zoom)
-     5. Future In-Person Training        — Starting at $75 / session — COMING SOON
-
-   Mission + slogan are surfaced in the hero/brand lockup. Services 3 and 4 are
-   TWO SEPARATE products: #3 is a one-time $75 trial session, #4 is the ongoing
-   $50/session program. Spanish equivalents live in `./es.js` — every key here
-   must exist there.
-   ========================================================================== */
+/*
+ * English content tree for the site. The prices and service names here are the
+ * business's own copy, not display formatting to be tidied:
+ *
+ *   1. Delux Fit Membership          - $14.99 / month, general (not personalized)
+ *   2. Personalized Online Coaching  - $150 / month
+ *   3. Single Live Training Session  - $75, one 45-60 min trial session
+ *   4. Live Online Personal Training - $50 / session, ongoing program over Zoom
+ *   5. In-person training            - from $75 / session, not launched yet
+ *
+ * Services 3 and 4 are separate products and are deliberately not merged: 3 is
+ * the one-off trial, 4 is the ongoing program. `./es.js` mirrors this tree, and
+ * a key that exists here but not there renders as a blank on the Spanish site.
+ */
 
 import {
   Dumbbell,
@@ -217,9 +213,7 @@ const en = {
 
   services,
 
-  /* ----------------------------------------------------------------------- */
-  /*  HOME                                                                    */
-  /* ----------------------------------------------------------------------- */
+  /* HOME */
   home: {
     hero: {
       badge: 'Now coaching new online clients',
@@ -302,9 +296,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  ABOUT                                                                   */
-  /* ----------------------------------------------------------------------- */
+  /* ABOUT */
   about: {
     hero: {
       eyebrow: 'About Angie',
@@ -376,9 +368,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  MEMBERSHIP — Service 01 · $14.99 / month                               */
-  /* ----------------------------------------------------------------------- */
+  /* MEMBERSHIP — Service 01 · $14.99 / month */
   membership: {
     hero: {
       eyebrow: 'Service 01 · Delux Fit Membership',
@@ -458,9 +448,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  ONLINE COACHING — Service 02 · $150 / month                            */
-  /* ----------------------------------------------------------------------- */
+  /* ONLINE COACHING — Service 02 · $150 / month */
   coaching: {
     hero: {
       eyebrow: 'Service 02 · Personalized Online Coaching',
@@ -601,9 +589,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  SINGLE LIVE TRAINING SESSION — Service 03 · $75 / session              */
-  /* ----------------------------------------------------------------------- */
+  /* SINGLE LIVE TRAINING SESSION — Service 03 · $75 / session */
   session: {
     hero: {
       eyebrow: 'Service 03 · Single Live Training Session',
@@ -643,9 +629,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  LIVE ONLINE PERSONAL TRAINING PROGRAM — Service 04 · $50 / session     */
-  /* ----------------------------------------------------------------------- */
+  /* LIVE ONLINE PERSONAL TRAINING PROGRAM — Service 04 · $50 / session */
   training: {
     hero: {
       eyebrow: 'Service 04 · Live Online Personal Training Program',
@@ -710,9 +694,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  BOOKING — shared copy for the live booking calendar (services 03 & 04) */
-  /* ----------------------------------------------------------------------- */
+  /* BOOKING — shared copy for the live booking calendar (services 03 & 04) */
   booking: {
     selectDateLabel: 'Select a date',
     selectTimeLabel: 'Select a time',
@@ -752,9 +734,7 @@ const en = {
     fitnessGoalOptions: ['Fat loss', 'Muscle gain', 'Strength development', 'General fitness', 'Other'],
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  TESTIMONIALS                                                            */
-  /* ----------------------------------------------------------------------- */
+  /* TESTIMONIALS */
   testimonials: {
     hero: {
       eyebrow: 'Client stories',
@@ -814,9 +794,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  CONTACT                                                                 */
-  /* ----------------------------------------------------------------------- */
+  /* CONTACT */
   contact: {
     hero: {
       eyebrow: 'Contact',
@@ -860,9 +838,7 @@ const en = {
     },
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  PROGRAMS GRID — shared section used on Home + service pages             */
-  /* ----------------------------------------------------------------------- */
+  /* PROGRAMS GRID — shared section used on Home + service pages */
   programs: {
     eyebrow: 'Programs',
     heading: 'Pick the level of support that fits.',
@@ -871,9 +847,7 @@ const en = {
       'Four ways to train and one coming soon. Pricing and features are exact — nothing hidden.',
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  In-person coming soon — Service 05                                      */
-  /* ----------------------------------------------------------------------- */
+  /* In-person coming soon — Service 05 */
   inPerson: {
     eyebrow: 'Coming soon',
     title: 'Future In-Person Training',
@@ -897,9 +871,7 @@ const en = {
       'Results vary. DeluxFit by Angie provides fitness coaching for educational purposes and is not a substitute for medical advice. Consult your physician before beginning any exercise or nutrition program.',
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  CLIENT PORTAL — member dashboard                                        */
-  /* ----------------------------------------------------------------------- */
+  /* CLIENT PORTAL — member dashboard */
   portal: {
     backToSite: 'Back to site',
     backToHome: 'Back to DeluxFit',
@@ -1061,9 +1033,7 @@ const en = {
       'The portal couldn’t reach the server. Some data may be unavailable right now.',
   },
 
-  /* ----------------------------------------------------------------------- */
-  /*  Shared icons exposed for components that want a generic icon by name    */
-  /* ----------------------------------------------------------------------- */
+  /* Shared icons exposed for components that want a generic icon by name */
   icons: {
     shield: ShieldCheck,
     users: Users,

@@ -1,10 +1,10 @@
-/* =============================================================================
-   I18N — SUPPORTED LOCALES
-   -----------------------------------------------------------------------------
-   The single source of truth for which languages the site ships. Adding a third
-   language is a matter of authoring its content tree, registering it here, and
-   adding a tab to LanguageSwitcher — no other file needs to change.
-   ========================================================================== */
+/*
+ * I18N — SUPPORTED LOCALES
+ *
+ * The single source of truth for which languages the site ships. Adding a third
+ * language is a matter of authoring its content tree, registering it here, and
+ * adding a tab to LanguageSwitcher — no other file needs to change.
+ */
 
 import en from './content/en'
 import es from './content/es'
