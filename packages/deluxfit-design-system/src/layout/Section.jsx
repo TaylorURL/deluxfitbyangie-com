@@ -24,8 +24,8 @@ const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
  * `tone` switches the section's surface context (dark / light / gray) by
  * scoping the `--df-*` tokens to this element via `data-theme`. All children
  * resolve from semantic tokens, so the brand red, text, borders, and shadows
- * flip together with no per-section hardcoding — the anduril-style alternation
- * pattern. When `tone` is set, the section also paints its `bg-df-bg` so the
+ * flip together with no per-section hardcoding, which is what lets a page
+ * alternate tones panel by panel. When `tone` is set, the section also paints its `bg-df-bg` so the
  * panel is fully self-contained and hard-cuts cleanly against the neighbors.
  *
  * @param {object} props

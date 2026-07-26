@@ -194,7 +194,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MEET ANGIE — light editorial panel, anduril-style hard cut from the hero */}
+      {/* Light panel, hard-cut against the hero rather than blended into it */}
       <section data-theme="light" className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28">
         <Container size="lg">
           <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
