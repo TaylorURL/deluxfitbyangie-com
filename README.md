@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.28-e11d2a?style=for-the-badge" alt="Version 1.0.28" />
+  <img src="https://img.shields.io/badge/version-1.0.30-e11d2a?style=for-the-badge" alt="Version 1.0.30" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
@@ -51,10 +51,10 @@ Most trainer sites sell a service and then hand the client off to a spreadsheet 
 | Layer | Technology |
 | :--- | :--- |
 | UI | React 19 + a hand-rolled SPA router (no `react-router`) |
-| Build & dev | Vite 7 |
+| Build & dev | Vite 7 (Node `22.x`) |
 | Styling | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens) |
-| Components & motion | Radix UI, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react` |
-| Backend | Supabase — Auth, Postgres + RLS, 15 Deno edge functions |
+| Components & motion | Radix UI, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl` |
+| Backend | Supabase — Auth, Postgres + RLS, 14 Deno edge functions |
 | Payments | Stripe Checkout, driven entirely from the edge functions |
 | i18n | Custom English / Spanish content trees |
 | Analytics | First-party, cookieless Sunday Analyzer beacon |
@@ -133,13 +133,14 @@ deluxfitbyangie-com/
 │   └── deluxfit-logo.png          Wordmark used across the app
 ├── docs/logo-dark.png             Dark-scheme wordmark
 ├── migrations/                    Ordered SQL DDL, RLS policies, RLS self-test
-├── supabase/functions/            13 Deno edge functions (service role)
+├── supabase/functions/            14 Deno edge functions (service role)
 ├── packages/
 │   └── deluxfit-design-system/    In-repo DS — --df-* tokens, Tailwind preset, components
 ├── src/
 │   ├── router/                    Hand-rolled SPA router (path match + <Link>)
-│   ├── pages/                     Public funnel — Home, Membership, Online Coaching, …
-│   ├── components/                Site chrome, forms, photo layouts
+│   ├── pages/                     Home, Membership, OnlineCoaching, SingleSession,
+│   │                              LiveTrainingProgram, About, Testimonials, Contact, auth
+│   ├── components/                Site chrome, forms, photo layouts, reactbits effects
 │   ├── auth/                      Supabase Auth provider, protected routes, roles
 │   ├── portal/                    Signed-in member portal and its panels
 │   ├── admin/                     Staff-gated coach dashboard
