@@ -1,26 +1,26 @@
-/* =============================================================================
-   DeluxFit Design System — tokens & primitives
-   -----------------------------------------------------------------------------
-   The single, portable source of the DeluxFit visual language: a red/black
-   "gym-luxe" theme — true blacks and charcoals, an aggressive crimson accent,
-   off-white text, a heavy condensed display face for headlines, and a clean
-   sans for body copy.
-
-   Theming model
-   -------------
-   Every color is a CSS custom property under the `--df-*` namespace. Wrap the
-   tree in an element with the `df-root` class (defaults to the dark theme).
-   The Tailwind preset maps these vars onto `df-*` utilities
-   (`bg-df-surface`, `text-df-text-muted`, `border-df-border-strong`, …) so the
-   tokens are the single source of truth for both CSS and Tailwind.
-
-   Three surface contexts ship: `dark` (default), `light`, and `gray`. Setting
-   `data-theme` on any element re-scopes every `--df-*` var below it, so a
-   single page can stack alternating panels (anduril-style) without rewiring
-   any consumer — they read the same semantic tokens regardless of tone. The
-   crimson brand red is the through-line: a deeper crimson on light surfaces
-   for AA contrast, the canonical vivid red on dark / gray.
-   ========================================================================== */
+/*
+ * DeluxFit Design System — tokens & primitives
+ *
+ * The single, portable source of the DeluxFit visual language: a red/black
+ * "gym-luxe" theme — true blacks and charcoals, an aggressive crimson accent,
+ * off-white text, a heavy condensed display face for headlines, and a clean
+ * sans for body copy.
+ *
+ * Theming model
+ *
+ * Every color is a CSS custom property under the `--df-*` namespace. Wrap the
+ * tree in an element with the `df-root` class (defaults to the dark theme).
+ * The Tailwind preset maps these vars onto `df-*` utilities
+ * (`bg-df-surface`, `text-df-text-muted`, `border-df-border-strong`, …) so the
+ * tokens are the single source of truth for both CSS and Tailwind.
+ *
+ * Three surface contexts ship: `dark` (default), `light`, and `gray`. Setting
+ * `data-theme` on any element re-scopes every `--df-*` var below it, so a
+ * single page can stack alternating panels without rewiring
+ * any consumer — they read the same semantic tokens regardless of tone. The
+ * crimson brand red is the through-line: a deeper crimson on light surfaces
+ * for AA contrast, the canonical vivid red on dark / gray.
+ */
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -129,7 +129,7 @@
 }
 
 /* ---- Light theme --------------------------------------------------------- */
-/* Used on alternating panels (the anduril-style hard-cut pattern). The red
+/* Used on alternating panels that hard-cut against their neighbours. The red
    shifts a half-stop deeper so it stays AA-readable on a near-white surface
    without losing its identity. */
 [data-theme='light'] {
