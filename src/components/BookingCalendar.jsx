@@ -33,7 +33,6 @@ export default function BookingCalendar({ service }) {
   const [status, setStatus] = useState('idle') // idle | submitting | success | error | unconfigured
   const [errorBody, setErrorBody] = useState(null)
 
-  // Load taken slots whenever the selected date changes.
   useEffect(() => {
     if (!selectedDate) return
     let active = true

@@ -97,9 +97,7 @@ export const getNutritionPlan = userId =>
       .maybeSingle()
   )
 
-/* -------------------------------------------------------------------------- */
-/*  Mutations — all routed through edge functions (never direct table writes)  */
-/* -------------------------------------------------------------------------- */
+// Mutations — all routed through edge functions (never direct table writes)
 
 /** Insert a progress entry via the `log-progress` edge function. */
 export async function logProgress(entry) {
