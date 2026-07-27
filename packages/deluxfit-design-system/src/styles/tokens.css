@@ -24,7 +24,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ---- Global, theme-independent scales ------------------------------------ */
+/* Global, theme-independent scales */
 :root {
   --df-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -71,7 +71,7 @@
   --df-z-modal: 1300;
 }
 
-/* ---- Dark theme (default) ------------------------------------------------ */
+/* Dark theme (default) */
 .df-root,
 .df-root[data-theme='dark'],
 [data-theme='dark'] {
@@ -128,7 +128,7 @@
   --df-glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* ---- Light theme --------------------------------------------------------- */
+/* Light theme */
 /* Used on alternating panels that hard-cut against their neighbours. The red
    shifts a half-stop deeper so it stays AA-readable on a near-white surface
    without losing its identity. */
@@ -190,7 +190,7 @@
   --df-shadow-glow-soft: 0 14px 50px -16px rgba(189, 21, 33, 0.28);
 }
 
-/* ---- Gray theme ---------------------------------------------------------- */
+/* Gray theme */
 /* Mid-tone neutral surface — useful for sections that want a quieter brand
    moment than the true-black hero but more weight than a light panel. */
 [data-theme='gray'] {
@@ -240,7 +240,7 @@
   --df-glass-border: rgba(255, 255, 255, 0.12);
 }
 
-/* ---- Base element resets bound to tokens --------------------------------- */
+/* Base element resets bound to tokens */
 .df-root {
   background-color: var(--df-bg);
   color: var(--df-text);

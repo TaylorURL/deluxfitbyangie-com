@@ -38,11 +38,11 @@ import {
   Target,
 } from 'lucide-react'
 
-/* ---------------------------------------------------------------------------
-   Service spec — the 4 live/bookable services + the coming-soon in-person
-   teaser. Every page that surfaces a service reads from this single source so
-   prices, names, and features stay in lockstep. EXACT VALUES — do not paraphrase.
-   ------------------------------------------------------------------------ */
+/*
+ * Every page that surfaces a service reads from this one object, so prices,
+ * names and features stay in lockstep. The values are copy, not placeholders —
+ * paraphrasing them changes what the site advertises.
+ */
 const services = {
   membership: {
     id: 'membership',
@@ -847,7 +847,6 @@ const en = {
       'Four ways to train and one coming soon. Pricing and features are exact — nothing hidden.',
   },
 
-  /* In-person coming soon — Service 05 */
   inPerson: {
     eyebrow: 'Coming soon',
     title: 'Future In-Person Training',
