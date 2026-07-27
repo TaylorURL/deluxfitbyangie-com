@@ -26,9 +26,7 @@ const one = async query => {
 /** Invoke a staff edge function and unwrap the { ok, ... } envelope. */
 const invoke = (fn, body) => invokeOk(fn, body)
 
-/* -------------------------------------------------------------------------- */
-/*  People                                                                      */
-/* -------------------------------------------------------------------------- */
+// People
 
 export const listClients = () =>
   rows(
@@ -51,9 +49,7 @@ export const listStaff = () =>
 export const getClientProfile = userId =>
   one(supabase.from('profiles').select('*').eq('id', userId).maybeSingle())
 
-/* -------------------------------------------------------------------------- */
-/*  Per-client reads (used by the client detail / monthly-review surface)       */
-/* -------------------------------------------------------------------------- */
+// Per-client reads (used by the client detail / monthly-review surface)
 
 export const getClientPlans = userId =>
   rows(
@@ -114,9 +110,7 @@ export const getClientAssignments = userId =>
     list.map(row => row.content_id)
   )
 
-/* -------------------------------------------------------------------------- */
-/*  Library / bookings / memberships (cross-client reads)                       */
-/* -------------------------------------------------------------------------- */
+// Library / bookings / memberships (cross-client reads)
 
 export const listContent = (locale = 'en') =>
   rows(
@@ -133,9 +127,7 @@ export const listAllBookings = () =>
 export const listAllMemberships = () =>
   rows(supabase.from('memberships').select('*').order('updated_at', { ascending: false }))
 
-/* -------------------------------------------------------------------------- */
-/*  Writes — all via staff-only edge functions                                  */
-/* -------------------------------------------------------------------------- */
+// Writes — all via staff-only edge functions
 
 export const savePlan = payload => invoke('upsert-plan', payload).then(d => d.plan)
 export const deletePlan = id => invoke('upsert-plan', { id, delete: true })

@@ -36,7 +36,6 @@ export default function AuthProvider({ children }) {
     }
   }, [])
 
-  // Load profile whenever the user changes.
   useEffect(() => {
     const userId = session?.user?.id ?? null
     if (!userId) {

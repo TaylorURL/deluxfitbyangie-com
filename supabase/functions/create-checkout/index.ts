@@ -13,7 +13,6 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
-// --- Price IDs ---------------------------------------------------------------
 // TODO: set these env vars to the real Stripe price IDs in the dashboard.
 //   STRIPE_PRICE_MEMBERSHIP     -> $14.99/mo recurring
 //   STRIPE_PRICE_COACHING       -> $150/mo recurring

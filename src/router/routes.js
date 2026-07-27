@@ -1,13 +1,12 @@
-/* =============================================================================
-   ROUTES — single source of truth for the DeluxFit by Angie site map
-   -----------------------------------------------------------------------------
-   The site ships as a Vite SPA. Vercel rewrites every URL to `index.html`, so
-   the client picks the page off the path. Routes are matched in registration
-   order; the first match wins.
-
-   Special routes (`/portal`, `/dev-upload`) keep their own root-level shells
-   and are NOT listed here — they're handled directly in `App.jsx`.
-   ========================================================================== */
+/*
+ * The public site map. Vercel rewrites every URL to `index.html`, so the client
+ * picks the page off the path. `matchRoute` compares normalized paths for exact
+ * equality — there is no pattern or prefix matching here, so entry order does
+ * not affect which route wins.
+ *
+ * Anything that renders its own root-level shell instead of SiteShell lives in
+ * `App.jsx` under STANDALONE_ROUTES, not here.
+ */
 
 import Home from '../pages/Home'
 import About from '../pages/About'
