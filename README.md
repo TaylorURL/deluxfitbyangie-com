@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.30-e11d2a?style=for-the-badge" alt="Version 1.0.30" />
+  <img src="https://img.shields.io/badge/version-1.0.33-e11d2a?style=for-the-badge" alt="Version 1.0.33" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
@@ -114,13 +114,13 @@ flowchart TD
 - **The portal is the product after the sale.** Overview, workout plan, nutrition targets, progress history, bookings, a coach message thread with private attachments, and a media library — all RLS-scoped to the signed-in member.
 - **The dashboard is the same data from the coach's side.** Staff author plans, nutrition, and library content, review progress, and manage bookings, memberships, and invites; every admin function re-checks staff status server-side.
 - **The design system is consumed from source.** `packages/deluxfit-design-system` is aliased as `@deluxfit/ds` with no build step; `--df-*` CSS variables are mirrored into Tailwind by `tailwind-preset.cjs`, and `data-theme` re-scopes them on any subtree.
-- **Migrations are append-only.** `migrations/` holds ordered SQL DDL for the schema, RLS policies, and storage buckets, plus a transaction-wrapped `verify_rls_isolation.sql` self-test.
+- **Migrations are append-only.** The schema, RLS policies, and storage buckets are numbered SQL files applied in order, plus a transaction-wrapped `verify_rls_isolation.sql` self-test. The `.sql` files themselves are gitignored, so a fresh clone carries [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md) — the version-controlled record of what each migration does — rather than the SQL.
 
 ## Deeper docs
 
 | Document | Covers |
 | :--- | :--- |
-| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md) | The append-only migration set, what each file adds, and the RLS isolation self-test. |
+| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md) | The append-only migration set, what each file adds, and the RLS isolation self-test. The `.sql` files are gitignored; this is the tracked record. |
 | [`supabase/functions/EDGE_FUNCTIONS.md`](supabase/functions/EDGE_FUNCTIONS.md) | Every edge function, its auth gate, deploy commands, and required secrets. |
 | [`packages/deluxfit-design-system/DESIGN_SYSTEM.md`](packages/deluxfit-design-system/DESIGN_SYSTEM.md) | `--df-*` tokens, the Tailwind preset, and the component catalog. |
 
@@ -132,7 +132,7 @@ deluxfitbyangie-com/
 │   ├── brand/                     Studio + gym brand photography
 │   └── deluxfit-logo.png          Wordmark used across the app
 ├── docs/logo-dark.png             Dark-scheme wordmark
-├── migrations/                    Ordered SQL DDL, RLS policies, RLS self-test
+├── migrations/MIGRATIONS.md       Record of the ordered SQL DDL (the .sql files are gitignored)
 ├── supabase/functions/            14 Deno edge functions (service role)
 ├── packages/
 │   └── deluxfit-design-system/    In-repo DS — --df-* tokens, Tailwind preset, components
