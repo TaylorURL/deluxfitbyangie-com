@@ -89,7 +89,8 @@ Deno.serve(async (req) => {
     return json({ ok: false, error: error.message }, 400);
   }
 
-  // TODO: send a confirmation email once SMTP / RESEND_API_KEY is configured.
+  // Confirmation mail is opt-in per environment: with no key the booking still
+  // succeeds and the guest simply gets no email.
   const resendKey = Deno.env.get("RESEND_API_KEY");
   if (resendKey) {
     const to = guestEmail ?? booking?.guest_email;
