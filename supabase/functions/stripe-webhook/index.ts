@@ -10,8 +10,11 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
-// Map a Stripe price ID back to a membership product. Falls back to metadata.
-// TODO: keep these aligned with the STRIPE_PRICE_* env vars in create-checkout.
+// Fallback used only when the subscription carries no `product` metadata, so a
+// subscription created outside the checkout flow still resolves to a product.
+// Reads the same STRIPE_PRICE_* env vars create-checkout sends the customer to;
+// point either function at a different price and this mapping goes silently
+// null, which downstream reads as "not a membership".
 function productFromPriceId(priceId?: string | null): string | null {
   if (!priceId) return null;
   if (priceId === Deno.env.get("STRIPE_PRICE_MEMBERSHIP")) return "membership";

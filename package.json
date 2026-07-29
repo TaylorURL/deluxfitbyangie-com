@@ -1,7 +1,7 @@
 {
   "name": "deluxfitbyangie-com",
   "private": true,
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "DeluxFit by Angie — direct-sale funnel for a personal training program.",
   "type": "module",
   "scripts": {
