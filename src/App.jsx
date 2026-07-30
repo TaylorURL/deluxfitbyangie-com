@@ -122,8 +122,9 @@ function useGlobalLinkInterception(navigate) {
 }
 
 /**
- *   2. A SPA route in `src/router/routes.js` — rendered inside SiteShell.
- *   3. Anything else — a branded 404, also inside SiteShell.
+ * Resolves the current pathname in three passes: a standalone route first (it
+ * owns its own chrome and renders bare), then a SPA route from
+ * `src/router/routes.js`, then a branded 404 — the last two inside SiteShell.
  */
 export default function App() {
   const { meta } = useContent()

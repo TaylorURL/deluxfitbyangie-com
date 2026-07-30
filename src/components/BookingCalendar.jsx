@@ -99,7 +99,8 @@ export default function BookingCalendar({ service }) {
         setTakenSlots(prev => new Set(prev).add(selectedSlot.toISOString()))
         setSelectedSlot(null)
       } else {
-        // Edge function not deployed yet — degrade honestly, don't fake a booking.
+        // The create-booking function answered 404, so there is nothing behind
+        // the form. Say so rather than showing a booking that never happened.
         setStatus('unconfigured')
       }
     } catch (error) {
