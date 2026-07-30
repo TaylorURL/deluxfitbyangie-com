@@ -66,8 +66,8 @@ export function getCandidateSlots(date) {
 
 /**
  * Fetch the set of taken slot-start ISO strings within a date range, so the UI
- * can disable them. Returns an empty set when the backend isn't reachable yet
- * (the DB still enforces no double-booking on submit).
+ * can disable them. Returns an empty set when the view is unreachable — the
+ * partial unique index still enforces no double-booking on submit.
  *
  * @returns {Promise<Set<string>>} set of ISO timestamps already booked
  */
@@ -109,7 +109,8 @@ export async function createBooking(input) {
   if (error) {
     const context = error.context
     if (context?.status === 409) return { status: 'slot_taken' }
-    // Function not deployed yet → degrade gracefully rather than hard-failing.
+    // A 404 means the function is not there at all; report that instead of
+    // failing hard, so the caller can say so rather than showing an error.
     if (context?.status === 404) return { status: 'unconfigured' }
     throw new Error(error.message || 'Booking failed.')
   }

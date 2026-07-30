@@ -9,8 +9,8 @@ const STATUS = { idle: 'idle', working: 'working', success: 'success', error: 'e
 
 /**
  * Captures the basics, then sends the visitor to Stripe Checkout for the
- * recurring subscription. If Stripe isn't configured yet, the intent is
- * recorded and a clear "payments coming online" notice is shown — never a fake
+ * recurring subscription. When Stripe is not configured the intent is recorded
+ * instead and a plain "payments coming online" notice is shown — never a fake
  * charge.
  */
 export default function MembershipSignupForm() {
@@ -39,7 +39,8 @@ export default function MembershipSignupForm() {
     try {
       const result = await startCheckout('membership')
       if (result.status === 'redirecting') return // browser is navigating to Stripe
-      // Stripe not configured yet — record interest and confirm honestly.
+      // No redirect means Stripe is not configured, so record the interest and
+      // say so rather than confirming a subscription that does not exist.
       await submitForm('membership-signup', values)
       setNotice(result.message)
       setStatus(STATUS.success)

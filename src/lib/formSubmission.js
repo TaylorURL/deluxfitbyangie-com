@@ -1,13 +1,12 @@
 /*
- * Backs the application, contact and booking forms. Nothing here reaches a
- * server yet: the only live backend integration is the `deluxfit-intake` edge
- * function, which takes FormData with a file attached and so can't carry these
- * JSON payloads.
+ * Backs the application, contact and booking forms. While FORM_ENDPOINT is
+ * null nothing leaves the browser: submit() waits out a short delay and
+ * resolves as if it succeeded, so the funnel stays clickable end-to-end but
+ * every submission is dropped. Treat these forms as non-delivering until an
+ * endpoint is set.
  *
- * Until an endpoint exists this simulates a successful submit, which keeps the
- * whole funnel clickable end-to-end but means real submissions are dropped on
- * the floor. Anything relying on these forms actually delivering is broken
- * until FORM_ENDPOINT is set.
+ * `deluxfit-intake` is not that endpoint — it takes FormData with a file
+ * attached and cannot carry these JSON payloads.
  */
 
 /**

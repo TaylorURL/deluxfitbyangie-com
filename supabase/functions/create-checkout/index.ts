@@ -13,7 +13,8 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
-// TODO: set these env vars to the real Stripe price IDs in the dashboard.
+// Each env var holds a Stripe price id; the ids live in the Stripe dashboard
+// rather than here so pricing can change without a redeploy.
 //   STRIPE_PRICE_MEMBERSHIP     -> $14.99/mo recurring
 //   STRIPE_PRICE_COACHING       -> $150/mo recurring
 //   STRIPE_PRICE_SINGLE_SESSION -> $75 one-off
@@ -95,7 +96,8 @@ Deno.serve(async (req) => {
 
   const stripeSecret = Deno.env.get("STRIPE_SECRET_KEY");
   if (!stripeSecret) {
-    // Never fake a charge — surface that Stripe is not wired up yet.
+    // Never fake a charge: report that Stripe is unconfigured and let the
+    // caller say so.
     return json(
       {
         configured: false,
