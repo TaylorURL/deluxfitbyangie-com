@@ -103,7 +103,8 @@ Deno.serve(async (req) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // TODO: replace with a verified sender domain.
+            // Resend rejects a send unless this domain is verified on the account
+            // the API key belongs to.
             from: "DeluxFit by Angie <bookings@deluxfitbyangie.com>",
             to,
             subject: "Your DeluxFit session is confirmed",

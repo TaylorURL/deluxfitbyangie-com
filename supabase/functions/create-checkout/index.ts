@@ -13,7 +13,8 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
-// TODO: set these env vars to the real Stripe price IDs in the dashboard.
+// Each env var holds a Stripe price id; the ids live in the Stripe dashboard
+// rather than here so pricing can change without a redeploy.
 //   STRIPE_PRICE_MEMBERSHIP     -> $14.99/mo recurring
 //   STRIPE_PRICE_COACHING       -> $150/mo recurring
 //   STRIPE_PRICE_SINGLE_SESSION -> $75 one-off
@@ -24,6 +25,41 @@ const PRICE_ENV: Record<string, { env: string; mode: "subscription" | "payment" 
   single_session: { env: "STRIPE_PRICE_SINGLE_SESSION", mode: "payment" },
   live_program:   { env: "STRIPE_PRICE_LIVE_PROGRAM",   mode: "payment" },
 };
+
+// Stripe sends the customer to successUrl / cancelUrl after checkout, and both
+// arrive in the request body, so they have to be pinned to origins we own.
+// Without this an unrelated site can mint a genuine, DeluxFit-branded Checkout
+// session that lands the payer on a page of its choosing once they have paid.
+// Override ALLOWED_REDIRECT_ORIGINS (comma-separated) to authorise preview
+// deployments or a different production domain.
+const DEFAULT_REDIRECT_ORIGINS = [
+  "https://deluxfitbyangie.com",
+  "https://www.deluxfitbyangie.com",
+  "http://localhost:5173",
+];
+
+const ALLOWED_REDIRECT_ORIGINS = (Deno.env.get("ALLOWED_REDIRECT_ORIGINS") ?? "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const REDIRECT_ORIGINS = ALLOWED_REDIRECT_ORIGINS.length
+  ? ALLOWED_REDIRECT_ORIGINS
+  : DEFAULT_REDIRECT_ORIGINS;
+
+/**
+ * True when `value` is an absolute URL whose origin is one we own. Compares the
+ * parsed origin rather than a string prefix, so a lookalike host such as
+ * https://deluxfitbyangie.com.example.com is rejected.
+ */
+function isAllowedRedirect(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  try {
+    return REDIRECT_ORIGINS.includes(new URL(value).origin);
+  } catch {
+    return false;
+  }
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -54,10 +90,14 @@ Deno.serve(async (req) => {
   if (!successUrl || !cancelUrl) {
     return json({ ok: false, error: "Missing successUrl or cancelUrl" }, 400);
   }
+  if (!isAllowedRedirect(successUrl) || !isAllowedRedirect(cancelUrl)) {
+    return json({ ok: false, error: "Invalid redirect URL" }, 400);
+  }
 
   const stripeSecret = Deno.env.get("STRIPE_SECRET_KEY");
   if (!stripeSecret) {
-    // Never fake a charge — surface that Stripe is not wired up yet.
+    // Never fake a charge: report that Stripe is unconfigured and let the
+    // caller say so.
     return json(
       {
         configured: false,

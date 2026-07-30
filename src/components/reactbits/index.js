@@ -5,15 +5,16 @@
  * https://reactbits.dev/r/<Name>-JS-TW.json and lives in-tree as source we own,
  * rather than as an opaque npm dependency. These are the JS + Tailwind variants.
  *
- * Two adaptations were applied at install time:
-     - `motion/react` imports were rewritten to `framer-motion` (the same
-       library, already a project dependency — no second animation runtime).
-     - The WebGL backdrops (Aurora / Particles / Threads) depend on `ogl`.
-     - StarBorder's keyframes live in tailwind.config.js.
-
-   Everything is re-exported here under a single, named surface so pages import
-   from '@/components/reactbits'. Consumers gate the motion-heavy pieces behind
-   `useReducedMotion()` to honor the OS preference, exactly like the DS does.
+ * Because the source is ours, two things diverge from upstream and have to be
+ * kept that way on any re-pull: `motion/react` imports are rewritten to
+ * `framer-motion` (the same library, already a dependency — a second animation
+ * runtime buys nothing), and StarBorder's keyframes live in tailwind.config.js
+ * rather than in the component. The WebGL backdrops (Aurora / Particles /
+ * Threads) additionally pull in `ogl`.
+ *
+ * Everything is re-exported here under a single, named surface so pages import
+ * from '@/components/reactbits'. Consumers gate the motion-heavy pieces behind
+ * `useReducedMotion()` to honor the OS preference, exactly like the DS does.
  */
 
 // Text animations
