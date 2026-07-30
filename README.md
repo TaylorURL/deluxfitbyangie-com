@@ -53,7 +53,7 @@ Most trainer sites sell a service and then hand the client off to a spreadsheet 
 | UI | React 19 + a hand-rolled SPA router (no `react-router`) |
 | Build & dev | Vite 7 (Node `22.x`) |
 | Styling | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens) |
-| Components & motion | Radix UI, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl` |
+| Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl` |
 | Backend | Supabase — Auth, Postgres + RLS, 14 Deno edge functions |
 | Payments | Stripe Checkout, driven entirely from the edge functions |
 | i18n | Custom English / Spanish content trees |
