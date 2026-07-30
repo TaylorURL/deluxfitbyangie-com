@@ -98,6 +98,7 @@ runtime. The rest are set with `supabase secrets set KEY=value` (or in the dashb
 | `STRIPE_PRICE_COACHING` | create-checkout, stripe-webhook | TODO: $150/mo recurring price ID. |
 | `STRIPE_PRICE_SINGLE_SESSION` | create-checkout | TODO: $75 one-off price ID. |
 | `STRIPE_PRICE_LIVE_PROGRAM` | create-checkout | TODO: $50 one-off price ID (quantity = sessions). |
+| `ALLOWED_REDIRECT_ORIGINS` | create-checkout | Optional. Comma-separated origins accepted for `successUrl` / `cancelUrl`. Defaults to the production domain, its `www` alias, and `http://localhost:5173`. Set it to authorise preview deployments. |
 
 ```bash
 supabase secrets set \
