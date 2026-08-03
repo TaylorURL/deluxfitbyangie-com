@@ -27,3 +27,6 @@ id_ed25519
 
 # Windows folder metadata
 desktop.ini
+
+# Supabase CLI scratch state (link ids, pooler URL)
+supabase/.temp
