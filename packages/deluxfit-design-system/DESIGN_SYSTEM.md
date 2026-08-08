@@ -68,7 +68,7 @@ All components are `cva`-based, composable, accessible, and theme-bound.
 - **Input / Textarea / Select + Field** — form controls with a labelled, a11y-wired wrapper.
 - **SectionEyebrow / SectionIndex / SplitHeading** — uppercase kickers, numbered index labels,
   and split display headings for section headers.
-- **Marquee** — seamless scrolling logo/label strip (pauses on hover, freezes under reduced
+- **Marquee** — scrolling logo/label strip that loops without a visible seam (pauses on hover, freezes under reduced
   motion).
 
 ## Layout

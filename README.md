@@ -109,7 +109,7 @@ flowchart TD
 
 ## How it works
 
-- **Three surfaces, one bundle.** Vercel rewrites every path to `index.html` and the router picks the page. `/portal` and `/admin` mount their own root-level shells; `/admin` additionally requires `profiles.role = 'staff'`.
+- **Three surfaces, one bundle.** Vercel rewrites every path to `index.html` and the router picks the page. `/portal` and `/admin` mount their own root-level shells; `/admin` also requires `profiles.role = 'staff'`.
 - **The funnel sells four offers.** Membership at $14.99/month, personalized online coaching at $150/month, a $75 single live session, and a $50/session live training program — each CTA opens a Stripe Checkout session through `create-checkout`.
 - **The portal is the product after the sale.** Overview, workout plan, nutrition targets, progress history, bookings, a coach message thread with private attachments, and a media library — all RLS-scoped to the signed-in member.
 - **The dashboard is the same data from the coach's side.** Staff author plans, nutrition, and library content, review progress, and manage bookings, memberships, and invites; every admin function re-checks staff status server-side.
