@@ -1,7 +1,7 @@
 <h1 align="center">Edge functions</h1>
 
 <p align="center">
-  <b>The service-role backend for DeluxFit by Angie — 13 Deno edge functions.</b>
+  <b>The service-role backend for DeluxFit by Angie — 14 Deno edge functions.</b>
 </p>
 <p align="center">
   Every privileged write — bookings, messaging, checkout, media, coach/admin content —<br />
