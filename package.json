@@ -1,7 +1,7 @@
 {
   "name": "deluxfitbyangie-com",
   "private": true,
-  "version": "2026.35.6",
+  "version": "2026.36.0",
   "description": "DeluxFit by Angie: the direct-sale funnel for a personal training program.",
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.45.4",
-    "@taylorurl/split-rail": "github:TaylorURL/split-rail#v2026.35.4",
+    "@taylorurl/split-rail": "github:TaylorURL/split-rail#v2026.36.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.29.2",
