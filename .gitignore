@@ -1,0 +1,36 @@
+node_modules
+dist
+.env
+.env.local
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets and local tooling state — never commit
+.env.*
+!.env.example
+.intelligence/
+INTELLIGENCE.md
+.idea/
+.vscode/
+.fleet/
+.junie/
+*.iml
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Vercel CLI link state (project/org ids) is per-machine.
+.vercel
+
+# Windows folder metadata
+desktop.ini
+
+# Supabase CLI scratch state (link ids, pooler URL)
+supabase/.temp
+
+# Migration SQL is applied straight to Supabase and stays out of the repo;
+# migrations/MIGRATIONS.md is the tracked record of it.
+migrations/*.sql

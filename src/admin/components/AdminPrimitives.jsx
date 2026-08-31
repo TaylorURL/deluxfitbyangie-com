@@ -1,0 +1,186 @@
+/* eslint-disable react-refresh/only-export-components --
+ * This module co-locates the admin formatters (clientLabel, fmtDate,
+ * fmtDateTime, mapById) and the useAsyncData hook with the primitive
+ * components that use them. The react-refresh rule only affects HMR
+ * ergonomics in dev, not correctness, and splitting the helpers into a
+ * separate module would trade cohesion for nothing. */
+import { useCallback, useEffect, useState } from 'react'
+import { Inbox, Loader2 } from 'lucide-react'
+import { Badge, Card, Select, cn } from '@deluxfit/ds'
+import { formatDate, formatDateTime } from '@/lib/datetime'
+
+export function SectionCard({ children, className }) {
+  return (
+    <Card variant="elevated" padded className={className}>
+      {children}
+    </Card>
+  )
+}
+
+export function SectionHeading({ eyebrow, title, intro }) {
+  return (
+    <div>
+      {eyebrow && (
+        <p className="inline-flex items-center gap-2 text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">
+          <span aria-hidden="true" className="h-1 w-6 rounded-df-full bg-df-accent" />
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
+        {title}
+      </h2>
+      {intro && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-df-text-muted">{intro}</p>
+      )}
+    </div>
+  )
+}
+
+export function AdminEmpty({ body, title, icon: Icon = Inbox }) {
+  return (
+    <div className="bg-df-surface/60 flex flex-col items-center gap-4 rounded-df-lg border border-dashed border-df-border-strong px-6 py-12 text-center">
+      <span
+        aria-hidden="true"
+        className="inline-flex h-12 w-12 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright"
+      >
+        <Icon className="h-5 w-5" />
+      </span>
+      <div className="max-w-sm">
+        {title && (
+          <p className="font-400 font-display text-lg uppercase tracking-tight text-df-text">
+            {title}
+          </p>
+        )}
+        <p className={cn('text-sm leading-relaxed text-df-text-muted', title && 'mt-2')}>{body}</p>
+      </div>
+    </div>
+  )
+}
+
+export function AdminLoading({ label = 'Loading…' }) {
+  return (
+    <p className="flex items-center justify-center gap-3 py-10 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-faint">
+      <Loader2 className="h-4 w-4 animate-spin text-df-accent-bright" aria-hidden="true" />
+      {label}
+    </p>
+  )
+}
+
+export function MetricTile({ label, value, icon: Icon, hint }) {
+  return (
+    <Card
+      variant="elevated"
+      padded
+      className="group relative overflow-hidden transition-colors duration-200 ease-df-out hover:border-df-border-hover"
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-df-full bg-df-accent-softer opacity-0 blur-2xl transition-opacity duration-300 ease-df-out group-hover:opacity-100"
+      />
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-text-faint">
+          {label}
+        </p>
+        {Icon && (
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright">
+            <Icon className="h-4 w-4" aria-hidden="true" />
+          </span>
+        )}
+      </div>
+      <p className="font-400 mt-4 font-display text-4xl tabular-nums leading-none text-df-text">
+        {value}
+      </p>
+      {hint && <p className="mt-2 text-xs text-df-text-muted">{hint}</p>}
+    </Card>
+  )
+}
+
+const STATUS_TONE = {
+  active: 'positive',
+  confirmed: 'positive',
+  past_due: 'warning',
+  pending: 'warning',
+  incomplete: 'neutral',
+  canceled: 'neutral',
+  archived: 'neutral',
+}
+
+export function StatusBadge({ status }) {
+  if (!status) return null
+  return (
+    <Badge tone={STATUS_TONE[status] ?? 'neutral'} variant="soft" size="sm">
+      {String(status).replace(/_/g, ' ')}
+    </Badge>
+  )
+}
+
+export const clientLabel = client =>
+  client?.full_name || client?.email || client?.id?.slice(0, 8) || 'Client'
+
+export function ClientSelect({ clients, value, onChange, placeholder = 'Select a client…', id }) {
+  return (
+    <Select id={id} value={value ?? ''} onChange={event => onChange(event.target.value)}>
+      <option value="" disabled>
+        {placeholder}
+      </option>
+      {clients.map(client => (
+        <option key={client.id} value={client.id}>
+          {clientLabel(client)}
+          {client.email ? ` · ${client.email}` : ''}
+        </option>
+      ))}
+    </Select>
+  )
+}
+
+export const fmtDate = formatDate
+export const fmtDateTime = formatDateTime
+
+/** Index an array of `{ id }` records into a Map keyed by id, for O(1) lookups. */
+export const mapById = items => new Map((items ?? []).map(item => [item.id, item]))
+
+/**
+ * Run `loader` on mount and whenever `deps` change, exposing the result
+ * alongside the loading and error state the admin pages render from.
+ *
+ * @template T
+ * @param {() => Promise<T>} loader
+ * @param {unknown[]} deps
+ * @param {T} initial - the data value held while loading and after a failure
+ * @returns {{ data: T, loading: boolean, error: string|null, reload: () => Promise<void> }}
+ */
+export function useAsyncData(loader, deps, initial = null) {
+  const [state, setState] = useState({ data: initial, loading: true, error: null })
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const run = useCallback(loader, deps)
+
+  const load = useCallback(async () => {
+    setState(prev => ({ ...prev, loading: true, error: null }))
+    try {
+      const data = await run()
+      setState({ data, loading: false, error: null })
+    } catch (error) {
+      setState({ data: initial, loading: false, error: error?.message || 'Failed to load.' })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run])
+
+  useEffect(() => {
+    let active = true
+    setState(prev => ({ ...prev, loading: true, error: null }))
+    run()
+      .then(data => active && setState({ data, loading: false, error: null }))
+      .catch(
+        error =>
+          active &&
+          setState({ data: initial, loading: false, error: error?.message || 'Failed to load.' })
+      )
+    return () => {
+      active = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run])
+
+  return { ...state, reload: load }
+}

@@ -1,0 +1,33 @@
+import { forwardRef } from 'react'
+import { cn } from '../lib/cn'
+
+/**
+ * @param {object} props
+ * @param {string} props.text - the full heading copy
+ * @param {string} [props.accent] - the substring to set in italic serif
+ * @param {string} [props.as='h2'] - heading element
+ */
+export const SplitHeading = forwardRef(function SplitHeading(
+  { className, text, accent, as: Component = 'h2', ...props },
+  ref
+) {
+  const hasAccent = typeof text === 'string' && accent && text.includes(accent)
+  const [before, after] = hasAccent ? text.split(accent) : [text, '']
+
+  return (
+    <Component
+      ref={ref}
+      className={cn(
+        'font-400 font-display leading-[0.9] tracking-[-0.01em] text-df-text',
+        className
+      )}
+      {...props}
+    >
+      {before}
+      {hasAccent && (
+        <span className="font-400 font-accent italic text-df-accent-bright">{accent}</span>
+      )}
+      {after}
+    </Component>
+  )
+})

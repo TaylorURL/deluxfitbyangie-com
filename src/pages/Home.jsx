@@ -1,0 +1,405 @@
+import { Fragment } from 'react'
+import { ArrowRight } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
+import {
+  Button,
+  Card,
+  Container,
+  Marquee,
+  Reveal,
+  SectionEyebrow,
+  SectionIndex,
+  SplitHeading,
+  cn,
+} from '@deluxfit/ds'
+import { useContent } from '@/i18n'
+import { Link } from '@/router'
+import FramedPhoto from '@/components/FramedPhoto'
+import { imageBox, imageSrcSet } from '@/lib/images'
+import PhotoGallery from '@/components/PhotoGallery'
+import ProgramsGrid from '@/components/ProgramsGrid'
+import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import { ShinyText, GradientText } from '@/components/reactbits'
+
+const HOME_GALLERY = [
+  {
+    src: '/brand/gym-battle-ropes.webp',
+    alt: 'Angie driving battle ropes on the turf, pink kit, gym session',
+    span: 'wide',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-red-mat-seated.webp',
+    alt: 'Angie seated on a crimson mat in a studio portrait',
+    span: 'tall',
+    objectPosition: 'object-[60%_35%]',
+  },
+  {
+    src: '/brand/gym-back-squat-discipline.webp',
+    alt: 'Angie under the bar setting up a back squat in the rack',
+    span: 'regular',
+    objectPosition: 'object-[50%_45%]',
+  },
+  {
+    src: '/brand/studio-dumbbell-side-pose.webp',
+    alt: 'Angie holding a dumbbell, step-up pose, studio lighting',
+    span: 'regular',
+    objectPosition: 'object-[55%_25%]',
+  },
+  {
+    src: '/brand/gym-dumbbell-deadlift.webp',
+    alt: 'Angie mid-rep of a dumbbell Romanian deadlift in the gym',
+    span: 'regular',
+    objectPosition: 'object-[50%_30%]',
+  },
+  {
+    src: '/brand/studio-cobra-stretch.webp',
+    alt: 'Angie in an upward stretch, studio session, dumbbells at her side',
+    span: 'wide',
+    objectPosition: 'object-[40%_40%]',
+  },
+  {
+    src: '/brand/gym-leg-press.webp',
+    alt: 'Angie pressing through a heavy leg-press set',
+    span: 'wide',
+    objectPosition: 'object-[50%_35%]',
+  },
+]
+
+const MotionH1 = motion.h1
+const MotionSpan = motion.span
+const MotionDiv = motion.div
+
+const LINE = {
+  hidden: { opacity: 0, y: '0.4em' },
+  visible: { opacity: 1, y: 0 },
+}
+
+const LINE_STAGGER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+}
+
+const HOME_MARQUEE = [
+  'Personalized programming',
+  'Live 1-on-1 coaching',
+  'Strength · Fat loss · Muscle gain',
+  'Coaching from a certified trainer',
+  'Home or gym',
+]
+
+export default function Home() {
+  const { home } = useContent()
+  const { hero, intro, transformationCallout, closing } = home
+  const prefersReducedMotion = useReducedMotion()
+  const lastIndex = hero.headline.length - 1
+
+  return (
+    <>
+      <section
+        id="top"
+        data-theme="dark"
+        className="relative isolate overflow-hidden bg-df-bg text-df-text"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,var(--df-accent-wash-soft),transparent_60%)]"
+        />
+        <AnimatedBackdrop variant="aurora" opacity={0.45} />
+
+        <Container size="xl" className="pb-12 pt-20 sm:pb-16 sm:pt-28 lg:pb-20 lg:pt-32">
+          <span className="inline-flex items-center gap-3 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
+            <span className="h-1.5 w-1.5 rounded-df-full bg-df-accent" aria-hidden="true" />
+            <ShinyText
+              text={hero.badge}
+              color="var(--df-shine)"
+              shineColor="var(--df-shine-highlight)"
+              speed={4}
+            />
+          </span>
+
+          <MotionH1
+            className="font-400 mt-5 font-display text-[clamp(2.5rem,9.5vw,7.5rem)] uppercase leading-[0.86] tracking-[-0.01em] text-df-text sm:mt-6"
+            variants={prefersReducedMotion ? undefined : LINE_STAGGER}
+            initial={prefersReducedMotion ? false : 'hidden'}
+            animate={prefersReducedMotion ? undefined : 'visible'}
+          >
+            {hero.headline.map((line, index) => (
+              // Each line is its own block, so the rendered text runs the lines
+              // together for anything reading textContent. Whitespace between
+              // block-level children collapses to nothing on screen, which is
+              // what separates the words without moving the break.
+              <Fragment key={line}>
+                {index > 0 ? ' ' : null}
+                <MotionSpan
+                  className={cn(
+                    'block',
+                    index === lastIndex &&
+                      'pb-[0.08em] font-accent text-[0.92em] normal-case italic text-df-accent-bright'
+                  )}
+                  variants={prefersReducedMotion ? undefined : LINE}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {line}
+                </MotionSpan>
+              </Fragment>
+            ))}
+          </MotionH1>
+
+          <div className="mt-8 grid items-end gap-8 border-t border-df-border pt-6 sm:mt-12 sm:gap-10 sm:pt-8 lg:grid-cols-[1.4fr_1fr]">
+            <div className="max-w-xl">
+              <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
+                {hero.subhead}
+              </p>
+
+              <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row">
+                <Button asChild size="lg" className="w-full sm:w-auto">
+                  <Link href={hero.primaryCtaHref}>
+                    {hero.primaryCta}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+                  <Link href={hero.secondaryCtaHref}>{hero.secondaryCta}</Link>
+                </Button>
+              </div>
+
+              <div className="mt-8 flex items-center gap-3">
+                <span className="h-px w-8 bg-df-accent" aria-hidden="true" />
+                <span className="text-sm font-600 uppercase tracking-wide text-df-text">
+                  {hero.trust.tagline}
+                </span>
+              </div>
+            </div>
+
+            <MotionDiv
+              className="relative mx-auto w-full max-w-[15rem] sm:max-w-[18rem] lg:mx-0 lg:justify-self-end"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+            >
+              <FramedPhoto
+                src="/brand/studio-portrait-dumbbells.webp"
+                alt={hero.imageAlt}
+                aspect="aspect-[4/5]"
+                priority
+              />
+              <div className="absolute -bottom-4 left-2 rounded-df-md border border-df-glass-border bg-df-glass-fill px-4 py-3 backdrop-blur-xl sm:-bottom-5 sm:-left-5 sm:px-5 sm:py-3">
+                <GradientText
+                  colors={[
+                    'var(--df-accent-bright)',
+                    'var(--df-accent)',
+                    'var(--df-shine-highlight)',
+                    'var(--df-accent)',
+                  ]}
+                  animationSpeed={6}
+                  className="font-400 !mx-0 font-display text-[clamp(1.75rem,5vw,3rem)] tabular-nums leading-none"
+                >
+                  {hero.trust.pillarValue}
+                </GradientText>
+                <div className="mt-1 text-[10px] font-600 uppercase tracking-[0.2em] text-df-text-muted">
+                  {hero.trust.pillarLabel}
+                </div>
+              </div>
+            </MotionDiv>
+          </div>
+        </Container>
+
+        <div className="border-y border-df-border bg-df-bg-elevated py-5">
+          <Marquee items={HOME_MARQUEE} />
+        </div>
+      </section>
+
+      <section data-theme="light" className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-28">
+        <Container size="lg">
+          <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <Reveal className="relative order-last lg:order-first">
+              <div
+                aria-hidden="true"
+                className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
+              />
+              <FramedPhoto
+                src="/brand/studio-kettlebell-portrait.webp"
+                alt={intro.imageAlt}
+                aspect="aspect-[4/5]"
+              />
+            </Reveal>
+
+            <Reveal delay={0.1} className="flex flex-col items-start">
+              <div className="flex items-center gap-4">
+                <SectionIndex>01</SectionIndex>
+                <SectionEyebrow>{intro.eyebrow}</SectionEyebrow>
+              </div>
+              <SplitHeading
+                text={intro.heading}
+                accent={intro.accent}
+                className="mt-5 text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.95]"
+              />
+              <div className="mt-6 flex flex-col gap-4">
+                {intro.body.map(paragraph => (
+                  <p key={paragraph} className="text-base leading-relaxed text-df-text-muted">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <Button asChild size="lg" variant="outline" className="mt-8">
+                <Link href={intro.ctaHref}>
+                  {intro.ctaLabel}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      <ProgramsGrid id="programs" highlightServiceId="coaching" />
+
+      <section
+        data-theme="light"
+        className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 text-df-text sm:py-28"
+      >
+        <Container size="lg">
+          <Reveal className="flex flex-col items-start">
+            <div className="flex items-center gap-4">
+              <SectionIndex>03</SectionIndex>
+              <SectionEyebrow>{transformationCallout.eyebrow}</SectionEyebrow>
+            </div>
+            <SplitHeading
+              text={transformationCallout.heading}
+              accent={transformationCallout.accent}
+              className="mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.95]"
+            />
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              {transformationCallout.body}
+            </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-5">
+            {transformationCallout.pillars.map(({ icon: Icon, title, description }, index) => (
+              <Reveal key={title} delay={index * 0.06}>
+                <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
+                  <span
+                    aria-hidden="true"
+                    className="font-400 pointer-events-none absolute right-4 top-2 font-display text-6xl tabular-nums leading-none text-df-surface-3"
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className="flex h-12 w-12 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
+                    aria-hidden="true"
+                  >
+                    <Icon className="h-6 w-6" strokeWidth={2} />
+                  </span>
+                  <h3 className="font-400 mt-6 font-display text-2xl uppercase tracking-[0.01em] text-df-text">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-df-text-muted">
+                    {description}
+                  </p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.2} className="mt-10 sm:mt-12">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <Link href={transformationCallout.ctaHref}>
+                {transformationCallout.ctaLabel}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section
+        data-theme="dark"
+        className="relative isolate overflow-hidden bg-df-bg py-16 text-df-text sm:py-28"
+      >
+        <AnimatedBackdrop variant="particles" opacity={0.5} />
+        <Container size="xl">
+          <Reveal className="flex flex-col items-start">
+            <div className="flex items-center gap-4">
+              <SectionIndex>04</SectionIndex>
+              <SectionEyebrow>
+                <ShinyText
+                  text="In the gym"
+                  color="var(--df-shine)"
+                  shineColor="var(--df-shine-highlight)"
+                  speed={4}
+                />
+              </SectionEyebrow>
+            </div>
+            <SplitHeading
+              text="Real reps. Real grit."
+              accent="grit"
+              className="mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.95]"
+            />
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              Studio portraits and gym sessions from the DeluxFit shoot, the same energy Angie
+              brings to every program.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1} className="mt-10 sm:mt-12">
+            <PhotoGallery items={HOME_GALLERY} />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section
+        data-theme="light"
+        className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-20 text-df-text sm:py-36"
+      >
+        <img
+          src="/brand/gym-back-squat-discipline.webp"
+          srcSet={imageSrcSet('/brand/gym-back-squat-discipline.webp')}
+          sizes="100vw"
+          width={imageBox('/brand/gym-back-squat-discipline.webp')?.width}
+          height={imageBox('/brand/gym-back-squat-discipline.webp')?.height}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-15 [filter:grayscale(0.9)_contrast(1.05)]"
+        />
+        <div
+          aria-hidden="true"
+          className="via-df-bg/85 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg to-df-bg"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,var(--df-accent-wash-deep),transparent_70%)]"
+        />
+        <Container size="lg">
+          <Reveal className="flex flex-col items-start">
+            <div className="flex items-center gap-4">
+              <SectionIndex>05</SectionIndex>
+              <SectionEyebrow>{closing.eyebrow}</SectionEyebrow>
+            </div>
+            <SplitHeading
+              text={closing.heading}
+              accent={closing.accent}
+              className="mt-6 max-w-[20ch] text-[clamp(2.25rem,7vw,5.5rem)] leading-[0.92]"
+            />
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg">
+              {closing.subhead}
+            </p>
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
+              <Button asChild size="lg" className="w-full sm:w-auto">
+                <Link href={closing.primaryCtaHref}>
+                  {closing.primaryCta}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+                <Link href={closing.secondaryCtaHref}>{closing.secondaryCta}</Link>
+              </Button>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+    </>
+  )
+}

@@ -1,0 +1,49 @@
+# DeluxFit by Angie
+
+> Fitness memberships, personalized online coaching, and live one-on-one
+> training delivered by Angie, a certified personal trainer. Every program is
+> run by her directly: no templates, no resold plans. The site is available in
+> English and Spanish.
+
+Four programs are sold, and they are separate products rather than tiers of one
+thing. Prices below are exact.
+
+## Programs
+
+- [Delux Fit Membership](https://www.deluxfitbyangie.com/membership): $14.99 a
+  month. General, non-personalized fitness content: workout programs, an
+  exercise library, training videos, fitness education, and a general nutrition
+  guide. No coaching is included.
+- [Personalized Online Coaching](https://www.deluxfitbyangie.com/online-coaching):
+  $150 a month. A workout plan and training schedule built around the client's
+  goals, monthly progress reviews and check-ins, basic nutrition guidance, and
+  direct messaging to Angie inside the platform. Response time is up to 72
+  business hours. There is no live session and no phone access.
+- [Single Live Training Session](https://www.deluxfitbyangie.com/single-session):
+  $75 for one 45 to 60 minute private live session over video. A one-off, meant
+  for trying the coaching, learning technique, and form correction.
+- [Live Online Personal Training](https://www.deluxfitbyangie.com/training): $50
+  a session, ongoing over Zoom, with Angie present for the whole session. A
+  minimum of three sessions a week is recommended.
+
+In-person training is not offered yet.
+
+## Pages
+
+- [Home](https://www.deluxfitbyangie.com/): the four programs side by side.
+- [About Angie](https://www.deluxfitbyangie.com/about): her background,
+  certifications, and coaching approach.
+- [Client Stories](https://www.deluxfitbyangie.com/testimonials): reviews and
+  transformation photos, published as clients finish their programs.
+- [Contact](https://www.deluxfitbyangie.com/contact): the message form. Active
+  coaching clients use the platform instead.
+- [Privacy Policy](https://www.deluxfitbyangie.com/privacy): what the site
+  collects, what it is used for, who else holds it, and how to have it deleted.
+- [Terms of Service](https://www.deluxfitbyangie.com/terms): billing,
+  cancellation, rescheduling, refunds, and the health disclaimer.
+
+## Notes
+
+- Coaching communication happens only inside the Delux Fit platform.
+- Results vary. The site provides fitness coaching for educational purposes and
+  is not a substitute for medical advice.

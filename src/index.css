@@ -1,0 +1,207 @@
+/*
+ * The three faces the tokens name, served from this origin.
+ *
+ * A font host is a second origin on the critical path: a DNS lookup, a TLS
+ * handshake and a stylesheet round trip all before the first byte of a face is
+ * requested. Serving them from `/fonts` means the connection is already open
+ * and the file is one hop away, and the display face is preloaded from the
+ * document so it starts downloading beside the bundle rather than after it.
+ *
+ * The files are the latin subsets from Fontsource 5.3.0 (`@fontsource/anton`,
+ * `@fontsource-variable/inter`, `@fontsource-variable/bodoni-moda`), which
+ * repackages the Google Fonts originals under their own OFL licences. The
+ * unicode-range is the one Fontsource ships for that subset; the site's two
+ * locales, English and Spanish, sit inside it.
+ */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/anton-latin-400.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-variable.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/bodoni-moda-latin-variable.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/bodoni-moda-latin-italic-variable.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+ * The face the reader sees for the fraction of a second before Inter lands,
+ * scaled so the two occupy the same box. Without the overrides the swap moves
+ * every line of body copy, which is the layout shift a font swap is otherwise
+ * guaranteed to cause.
+ */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-display: swap;
+  src: local('Helvetica Neue'), local('Arial'), local('Segoe UI');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* `overflow-x: clip` contains horizontal overflow without establishing a
+       new scroll container on `html`. `hidden` here breaks `position: fixed`
+       touch handling on iOS Safari once the page is scrolled, which leaves the
+       mobile nav untappable at any non-zero scroll position. */
+    overflow-x: clip;
+    /* Offset anchor jumps so the sticky header never covers section tops. */
+    scroll-padding-top: var(--df-header-height);
+    /* The condensed display face is drawn thin by subpixel antialiasing on
+       dark grounds, which is the ground this site is almost entirely on. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* A long press on iOS paints a grey block over the control before the
+       tap registers, which reads as a rendering fault rather than a press. */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply m-0 min-h-dvh bg-df-bg font-sans text-df-text antialiased;
+    overflow-x: clip;
+    /* Once a scroll region inside the page reaches its end, the gesture stops
+       there instead of carrying on into the page behind it. */
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    @apply bg-df-accent text-df-on-accent;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-df-accent-bright ring-offset-2 ring-offset-df-bg;
+  }
+
+  /* Headings set their own line breaks. Left to the browser, a three-word
+     second line hangs off a display headline at exactly the sizes the display
+     face is used at. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Drop the 300ms double-tap-to-zoom wait so a touch on any control
+     registers as soon as the finger lifts. */
+  a,
+  button,
+  [role='button'],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+
+  /* A control the pointer can act on says so before it is clicked. */
+  a[href],
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  label[for],
+  summary,
+  select {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  /* Press feedback. The transform is small enough to read as the control
+     taking the press rather than as the page moving, and it runs on the
+     compositor so it costs nothing on the interaction that triggers it. */
+  a[href]:active,
+  button:not(:disabled):active,
+  [role='button']:not([aria-disabled='true']):active {
+    transform: scale(0.97);
+  }
+
+  a[href],
+  button,
+  [role='button'] {
+    transition:
+      transform var(--df-duration-fast) var(--df-ease-out),
+      color var(--df-duration-fast) var(--df-ease-out),
+      background-color var(--df-duration-fast) var(--df-ease-out),
+      border-color var(--df-duration-fast) var(--df-ease-out);
+  }
+
+  /* Chrome paints its own pale blue over an autofilled field, which drops the
+     field out of the dark surface it sits on. An inset shadow the size of the
+     box repaints the surface without touching the value. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-text-fill-color: var(--df-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--df-surface-2) inset;
+    caret-color: var(--df-text);
+    transition: background-color 100000s ease-in-out 0s;
+  }
+
+  /* Honor iOS safe-area when content sits against the screen edges. */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  a[href]:active,
+  button:not(:disabled):active,
+  [role='button']:not([aria-disabled='true']):active {
+    transform: none;
+  }
+}

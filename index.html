@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" class="df-root" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050505" />
+    <title>DeluxFit by Angie: Online Fitness Coaching</title>
+    <meta
+      name="description"
+      content="Memberships, personalized online coaching, and live one-on-one training with certified personal trainer Angie. Discipline over excuses."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- The shell is served for every path, so this canonical is the entry
+         point's own. App.jsx rewrites it, and the whole share card with it, as
+         the router moves. -->
+    <link rel="canonical" href="https://www.deluxfitbyangie.com/" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- iOS does not render an SVG here, and a raster it cannot read leaves the
+         home-screen tile as a screenshot of the page. -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DeluxFit by Angie" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="DeluxFit by Angie: Online Fitness Coaching" />
+    <meta
+      property="og:description"
+      content="Memberships, personalized online coaching, and live one-on-one training with certified personal trainer Angie. Discipline over excuses."
+    />
+    <meta property="og:url" content="https://www.deluxfitbyangie.com/" />
+    <meta property="og:image" content="https://www.deluxfitbyangie.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DeluxFit by Angie: Online Fitness Coaching" />
+    <meta
+      name="twitter:description"
+      content="Memberships, personalized online coaching, and live one-on-one training with certified personal trainer Angie. Discipline over excuses."
+    />
+    <meta name="twitter:image" content="https://www.deluxfitbyangie.com/og.png" />
+
+    <!-- One island per statement rather than one @graph holding all of them.
+         A parser that chokes on a single node drops the whole document it came
+         in, so the publisher, the site, and the catalogue are read separately. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HealthAndBeautyBusiness",
+        "@id": "https://www.deluxfitbyangie.com/#organization",
+        "name": "DeluxFit by Angie",
+        "alternateName": "Delux Fit",
+        "url": "https://www.deluxfitbyangie.com/",
+        "logo": "https://www.deluxfitbyangie.com/deluxfit-logo.webp",
+        "image": "https://www.deluxfitbyangie.com/og.png",
+        "slogan": "Discipline over excuses",
+        "description": "Fitness memberships, personalized online coaching, and live one-on-one training with certified personal trainer Angie.",
+        "priceRange": "$14.99 - $150",
+        "founder": {
+          "@type": "Person",
+          "name": "Angie",
+          "jobTitle": "Certified Personal Trainer"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://www.deluxfitbyangie.com/#website",
+        "url": "https://www.deluxfitbyangie.com/",
+        "name": "DeluxFit by Angie",
+        "inLanguage": ["en-US", "es-US"],
+        "publisher": { "@id": "https://www.deluxfitbyangie.com/#organization" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "@id": "https://www.deluxfitbyangie.com/#programs",
+        "name": "DeluxFit programs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Product",
+              "@id": "https://www.deluxfitbyangie.com/membership#product",
+              "name": "Delux Fit Membership",
+              "description": "Workout programs, an exercise library, training videos, and fitness education, billed monthly.",
+              "url": "https://www.deluxfitbyangie.com/membership",
+              "image": "https://www.deluxfitbyangie.com/og.png",
+              "brand": { "@id": "https://www.deluxfitbyangie.com/#organization" },
+              "offers": {
+                "@type": "Offer",
+                "price": "14.99",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": "https://www.deluxfitbyangie.com/membership"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "Product",
+              "@id": "https://www.deluxfitbyangie.com/online-coaching#product",
+              "name": "Personalized Online Coaching",
+              "description": "A workout plan, a training schedule, monthly progress reviews, and direct messaging with Angie, billed monthly.",
+              "url": "https://www.deluxfitbyangie.com/online-coaching",
+              "image": "https://www.deluxfitbyangie.com/og.png",
+              "brand": { "@id": "https://www.deluxfitbyangie.com/#organization" },
+              "offers": {
+                "@type": "Offer",
+                "price": "150.00",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": "https://www.deluxfitbyangie.com/online-coaching"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "Product",
+              "@id": "https://www.deluxfitbyangie.com/single-session#product",
+              "name": "Single Live Training Session",
+              "description": "One private 45 to 60 minute live session with Angie over video.",
+              "url": "https://www.deluxfitbyangie.com/single-session",
+              "image": "https://www.deluxfitbyangie.com/og.png",
+              "brand": { "@id": "https://www.deluxfitbyangie.com/#organization" },
+              "offers": {
+                "@type": "Offer",
+                "price": "75.00",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": "https://www.deluxfitbyangie.com/single-session"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "Product",
+              "@id": "https://www.deluxfitbyangie.com/training#product",
+              "name": "Live Online Personal Training",
+              "description": "Ongoing live personal training over video with Angie coaching every rep, billed per session.",
+              "url": "https://www.deluxfitbyangie.com/training",
+              "image": "https://www.deluxfitbyangie.com/og.png",
+              "brand": { "@id": "https://www.deluxfitbyangie.com/#organization" },
+              "offers": {
+                "@type": "Offer",
+                "price": "50.00",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": "https://www.deluxfitbyangie.com/training"
+              }
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- The two faces the first screen sets. They are same-origin, so the
+         connection is already open; requesting them here starts the download
+         beside the bundle instead of after the stylesheet has been parsed. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/anton-latin-400.woff2"
+      crossorigin=""
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/inter-latin-variable.woff2"
+      crossorigin=""
+    />
+    <!-- The home hero photograph. It is the largest paint on the entry route
+         and lives inside a lazy chunk, so without this the browser cannot start
+         it until the bundle has downloaded, parsed and run. `imagesrcset` is the
+         one the element declares, so a phone preloads the phone-sized file. -->
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      href="/brand/studio-portrait-dumbbells.webp"
+      imagesrcset="/brand/studio-portrait-dumbbells-800.webp 800w, /brand/studio-portrait-dumbbells-1200.webp 1200w, /brand/studio-portrait-dumbbells.webp 1600w"
+      imagesizes="(min-width: 1024px) 18rem, 15rem"
+    />
+    <!-- The analytics collector and the Supabase project the portal talks to
+         are both cold origins on first paint; opening them early saves a DNS,
+         TCP, and TLS round trip apiece. -->
+    <link rel="preconnect" href="https://gujgtjqqurildqurpffh.supabase.co" crossorigin="" />
+    <link rel="preconnect" href="https://wmqwcnpiewfujmxaivvy.supabase.co" crossorigin="" />
+    <script>
+      ;(function () {
+        var endpoint = 'https://sunday.tail1f78d7.ts.net/report'
+        var site = 'DeluxFit by Angie'
+        var sent = 0
+        function report(kind, message, stack) {
+          if (sent >= 10) return
+          sent += 1
+          try {
+            var body = JSON.stringify({
+              site: site,
+              kind: kind,
+              message: String(message || 'Unknown error').slice(0, 1500),
+              stack: String(stack || '').slice(0, 4000),
+              url: location.href,
+              userAgent: navigator.userAgent,
+            })
+            if (navigator.sendBeacon) {
+              navigator.sendBeacon(endpoint, body)
+            } else {
+              fetch(endpoint, { method: 'POST', body: body, keepalive: true }).catch(function () {})
+            }
+          } catch (ignored) {}
+        }
+        // Capture phase, because element load failures fire error events that do not bubble.
+        window.addEventListener(
+          'error',
+          function (event) {
+            if (event.target && event.target !== window && event.target.tagName) {
+              report(
+                'resource',
+                'Failed to load ' +
+                  event.target.tagName.toLowerCase() +
+                  ': ' +
+                  (event.target.src || event.target.href || '')
+              )
+            } else {
+              report('uncaught', event.message, event.error && event.error.stack)
+            }
+          },
+          true
+        )
+        window.addEventListener('unhandledrejection', function (event) {
+          var reason = event.reason
+          report(
+            'rejection',
+            reason && reason.message ? reason.message : reason,
+            reason && reason.stack
+          )
+        })
+        var consoleError = console.error
+        console.error = function () {
+          var parts = []
+          for (var i = 0; i < arguments.length; i += 1) {
+            var piece = arguments[i]
+            if (piece && piece.stack) {
+              parts.push(piece.stack)
+            } else if (typeof piece === 'object') {
+              try {
+                parts.push(JSON.stringify(piece))
+              } catch (ignored) {
+                parts.push(String(piece))
+              }
+            } else {
+              parts.push(String(piece))
+            }
+          }
+          report('console', parts.join(' '))
+          return consoleError.apply(console, arguments)
+        }
+        if (window.fetch) {
+          var originalFetch = window.fetch
+          window.fetch = function (input) {
+            var target = typeof input === 'string' ? input : (input && input.url) || ''
+            if (target.indexOf(endpoint) === 0) return originalFetch.apply(window, arguments)
+            return originalFetch.apply(window, arguments).then(
+              function (response) {
+                if (response.status >= 500)
+                  report('http', 'HTTP ' + response.status + ' from ' + target.split('?')[0])
+                return response
+              },
+              function (error) {
+                report(
+                  'network',
+                  (error && error.message ? error.message : String(error)) +
+                    ' fetching ' +
+                    target.split('?')[0]
+                )
+                throw error
+              }
+            )
+          }
+        }
+      })()
+    </script>
+    <!-- Traffic analytics. The site key is public by design: it says which
+         site a hit belongs to, and the collector accepts it only from this
+         site's own origins. It is appended after `load`, so the hit is recorded
+         without the script competing for the main thread while the first screen
+         is still being painted. -->
+    <script>
+      addEventListener('load', function () {
+        var tracker = document.createElement('script')
+        tracker.src = 'https://gujgtjqqurildqurpffh.supabase.co/functions/v1/analytics-tracker'
+        tracker.dataset.site = 'sa_e65b4412338d559454807a3c2fd2b362'
+        tracker.crossOrigin = 'anonymous'
+        tracker.async = true
+        document.head.appendChild(tracker)
+      })
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/src/main.jsx" type="module"></script>
+  </body>
+</html>

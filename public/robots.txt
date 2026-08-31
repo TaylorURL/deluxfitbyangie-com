@@ -1,0 +1,106 @@
+# DeluxFit by Angie
+#
+# Robots groups do not inherit: a crawler that matches a named group reads that
+# group and no other, so the signed-in paths are repeated under every agent
+# rather than stated once under `*`.
+
+User-agent: *
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+# AI crawlers, answered deliberately rather than left to each company to decide.
+# Training and answer engines are allowed on the public pages: those pages are
+# the pitch, and a coach quoted in an answer is a coach who was found.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: Claude-User
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+User-agent: CCBot
+Allow: /
+Disallow: /portal
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /update-password
+
+# Bytespider ignores crawl-delay and has no answer surface that sends anyone
+# back here, so it gets nothing.
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://www.deluxfitbyangie.com/sitemap.xml
