@@ -139,6 +139,15 @@ export default function Aurora(props) {
     const ctn = ctnDom.current
     if (!ctn) return
 
+    // Devices that cannot create a WebGL context (some ChromeOS builds, older
+    // GPUs, software-only renderers) would crash OGL's Renderer constructor.
+    // Detecting support up front lets the component stay mounted as an empty
+    // container rather than throwing into the error boundary.
+    const probe = document.createElement('canvas')
+    const probeCtx = probe.getContext('webgl2') || probe.getContext('webgl')
+    if (!probeCtx) return
+    probeCtx.getExtension('WEBGL_lose_context')?.loseContext()
+
     // No geometry edge reaches the screen — the quad covers the viewport and
     // everything visible is a soft gradient inside it — so multisampling costs
     // a multiple of the fragment work and resolves to the same pixels.
