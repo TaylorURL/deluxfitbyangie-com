@@ -137,6 +137,11 @@ const Threads = ({
     const container = containerRef.current
     if (!container) return
 
+    const probe = document.createElement('canvas')
+    const probeCtx = probe.getContext('webgl2') || probe.getContext('webgl')
+    if (!probeCtx) return
+    probeCtx.getExtension('WEBGL_lose_context')?.loseContext()
+
     const renderer = new Renderer({ alpha: true })
     const gl = renderer.gl
     gl.clearColor(0, 0, 0, 0)
