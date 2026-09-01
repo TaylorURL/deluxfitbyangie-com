@@ -20,7 +20,15 @@ export default function SiteShell({ children }) {
         {a11y.skipToContent}
       </a>
       <Header />
-      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+      {/*
+        A screen of held height, so the footer opens below the fold on every
+        route and stays there. The footer runs taller than the viewport on a
+        phone, so `flex-1` alone never reaches it: the column is already past
+        its minimum before main has any room to grow, and a page that arrives
+        shorter than the screen — or a chunk still in flight behind the
+        placeholder — leaves the footer sitting halfway up the first screen.
+      */}
+      <main id="main" tabIndex={-1} className="min-h-dvh flex-1 focus:outline-none">
         {children}
       </main>
       <Footer>
