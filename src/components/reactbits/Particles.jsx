@@ -139,11 +139,22 @@ const Particles = ({
     const camera = new Camera(gl, { fov: 15 })
     camera.position.set(0, 0, cameraDistance)
 
+    let program
+
+    // Every particle is a point sprite shaded per fragment, so the field costs
+    // what the drawing buffer is wide. Past this size the sprites are soft
+    // enough that rendering under 1:1 and scaling the canvas up reads the same;
+    // the base size follows the ratio so the points keep their on-screen width.
+    const MAX_RENDER_DIM = 1920
     const resize = () => {
       const width = container.clientWidth
       const height = container.clientHeight
+      const longestSide = Math.max(width, height) * pixelRatio
+      renderer.dpr =
+        longestSide > MAX_RENDER_DIM ? (pixelRatio * MAX_RENDER_DIM) / longestSide : pixelRatio
       renderer.setSize(width, height)
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height })
+      if (program) program.uniforms.uBaseSize.value = particleBaseSize * renderer.dpr
     }
     window.addEventListener('resize', resize, false)
     resize()
@@ -186,13 +197,13 @@ const Particles = ({
       color: { size: 3, data: colors },
     })
 
-    const program = new Program(gl, {
+    program = new Program(gl, {
       vertex,
       fragment,
       uniforms: {
         uTime: { value: 0 },
         uSpread: { value: particleSpread },
-        uBaseSize: { value: particleBaseSize * pixelRatio },
+        uBaseSize: { value: particleBaseSize * renderer.dpr },
         uSizeRandomness: { value: sizeRandomness },
         uAlphaParticles: { value: alphaParticles ? 1 : 0 },
       },

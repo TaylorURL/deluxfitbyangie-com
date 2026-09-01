@@ -17,17 +17,22 @@ const ClickSpark = ({
   const startTimeRef = useRef(null)
   const wakeRef = useRef(null)
 
+  /*
+   * The canvas is pinned to the viewport rather than stretched over the
+   * document. A spark lives for less than half a second at the point of the
+   * click, so nothing is ever drawn outside the screen, and a surface sized to
+   * the whole page is a backing store of tens of megabytes that is reallocated
+   * and re-rastered every time the document grows — which it does on each lazy
+   * image and each font swap during load.
+   */
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const parent = canvas.parentElement
-    if (!parent) return
-
     let resizeTimeout
 
     const resizeCanvas = () => {
-      const { width, height } = parent.getBoundingClientRect()
+      const { width, height } = canvas.getBoundingClientRect()
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width
         canvas.height = height
@@ -39,13 +44,11 @@ const ClickSpark = ({
       resizeTimeout = setTimeout(resizeCanvas, 100)
     }
 
-    const ro = new ResizeObserver(handleResize)
-    ro.observe(parent)
-
+    window.addEventListener('resize', handleResize)
     resizeCanvas()
 
     return () => {
-      ro.disconnect()
+      window.removeEventListener('resize', handleResize)
       clearTimeout(resizeTimeout)
     }
   }, [])
@@ -159,7 +162,7 @@ const ClickSpark = ({
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-0 block h-full w-full select-none"
+        className="pointer-events-none fixed inset-0 block h-full w-full select-none"
       />
       {children}
     </div>

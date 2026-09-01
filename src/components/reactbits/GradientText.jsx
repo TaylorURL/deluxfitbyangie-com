@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { motion, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { framePump } from './framePump'
 
 export default function GradientText({
   children,
@@ -15,37 +16,47 @@ export default function GradientText({
   const progress = useMotionValue(0)
   const elapsedRef = useRef(0)
   const lastTimeRef = useRef(null)
+  const rootRef = useRef(null)
 
   const animationDuration = animationSpeed * 1000
 
-  useAnimationFrame(time => {
-    if (isPaused) {
+  /*
+   * The gradient travels by `background-position` on a `background-clip: text`
+   * layer, which the compositor cannot take over — every frame is a repaint on
+   * the main thread. Driving it from the pump keeps that cost to the moments
+   * the text is actually on screen in a visible tab.
+   */
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || isPaused) {
       lastTimeRef.current = null
       return
     }
 
-    if (lastTimeRef.current === null) {
-      lastTimeRef.current = time
-      return
-    }
-
-    const deltaTime = time - lastTimeRef.current
-    lastTimeRef.current = time
-    elapsedRef.current += deltaTime
-
-    if (yoyo) {
-      const fullCycle = animationDuration * 2
-      const cycleTime = elapsedRef.current % fullCycle
-
-      if (cycleTime < animationDuration) {
-        progress.set((cycleTime / animationDuration) * 100)
-      } else {
-        progress.set(100 - ((cycleTime - animationDuration) / animationDuration) * 100)
+    return framePump(root, (time, resumed) => {
+      if (resumed || lastTimeRef.current === null) {
+        lastTimeRef.current = time
+        return
       }
-    } else {
-      progress.set((elapsedRef.current / animationDuration) * 100)
-    }
-  })
+
+      const deltaTime = time - lastTimeRef.current
+      lastTimeRef.current = time
+      elapsedRef.current += deltaTime
+
+      if (yoyo) {
+        const fullCycle = animationDuration * 2
+        const cycleTime = elapsedRef.current % fullCycle
+
+        if (cycleTime < animationDuration) {
+          progress.set((cycleTime / animationDuration) * 100)
+        } else {
+          progress.set(100 - ((cycleTime - animationDuration) / animationDuration) * 100)
+        }
+      } else {
+        progress.set((elapsedRef.current / animationDuration) * 100)
+      }
+    })
+  }, [isPaused, yoyo, animationDuration, progress])
 
   useEffect(() => {
     elapsedRef.current = 0
@@ -93,6 +104,7 @@ export default function GradientText({
 
   return (
     <motion.div
+      ref={rootRef}
       className={`relative mx-auto flex max-w-fit cursor-pointer flex-row items-center justify-center overflow-hidden rounded-df-2xl font-medium backdrop-blur transition-shadow duration-500 ${showBorder ? 'px-2 py-1' : ''} ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
