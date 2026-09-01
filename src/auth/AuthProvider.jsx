@@ -12,10 +12,56 @@ import { AuthContext } from './useAuth'
  * first gets the same client without a second request.
  */
 let clientPromise = null
+const clientWaiters = []
 
 function client() {
-  if (!clientPromise) clientPromise = import('@/config/supabase').then(m => m.supabase)
+  if (!clientPromise) {
+    clientPromise = import('@/config/supabase').then(m => m.supabase)
+    while (clientWaiters.length) clientWaiters.pop()()
+  }
   return clientPromise
+}
+
+/*
+ * Every auth event on this site starts with one of the calls below asking for
+ * the client, so a subscriber that is in place by the time the client is first
+ * requested cannot miss one.
+ */
+function onClientRequested(notify) {
+  if (clientPromise) {
+    notify()
+    return () => {}
+  }
+  clientWaiters.push(notify)
+  return () => {
+    const index = clientWaiters.indexOf(notify)
+    if (index >= 0) clientWaiters.splice(index, 1)
+  }
+}
+
+const AUTH_STORAGE_KEY = 'deluxfit:auth'
+
+/*
+ * Whether this visit has an account to resolve at all. A stored session is one
+ * signal; the other is a link the auth server sent the visitor back on, which
+ * arrives as a token in the fragment or a code in the query and has to be
+ * exchanged before anything else happens on the page.
+ *
+ * A visit with neither is a reader on a sales page, and signed out is the
+ * answer without asking: the SDK is left on the shelf until something on the
+ * page actually needs an account.
+ */
+function hasAccountToResolve() {
+  if (typeof window === 'undefined') return true
+  const { hash, search } = window.location
+  if (hash.includes('access_token') || hash.includes('error') || search.includes('code=')) {
+    return true
+  }
+  try {
+    return window.localStorage.getItem(AUTH_STORAGE_KEY) !== null
+  } catch {
+    return true
+  }
 }
 
 /**
@@ -46,32 +92,53 @@ export default function AuthProvider({ children }) {
     let active = true
     let listener = null
 
-    client().then(async supabase => {
-      const verify = async nextSession => {
-        if (!nextSession) {
-          if (!active) return
-          setSession(null)
-          setUser(null)
-          setLoading(false)
-          return
-        }
-        const { data, error } = await supabase.auth.getUser()
-        if (!active) return
-        setSession(error ? null : nextSession)
-        setUser(error ? null : (data.user ?? null))
-        setLoading(false)
-      }
+    let hydrated = false
 
-      const { data } = await supabase.auth.getSession()
-      if (!active) return
-      await verify(data.session ?? null)
-      listener = supabase.auth.onAuthStateChange((_event, nextSession) => {
-        verify(nextSession ?? null)
-      }).data
-    })
+    const hydrate = () => {
+      if (hydrated) return
+      hydrated = true
+      client().then(async supabase => {
+        const verify = async nextSession => {
+          if (!nextSession) {
+            if (!active) return
+            setSession(null)
+            setUser(null)
+            setLoading(false)
+            return
+          }
+          const { data, error } = await supabase.auth.getUser()
+          if (!active) return
+          setSession(error ? null : nextSession)
+          setUser(error ? null : (data.user ?? null))
+          setLoading(false)
+        }
+
+        const { data } = await supabase.auth.getSession()
+        if (!active) return
+        await verify(data.session ?? null)
+        listener = supabase.auth.onAuthStateChange((_event, nextSession) => {
+          verify(nextSession ?? null)
+        }).data
+      })
+    }
+
+    if (hasAccountToResolve()) {
+      hydrate()
+      return () => {
+        active = false
+        listener?.subscription?.unsubscribe()
+      }
+    }
+
+    // Signed out is already the answer, so the app settles on it now and the
+    // listener that catches a later sign-in goes up the moment anything asks
+    // for the client.
+    setLoading(false)
+    const stopWatching = onClientRequested(hydrate)
 
     return () => {
       active = false
+      stopWatching()
       listener?.subscription?.unsubscribe()
     }
   }, [])
