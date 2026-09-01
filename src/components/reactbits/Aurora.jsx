@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { framePump } from './framePump'
 
 const VERT = `#version 300 es
@@ -119,14 +119,33 @@ export default function Aurora(props) {
 
   const ctnDom = useRef(null)
 
+  // Parsing three hex strings into GL floats is the same work on every frame as
+  // it is once, so it is keyed on the stops themselves and handed to the loop
+  // through a ref the effect never has to be rebuilt for.
+  const colorStopsKey = colorStops.join('|')
+  const colorStopsArray = useMemo(
+    () =>
+      colorStops.map(hex => {
+        const c = new Color(hex)
+        return [c.r, c.g, c.b]
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [colorStopsKey]
+  )
+  const colorStopsRef = useRef(colorStopsArray)
+  colorStopsRef.current = colorStopsArray
+
   useEffect(() => {
     const ctn = ctnDom.current
     if (!ctn) return
 
+    // No geometry edge reaches the screen — the quad covers the viewport and
+    // everything visible is a soft gradient inside it — so multisampling costs
+    // a multiple of the fragment work and resolves to the same pixels.
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: true,
-      antialias: true,
+      antialias: false,
     })
     const gl = renderer.gl
     gl.clearColor(0, 0, 0, 0)
@@ -136,13 +155,19 @@ export default function Aurora(props) {
 
     let program
 
+    // The gradient is shaded per pixel, so its cost scales with the size of the
+    // drawing buffer. Past this width the noise field is soft enough that
+    // rendering under 1:1 and letting the canvas scale up is indistinguishable.
+    const MAX_RENDER_DIM = 1920
     function resize() {
       if (!ctn) return
       const width = ctn.offsetWidth
       const height = ctn.offsetHeight
+      const longestSide = Math.max(width, height)
+      renderer.dpr = longestSide > MAX_RENDER_DIM ? MAX_RENDER_DIM / longestSide : 1
       renderer.setSize(width, height)
       if (program) {
-        program.uniforms.uResolution.value = [width, height]
+        program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height]
       }
     }
     window.addEventListener('resize', resize)
@@ -152,19 +177,14 @@ export default function Aurora(props) {
       delete geometry.attributes.uv
     }
 
-    const colorStopsArray = colorStops.map(hex => {
-      const c = new Color(hex)
-      return [c.r, c.g, c.b]
-    })
-
     program = new Program(gl, {
       vertex: VERT,
       fragment: FRAG,
       uniforms: {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
-        uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+        uColorStops: { value: colorStopsRef.current },
+        uResolution: { value: [gl.canvas.width, gl.canvas.height] },
         uBlend: { value: blend },
       },
     })
@@ -177,11 +197,7 @@ export default function Aurora(props) {
       program.uniforms.uTime.value = time * speed * 0.1
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0
       program.uniforms.uBlend.value = propsRef.current.blend ?? blend
-      const stops = propsRef.current.colorStops ?? colorStops
-      program.uniforms.uColorStops.value = stops.map(hex => {
-        const c = new Color(hex)
-        return [c.r, c.g, c.b]
-      })
+      program.uniforms.uColorStops.value = colorStopsRef.current
       renderer.render({ scene: mesh })
     })
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { LanguageContext } from './context'
-import { DEFAULT_LOCALE, LOCALES, isSupportedLocale } from './locales'
+import { DEFAULT_LOCALE, LOCALES, isSupportedLocale, loadContent, loadedContent } from './locales'
 
 const STORAGE_KEY = 'deluxfit:locale'
 
@@ -32,8 +32,32 @@ function detectInitialLocale() {
   return DEFAULT_LOCALE
 }
 
+const INITIAL_LOCALE = detectInitialLocale()
+
+// The request for a non-default tree goes out as this module evaluates rather
+// than when the provider mounts, so it overlaps the rest of the boot instead of
+// queueing behind the first render.
+if (INITIAL_LOCALE !== DEFAULT_LOCALE) loadContent(INITIAL_LOCALE)
+
 export default function LanguageProvider({ children }) {
-  const [locale, setLocaleState] = useState(detectInitialLocale)
+  const [locale, setLocaleState] = useState(INITIAL_LOCALE)
+  const [content, setContent] = useState(() => loadedContent(locale))
+
+  /*
+   * A locale and the copy it renders move together. Switching sets both only
+   * once the tree is in hand, so no surface is ever caught showing one
+   * language under the label of another.
+   */
+  useEffect(() => {
+    if (content) return
+    let active = true
+    loadContent(locale).then(next => {
+      if (active) setContent(next)
+    })
+    return () => {
+      active = false
+    }
+  }, [locale, content])
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -50,7 +74,16 @@ export default function LanguageProvider({ children }) {
 
   const setLocale = useCallback(code => {
     if (!isSupportedLocale(code)) return
-    setLocaleState(code)
+    const ready = loadedContent(code)
+    if (ready) {
+      setContent(ready)
+      setLocaleState(code)
+      return
+    }
+    loadContent(code).then(next => {
+      setContent(next)
+      setLocaleState(code)
+    })
   }, [])
 
   const value = useMemo(() => {
@@ -58,11 +91,13 @@ export default function LanguageProvider({ children }) {
     return {
       locale: entry.code,
       localeName: entry.name,
-      content: entry.content,
+      content,
       locales: LOCALES,
       setLocale,
     }
-  }, [locale, setLocale])
+  }, [locale, content, setLocale])
+
+  if (!content) return null
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }

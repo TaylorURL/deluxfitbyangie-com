@@ -5,8 +5,9 @@ import BrandLogo from './BrandLogo'
 import LanguageSwitcher from './LanguageSwitcher'
 import SocialLinks from './SocialLinks'
 import { ShinyText } from '@/components/reactbits'
+import { studioYear } from '@/lib/timezone'
 
-const CURRENT_YEAR = new Date().getFullYear()
+const CURRENT_YEAR = studioYear()
 
 export default function Footer({ children }) {
   const { brand, footer, nav } = useContent()

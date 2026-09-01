@@ -11,9 +11,10 @@ import {
   toDateKey,
 } from '@/lib/booking'
 import { FormError, FormSuccess } from './forms/FormFeedback'
+import { dayAfter, dayKey, instantAt, ZONE } from '@/lib/timezone'
 
-const WEEKDAY = { weekday: 'short' }
-const MONTH_DAY = { month: 'short', day: 'numeric' }
+const WEEKDAY = { timeZone: ZONE, weekday: 'short' }
+const MONTH_DAY = { timeZone: ZONE, month: 'short', day: 'numeric' }
 
 /**
  * @param {object} props
@@ -36,10 +37,11 @@ export default function BookingCalendar({ service }) {
   useEffect(() => {
     if (!selectedDate) return
     let active = true
-    const dayStart = new Date(selectedDate)
-    dayStart.setHours(0, 0, 0, 0)
-    const dayEnd = new Date(selectedDate)
-    dayEnd.setHours(23, 59, 59, 999)
+    // The studio's day rather than the visitor's, so the slots greyed out are
+    // the slots taken on the day the chip names.
+    const key = dayKey(selectedDate)
+    const dayStart = instantAt(key, 0)
+    const dayEnd = new Date(instantAt(dayAfter(key), 0).getTime() - 1)
     setLoadingSlots(true)
     fetchTakenSlots(dayStart, dayEnd).then(taken => {
       if (!active) return
@@ -146,10 +148,10 @@ export default function BookingCalendar({ service }) {
                 )}
               >
                 <span className="text-[10px] font-700 uppercase tracking-[0.16em]">
-                  {date.toLocaleDateString([], WEEKDAY)}
+                  {date.toLocaleDateString('en-US', WEEKDAY)}
                 </span>
                 <span className="mt-1 text-sm font-600">
-                  {date.toLocaleDateString([], MONTH_DAY)}
+                  {date.toLocaleDateString('en-US', MONTH_DAY)}
                 </span>
               </button>
             )
