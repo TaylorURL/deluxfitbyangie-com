@@ -3,6 +3,7 @@ import { Container } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { Link } from '@/router'
 import BrandLogo from '@/components/BrandLogo'
+import { studioYear } from '@/lib/timezone'
 
 export default function AuthShell({ children }) {
   return (
@@ -43,7 +44,7 @@ export default function AuthShell({ children }) {
       <footer className="border-t border-df-border">
         <Container size="xl">
           <p className="py-6 text-[10px] font-600 uppercase tracking-[0.24em] text-df-text-faint">
-            © {new Date().getFullYear()} DeluxFit by Angie · Train with intent.
+            © {studioYear()} DeluxFit by Angie · Train with intent.
           </p>
         </Container>
         <SplitRail version={__BUILD_VERSION__} />
