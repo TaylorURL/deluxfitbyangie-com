@@ -4,6 +4,7 @@ import SplitRail from '@taylorurl/split-rail'
 import { useContent } from '@/i18n'
 import BrandLogo from '@/components/BrandLogo'
 import { useAuth } from '@/auth/useAuth'
+import { studioYear } from '@/lib/timezone'
 
 export default function PortalShell({ children }) {
   const { brand, portal, header } = useContent()
@@ -69,7 +70,7 @@ export default function PortalShell({ children }) {
       <footer className="border-t border-df-border">
         <Container size="xl">
           <p className="py-6 text-[10px] font-600 uppercase tracking-[0.24em] text-df-text-faint">
-            © {new Date().getFullYear()} {brand.fullName} · {brand.slogan}
+            © {studioYear()} {brand.fullName} · {brand.slogan}
           </p>
         </Container>
         <SplitRail version={__BUILD_VERSION__} />

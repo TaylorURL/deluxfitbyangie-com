@@ -1,4 +1,5 @@
 import { supabase } from '@/config/supabase'
+import { dayAfter, dayKey, instantAt, weekdayOf, ZONE } from '@/lib/timezone'
 
 /**
  * Candidate slots are generated client-side from Angie's standing business
@@ -9,7 +10,12 @@ import { supabase } from '@/config/supabase'
  * index — so a race that slips past the greyed-out UI still fails closed (409).
  */
 
-/** Standing weekly availability: weekday (0=Sun) to a list of 24h start hours. */
+/**
+ * Standing weekly availability: weekday (0=Sun) to a list of 24h start hours.
+ *
+ * The hours are the studio's, so 6 means six in the morning in the room the
+ * session happens in, whatever clock the person booking is looking at.
+ */
 const BUSINESS_HOURS = {
   0: [], // Sunday — closed
   1: [6, 7, 8, 9, 16, 17, 18, 19],
@@ -23,23 +29,24 @@ const BUSINESS_HOURS = {
 /** Number of days ahead (from today) that are open for booking. */
 const BOOKING_WINDOW_DAYS = 28
 
-/** Format a Date as a local `YYYY-MM-DD` key (no timezone drift). */
+/** Format a Date as the studio's `YYYY-MM-DD` key. */
 export function toDateKey(date) {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
+  return dayKey(date)
 }
 
-/** The bookable dates: today through the booking window, excluding closed days. */
+/**
+ * The bookable dates: today through the booking window, excluding closed days.
+ *
+ * Each is held at its midday here, which is far enough from both edges of the
+ * day that the hour daylight saving moves cannot carry one onto its neighbour.
+ */
 export function getBookableDates() {
   const dates = []
-  const start = new Date()
-  start.setHours(0, 0, 0, 0)
+  let key = dayKey()
   for (let offset = 0; offset <= BOOKING_WINDOW_DAYS; offset += 1) {
-    const date = new Date(start)
-    date.setDate(start.getDate() + offset)
-    if ((BUSINESS_HOURS[date.getDay()] ?? []).length > 0) dates.push(date)
+    const noon = instantAt(key, 12)
+    if ((BUSINESS_HOURS[weekdayOf(noon)] ?? []).length > 0) dates.push(noon)
+    key = dayAfter(key)
   }
   return dates
 }
@@ -49,18 +56,19 @@ export function getBookableDates() {
  * Past times (for today) are excluded.
  */
 export function getCandidateSlots(date) {
-  const hours = BUSINESS_HOURS[date.getDay()] ?? []
-  const now = new Date()
+  const key = dayKey(date)
+  const hours = BUSINESS_HOURS[weekdayOf(date)] ?? []
+  const now = Date.now()
   return hours
-    .map(hour => {
-      const start = new Date(date)
-      start.setHours(hour, 0, 0, 0)
-      return start
-    })
-    .filter(start => start.getTime() > now.getTime())
+    .map(hour => instantAt(key, hour))
+    .filter(start => start && start.getTime() > now)
     .map(start => ({
       start,
-      label: start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+      label: start.toLocaleTimeString('en-US', {
+        timeZone: ZONE,
+        hour: 'numeric',
+        minute: '2-digit',
+      }),
     }))
 }
 
