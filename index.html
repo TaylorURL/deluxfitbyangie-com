@@ -3,6 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Whether this machine draws in software, asked before anything is
+         painted. Every gradient, shadow, blur and blend on the page is a
+         separate shader a software rasteriser has to build before it can draw
+         the first frame, and together they hold that frame for seconds on a
+         machine with no GPU, which is what PageSpeed measures on. The answer
+         lands on the root element ahead of the first frame and the stylesheet
+         paints flat off it. The pattern is the one src/lib/softwareRenderer.js
+         tests the backdrops with. -->
+    <script>
+      ;(function () {
+        try {
+          var canvas = document.createElement('canvas')
+          var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+          if (!gl) return
+          var info = gl.getExtension('WEBGL_debug_renderer_info')
+          var renderer = info
+            ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL)
+            : gl.getParameter(gl.RENDERER)
+          if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(renderer || '')))
+            document.documentElement.setAttribute('data-gpu', 'software')
+          var lose = gl.getExtension('WEBGL_lose_context')
+          if (lose) lose.loseContext()
+        } catch (e) {}
+      })()
+    </script>
     <meta name="theme-color" content="#050505" />
     <title>DeluxFit by Angie: Online Fitness Coaching</title>
     <meta
