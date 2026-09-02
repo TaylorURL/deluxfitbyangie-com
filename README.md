@@ -14,6 +14,9 @@
   The direct-sale funnel, member portal, and coach dashboard for certified personal trainer Angie:<br />
   memberships, online coaching, and live 1-on-1 training.
 </p>
+<p align="center">
+  <sub>Published for reading. Proprietary — see <a href="LICENSE.md">LICENSE.md</a>. Outside contributions are not accepted.</sub>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-2026.36.10-e11d2a?style=for-the-badge" alt="Version 2026.36.10" />
