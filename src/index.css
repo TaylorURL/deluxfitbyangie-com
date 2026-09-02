@@ -205,3 +205,21 @@
     transform: none;
   }
 }
+
+/* On a machine that draws in software (the probe in the document head sets the
+   attribute) the page paints flat. Every gradient, shadow, blur and blend is a
+   separate shader a software rasteriser has to build before it can draw the
+   first frame, and together they held that frame for seconds; the colours and
+   the type are what remain. A machine with a GPU never matches this and sees
+   the page as designed. */
+html[data-gpu='software'] *,
+html[data-gpu='software'] *::before,
+html[data-gpu='software'] *::after {
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
