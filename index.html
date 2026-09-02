@@ -348,6 +348,21 @@
           function (event) {
             try {
               if (event.target && event.target !== window && event.target.tagName) {
+                // A preload is a hint the browser is allowed to drop. Googlebot's
+                // renderer cancels ones it does not need in time, and iOS Safari
+                // drops preloads for images whose imagesrcset picks a candidate
+                // that is not the href. Neither is a failure the visitor sees:
+                // the stylesheet still asks for the font it needs, and an image
+                // that the picture element renders fires its own error event if
+                // that fetch fails. Reporting a hint the browser chose not to use
+                // files a ticket for behaviour that is by design.
+                var rel = (event.target.rel || '').toLowerCase()
+                if (
+                  event.target.tagName.toLowerCase() === 'link' &&
+                  (rel === 'preload' || rel === 'modulepreload' || rel === 'prefetch')
+                ) {
+                  return
+                }
                 report(
                   'resource',
                   'Failed to load ' +
