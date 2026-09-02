@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Renderer, Camera, Geometry, Program, Mesh } from 'ogl'
 import { framePump } from './framePump'
+import { drawsInSoftware } from '@/lib/softwareRenderer'
 
 const defaultColors = ['var(--df-accent-bright)', 'var(--df-accent)', 'var(--df-text)']
 
@@ -133,6 +134,7 @@ const Particles = ({
     }
     const gl = renderer.gl
     if (!gl || !gl.canvas) return
+    const software = drawsInSoftware(gl)
     container.appendChild(gl.canvas)
     gl.clearColor(0, 0, 0, 0)
 
@@ -216,7 +218,7 @@ const Particles = ({
     let lastTime = performance.now()
     let elapsed = 0
 
-    const stopPump = framePump(container, (t, resumed) => {
+    const draw = (t, resumed) => {
       // A paused loop resumes with the whole gap in `t`; rebasing the clock is
       // what keeps the field from lurching forward when it scrolls back in.
       if (resumed) lastTime = t
@@ -241,7 +243,12 @@ const Particles = ({
       }
 
       renderer.render({ scene: particles, camera })
-    })
+    }
+    // A field a machine with no GPU would have to draw in software is drawn
+    // once and held: on one of those a frame costs more than the page paints
+    // in the same time.
+    const stopPump = software ? () => {} : framePump(container, draw)
+    if (software) draw(0, true)
 
     return () => {
       window.removeEventListener('resize', resize)
