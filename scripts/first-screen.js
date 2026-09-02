@@ -15,6 +15,16 @@
  *
  * The markup mirrors Home.jsx's hero. A change to that hero's structure or
  * classes belongs here too, or the app will land a few pixels off the shell.
+ *
+ * The bundle runs after the first frame rather than before it. A module
+ * script is deferred, which only means it waits for the parser: it runs the
+ * moment parsing ends, and on a slow phone that moment arrives before the
+ * browser has found a frame to paint the shell in. The page then sits blank
+ * while the bundle draws over markup nobody has been shown, and the whole
+ * download is charged to the first paint. The entry keeps its early fetch, as
+ * a module preload, and loses its script tag; an inline module in its place
+ * asks for the bundle one frame after the first, which is the first frame the
+ * shell can have been painted in.
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -83,4 +93,11 @@ if (!html.includes('<div id="root"></div>'))
   throw new Error('dist/index.html carries no empty root')
 html = html.replace('<div id="root"></div>', `<div id="root">${shell}</div>`)
 html = html.replace('</head>', `${style}${guard}</head>`)
+
+const entry = html.match(/^[ \t]*<script type="module" crossorigin src="([^"]+)"><\/script>\n/m)
+if (!entry) throw new Error('dist/index.html carries no module entry')
+const [tag, src] = entry
+const preload = `    <link rel="modulepreload" crossorigin href="${src}" />\n`
+const boot = `    <script type="module">requestAnimationFrame(() => requestAnimationFrame(() => import(${JSON.stringify(src)})))</script>\n`
+html = html.replace(tag, `${preload}${boot}`)
 writeFileSync(dist, html)
