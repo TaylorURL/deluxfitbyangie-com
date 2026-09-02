@@ -1,6 +1,7 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl'
 import { useEffect, useMemo, useRef } from 'react'
 import { framePump } from './framePump'
+import { drawsInSoftware } from '@/lib/softwareRenderer'
 
 const VERT = `#version 300 es
 in vec2 position;
@@ -146,6 +147,7 @@ export default function Aurora(props) {
     const probe = document.createElement('canvas')
     const probeCtx = probe.getContext('webgl2') || probe.getContext('webgl')
     if (!probeCtx) return
+    const software = drawsInSoftware(probeCtx)
     probeCtx.getExtension('WEBGL_lose_context')?.loseContext()
 
     // No geometry edge reaches the screen — the quad covers the viewport and
@@ -201,16 +203,21 @@ export default function Aurora(props) {
     const mesh = new Mesh(gl, { geometry, program })
     ctn.appendChild(gl.canvas)
 
-    const stopPump = framePump(ctn, t => {
+    const draw = t => {
       const { time = t * 0.01, speed = 1.0 } = propsRef.current
       program.uniforms.uTime.value = time * speed * 0.1
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0
       program.uniforms.uBlend.value = propsRef.current.blend ?? blend
       program.uniforms.uColorStops.value = colorStopsRef.current
       renderer.render({ scene: mesh })
-    })
+    }
+    // A wash a machine with no GPU would have to draw in software is drawn
+    // once and held: on one of those a frame costs more than the page paints
+    // in the same time.
+    const stopPump = software ? () => {} : framePump(ctn, draw)
 
     resize()
+    if (software) draw(0)
 
     return () => {
       stopPump()

@@ -70,9 +70,12 @@ const MotionH1 = motion.h1
 const MotionSpan = motion.span
 const MotionDiv = motion.div
 
+// The lines rise without a fade: an element first painted at nothing is never
+// reconsidered as the page's largest paint, so a headline that faded in was
+// measured by whatever painted after it.
 const LINE = {
-  hidden: { opacity: 0, y: '0.4em' },
-  visible: { opacity: 1, y: 0 },
+  hidden: { y: '0.4em' },
+  visible: { y: 0 },
 }
 
 const LINE_STAGGER = {
@@ -174,8 +177,8 @@ export default function Home() {
 
             <MotionDiv
               className="relative mx-auto w-full max-w-[15rem] sm:max-w-[18rem] lg:mx-0 lg:justify-self-end"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? false : { y: 20 }}
+              animate={prefersReducedMotion ? undefined : { y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
             >
               <FramedPhoto
