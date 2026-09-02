@@ -10,6 +10,11 @@ roughly four times what a phone does. Each one is resized to the widths
 in `PHOTO_WIDTHS` (or `LOGO_WIDTHS`) and written beside the original as `<name>-<width>.webp`, and
 the table in `src/lib/images.js` is rewritten from what is on disk, so a photo
 with no variants cannot be referenced as though it had them.
+
+The narrowest photo width is for a frame a phone draws at a few hundred points:
+the hero portrait is capped at 15rem, so a phone asks for a little over 400
+device pixels and was handed the 800px file — twice the picture the frame has
+anywhere to put, on the one download the largest paint waits for.
 """
 
 from __future__ import annotations
@@ -25,7 +30,7 @@ except ImportError:  # pragma: no cover - the failure is the message
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
 TABLE = ROOT / "src" / "lib" / "images.js"
-PHOTO_WIDTHS = (800, 1200)
+PHOTO_WIDTHS = (480, 800, 1200)
 LOGO_WIDTHS = (320, 640)
 ALL_WIDTHS = PHOTO_WIDTHS + LOGO_WIDTHS
 QUALITY = {"photo": 76, "logo": 88}
