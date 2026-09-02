@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { hexToUnitRgb, useTokenColors } from '@deluxfit/ds'
+import { documentDrawsInSoftware } from '@/lib/softwareRenderer'
 
 /*
  * The three canvases carry `ogl` and their shaders — around 64KB that renders
@@ -13,6 +14,13 @@ import { hexToUnitRgb, useTokenColors } from '@deluxfit/ds'
 const Aurora = lazy(() => import('@/components/reactbits/Aurora'))
 const Particles = lazy(() => import('@/components/reactbits/Particles'))
 const Threads = lazy(() => import('@/components/reactbits/Threads'))
+
+/*
+ * Whether this machine draws in software, read once for the module. The head
+ * settles it before the first frame and it cannot change afterwards, so there
+ * is nothing here for a render to ask again.
+ */
+const SOFTWARE = documentDrawsInSoftware()
 
 const AURORA_TOKENS = ['--df-aurora-deep', '--df-aurora-mid', '--df-aurora-black']
 const PARTICLE_TOKENS = ['--df-accent-bright', '--df-accent', '--df-text']
@@ -30,7 +38,16 @@ export default function AnimatedBackdrop({ variant = 'aurora', className = '', o
   const particleColors = useTokenColors(PARTICLE_TOKENS)
   const [threadColor] = useTokenColors(THREAD_TOKENS)
 
-  if (prefersReducedMotion) return null
+  /*
+   * The stylesheet already paints the page flat where there is no GPU behind
+   * it, and a canvas is the part of that page a stylesheet cannot reach: a
+   * shader compiled and rasterised on the CPU holds the same thread the page
+   * is laid out on, and a field below the fold is drawn there for a reader who
+   * has not scrolled to it. Deciding here rather than inside each canvas means
+   * the chunk carrying them is never asked for at all. A machine with a GPU
+   * never takes this branch and sees the backdrop as designed.
+   */
+  if (prefersReducedMotion || SOFTWARE) return null
 
   return (
     <div

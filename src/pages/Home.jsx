@@ -186,6 +186,12 @@ export default function Home() {
                 alt={hero.imageAlt}
                 aspect="aspect-[4/5]"
                 priority
+                // The frame this photograph fills is capped well short of the
+                // column that holds it, and the default describes the column.
+                // The head preloads this file against the same widths, so the
+                // two have to name one candidate or the preload is spent on a
+                // file the element then declines to use.
+                sizes="(min-width: 640px) 18rem, 15rem"
               />
               <div className="absolute -bottom-4 left-2 rounded-df-md border border-df-glass-border bg-df-glass-fill px-4 py-3 backdrop-blur-xl sm:-bottom-5 sm:-left-5 sm:px-5 sm:py-3">
                 <GradientText

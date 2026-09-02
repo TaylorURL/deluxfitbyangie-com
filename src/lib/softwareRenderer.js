@@ -20,3 +20,21 @@ export function drawsInSoftware(gl) {
     : gl.getParameter(gl.RENDERER)
   return SOFTWARE_RENDERER.test(String(renderer || ''))
 }
+
+/**
+ * The same answer, as the document already recorded it.
+ *
+ * The head asks this question of its own context before anything is painted
+ * and writes `data-gpu="software"` on the root, which is what the stylesheet
+ * paints flat off. Reading the attribute back rather than opening a second
+ * context lets code that runs later decide whether to draw at all, and keeps
+ * one answer for the page rather than one per canvas.
+ *
+ * @returns {boolean}
+ */
+export function documentDrawsInSoftware() {
+  return (
+    typeof document !== 'undefined' &&
+    document.documentElement.getAttribute('data-gpu') === 'software'
+  )
+}
