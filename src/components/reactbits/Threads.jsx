@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Renderer, Program, Mesh, Triangle, Color } from 'ogl'
 import { framePump } from './framePump'
+import { drawsInSoftware } from '@/lib/softwareRenderer'
 
 const vertexShader = `
 attribute vec2 position;
@@ -140,6 +141,7 @@ const Threads = ({
     const probe = document.createElement('canvas')
     const probeCtx = probe.getContext('webgl2') || probe.getContext('webgl')
     if (!probeCtx) return
+    const software = drawsInSoftware(probeCtx)
     probeCtx.getExtension('WEBGL_lose_context')?.loseContext()
 
     const renderer = new Renderer({ alpha: true })
@@ -204,7 +206,7 @@ const Threads = ({
     container.addEventListener('mousemove', handleMouseMove)
     container.addEventListener('mouseleave', handleMouseLeave)
 
-    const stopPump = framePump(container, t => {
+    const draw = t => {
       const { color, amplitude, distance, enableMouseInteraction } = propsRef.current
 
       program.uniforms.uColor.value.set(...color)
@@ -224,7 +226,12 @@ const Threads = ({
       program.uniforms.iTime.value = t * 0.001
 
       renderer.render({ scene: mesh })
-    })
+    }
+    // Threads a machine with no GPU would have to draw in software are drawn
+    // once and held: on one of those a frame costs more than the page paints
+    // in the same time.
+    const stopPump = software ? () => {} : framePump(container, draw)
+    if (software) draw(0)
 
     return () => {
       stopPump()

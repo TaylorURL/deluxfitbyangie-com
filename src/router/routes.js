@@ -14,15 +14,20 @@
  */
 
 import { lazy } from 'react'
+import Home from '../pages/Home'
 import { ROUTE_PATHS } from './paths'
 
 /*
  * Each page is its own chunk. A visitor reading the membership page has no use
  * for the contact form's validation or the testimonials gallery, and one
  * bundle holding them all makes the first page wait for every other one.
+ *
+ * The home page is the exception and rides with the bundle. It is where most
+ * visits begin, and a chunk of its own is a second round trip between the app
+ * arriving and the first screen being drawn.
  */
 const COMPONENTS = {
-  '/': lazy(() => import('../pages/Home')),
+  '/': Home,
   '/about': lazy(() => import('../pages/About')),
   '/membership': lazy(() => import('../pages/Membership')),
   '/online-coaching': lazy(() => import('../pages/OnlineCoaching')),
