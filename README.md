@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.36.16-e11d2a?style=for-the-badge" alt="Version 2026.36.16" />
+  <img src="https://img.shields.io/badge/version-2026.36.17-e11d2a?style=for-the-badge" alt="Version 2026.36.17" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
@@ -133,7 +133,7 @@ flowchart TD
 ```
 deluxfitbyangie-com/
 ├── public/
-│   ├── brand/                     Studio + gym brand photography (WebP, 800/1200/full)
+│   ├── brand/                     Studio + gym brand photography (WebP, 480/800/1200/full)
 │   ├── fonts/                     Anton, Inter and Bodoni Moda, latin subsets
 │   ├── deluxfit-logo.webp         Wordmark used across the app
 │   ├── og.png                     1200x630 share card
@@ -143,6 +143,7 @@ deluxfitbyangie-com/
 │   └── llms.txt                   What the site sells, for the readers that fetch it
 ├── docs/logo-dark.png             Dark-scheme wordmark
 ├── scripts/images.py              Resizes every raster and writes src/lib/images.js
+├── scripts/first-screen.js        Inlines the home hero into dist/index.html after the Vite build
 ├── migrations/MIGRATIONS.md       Record of the ordered SQL DDL (the .sql files are gitignored)
 ├── supabase/functions/            14 Deno edge functions (service role)
 ├── packages/
@@ -159,6 +160,7 @@ deluxfitbyangie-com/
 │   ├── lib/                       payments, booking, portal/admin APIs, image sources
 │   ├── i18n/                      English + Spanish content trees
 │   └── config/supabase.js         Browser Supabase client
+├── api/version.js                 Reports the commit the deployment was built from
 ├── vite.config.js                 `@` and `@deluxfit/ds` aliases, chunking
 └── vercel.json                    SPA rewrites + security headers
 ```

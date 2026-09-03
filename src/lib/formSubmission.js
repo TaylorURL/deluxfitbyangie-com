@@ -13,7 +13,7 @@
  * Point at a real endpoint URL (or a Supabase function URL) to start
  * delivering submissions. While `null`, nothing leaves the browser.
  */
-export const FORM_ENDPOINT = null
+const FORM_ENDPOINT = null
 
 const ARTIFICIAL_LATENCY_MS = 650
 
