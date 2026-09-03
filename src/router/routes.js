@@ -39,7 +39,7 @@ const COMPONENTS = {
   '/terms': lazy(() => import('../pages/Terms')),
 }
 
-export const ROUTES = ROUTE_PATHS.map(({ path }) => ({ path, component: COMPONENTS[path] }))
+const ROUTES = ROUTE_PATHS.map(({ path }) => ({ path, component: COMPONENTS[path] }))
 
 export const NOT_FOUND = lazy(() => import('../pages/NotFound'))
 

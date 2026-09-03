@@ -141,5 +141,3 @@ export const ScrollVelocity = ({
     </section>
   )
 }
-
-export default ScrollVelocity
