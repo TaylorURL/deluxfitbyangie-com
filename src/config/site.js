@@ -6,7 +6,7 @@
  * and has to name one host. Without that, the www and bare-domain variants of
  * a route compete with each other for the same ranking.
  */
-export const SITE_URL = 'https://www.deluxfitbyangie.com'
+const SITE_URL = 'https://www.deluxfitbyangie.com'
 
 /** The 1200x630 share card served for any route that does not name its own. */
 export const SITE_SHARE_IMAGE = `${SITE_URL}/og.png`
