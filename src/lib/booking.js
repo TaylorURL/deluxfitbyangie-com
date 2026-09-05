@@ -11,12 +11,15 @@ import { dayAfter, dayKey, instantAt, weekdayOf, ZONE } from '@/lib/timezone'
  */
 
 /**
- * Standing weekly availability: weekday (0=Sun) to a list of 24h start hours.
+ * The hours Angie works when nothing special is going on, used only when her
+ * saved schedule cannot be read. She edits the real one in the coach panel and
+ * it lives in `coach_availability`; this copy exists so a calendar still draws
+ * something bookable if that read fails, rather than showing a closed month.
  *
  * The hours are the studio's, so 6 means six in the morning in the room the
  * session happens in, whatever clock the person booking is looking at.
  */
-const BUSINESS_HOURS = {
+const FALLBACK_HOURS = {
   0: [], // Sunday — closed
   1: [6, 7, 8, 9, 16, 17, 18, 19],
   2: [6, 7, 8, 9, 16, 17, 18, 19],
@@ -24,6 +27,63 @@ const BUSINESS_HOURS = {
   4: [6, 7, 8, 9, 16, 17, 18, 19],
   5: [6, 7, 8, 9, 16, 17],
   6: [8, 9, 10, 11], // Saturday — morning only
+}
+
+/** The shape the calendar reads: a standing week, plus dates that differ. */
+const FALLBACK_SCHEDULE = { standing: FALLBACK_HOURS, overrides: {} }
+
+/**
+ * Read Angie's published availability.
+ *
+ * Two tables rather than one, because a week has two kinds of answer in it:
+ * `coach_availability` is what a normal week looks like, and
+ * `coach_availability_overrides` is what one specific date does instead. An
+ * override replaces that date's hours outright — what she sees in the editor
+ * is what the calendar draws — and `closed` empties the day.
+ *
+ * Never throws. A schedule nobody can read falls back to the standing hours
+ * above, because a booking page with no slots on it looks like a closed
+ * business, and that is a worse failure than slightly stale hours.
+ *
+ * @returns {Promise<{ standing: Record<number, number[]>,
+ *   overrides: Record<string, { closed: boolean, hours: number[] }> }>}
+ */
+export async function fetchSchedule() {
+  try {
+    const [standingResult, overrideResult] = await Promise.all([
+      supabase.from('coach_availability').select('weekday, hour'),
+      supabase
+        .from('coach_availability_overrides')
+        .select('override_date, closed, hours')
+        .gte('override_date', dayKey()),
+    ])
+    if (standingResult.error) throw standingResult.error
+
+    const standing = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
+    for (const row of standingResult.data ?? []) {
+      if (standing[row.weekday]) standing[row.weekday].push(row.hour)
+    }
+    for (const day of Object.keys(standing)) standing[day].sort((a, b) => a - b)
+
+    // An unreadable override list is not worth losing the standing week over.
+    const overrides = {}
+    for (const row of overrideResult.error ? [] : (overrideResult.data ?? [])) {
+      overrides[row.override_date] = {
+        closed: Boolean(row.closed),
+        hours: [...(row.hours ?? [])].sort((a, b) => a - b),
+      }
+    }
+    return { standing, overrides }
+  } catch {
+    return FALLBACK_SCHEDULE
+  }
+}
+
+/** The hours open on one date: its override if it has one, else its weekday. */
+function hoursFor(schedule, date) {
+  const override = schedule?.overrides?.[dayKey(date)]
+  if (override) return override.closed ? [] : override.hours
+  return schedule?.standing?.[weekdayOf(date)] ?? []
 }
 
 /** Number of days ahead (from today) that are open for booking. */
@@ -40,12 +100,12 @@ export function toDateKey(date) {
  * Each is held at its midday here, which is far enough from both edges of the
  * day that the hour daylight saving moves cannot carry one onto its neighbour.
  */
-export function getBookableDates() {
+export function getBookableDates(schedule = FALLBACK_SCHEDULE) {
   const dates = []
   let key = dayKey()
   for (let offset = 0; offset <= BOOKING_WINDOW_DAYS; offset += 1) {
     const noon = instantAt(key, 12)
-    if ((BUSINESS_HOURS[weekdayOf(noon)] ?? []).length > 0) dates.push(noon)
+    if (hoursFor(schedule, noon).length > 0) dates.push(noon)
     key = dayAfter(key)
   }
   return dates
@@ -55,9 +115,9 @@ export function getBookableDates() {
  * The candidate slots for a given date as `{ start: Date, label: string }`.
  * Past times (for today) are excluded.
  */
-export function getCandidateSlots(date) {
+export function getCandidateSlots(date, schedule = FALLBACK_SCHEDULE) {
   const key = dayKey(date)
-  const hours = BUSINESS_HOURS[weekdayOf(date)] ?? []
+  const hours = hoursFor(schedule, date)
   const now = Date.now()
   return hours
     .map(hour => instantAt(key, hour))

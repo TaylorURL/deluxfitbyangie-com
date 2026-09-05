@@ -7,6 +7,60 @@ import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const MEDIA_ICON = { video: PlayCircle, article: BookOpen, pdf: FileText }
 
+/**
+ * Group items the way the training is actually followed: program, then week,
+ * then day. A program is a sequence, and a flat grid of forty videos hides
+ * that — the member has to read titles to work out what comes next.
+ *
+ * Items with no program are a different thing entirely (a nutrition PDF, a
+ * single demo) and collect into one trailing group rather than pretending to
+ * be week one of something.
+ *
+ * @returns {{ key: string, program: string|null,
+ *   weeks: { week: number|null, days: { day: number|null, items: object[] }[] }[] }[]}
+ */
+function groupByProgram(items) {
+  const programs = new Map()
+  for (const item of items) {
+    const program = item.program || null
+    if (!programs.has(program)) programs.set(program, new Map())
+    const weeks = programs.get(program)
+    const week = item.week ?? null
+    if (!weeks.has(week)) weeks.set(week, new Map())
+    const days = weeks.get(week)
+    const day = item.day ?? null
+    if (!days.has(day)) days.set(day, [])
+    days.get(day).push(item)
+  }
+
+  // null sorts last within each level, so an unnumbered item trails the
+  // numbered ones instead of leading them.
+  const ordered = value => (value == null ? Number.POSITIVE_INFINITY : value)
+
+  return [...programs.entries()]
+    .sort(([a], [b]) => {
+      if (a === b) return 0
+      if (a === null) return 1
+      if (b === null) return -1
+      return a.localeCompare(b)
+    })
+    .map(([program, weeks]) => ({
+      key: program ?? '__standalone__',
+      program,
+      weeks: [...weeks.entries()]
+        .sort(([a], [b]) => ordered(a) - ordered(b))
+        .map(([week, days]) => ({
+          week,
+          days: [...days.entries()]
+            .sort(([a], [b]) => ordered(a) - ordered(b))
+            .map(([day, dayItems]) => ({
+              day,
+              items: [...dayItems].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)),
+            })),
+        })),
+    }))
+}
+
 /** A single library card. External-url items are plain links; private
  * media_path items resolve a short-lived signed URL on demand. */
 function LibraryCard({ item, copy, coachingLabel }) {
@@ -114,6 +168,7 @@ export default function LibraryPanel({ content, entitlements }) {
     { id: 'education', label: copy.categoryEducation },
   ]
   const visible = category === 'all' ? content : content.filter(item => item.category === category)
+  const groups = groupByProgram(visible)
 
   return (
     <section>
@@ -141,14 +196,45 @@ export default function LibraryPanel({ content, entitlements }) {
       {visible.length === 0 ? (
         <EmptyState body={copy.empty} />
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map(item => (
-            <LibraryCard
-              key={item.id}
-              item={item}
-              copy={copy}
-              coachingLabel={portal.overview.coachingStatus}
-            />
+        <div className="flex flex-col gap-10">
+          {groups.map(group => (
+            <div key={group.key}>
+              <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
+                {group.program ?? copy.resourcesGroup}
+              </h3>
+              <div className="mt-4 flex flex-col gap-6">
+                {group.weeks.map(({ week, days }) => (
+                  <div key={week ?? 'no-week'}>
+                    {week != null && (
+                      <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-accent-bright">
+                        {copy.weekLabel} {week}
+                      </p>
+                    )}
+                    <div className="mt-3 flex flex-col gap-5">
+                      {days.map(({ day, items }) => (
+                        <div key={day ?? 'no-day'}>
+                          {day != null && (
+                            <p className="mb-3 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+                              {copy.dayLabel} {day}
+                            </p>
+                          )}
+                          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                            {items.map(item => (
+                              <LibraryCard
+                                key={item.id}
+                                item={item}
+                                copy={copy}
+                                coachingLabel={portal.overview.coachingStatus}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}

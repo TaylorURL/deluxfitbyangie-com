@@ -1107,6 +1107,9 @@ const en = {
       locked: 'Locked',
       open: 'Open',
       opening: 'Opening…',
+      weekLabel: 'Week',
+      dayLabel: 'Day',
+      resourcesGroup: 'Resources',
     },
     nutrition: {
       title: 'Nutrition',
