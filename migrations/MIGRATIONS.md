@@ -39,6 +39,18 @@ numbered and applied in order; **never edit an already-applied migration. Add a 
 | `0004_nutrition.sql` | `nutrition_plans` (per-client calorie/macro targets, meal-structure suggestions, resources, notes). RLS: select-own + select-staff; writes are service-role only (the `upsert-nutrition` function). |
 | `0005_coach_access.sql` | Coach (staff) read access + supporting columns: `*_select_staff` policies on `memberships`, `plans`, `progress_entries`, `bookings`, `conversations`, `messages`; `content_assignments` with a widened `content_items` SELECT; `content_items.media_path`; `progress_entries.measurements jsonb`; `messages.attachment_bucket`; and the private `progress-photos` + `library-media` buckets with per-user and staff RLS. |
 | `0006_slots_view_grants.sql` | Revokes `insert`, `update`, `delete`, `truncate`, `references` and `trigger` on `booking_slots_taken` from `anon` and `authenticated`, leaving `select`. |
+| `0007_availability.sql` | `coach_availability` (the standing weekly grid of bookable hours) and `coach_availability_overrides` (one row per date that differs — closed, or different hours). Both are readable by `anon`, because the booking calendar draws open slots before anyone signs in; neither has a write policy, so only the `upsert-availability` function changes them. Seeds the standing grid with the hours that used to be compiled into `src/lib/booking.js`. |
+| `0008_content_structure.sql` | `content_items.program`, `.week` and `.day`, so a library item can say where it sits inside a program rather than encoding it in the title. All nullable — an item without them is a standalone resource. Adds the `(access_level, program, week, day, sort)` index the library reads in. |
+
+### Availability belongs to the coach, not the release
+
+`0007` exists because Angie's bookable hours were a constant in the bundle, and
+hers move week to week. The standing grid answers "what does a normal week look
+like"; an override answers "what does this date do instead", and it replaces
+that date's hours rather than adding to them, so what she ticks in the coach
+panel is exactly what a client is offered. `booking.js` keeps a copy of the
+seeded hours as a fallback for a read that fails, because a calendar with no
+open dates reads as a closed business.
 
 ### `booking_slots_taken` is read-only to the browser
 

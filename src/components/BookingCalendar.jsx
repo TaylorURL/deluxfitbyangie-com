@@ -5,6 +5,7 @@ import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import {
   createBooking,
+  fetchSchedule,
   fetchTakenSlots,
   getBookableDates,
   getCandidateSlots,
@@ -24,7 +25,11 @@ export default function BookingCalendar({ service }) {
   const { booking } = useContent()
   const { user } = useAuth()
 
-  const dates = useMemo(() => getBookableDates(), [])
+  // Angie's published availability, which she edits in the coach panel. Held
+  // in state rather than read per render because every open date and every
+  // slot chip on the page is derived from this one answer.
+  const [schedule, setSchedule] = useState(null)
+  const dates = useMemo(() => (schedule ? getBookableDates(schedule) : []), [schedule])
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState(null)
   const [takenSlots, setTakenSlots] = useState(() => new Set())
@@ -33,6 +38,26 @@ export default function BookingCalendar({ service }) {
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | submitting | success | error | unconfigured
   const [errorBody, setErrorBody] = useState(null)
+
+  useEffect(() => {
+    let active = true
+    fetchSchedule().then(next => {
+      if (active) setSchedule(next)
+    })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  // A date she has since closed should not stay selected underneath the form.
+  useEffect(() => {
+    if (!selectedDate || !schedule) return
+    const stillOpen = dates.some(date => toDateKey(date) === toDateKey(selectedDate))
+    if (!stillOpen) {
+      setSelectedDate(null)
+      setSelectedSlot(null)
+    }
+  }, [dates, schedule, selectedDate])
 
   useEffect(() => {
     if (!selectedDate) return
@@ -54,8 +79,8 @@ export default function BookingCalendar({ service }) {
   }, [selectedDate])
 
   const candidateSlots = useMemo(
-    () => (selectedDate ? getCandidateSlots(selectedDate) : []),
-    [selectedDate]
+    () => (selectedDate && schedule ? getCandidateSlots(selectedDate, schedule) : []),
+    [selectedDate, schedule]
   )
 
   const handleField = key => event => {
@@ -126,36 +151,45 @@ export default function BookingCalendar({ service }) {
           <CalendarDays className="h-4 w-4 text-df-accent-bright" aria-hidden="true" />
           {booking.selectDateLabel}
         </legend>
-        <div className="mt-3 flex flex-wrap gap-2 sm:gap-3">
-          {dates.map(date => {
-            const key = toDateKey(date)
-            const active = selectedDate && toDateKey(selectedDate) === key
-            return (
-              <button
-                key={key}
-                type="button"
-                aria-pressed={active}
-                onClick={() => {
-                  setSelectedDate(date)
-                  setSelectedSlot(null)
-                  if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
-                }}
-                className={cn(
-                  'flex min-h-[3.25rem] min-w-[3.75rem] flex-col items-center justify-center rounded-df-md border px-4 py-3 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
-                  active
-                    ? 'border-df-accent bg-df-accent text-df-on-accent'
-                    : 'border-df-border-input text-df-text-muted hover:border-df-border-hover hover:text-df-text'
-                )}
-              >
-                <span className="text-[10px] font-700 uppercase tracking-[0.16em]">
-                  {date.toLocaleDateString('en-US', WEEKDAY)}
-                </span>
-                <span className="mt-1 text-sm font-600">
-                  {date.toLocaleDateString('en-US', MONTH_DAY)}
-                </span>
-              </button>
-            )
-          })}
+        <div className="mt-3 flex min-h-[3.25rem] flex-wrap gap-2 sm:gap-3">
+          {!schedule ? (
+            <p className="flex items-center gap-2 text-sm text-df-text-faint">
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              {booking.loadingSlots}
+            </p>
+          ) : dates.length === 0 ? (
+            <p className="text-sm text-df-text-faint">{booking.noSlots}</p>
+          ) : (
+            dates.map(date => {
+              const key = toDateKey(date)
+              const active = selectedDate && toDateKey(selectedDate) === key
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => {
+                    setSelectedDate(date)
+                    setSelectedSlot(null)
+                    if (errors.slot) setErrors(prev => ({ ...prev, slot: undefined }))
+                  }}
+                  className={cn(
+                    'flex min-h-[3.25rem] min-w-[3.75rem] flex-col items-center justify-center rounded-df-md border px-4 py-3 transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-surface',
+                    active
+                      ? 'border-df-accent bg-df-accent text-df-on-accent'
+                      : 'border-df-border-input text-df-text-muted hover:border-df-border-hover hover:text-df-text'
+                  )}
+                >
+                  <span className="text-[10px] font-700 uppercase tracking-[0.16em]">
+                    {date.toLocaleDateString('en-US', WEEKDAY)}
+                  </span>
+                  <span className="mt-1 text-sm font-600">
+                    {date.toLocaleDateString('en-US', MONTH_DAY)}
+                  </span>
+                </button>
+              )
+            })
+          )}
         </div>
       </fieldset>
 
