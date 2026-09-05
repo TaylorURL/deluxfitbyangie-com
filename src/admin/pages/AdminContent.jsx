@@ -16,6 +16,7 @@ import {
   ACCESS_LEVEL_OPTIONS,
   CATEGORY_OPTIONS,
   MEDIA_TYPE_OPTIONS,
+  byProgramOrder,
   draftFromItem,
   emptyDraft,
 } from '../content/contentMeta'
@@ -42,10 +43,7 @@ export default function AdminContent() {
   const isEditing = Boolean(draft?.id)
   const isWorking = status === 'saving' || status === 'uploading'
 
-  const sortedItems = useMemo(
-    () => [...(items ?? [])].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)),
-    [items]
-  )
+  const sortedItems = useMemo(() => [...(items ?? [])].sort(byProgramOrder), [items])
 
   const resetForm = useCallback(() => {
     setDraft(null)
@@ -138,6 +136,9 @@ export default function AdminContent() {
         mediaType: draft.mediaType,
         accessLevel: draft.accessLevel,
         sort: Number(draft.sort) || 0,
+        program: draft.program.trim() || undefined,
+        week: Number(draft.week) || undefined,
+        day: Number(draft.day) || undefined,
         locale: 'en',
       }
       if (mediaPath) payload.mediaPath = mediaPath
@@ -257,7 +258,36 @@ export default function AdminContent() {
               </Field>
             </div>
 
-            <Field label="Sort Order" helper="Lower numbers appear first in the library.">
+            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
+              <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
+                Program Placement
+              </p>
+              <p className="text-sm text-df-text-muted">
+                Where this sits inside a program. Leave all three blank for a standalone resource,
+                like a nutrition guide or a single demo video.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Field label="Program" helper="e.g. Glute Growth">
+                  <Input
+                    type="text"
+                    value={draft.program}
+                    onChange={setField('program')}
+                    placeholder="Program name"
+                  />
+                </Field>
+                <Field label="Week">
+                  <Input type="number" min="1" value={draft.week} onChange={setField('week')} />
+                </Field>
+                <Field label="Day">
+                  <Input type="number" min="1" value={draft.day} onChange={setField('day')} />
+                </Field>
+              </div>
+            </div>
+
+            <Field
+              label="Sort Order"
+              helper="Orders items inside the same day. Lower numbers first."
+            >
               <Input
                 type="number"
                 value={draft.sort}

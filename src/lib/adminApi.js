@@ -148,6 +148,39 @@ export const removeMembership = ({ userId, product }) =>
 export const updateBookingStatus = (id, status) =>
   invoke('update-booking', { id, status }).then(d => d.booking)
 
+// Availability
+
+/**
+ * Angie's standing week as `{ 0..6: number[] }`, every weekday present so the
+ * editor can draw an empty row for a day she does not work.
+ */
+export const getStandingAvailability = async () => {
+  const list = await rows(supabase.from('coach_availability').select('weekday, hour'))
+  const standing = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
+  for (const row of list) if (standing[row.weekday]) standing[row.weekday].push(row.hour)
+  for (const day of Object.keys(standing)) standing[day].sort((a, b) => a - b)
+  return standing
+}
+
+/** The dates that do something other than their weekday, today onward. */
+export const listAvailabilityOverrides = () =>
+  rows(
+    supabase
+      .from('coach_availability_overrides')
+      .select('*')
+      .gte('override_date', new Date().toISOString().slice(0, 10))
+      .order('override_date', { ascending: true })
+  )
+
+/** Replace the whole standing week. The payload is the grid, not a delta. */
+export const saveStandingAvailability = standing => invoke('upsert-availability', { standing })
+
+export const saveAvailabilityOverride = override =>
+  invoke('upsert-availability', { override }).then(d => d.override)
+
+export const removeAvailabilityOverride = date =>
+  invoke('upsert-availability', { deleteOverride: date })
+
 /**
  * Upload coach media (library video/PDF, message feedback) to the private
  * `library-media` bucket via the staff-only `upload-media` function. Returns

@@ -59,6 +59,7 @@ coach/admin function enforces `profiles.role = 'staff'` server-side before any w
 | `coach-message`     | Insert a `sender='coach'` message into a client's conversation (creating it if needed); supports a `library-media` attachment for video feedback.                                                                                         |
 | `update-membership` | Manually upsert / delete a client's `memberships` row (the manual override alongside the Stripe webhook).                                                                                                                                 |
 | `update-booking`    | Set a booking's status (`pending` / `confirmed` / `canceled`).                                                                                                                                                                            |
+| `upsert-availability` | Replace the standing weekly availability grid, or upsert / delete a single date's override. The booking calendar reads both tables directly and writes neither. |
 
 ## Deploying
 
@@ -68,6 +69,7 @@ supabase link --project-ref wmqwcnpiewfujmxaivvy
 # Deploy all functions
 for fn in create-booking send-message log-progress signed-url invite-user \
           create-checkout upsert-plan upsert-nutrition upsert-content \
+          upsert-availability \
           upload-media coach-message update-membership update-booking; do
   supabase functions deploy "$fn"
 done

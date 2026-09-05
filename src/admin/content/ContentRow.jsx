@@ -8,6 +8,12 @@ import {
   mediaTypeLabel,
 } from './contentMeta'
 
+/** "Glute Growth · W2 D3" — only the parts the item actually carries. */
+const placementLabel = item =>
+  [item.program, item.week ? `W${item.week}` : null, item.day ? `D${item.day}` : null]
+    .filter(Boolean)
+    .join(' · ')
+
 export default function ContentRow({ item, onEdit, onDelete, busy }) {
   const Icon = MEDIA_ICON[item.media_type] ?? MEDIA_ICON.video
   const hasUpload = Boolean(item.media_path)
@@ -36,6 +42,11 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
           <Badge tone={accessTone(item.access_level)} variant="soft" size="sm">
             {accessLevelLabel(item.access_level)}
           </Badge>
+          {item.program ? (
+            <Badge tone="accent" variant="outline" size="sm">
+              {placementLabel(item)}
+            </Badge>
+          ) : null}
         </div>
         {item.description ? (
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-df-text-muted">

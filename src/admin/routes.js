@@ -3,6 +3,7 @@ import {
   Users,
   ClipboardCheck,
   CalendarClock,
+  CalendarRange,
   Library as LibraryIcon,
   ClipboardList,
   Apple,
@@ -13,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminClients from './pages/AdminClients'
 import AdminReview from './pages/AdminReview'
 import AdminBookings from './pages/AdminBookings'
+import AdminAvailability from './pages/AdminAvailability'
 import AdminContent from './pages/AdminContent'
 import AdminPlans from './pages/AdminPlans'
 import AdminNutrition from './pages/AdminNutrition'
@@ -53,6 +55,13 @@ export const ADMIN_ROUTES = [
     icon: CalendarClock,
     component: AdminBookings,
     description: 'Confirm or cancel live sessions across all clients.',
+  },
+  {
+    path: '/admin/availability',
+    label: 'Availability',
+    icon: CalendarRange,
+    component: AdminAvailability,
+    description: 'Set the hours clients can book, and close the dates you are away.',
   },
   {
     path: '/admin/content',

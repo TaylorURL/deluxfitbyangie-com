@@ -1,6 +1,7 @@
 // upsert-content
 // POST { id?, title, description?, category, mediaType, url?, mediaPath?,
-//        accessLevel?, locale?, sort?, assignedUserIds?, delete? }
+//        accessLevel?, locale?, sort?, program?, week?, day?,
+//        assignedUserIds?, delete? }
 // Auth REQUIRED + staff only. Creates / updates / deletes a library item and
 // syncs its per-client assignments. `mediaPath` is a key in the private
 // `library-media` bucket (uploaded via `upload-media`); `url` is an external
@@ -33,6 +34,9 @@ Deno.serve(async req => {
     locale?: string
     sort?: number
     assignedUserIds?: string[]
+    program?: string
+    week?: number
+    day?: number
     delete?: boolean
   }
   try {
@@ -60,6 +64,14 @@ Deno.serve(async req => {
     ? payload.accessLevel
     : 'coaching'
 
+  // Program / week / day place an item inside a structured program; all three
+  // are optional, and an item without them is a standalone resource that the
+  // library lists on its own.
+  const toPosition = (value: unknown): number | null => {
+    const n = Number(value)
+    return Number.isInteger(n) && n > 0 ? n : null
+  }
+
   const row = {
     title: payload.title.trim(),
     description: payload.description ?? null,
@@ -70,6 +82,9 @@ Deno.serve(async req => {
     access_level: accessLevel,
     locale: payload.locale || 'en',
     sort: Number.isFinite(payload.sort) ? payload.sort : 0,
+    program: payload.program?.trim() || null,
+    week: toPosition(payload.week),
+    day: toPosition(payload.day),
   }
 
   const query = payload.id

@@ -1109,6 +1109,9 @@ const es = {
       locked: 'Bloqueado',
       open: 'Abrir',
       opening: 'Abriendo…',
+      weekLabel: 'Semana',
+      dayLabel: 'Día',
+      resourcesGroup: 'Recursos',
     },
     nutrition: {
       title: 'Nutrición',

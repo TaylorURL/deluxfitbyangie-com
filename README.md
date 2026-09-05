@@ -57,7 +57,7 @@ Most trainer sites sell a service and then hand the client off to a spreadsheet 
 | Build & dev | Vite 7 (Node `22.x`) |
 | Styling | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens), Anton / Bodoni Moda / Inter self-hosted from `public/fonts` |
 | Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl` |
-| Backend | Supabase: Auth, Postgres + RLS, 14 Deno edge functions |
+| Backend | Supabase: Auth, Postgres + RLS, 15 Deno edge functions |
 | Payments | Stripe Checkout, driven entirely from the edge functions |
 | i18n | Custom English / Spanish content trees |
 | Analytics | First-party and cookieless, from a shared tracker script |
@@ -145,7 +145,7 @@ deluxfitbyangie-com/
 ├── scripts/images.py              Resizes every raster and writes src/lib/images.js
 ├── scripts/first-screen.js        Inlines the home hero into dist/index.html after the Vite build
 ├── migrations/MIGRATIONS.md       Record of the ordered SQL DDL (the .sql files are gitignored)
-├── supabase/functions/            14 Deno edge functions (service role)
+├── supabase/functions/            15 Deno edge functions (service role)
 ├── packages/
 │   └── deluxfit-design-system/    In-repo DS: --df-* tokens, Tailwind preset, components
 ├── src/
