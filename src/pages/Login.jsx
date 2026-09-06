@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
@@ -9,6 +10,8 @@ import { useLocation } from '@/router'
 import { FormError } from '@/components/forms/FormFeedback'
 
 export default function Login() {
+  const { auth, forms } = useContent()
+  const copy = auth.login
   const { signIn, user, role, profileLoading } = useAuth()
   const { navigate } = useLocation()
   const [values, setValues] = useState({ email: '', password: '' })
@@ -38,9 +41,9 @@ export default function Login() {
   const handleSubmit = async event => {
     event.preventDefault()
     const next = {}
-    if (!values.email.trim()) next.email = 'Required'
-    else if (!values.email.includes('@')) next.email = 'Enter a valid email'
-    if (!values.password) next.password = 'Required'
+    if (!values.email.trim()) next.email = forms.required
+    else if (!values.email.includes('@')) next.email = forms.invalidEmail
+    if (!values.password) next.password = forms.required
     setErrors(next)
     if (Object.keys(next).length) return
 
@@ -49,33 +52,35 @@ export default function Login() {
     try {
       await signIn({ email: values.email, password: values.password })
       // The auth listener + role-loading effect navigates from here.
-    } catch (error) {
+    } catch {
+      // Supabase says which of the two was wrong; the form does not, because
+      // telling an attacker that the address exists is the whole of the answer.
       setStatus('error')
-      setErrorBody(error?.message || 'Could not sign in.')
+      setErrorBody(copy.failed)
     }
   }
 
   return (
     <AuthShell>
       <AuthCard
-        title="Sign in"
-        subtitle="Welcome back. Pick up right where you left off."
+        title={copy.title}
+        subtitle={copy.subtitle}
         footerLinks={[
-          { href: '/signup', label: 'Create an Account' },
-          { href: '/reset-password', label: 'Forgot Password?' },
+          { href: '/signup', label: copy.createAccount },
+          { href: '/reset-password', label: copy.forgotPassword },
         ]}
       >
         <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <Field label="Email" error={errors.email}>
+          <Field label={auth.emailLabel} error={errors.email}>
             <Input
               type="email"
               value={values.email}
               onChange={handleChange('email')}
-              placeholder="you@example.com"
+              placeholder={auth.emailPlaceholder}
               autoComplete="email"
             />
           </Field>
-          <Field label="Password" error={errors.password}>
+          <Field label={auth.passwordLabel} error={errors.password}>
             <Input
               type="password"
               value={values.password}
@@ -89,17 +94,17 @@ export default function Login() {
             {status === 'working' ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                Signing in…
+                {copy.submitting}
               </>
             ) : (
               <>
-                Sign In
+                {copy.submit}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </>
             )}
           </Button>
 
-          <FormError body={status === 'error' ? errorBody : undefined} />
+          <FormError className="mt-4" body={status === 'error' ? errorBody : undefined} />
         </form>
       </AuthCard>
     </AuthShell>

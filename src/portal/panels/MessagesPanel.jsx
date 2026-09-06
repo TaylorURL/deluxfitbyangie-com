@@ -37,7 +37,15 @@ function Attachment({ message, label }) {
   }
 
   if (isVideo(path)) {
-    return <video controls src={url} className="mt-2 max-w-full rounded-df-md" />
+    return (
+      <video
+        controls
+        src={url}
+        width="320"
+        height="180"
+        className="mt-2 aspect-video w-full max-w-xs rounded-df-md bg-df-bg object-cover shadow-df-sm"
+      />
+    )
   }
 
   return (
@@ -67,7 +75,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
   if (!entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading eyebrow={portal.nav.messages} title={copy.title} />
+        <PanelHeading title={copy.title} />
         <EmptyState
           body={copy.gatedBody}
           ctaLabel={portal.plan.emptyCta}
@@ -98,9 +106,9 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
 
   return (
     <section>
-      <PanelHeading eyebrow={portal.nav.messages} title={copy.title} intro={copy.intro} />
+      <PanelHeading title={copy.title} intro={copy.intro} />
 
-      <div className="bg-df-surface/60 flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border p-5">
+      <div className="flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-md bg-df-bg p-5 shadow-df-sm">
         {messages.length === 0 ? (
           <p className="py-8 text-center text-sm text-df-text-faint">{copy.empty}</p>
         ) : (
@@ -116,7 +124,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
                     'max-w-[80%] rounded-df-lg px-4 py-3 text-sm leading-relaxed',
                     fromClient
                       ? 'bg-df-accent text-df-on-accent'
-                      : 'border border-df-border bg-df-surface-2 text-df-text'
+                      : 'bg-df-surface-2 text-df-text shadow-df-sm'
                   )}
                 >
                   {message.body}
@@ -172,7 +180,7 @@ export default function MessagesPanel({ messages, entitlements, reloadMessages }
             )}
           </Button>
         </div>
-        <FormError body={error} />
+        <FormError className="mt-4" body={error} />
       </form>
     </section>
   )

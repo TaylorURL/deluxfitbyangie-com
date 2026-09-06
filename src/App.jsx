@@ -226,7 +226,7 @@ export default function App() {
 
   return (
     <SiteShell>
-      <Suspense fallback={<RouteFallback />}>
+      <Suspense fallback={<RouteFallback hero={matched?.hero} />}>
         <PageComponent />
       </Suspense>
     </SiteShell>

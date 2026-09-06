@@ -1,20 +1,12 @@
 import { ArrowRight, Check } from 'lucide-react'
-import {
-  Button,
-  Container,
-  Reveal,
-  Section,
-  SectionEyebrow,
-  SectionIndex,
-  SplitHeading,
-} from '@deluxfit/ds'
+import { Button, Container, Reveal, Section, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/FramedPhoto'
 import PhotoBand from '@/components/PhotoBand'
 import PhotoGallery from '@/components/PhotoGallery'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
-import { ShinyText, DecryptedText, SpotlightCard } from '@/components/reactbits'
+import { DecryptedText, SpotlightCard } from '@/components/reactbits'
 
 const ABOUT_GALLERY = [
   {
@@ -48,13 +40,13 @@ export default function About() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-df-bg pb-10 pt-24 sm:pb-12 sm:pt-40 lg:pt-48">
+      <section className="relative isolate overflow-hidden bg-df-bg pb-10 pt-[calc(var(--df-header-height)+1.5rem)] sm:pb-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,var(--df-accent-wash-soft),transparent_60%)]"
         />
         <AnimatedBackdrop variant="aurora" opacity={0.4} />
-        <Container size="xl">
+        <Container size="lg">
           <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
             <Reveal className="relative">
               <div
@@ -70,27 +62,21 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={0.1} className="flex flex-col items-start">
-              <SectionEyebrow>
-                <ShinyText
-                  text={about.hero.eyebrow}
-                  color="var(--df-shine)"
-                  shineColor="var(--df-shine-highlight)"
-                  speed={4}
-                />
-              </SectionEyebrow>
+              <SectionEyebrow>{about.hero.eyebrow}</SectionEyebrow>
               <SplitHeading
                 as="h1"
+                size="page"
                 text={about.hero.heading}
                 accent={about.hero.accent}
-                className="mt-5 text-[clamp(2rem,8vw,4rem)] leading-[0.95] sm:mt-6"
+                className="mt-5 sm:mt-6"
               />
-              <p className="mt-5 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-muted sm:mt-6">
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
                 <DecryptedText
-                  text={about.hero.tagline}
+                  text={about.hero.subhead}
                   animateOn="view"
                   sequential
                   revealDirection="start"
-                  speed={38}
+                  speed={14}
                   useOriginalCharsOnly
                 />
               </p>
@@ -99,14 +85,13 @@ export default function About() {
         </Container>
       </section>
 
-      <section className="border-y border-df-border bg-df-bg-elevated py-12 sm:py-20">
+      <section className="border-y border-df-border bg-df-bg-elevated py-14 sm:py-20">
         <Container size="md">
           <Reveal className="flex flex-col items-start">
-            <SectionEyebrow>{about.mission.eyebrow}</SectionEyebrow>
             <SplitHeading
               text={about.mission.heading}
               accent={about.mission.accent}
-              className="mt-4 text-[clamp(2rem,9vw,3.75rem)] leading-[0.92] sm:mt-5"
+              className="mt-4 sm:mt-5"
             />
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
               {about.mission.body}
@@ -115,13 +100,7 @@ export default function About() {
         </Container>
       </section>
 
-      <Section
-        eyebrow={about.story.eyebrow}
-        heading={about.story.heading}
-        accent={about.story.accent}
-        index="01"
-        containerSize="md"
-      >
+      <Section heading={about.story.heading} accent={about.story.accent} containerSize="md">
         <div className="flex flex-col gap-5">
           {about.story.paragraphs.map(paragraph => (
             <Reveal key={paragraph}>
@@ -135,7 +114,6 @@ export default function About() {
         eyebrow={about.credentials.eyebrow}
         heading={about.credentials.heading}
         accent={about.credentials.accent}
-        index="02"
       >
         <ul className="grid gap-x-8 sm:grid-cols-2">
           {about.credentials.items.map(item => (
@@ -166,25 +144,14 @@ export default function About() {
         height="short"
       />
 
-      <Section
-        eyebrow={about.philosophy.eyebrow}
-        heading={about.philosophy.heading}
-        accent={about.philosophy.accent}
-        index="03"
-      >
+      <Section heading={about.philosophy.heading} accent={about.philosophy.accent}>
         <div className="grid gap-5 lg:grid-cols-3">
           {about.philosophy.pillars.map(({ icon: Icon, title, description }, index) => (
             <Reveal key={title} delay={index * 0.06} className="flex">
               <SpotlightCard
                 spotlightColor="var(--df-accent-wash-soft)"
-                className="flex h-full w-full flex-col !rounded-df-lg !border-df-border !bg-df-surface !p-6 sm:!p-8"
+                className="flex h-full w-full flex-col"
               >
-                <span
-                  aria-hidden="true"
-                  className="font-400 pointer-events-none absolute right-4 top-2 font-display text-6xl tabular-nums leading-none text-df-surface-3"
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
                 <span
                   className="flex h-12 w-12 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
                   aria-hidden="true"
@@ -201,13 +168,7 @@ export default function About() {
         </div>
       </Section>
 
-      <Section
-        eyebrow="In session"
-        heading="How she trains."
-        accent="trains."
-        index="04"
-        containerSize="xl"
-      >
+      <Section eyebrow="In session" heading="How she trains." accent="trains.">
         <Reveal>
           <PhotoGallery items={ABOUT_GALLERY} />
         </Reveal>
@@ -221,26 +182,15 @@ export default function About() {
         <AnimatedBackdrop variant="particles" opacity={0.45} />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <SectionIndex>05</SectionIndex>
-              <SectionEyebrow>
-                <ShinyText
-                  text={about.hero.eyebrow}
-                  color="var(--df-shine)"
-                  shineColor="var(--df-shine-highlight)"
-                  speed={4}
-                />
-              </SectionEyebrow>
-            </div>
             <SplitHeading
               text={about.cta.heading}
               accent={about.cta.accent}
-              className="mt-5 max-w-[18ch] text-[clamp(2rem,8vw,3.75rem)] leading-[0.95] sm:mt-6"
+              className="mt-5 max-w-[18ch] sm:mt-6"
             />
             <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {about.cta.subhead}
             </p>
-            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={about.cta.primary.href}>
                   {about.cta.primary.label}

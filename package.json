@@ -2,7 +2,7 @@
   "name": "deluxfitbyangie-com",
   "private": true,
   "license": "UNLICENSED",
-  "version": "2026.36.18",
+  "version": "2026.36.19",
   "description": "DeluxFit by Angie: the direct-sale funnel for a personal training program.",
   "type": "module",
   "scripts": {
@@ -37,6 +37,7 @@
     "autoprefixer": "^10.4.24",
     "beasties": "^0.5.2",
     "eslint": "^9.33.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",

@@ -1,10 +1,78 @@
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowLeft, LogOut } from 'lucide-react'
-import { Container, cn } from '@deluxfit/ds'
+import { Container, MicroLabel, cn } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { Link, useLocation } from '@/router'
 import { useAuth } from '@/auth/useAuth'
 import BrandLogo from '@/components/BrandLogo'
+import ShellAction from '@/components/ShellAction'
 import { ADMIN_ROUTES, matchAdminRoute } from './routes'
+
+const MotionSpan = motion.span
+
+/**
+ * Ten destinations is too many for a bottom bar and too many to wrap into a
+ * ragged block on a phone, so the rail turns rather than folds: one scrolling
+ * row under the header on a narrow screen, the sticky column on a wide one.
+ * The marker travels between entries on a shared layout id in both, which is
+ * a transform, so it never moves the rail it sits in.
+ */
+function AdminRail({ activePath }) {
+  const prefersReducedMotion = useReducedMotion()
+
+  return (
+    <nav aria-label="Admin Navigation" className="lg:sticky lg:top-28 lg:self-start">
+      <MicroLabel className="mb-3 hidden px-1 lg:block">Manage</MicroLabel>
+      <ul
+        className={cn(
+          '-mx-4 flex snap-x gap-1 overflow-x-auto px-4 pb-1',
+          '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+          'lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0'
+        )}
+      >
+        {ADMIN_ROUTES.map(route => {
+          const Icon = route.icon
+          const isActive = route.path === activePath
+          return (
+            <li key={route.path} className="shrink-0 snap-start lg:w-full">
+              <Link
+                href={route.path}
+                aria-current={isActive ? 'page' : undefined}
+                className={cn(
+                  'group relative isolate inline-flex h-11 w-full items-center gap-2.5 whitespace-nowrap rounded-df-sm px-3.5 text-[12px] font-700 uppercase tracking-[0.14em] transition-colors duration-df-fast ease-df-out lg:gap-3 lg:px-4',
+                  isActive ? 'text-df-accent-bright' : 'text-df-text-muted hover:text-df-text'
+                )}
+              >
+                {isActive && (
+                  <MotionSpan
+                    aria-hidden="true"
+                    layoutId="admin-rail-marker"
+                    className="absolute inset-0 -z-10 rounded-df-sm border-l-2 border-df-accent bg-df-accent-soft"
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0 }
+                        : { type: 'tween', duration: 0.18, ease: [0.22, 1, 0.36, 1] }
+                    }
+                  />
+                )}
+                <Icon
+                  className={cn(
+                    'h-4 w-4 shrink-0 transition-colors duration-df-fast ease-df-out',
+                    isActive
+                      ? 'text-df-accent-bright'
+                      : 'text-df-text-faint group-hover:text-df-text'
+                  )}
+                  aria-hidden="true"
+                />
+                {route.label}
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </nav>
+  )
+}
 
 export default function AdminShell() {
   const { pathname } = useLocation()
@@ -21,13 +89,13 @@ export default function AdminShell() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_45%_at_50%_-10%,var(--df-accent-wash-soft),transparent_65%)]"
       />
 
-      <header className="bg-df-bg/85 sticky top-0 z-sticky border-b border-df-border shadow-[0_1px_0_var(--df-accent-wash)] [-webkit-backdrop-filter:blur(20px)] [backdrop-filter:blur(20px)]">
+      <header className="bg-df-bg/85 sticky top-0 z-sticky border-b border-df-border [-webkit-backdrop-filter:blur(20px)] [backdrop-filter:blur(20px)]">
         <Container size="xl">
           <div className="flex h-[var(--df-header-height)] items-center justify-between gap-3">
             <Link
               href="/admin"
               aria-label="DeluxFit admin"
-              className="inline-flex shrink-0 items-center gap-3 rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+              className="inline-flex shrink-0 items-center gap-3 rounded-df-sm transition-opacity duration-df-fast ease-df-out hover:opacity-80"
             >
               <BrandLogo alt="" className="h-7 sm:h-8" />
               <span className="hidden rounded-df-full border border-df-accent bg-df-accent-softer px-3 py-1 text-[9px] font-700 uppercase tracking-[0.24em] text-df-accent-bright sm:inline">
@@ -36,29 +104,15 @@ export default function AdminShell() {
             </Link>
 
             <div className="flex items-center gap-2 sm:gap-3">
-              <span className="hidden max-w-[12rem] truncate text-[11px] font-600 uppercase tracking-[0.18em] text-df-text-faint sm:inline">
+              <MicroLabel
+                as="span"
+                tone="faint"
+                className="hidden max-w-[12rem] truncate sm:inline"
+              >
                 {identity}
-              </span>
-              <button
-                type="button"
-                onClick={signOut}
-                aria-label="Sign Out"
-                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
-              >
-                <LogOut aria-hidden="true" className="h-4 w-4" />
-                <span className="hidden sm:inline">Sign Out</span>
-              </button>
-              <Link
-                href="/"
-                aria-label="Back to Site"
-                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg"
-              >
-                <ArrowLeft
-                  aria-hidden="true"
-                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
-                />
-                <span className="hidden sm:inline">Site</span>
-              </Link>
+              </MicroLabel>
+              <ShellAction onClick={signOut} icon={LogOut} label="Sign Out" />
+              <ShellAction native href="/" icon={ArrowLeft} label="Site" />
             </div>
           </div>
         </Container>
@@ -66,74 +120,25 @@ export default function AdminShell() {
 
       <Container size="xl">
         <div className="grid gap-8 py-10 lg:grid-cols-[248px_1fr] lg:py-14">
-          <nav aria-label="Admin Navigation" className="lg:sticky lg:top-28 lg:self-start">
-            <p className="mb-3 hidden px-1 text-[10px] font-700 uppercase tracking-[0.28em] text-df-text-faint lg:block">
-              Manage
-            </p>
-            <ul className="flex flex-wrap gap-2 lg:flex-col">
-              {ADMIN_ROUTES.map(route => {
-                const Icon = route.icon
-                const isActive = route.path === active.path
-                return (
-                  <li key={route.path} className="lg:w-full">
-                    <Link
-                      href={route.path}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={cn(
-                        'group relative inline-flex w-full items-center gap-3 overflow-hidden rounded-df-sm border px-4 py-3 text-[12px] font-700 uppercase tracking-[0.14em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
-                        isActive
-                          ? 'border-df-accent bg-df-accent-soft text-df-accent-bright'
-                          : 'border-transparent text-df-text-muted hover:bg-df-surface-2 hover:text-df-text'
-                      )}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'absolute inset-y-2 left-0 hidden w-[3px] rounded-df-full bg-df-accent transition-opacity duration-200 lg:block',
-                          isActive ? 'opacity-100' : 'opacity-0'
-                        )}
-                      />
-                      <Icon
-                        className={cn(
-                          'h-4 w-4 shrink-0 transition-colors',
-                          isActive
-                            ? 'text-df-accent-bright'
-                            : 'text-df-text-faint group-hover:text-df-text'
-                        )}
-                        aria-hidden="true"
-                      />
-                      {route.label}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
+          <AdminRail activePath={active.path} />
 
           <main className="min-w-0">
             <header className="mb-8 border-b border-df-border pb-6">
-              <div className="flex items-start gap-4">
-                <span
+              <div className="flex items-center gap-3">
+                <ActiveIcon
                   aria-hidden="true"
-                  className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright sm:inline-flex"
-                >
-                  <ActiveIcon className="h-6 w-6" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">
-                    DeluxFit Console
-                  </p>
-                  <h1 className="font-400 mt-2 font-display text-3xl uppercase leading-none tracking-tight text-df-text sm:text-4xl">
-                    {active.label}
-                    <span className="text-df-accent">.</span>
-                  </h1>
-                  {active.description && (
-                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-df-text-muted">
-                      {active.description}
-                    </p>
-                  )}
-                </div>
+                  className="h-5 w-5 shrink-0 text-df-accent-bright sm:h-6 sm:w-6"
+                />
+                <h1 className="font-400 min-w-0 font-display text-[clamp(1.75rem,5vw,2.5rem)] uppercase leading-[0.95] tracking-tight text-df-text">
+                  {active.label}
+                  <span className="text-df-accent">.</span>
+                </h1>
               </div>
+              {active.description && (
+                <p className="mt-3 max-w-df-measure text-[15px] leading-relaxed text-df-text-muted">
+                  {active.description}
+                </p>
+              )}
             </header>
             <ActiveComponent />
           </main>

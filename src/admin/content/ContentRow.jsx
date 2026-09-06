@@ -1,5 +1,5 @@
 import { ExternalLink, FileUp, Pencil, Trash2 } from 'lucide-react'
-import { Badge, Button } from '@deluxfit/ds'
+import { Badge, Button, MicroLabel } from '@deluxfit/ds'
 import {
   MEDIA_ICON,
   accessLevelLabel,
@@ -20,7 +20,7 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
   const hasUrl = Boolean(item.url)
 
   return (
-    <li className="bg-df-surface-2/50 flex flex-col gap-4 rounded-df-md border border-df-border p-4 sm:flex-row sm:items-center">
+    <li className="flex flex-col gap-4 rounded-df-md bg-df-surface-2 p-4 shadow-df-sm sm:flex-row sm:items-center">
       <span
         aria-hidden="true"
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
@@ -53,7 +53,7 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
             {item.description}
           </p>
         ) : null}
-        <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-faint">
+        <MicroLabel tone="faint" className="mt-2 inline-flex items-center gap-2">
           {hasUpload ? (
             <>
               <FileUp className="h-3.5 w-3.5" aria-hidden="true" />
@@ -69,7 +69,7 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
           )}
           <span aria-hidden="true">·</span>
           <span>Sort {Number.isFinite(item.sort) ? item.sort : 0}</span>
-        </p>
+        </MicroLabel>
       </div>
 
       <div className="flex shrink-0 items-center gap-2">

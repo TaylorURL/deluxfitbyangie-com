@@ -2,10 +2,10 @@ import { cn } from '@deluxfit/ds'
 import { useContent, useLanguage } from '@/i18n'
 
 const SWITCHER_BASE =
-  'group/lang inline-flex items-center rounded-df-sm border border-df-border-strong bg-df-surface/40 p-1 transition-colors duration-200 ease-df-out hover:border-df-border-hover'
+  'group/lang inline-flex items-center rounded-df-sm border border-df-border-strong bg-df-surface p-1 transition-colors duration-df-base ease-df-out hover:border-df-border-hover'
 
 const OPTION_BASE =
-  'relative inline-flex min-w-[44px] items-center justify-center rounded-df-xs px-3 text-[11px] font-700 uppercase tracking-[0.22em] transition-colors duration-200 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg'
+  'relative inline-flex min-w-[44px] items-center justify-center rounded-df-xs px-3 text-[11px] font-700 uppercase tracking-[0.14em] transition-colors duration-df-fast ease-df-out'
 
 /**
  * @param {object} props
@@ -15,8 +15,8 @@ const OPTION_BASE =
 export default function LanguageSwitcher({ size = 'sm', block = false, className }) {
   const { locale, setLocale, locales } = useLanguage()
   const { language } = useContent()
-  const heightClass = size === 'md' ? 'h-12' : 'h-10'
-  const optionHeight = size === 'md' ? 'h-11' : 'h-9'
+  const heightClass = size === 'md' ? 'h-14' : 'h-12'
+  const optionHeight = size === 'md' ? 'h-12' : 'h-11'
 
   const ariaFor = code => (code === 'es' ? language.switchToSpanish : language.switchToEnglish)
 
@@ -40,7 +40,7 @@ export default function LanguageSwitcher({ size = 'sm', block = false, className
               optionHeight,
               block && 'flex-1',
               active
-                ? 'bg-df-accent text-df-on-accent shadow-df-glow-soft'
+                ? 'bg-df-accent text-df-on-accent shadow-df-key-soft'
                 : 'text-df-text-muted hover:bg-df-surface-2 hover:text-df-text'
             )}
           >

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button, Field, Select } from '@deluxfit/ds'
 import { listAllMemberships, listClients, saveMembership, removeMembership } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   SectionCard,
@@ -27,6 +28,7 @@ const PRODUCT_LABEL = {
 const loadMemberships = () => Promise.all([listAllMemberships(), listClients()])
 
 export default function AdminMemberships() {
+  const confirm = useConfirm()
   const { data, loading, error, reload } = useAsyncData(loadMemberships, [], [[], []])
   const [memberships, clients] = data ?? [[], []]
   const [busyKey, setBusyKey] = useState(null)
@@ -49,12 +51,13 @@ export default function AdminMemberships() {
 
   const handleRemove = async membership => {
     const name = clientLabel(clientMap.get(membership.user_id))
-    if (
-      !window.confirm(
-        `Remove the ${PRODUCT_LABEL[membership.product] ?? membership.product} for ${name}?`
-      )
-    )
-      return
+    const product = PRODUCT_LABEL[membership.product] ?? membership.product
+    const ok = await confirm({
+      title: 'Remove This Membership?',
+      body: `${name} loses access to everything the ${product.toLowerCase()} unlocks. Stripe is not touched: cancel the subscription there as well, or it keeps billing.`,
+      confirmLabel: 'Remove Membership',
+    })
+    if (!ok) return
     setBusyKey(`${membership.id}:remove`)
     setWriteError(null)
     try {
@@ -73,8 +76,7 @@ export default function AdminMemberships() {
 
       <SectionCard>
         <SectionHeading
-          eyebrow="Memberships"
-          title="All subscriptions."
+          title="All subscriptions"
           intro="Every membership and coaching record across all clients. Change a status or remove a record below."
         />
 
@@ -183,8 +185,7 @@ function GrantForm({ clients, onSaved }) {
   return (
     <SectionCard>
       <SectionHeading
-        eyebrow="Grant"
-        title="Grant a membership."
+        title="Grant a membership"
         intro="Create or update a membership for a client without going through Stripe."
       />
 

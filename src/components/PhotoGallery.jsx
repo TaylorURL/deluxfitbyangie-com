@@ -35,13 +35,13 @@ export default function PhotoGallery({ items, className }) {
             loading="lazy"
             decoding="async"
             className={cn(
-              'absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-df-out group-hover:scale-[1.04]',
+              'absolute inset-0 h-full w-full object-cover transition-transform duration-df-slow ease-df-out group-hover:scale-[1.04]',
               objectPosition
             )}
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"
+            className="from-df-bg/60 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent"
           />
           <div
             aria-hidden="true"

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Loader2, Send } from 'lucide-react'
-import { Button, Card, Field, Input, Select } from '@deluxfit/ds'
+import { Button, Field, Input, Panel, Select } from '@deluxfit/ds'
 import { inviteUser } from '@/lib/inviteApi'
 import { listStaff } from '@/lib/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
@@ -60,18 +60,13 @@ export default function AdminStaff() {
 
   return (
     <div className="grid gap-6">
-      <Card variant="elevated" padded>
-        <p className="text-[10px] font-700 uppercase tracking-[0.28em] text-df-accent">Invite</p>
-        <h2 className="font-400 mt-3 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
-          Send an invite.
-        </h2>
-        <p className="mt-3 text-sm leading-relaxed text-df-text-muted">
-          Invites are brokered through the <code className="text-df-text">invite-user</code> edge
-          function. The recipient gets a Supabase Auth email; their profile is created with the role
-          you pick here.
-        </p>
+      <Panel>
+        <SectionHeading
+          title="Send an invite"
+          intro="Invites are brokered through the invite-user edge function. The recipient gets a Supabase Auth email; their profile is created with the role you pick here."
+        />
 
-        <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5 sm:grid-cols-2">
+        <form noValidate onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
           <Field label="Email" error={errors.email} className="sm:col-span-2">
             <Input
               type="email"
@@ -81,7 +76,7 @@ export default function AdminStaff() {
               autoComplete="off"
             />
           </Field>
-          <Field label="Full Name (Optional)" error={errors.fullName}>
+          <Field label="Full Name" optional error={errors.fullName}>
             <Input
               value={values.fullName}
               onChange={handleChange('fullName')}
@@ -122,7 +117,7 @@ export default function AdminStaff() {
           </div>
         )}
         {status === 'error' && <FormError body={errorBody} />}
-      </Card>
+      </Panel>
 
       <StaffList />
     </div>
@@ -135,11 +130,7 @@ function StaffList() {
 
   return (
     <SectionCard>
-      <SectionHeading
-        eyebrow="Team"
-        title="Staff."
-        intro="Everyone with admin access. Invite more above."
-      />
+      <SectionHeading title="Staff" intro="Everyone with admin access. Invite more above." />
 
       <div className="mt-6">
         {loading ? (

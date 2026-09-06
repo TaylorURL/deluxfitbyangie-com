@@ -23,14 +23,9 @@
  */
 
 // Text animations
-export { default as ShinyText } from './ShinyText'
-export { default as GradientText } from './GradientText'
 export { default as CountUp } from './CountUp'
-export { default as BlurText } from './BlurText'
 export { default as DecryptedText } from './DecryptedText'
-export { ScrollVelocity } from './ScrollVelocity'
 
 // Interaction + cards
 export { default as SpotlightCard } from './SpotlightCard'
 export { default as ClickSpark } from './ClickSpark'
-export { default as Magnet } from './Magnet'

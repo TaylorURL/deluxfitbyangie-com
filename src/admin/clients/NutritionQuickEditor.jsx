@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Loader2, Pencil, Plus, Trash2, X } from 'lucide-react'
-import { Badge, Button, Card, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { Badge, Button, Card, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import { deleteNutrition, saveNutrition } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import { AdminEmpty, StatusBadge, fmtDate } from '../components/AdminPrimitives'
 
@@ -30,6 +31,7 @@ const numOrUndef = value => {
 }
 
 export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
+  const confirm = useConfirm()
   const list = nutrition ?? []
   const current = list[0] ?? null
 
@@ -121,7 +123,14 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
     }
   }
 
-  const handleDelete = async id => {
+  const handleDelete = async plan => {
+    const ok = await confirm({
+      title: 'Delete This Nutrition Plan?',
+      body: `“${plan.title || 'This plan'}” will be removed from the client's portal, along with its macros, meals and notes. This cannot be undone.`,
+      confirmLabel: 'Delete Plan',
+    })
+    if (!ok) return
+    const id = plan.id
     setDeleting(true)
     setError(null)
     setSuccess(null)
@@ -138,9 +147,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-          Current Nutrition
-        </p>
+        <MicroLabel>Current Nutrition</MicroLabel>
         {!open && (
           <Button type="button" variant="outline" size="sm" onClick={startCreate}>
             <Plus className="h-4 w-4" aria-hidden="true" />
@@ -152,7 +159,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
       {!current ? (
         <AdminEmpty body="No nutrition plan yet for this client." />
       ) : (
-        <div className="bg-df-surface/60 rounded-df-lg border border-df-border px-4 py-4">
+        <Card variant="inset" padded={false} className="px-4 py-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm font-600 text-df-text">
@@ -174,7 +181,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => handleDelete(current.id)}
+                onClick={() => handleDelete(current)}
                 disabled={deleting}
                 aria-label="Delete Nutrition Plan"
               >
@@ -241,7 +248,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
             <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{current.notes}</p>
           )}
           <p className="mt-2 text-xs text-df-text-faint">{fmtDate(current.created_at)}</p>
-        </div>
+        </Card>
       )}
 
       {open && (
@@ -249,7 +256,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
           <form onSubmit={handleSave} className="grid gap-5">
             <div className="flex items-center justify-between">
               <p className="text-sm font-600 text-df-text">
-                {form.id ? 'Edit nutrition plan' : 'New nutrition plan'}
+                {form.id ? 'Edit Nutrition Plan' : 'New Nutrition Plan'}
               </p>
               <Button
                 type="button"
@@ -307,9 +314,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
 
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-                  Meal Structure
-                </p>
+                <MicroLabel>Meal Structure</MicroLabel>
                 <Button
                   type="button"
                   variant="ghost"
@@ -348,9 +353,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
 
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-                  Resources
-                </p>
+                <MicroLabel>Resources</MicroLabel>
                 <Button
                   type="button"
                   variant="ghost"
@@ -408,9 +411,9 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
                     Saving…
                   </>
                 ) : form.id ? (
-                  'Save plan'
+                  'Save Plan'
                 ) : (
-                  'Create plan'
+                  'Create Plan'
                 )}
               </Button>
             </div>

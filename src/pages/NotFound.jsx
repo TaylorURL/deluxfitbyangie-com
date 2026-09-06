@@ -1,12 +1,15 @@
 import { ArrowLeft } from 'lucide-react'
 import { Button, Container, Reveal, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
 import { DecryptedText } from '@/components/reactbits'
 
 export default function NotFound() {
+  const { notFound } = useContent()
+
   return (
-    <section className="relative isolate overflow-hidden bg-df-bg py-32 sm:py-44">
+    <section className="relative isolate overflow-hidden bg-df-bg py-20 sm:py-36">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_45%_at_50%_-10%,var(--df-accent-wash-strong),transparent_65%)]"
@@ -16,7 +19,7 @@ export default function NotFound() {
         <Reveal className="flex flex-col items-start">
           <SectionEyebrow>
             <DecryptedText
-              text="404 · Page not found"
+              text={notFound.eyebrow}
               animateOn="view"
               sequential
               revealDirection="start"
@@ -26,18 +29,18 @@ export default function NotFound() {
           </SectionEyebrow>
           <SplitHeading
             as="h1"
-            text="Page not found."
-            accent="not found"
-            className="mt-6 text-[clamp(2.5rem,7vw,5rem)] leading-[0.92]"
+            size="page"
+            text={notFound.heading}
+            accent={notFound.accent}
+            className="mt-6"
           />
           <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
-            The page you’re looking for doesn’t exist. Head back to the home page and try the
-            navigation from there.
+            {notFound.body}
           </p>
           <Button asChild size="lg" className="mt-10">
             <Link href="/">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Back to Home
+              {notFound.cta}
             </Link>
           </Button>
         </Reveal>

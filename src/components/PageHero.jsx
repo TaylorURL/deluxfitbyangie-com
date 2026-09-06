@@ -1,8 +1,7 @@
 import { ArrowRight } from 'lucide-react'
-import { Button, Container, Reveal, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
+import { Button, Container, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
 import { Link } from '@/router'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
-import { ShinyText, BlurText } from '@/components/reactbits'
 
 /**
  * @param {object} props
@@ -18,13 +17,13 @@ import { ShinyText, BlurText } from '@/components/reactbits'
 export default function PageHero({ eyebrow, heading, accent, subhead, primary, secondary, aside }) {
   const hasAside = Boolean(aside)
   return (
-    <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-24 sm:pb-16 sm:pt-40 lg:pt-48">
+    <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-[calc(var(--df-header-height)+1.5rem)] sm:pb-16">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,var(--df-accent-wash-soft),transparent_60%)]"
       />
       <AnimatedBackdrop variant="aurora" opacity={0.4} />
-      <Container size="xl">
+      <Container size="lg">
         <div
           className={
             hasAside
@@ -32,35 +31,24 @@ export default function PageHero({ eyebrow, heading, accent, subhead, primary, s
               : 'flex flex-col items-start'
           }
         >
-          <Reveal className="flex max-w-3xl flex-col items-start">
-            {eyebrow && (
-              <SectionEyebrow>
-                <ShinyText
-                  text={eyebrow}
-                  color="var(--df-shine)"
-                  shineColor="var(--df-shine-highlight)"
-                  speed={4}
-                />
-              </SectionEyebrow>
-            )}
+          <div className="flex max-w-3xl animate-df-rise flex-col items-start motion-reduce:animate-none">
+            {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
             {heading && (
               <SplitHeading
                 as="h1"
+                size="page"
                 text={heading}
                 accent={accent}
-                className="mt-5 text-[clamp(2.25rem,9vw,5.5rem)] leading-[0.92] sm:mt-6"
+                className="mt-5 max-w-[17ch] sm:mt-6"
               />
             )}
             {subhead && (
-              <BlurText
-                text={subhead}
-                animateBy="words"
-                delay={60}
-                className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-7 sm:text-lg"
-              />
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+                {subhead}
+              </p>
             )}
             {(primary || secondary) && (
-              <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
+              <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                 {primary && (
                   <Button asChild size="lg" className="w-full sm:w-auto">
                     <Link href={primary.href}>
@@ -76,12 +64,12 @@ export default function PageHero({ eyebrow, heading, accent, subhead, primary, s
                 )}
               </div>
             )}
-          </Reveal>
+          </div>
 
           {hasAside && (
-            <Reveal delay={0.15} className="mx-auto w-full max-w-sm lg:mx-0 lg:justify-self-end">
+            <div className="mx-auto w-full max-w-sm animate-df-rise [animation-delay:150ms] motion-reduce:animate-none lg:mx-0 lg:justify-self-end">
               {aside}
-            </Reveal>
+            </div>
           )}
         </div>
       </Container>

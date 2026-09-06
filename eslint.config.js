@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
+import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
@@ -13,6 +14,8 @@ export default defineConfig([
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
     ],
+    plugins: { react },
+    settings: { react: { version: 'detect' } },
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
@@ -28,9 +31,15 @@ export default defineConfig([
       },
     },
     rules: {
+      // A component used in JSX and never imported is not a syntax error and
+      // not a build error - Rollup only checks module exports - so it ships and
+      // blanks the page at runtime. These two are what catch it: one marks a
+      // JSX tag as a use of its binding, the other reports the tag with none.
+      'react/jsx-uses-vars': 'error',
+      'react/jsx-no-undef': 'error',
       'no-unused-vars': [
         'error',
-        { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^[A-Z_]', ignoreRestSiblings: true },
+        { varsIgnorePattern: '^_', argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
       // The design system (@deluxfit/ds) is the single source of truth for UI.
       // Block deep imports into its internals so the barrel stays the entry.

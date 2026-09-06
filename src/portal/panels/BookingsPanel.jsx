@@ -1,4 +1,4 @@
-import { Badge, Card } from '@deluxfit/ds'
+import { Badge, Card, MicroLabel } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { formatDateTime } from '@/lib/datetime'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
@@ -7,6 +7,8 @@ const SERVICE_LABEL = {
   single_session: 'Single Live Session',
   live_program: 'Live Training Program',
 }
+
+const STATUS_TONE = { confirmed: 'positive', pending: 'warning', canceled: 'neutral' }
 
 const formatSlot = iso =>
   formatDateTime(iso, {
@@ -31,7 +33,7 @@ export default function BookingsPanel({ bookings }) {
   if (bookings.length === 0) {
     return (
       <section>
-        <PanelHeading eyebrow={portal.nav.bookings} title={copy.title} />
+        <PanelHeading title={copy.title} />
         <EmptyState body={copy.empty} ctaLabel={copy.bookCta} ctaHref="/single-session#book" />
       </section>
     )
@@ -47,10 +49,10 @@ export default function BookingsPanel({ bookings }) {
         .filter(group => group.rows.length > 0)
         .map(group => (
           <div key={group.label} className="mb-8">
-            <p className="mb-4 inline-flex items-center gap-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
+            <MicroLabel className="mb-4 inline-flex items-center gap-3">
               <span aria-hidden="true" className="h-px w-6 bg-df-accent" />
               {group.label}
-            </p>
+            </MicroLabel>
             <div className="flex flex-col gap-3">
               {group.rows.map(booking => (
                 <Card
@@ -65,12 +67,10 @@ export default function BookingsPanel({ bookings }) {
                       {booking.training_focus ? ` · ${booking.training_focus}` : ''}
                     </p>
                   </div>
-                  <Badge
-                    tone={booking.status === 'canceled' ? 'neutral' : 'accent'}
-                    variant="outline"
-                    size="sm"
-                  >
-                    {booking.status}
+                  {/* The status came straight off the row before this, so a
+                      Spanish reader was shown "confirmed" in lower case. */}
+                  <Badge tone={STATUS_TONE[booking.status] ?? 'neutral'} variant="soft" size="sm">
+                    {copy.status[booking.status] ?? booking.status}
                   </Badge>
                 </Card>
               ))}

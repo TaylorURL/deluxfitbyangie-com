@@ -3,19 +3,20 @@ import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-2 whitespace-nowrap rounded-df-full font-semibold uppercase tracking-wider leading-none',
+  'inline-flex items-center gap-1.5 whitespace-nowrap rounded-df-full font-700 uppercase tracking-[0.1em] leading-none',
   {
     variants: {
-      tone: { accent: '', neutral: '', positive: '', warning: '' },
+      tone: { accent: '', neutral: '', positive: '', warning: '', danger: '' },
       variant: { soft: '', solid: '', outline: '' },
       size: {
-        sm: 'px-3 py-1 text-[10px]',
-        md: 'px-3 py-2 text-[11px]',
-        lg: 'px-4 py-2 text-[12px]',
+        sm: 'h-5 px-2 text-[10px]',
+        md: 'h-6 px-2.5 text-[11px]',
+        lg: 'h-7 px-3 text-[12px]',
       },
     },
     compoundVariants: [
       { tone: 'accent', variant: 'soft', class: 'bg-df-accent-soft text-df-accent-bright' },
+      { tone: 'danger', variant: 'soft', class: 'bg-df-danger-soft text-df-danger' },
       { tone: 'neutral', variant: 'soft', class: 'bg-df-surface-3 text-df-text-muted' },
       { tone: 'positive', variant: 'soft', class: 'bg-df-positive-soft text-df-positive' },
       { tone: 'warning', variant: 'soft', class: 'bg-df-warning-soft text-df-warning' },
@@ -39,6 +40,8 @@ const badgeVariants = cva(
         class: 'border border-df-positive text-df-positive',
       },
       { tone: 'warning', variant: 'outline', class: 'border border-df-warning text-df-warning' },
+      { tone: 'danger', variant: 'outline', class: 'border border-df-danger text-df-danger' },
+      { tone: 'danger', variant: 'solid', class: 'bg-df-danger text-df-on-accent' },
     ],
     defaultVariants: { tone: 'accent', variant: 'soft', size: 'md' },
   }

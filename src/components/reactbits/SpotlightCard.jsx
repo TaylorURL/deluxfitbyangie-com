@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react'
+import { cn } from '@deluxfit/ds'
 
 /**
  * A card that lights a soft radial under the pointer.
@@ -8,6 +9,10 @@ import { useCallback, useRef } from 'react'
  * per frame is what makes an effect like this stutter on a long page. The
  * gradient reads the property, so the browser repaints one element and React
  * is not involved.
+ *
+ * The card itself carries the system's own card treatment — the same surface,
+ * corner and ring every other card has — so the spotlight is the only thing
+ * this component adds and callers never override the box back into shape.
  */
 const SpotlightCard = ({
   children,
@@ -42,12 +47,15 @@ const SpotlightCard = ({
       onBlur={hide}
       onMouseEnter={show}
       onMouseLeave={hide}
-      className={`relative overflow-hidden rounded-df-2xl border border-df-border bg-df-surface p-8 ${className}`}
+      className={cn(
+        'relative overflow-hidden rounded-df-md bg-df-surface p-5 shadow-df-sm transition-shadow duration-df-base ease-df-out hover:shadow-df-md sm:p-6',
+        className
+      )}
     >
       <div
         ref={glowRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-df-out"
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-df-slow ease-df-out"
         style={{
           background: `radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), ${spotlightColor}, transparent 80%)`,
         }}
