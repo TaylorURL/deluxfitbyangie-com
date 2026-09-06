@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
-import { Button } from '@deluxfit/ds'
+import { Button, MicroLabel } from '@deluxfit/ds'
 
 // The caller owns the row data; this only handles layout, the add button, and
 // per-row removal.
@@ -15,11 +15,9 @@ export default function RepeatableSection({
   disabled,
 }) {
   return (
-    <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
+    <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2 p-4">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
-          {title}
-        </p>
+        <MicroLabel>{title}</MicroLabel>
         <Button type="button" variant="outline" size="sm" onClick={onAdd} disabled={disabled}>
           <Plus className="h-4 w-4" aria-hidden="true" />
           {addLabel}
@@ -30,7 +28,7 @@ export default function RepeatableSection({
         {rows.map((row, index) => (
           <div
             key={index}
-            className="bg-df-surface/40 grid gap-4 rounded-df-sm border border-df-border p-3 sm:grid-cols-3"
+            className="grid gap-4 rounded-df-sm border border-df-border bg-df-surface p-3 sm:grid-cols-3"
           >
             {renderRow(row, index)}
             <div className="sm:col-span-3 sm:flex sm:justify-end">

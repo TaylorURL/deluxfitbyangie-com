@@ -2,10 +2,9 @@ import { ArrowRight, Info, Quote } from 'lucide-react'
 import {
   Button,
   Container,
+  Marquee,
   Reveal,
   Section,
-  SectionEyebrow,
-  SectionIndex,
   SplitHeading,
   Testimonial,
 } from '@deluxfit/ds'
@@ -14,7 +13,6 @@ import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
 import PhotoBand from '@/components/PhotoBand'
 import AnimatedBackdrop from '@/components/AnimatedBackdrop'
-import { ShinyText, ScrollVelocity } from '@/components/reactbits'
 
 export default function Testimonials() {
   const { testimonials } = useContent()
@@ -36,32 +34,18 @@ export default function Testimonials() {
 
       <Container size="lg">
         <Reveal>
-          <div className="bg-df-surface-2/60 flex items-start gap-3 rounded-df-md border border-df-border px-4 py-4">
+          <div className="flex items-start gap-3 rounded-df-md border border-df-border bg-df-surface-2 px-4 py-4">
             <Info className="mt-1 h-4 w-4 shrink-0 text-df-accent-bright" aria-hidden="true" />
             <p className="text-xs leading-relaxed text-df-text-muted">{testimonials.storiesNote}</p>
           </div>
         </Reveal>
       </Container>
 
-      <div
-        data-theme="dark"
-        className="mt-12 overflow-hidden border-y border-df-border bg-df-bg-elevated py-6 sm:mt-16 sm:py-8"
-      >
-        <ScrollVelocity
-          texts={['Real results · Real grit · ', 'Discipline over excuses · ']}
-          velocity={55}
-          numCopies={5}
-          className="text-df-surface-3"
-          scrollerClassName="!font-display !text-3xl !font-400 !uppercase !tracking-tight md:!text-5xl"
-        />
+      <div className="mt-12 border-y border-df-border bg-df-bg-elevated py-5 sm:mt-16">
+        <Marquee items={testimonials.marquee} />
       </div>
 
-      <Section
-        index="01"
-        eyebrow={testimonials.storiesEyebrow}
-        heading={testimonials.storiesHeading}
-        accent={testimonials.storiesAccent}
-      >
+      <Section heading={testimonials.storiesHeading} accent={testimonials.storiesAccent}>
         {testimonials.items?.length ? (
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {testimonials.items.map(({ metric, quote, name, result, rating }, index) => (
@@ -78,7 +62,7 @@ export default function Testimonials() {
           </div>
         ) : (
           <Reveal>
-            <div className="bg-df-surface-2/60 flex flex-col items-start gap-4 rounded-df-lg border border-df-border-strong px-6 py-8 sm:px-8 sm:py-12">
+            <div className="flex flex-col items-start gap-4 rounded-df-lg border border-df-border-strong bg-df-surface-2 px-6 py-8 sm:px-8 sm:py-12">
               <Quote className="h-6 w-6 text-df-accent-bright" aria-hidden="true" />
               <h3 className="font-400 font-display text-2xl uppercase leading-tight sm:text-3xl">
                 {testimonials.storiesEmpty.heading}
@@ -105,26 +89,15 @@ export default function Testimonials() {
         <AnimatedBackdrop variant="particles" opacity={0.45} />
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <SectionIndex>02</SectionIndex>
-              <SectionEyebrow>
-                <ShinyText
-                  text={testimonials.hero.eyebrow}
-                  color="var(--df-shine)"
-                  shineColor="var(--df-shine-highlight)"
-                  speed={4}
-                />
-              </SectionEyebrow>
-            </div>
             <SplitHeading
               text={testimonials.cta.heading}
               accent={testimonials.cta.accent}
-              className="mt-5 max-w-[20ch] text-[clamp(2rem,8vw,3.75rem)] leading-[0.95] sm:mt-6"
+              className="mt-5 max-w-[20ch] sm:mt-6"
             />
             <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {testimonials.cta.subhead}
             </p>
-            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={testimonials.cta.primary.href}>
                   {testimonials.cta.primary.label}

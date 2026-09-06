@@ -2,24 +2,25 @@ import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 import { Container } from './Container'
 import { SectionEyebrow } from '../components/SectionEyebrow'
-import { SectionIndex } from '../components/SectionIndex'
 import { SplitHeading } from '../components/SplitHeading'
 import { Reveal } from '../components/Reveal'
 
+/* The rhythm the hand-written sections already keep. `lg` used to run half
+   again past it, which is why a page built from both read as two pages. */
 const SPACE = {
   sm: 'py-12 sm:py-16',
-  md: 'py-16 sm:py-28',
-  lg: 'py-20 sm:py-36',
-  xl: 'py-24 sm:py-44',
+  md: 'py-14 sm:py-20',
+  lg: 'py-16 sm:py-28',
+  xl: 'py-20 sm:py-36',
 }
 
 const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
 
 /**
  * When `heading`/`eyebrow` is supplied it renders an editorial, left-aligned
- * header: an oversized outlined index numeral as type furniture, the crimson
- * eyebrow, a giant condensed headline (with one phrase accented in Bodoni
- * Moda italic), and a measured subhead. Pass `bare` for fully custom content.
+ * header: the crimson eyebrow, a giant condensed headline with one phrase
+ * carried in the accent colour, and a measured subhead. Pass `bare` for fully
+ * custom content.
  *
  * `tone` switches the section's surface context (dark / light / gray) by
  * scoping the `--df-*` tokens to this element via `data-theme`. All children
@@ -31,10 +32,9 @@ const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
  *
  * @param {object} props
  * @param {'sm'|'md'|'lg'|'xl'} [props.space='lg']
- * @param {string} [props.index] - oversized section numeral (e.g. "03")
  * @param {string} [props.eyebrow]
  * @param {React.ReactNode} [props.heading]
- * @param {string} [props.accent] - phrase within `heading` to set in italic serif
+ * @param {string} [props.accent] - phrase within `heading` to set in the accent colour
  * @param {React.ReactNode} [props.subhead]
  * @param {'left'|'center'} [props.align='left']
  * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.containerSize='lg'] - inner Container width
@@ -45,7 +45,6 @@ export const Section = forwardRef(function Section(
   {
     className,
     space = 'lg',
-    index,
     eyebrow,
     heading,
     accent,
@@ -81,7 +80,7 @@ export const Section = forwardRef(function Section(
       ) : (
         <Container
           size={containerSize}
-          className={cn('flex flex-col', hasHeader && 'gap-10 sm:gap-20')}
+          className={cn('flex flex-col', hasHeader && 'gap-8 sm:gap-12')}
         >
           {hasHeader && (
             <Reveal
@@ -90,18 +89,12 @@ export const Section = forwardRef(function Section(
                 centered ? 'items-center text-center' : 'items-start text-left'
               )}
             >
-              <div className={cn('flex items-center gap-3 sm:gap-6', centered && 'justify-center')}>
-                {index && <SectionIndex>{index}</SectionIndex>}
-                {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
-              </div>
+              {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
               {heading && (
                 <SplitHeading
                   text={heading}
                   accent={accent}
-                  className={cn(
-                    'mt-4 text-[clamp(2rem,8vw,4.75rem)] leading-[0.92] sm:mt-7',
-                    centered ? 'max-w-[18ch]' : 'max-w-[20ch]'
-                  )}
+                  className={cn('mt-4 sm:mt-6', centered ? 'max-w-[18ch]' : 'max-w-[20ch]')}
                 />
               )}
               {subhead && (

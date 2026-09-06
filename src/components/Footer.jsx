@@ -1,40 +1,55 @@
-import { Container } from '@deluxfit/ds'
+import { Container, SplitHeading, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import BrandLogo from './BrandLogo'
 import LanguageSwitcher from './LanguageSwitcher'
 import SocialLinks from './SocialLinks'
-import { ShinyText } from '@/components/reactbits'
 import { studioYear } from '@/lib/timezone'
 
 const CURRENT_YEAR = studioYear()
 
-export default function Footer({ children }) {
+/**
+ * The page closes on its own line rather than on an index of itself. The
+ * slogan is the argument every page above it has been making, so it is set at
+ * display scale and given the room a statement needs; the wordmark, the
+ * destinations and the small print sit under a rule beneath it, quiet and out
+ * of the way.
+ *
+ * The alternative — four columns headed Product, Company, Resources, Legal —
+ * is what a footer becomes when it is filled in rather than written, and on a
+ * seven-page site it is an index of a thing small enough not to need one.
+ */
+export default function Footer({ children, className }) {
   const { brand, footer, nav } = useContent()
+
   return (
-    <footer className="overflow-hidden border-t border-df-border bg-df-bg pt-12 sm:pt-16">
-      <Container size="xl">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-sm">
+    <footer
+      className={cn('border-t border-df-border bg-df-bg pb-10 pt-14 sm:pb-12 sm:pt-20', className)}
+    >
+      <Container size="lg">
+        <SplitHeading
+          as="p"
+          size="page"
+          text={`${brand.slogan}.`}
+          accent="."
+          className="max-w-[16ch]"
+        />
+
+        <div className="mt-12 flex flex-col gap-10 border-t border-df-border pt-10 lg:flex-row lg:items-start lg:justify-between">
+          {/* The column's own gap rather than a margin per child: a margin is
+              measured from a box the logo does not fill, so the space under it
+              comes out a couple of pixels off every other gap on the page. */}
+          <div className="flex max-w-sm flex-col items-start gap-4">
             <Link
               href="/"
               aria-label={brand.fullName}
-              className="-my-[6px] inline-flex min-h-[44px] items-center py-[6px]"
+              className="inline-flex h-11 items-center transition-opacity duration-df-fast ease-df-out hover:opacity-80"
             >
-              <BrandLogo alt={brand.fullName} className="h-8 sm:h-10" />
+              <BrandLogo alt={brand.fullName} className="h-8 sm:h-9" />
             </Link>
-            <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.24em]">
-              <ShinyText
-                text={brand.slogan}
-                color="var(--df-shine)"
-                shineColor="var(--df-shine-highlight)"
-                speed={4}
-              />
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{footer.blurb}</p>
-
+            <p className="text-[15px] leading-relaxed text-df-text-muted">{footer.blurb}</p>
             {footer.socials.length > 0 && (
-              <div className="mt-6">
+              <div className="mt-2">
                 <SocialLinks />
               </div>
             )}
@@ -42,13 +57,13 @@ export default function Footer({ children }) {
 
           <nav
             aria-label={footer.navLabel}
-            className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3"
+            className="grid grid-cols-2 gap-x-10 gap-y-1 sm:grid-cols-3 lg:gap-x-14"
           >
             {nav.map(item => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex min-h-11 items-center text-sm font-500 text-df-text-muted transition-colors hover:text-df-text"
+                className="flex min-h-11 items-center text-[15px] font-500 text-df-text-muted transition-colors duration-df-fast ease-df-out hover:text-df-text"
               >
                 {item.label}
               </Link>
@@ -56,38 +71,30 @@ export default function Footer({ children }) {
           </nav>
         </div>
 
-        <div
-          aria-hidden="true"
-          className="font-400 mt-10 select-none font-display text-[clamp(2.5rem,22vw,13rem)] uppercase leading-[0.78] tracking-tight text-df-surface-3 sm:mt-14"
-        >
-          {brand.name}
-          <span className="text-df-accent-deep">.</span>
-        </div>
-
-        <div className="flex flex-col gap-5 border-t border-df-border py-7 sm:flex-row sm:items-center sm:justify-between sm:py-8">
-          <div className="flex flex-col gap-3 sm:gap-4">
-            <p className="max-w-3xl text-xs leading-relaxed text-df-text-faint">
+        <div className="mt-12 flex flex-col gap-5 border-t border-df-border pt-7 sm:flex-row sm:items-end sm:justify-between sm:pt-8">
+          <div className="flex flex-col gap-3">
+            <p className="max-w-3xl text-[13px] leading-relaxed text-df-text-faint">
               {footer.smallPrint}
             </p>
             <nav
               aria-label={footer.legalLabel}
-              className="flex flex-wrap items-center gap-x-5 gap-y-2"
+              className="flex flex-wrap items-center gap-x-6 gap-y-1"
             >
               {footer.legal.map(item => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="-my-[14px] inline-flex min-h-[44px] items-center py-[14px] text-xs text-df-text-muted underline-offset-4 hover:text-df-text hover:underline"
+                  className="-my-[14px] inline-flex min-h-[44px] items-center py-[14px] text-[13px] text-df-text-muted underline-offset-4 hover:text-df-text hover:underline"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <p className="text-xs text-df-text-faint">
+            <p className="text-[13px] text-df-text-faint">
               © {CURRENT_YEAR} {brand.fullName}. {footer.rightsReserved}
             </p>
           </div>
-          <LanguageSwitcher size="md" className="self-start sm:self-center" />
+          <LanguageSwitcher className="self-start sm:self-end" />
         </div>
       </Container>
       {children}

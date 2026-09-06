@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react'
 import { Dumbbell, Loader2, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
-import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import { deletePlan, getClientPlans, listClients, savePlan } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -49,6 +50,7 @@ const weeksFromSchedule = schedule =>
     .map(title => ({ title }))
 
 export default function AdminPlans() {
+  const confirm = useConfirm()
   const {
     data: clients,
     loading: clientsLoading,
@@ -144,7 +146,12 @@ export default function AdminPlans() {
   }
 
   const handleDelete = async plan => {
-    if (!window.confirm(`Delete “${plan.title}”? This cannot be undone.`)) return
+    const ok = await confirm({
+      title: 'Delete This Program?',
+      body: `“${plan.title}” and every week inside it will be removed from the client's portal. This cannot be undone.`,
+      confirmLabel: 'Delete Program',
+    })
+    if (!ok) return
     setBusyId(plan.id)
     setFormError(null)
     setSuccess(null)
@@ -164,8 +171,7 @@ export default function AdminPlans() {
     <div className="grid gap-6">
       <SectionCard>
         <SectionHeading
-          eyebrow="Programs"
-          title="Workout programs."
+          title="Workout programs"
           intro="Pick a client, then author their personalized training programs. Program type is set by the title you choose — common ones are suggested as you type."
         />
         <div className="mt-6 max-w-md">
@@ -188,18 +194,18 @@ export default function AdminPlans() {
 
       {clientId && (
         <SectionCard>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <SectionHeading
-              eyebrow={selectedClient ? clientLabel(selectedClient) : 'Client'}
-              title="Programs."
-            />
-            {!draft && (
-              <Button onClick={openCreate} className="shrink-0">
-                <Plus className="h-4 w-4" aria-hidden="true" />
-                New Program
-              </Button>
-            )}
-          </div>
+          <SectionHeading
+            title="Programs"
+            intro={selectedClient ? clientLabel(selectedClient) : undefined}
+            actions={
+              !draft && (
+                <Button onClick={openCreate} className="shrink-0">
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                  New Program
+                </Button>
+              )
+            }
+          />
 
           {success && (
             <div className="mt-5">
@@ -210,9 +216,7 @@ export default function AdminPlans() {
           {draft && (
             <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.2em] text-df-accent">
-                  {isEditing ? 'Edit program' : 'New program'}
-                </p>
+                <MicroLabel tone="accent">{isEditing ? 'Edit program' : 'New program'}</MicroLabel>
                 <Button variant="ghost" size="sm" onClick={resetForm} disabled={isWorking}>
                   <X className="h-4 w-4" aria-hidden="true" />
                   Cancel
@@ -323,7 +327,7 @@ function PlanRow({ plan, onEdit, onDelete, busy }) {
   const weeks = Array.isArray(plan.content?.weeks) ? plan.content.weeks : []
 
   return (
-    <li className="bg-df-surface-2/50 flex flex-col gap-4 rounded-df-md border border-df-border p-4">
+    <li className="flex flex-col gap-4 rounded-df-md bg-df-surface-2 p-4 shadow-df-sm">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 gap-3">
           <span
@@ -342,11 +346,11 @@ function PlanRow({ plan, onEdit, onDelete, busy }) {
             {plan.summary ? (
               <p className="mt-2 text-sm leading-relaxed text-df-text-muted">{plan.summary}</p>
             ) : null}
-            <p className="mt-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-faint">
+            <MicroLabel tone="faint" className="mt-2">
               {weeks.length} {weeks.length === 1 ? 'week' : 'weeks'}
               <span aria-hidden="true"> · </span>
               Created {fmtDate(plan.created_at)}
-            </p>
+            </MicroLabel>
           </div>
         </div>
 

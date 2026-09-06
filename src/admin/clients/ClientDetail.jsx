@@ -1,4 +1,4 @@
-import { Badge } from '@deluxfit/ds'
+import { Badge, Card, DataTable, MicroLabel, SplitHeading } from '@deluxfit/ds'
 import {
   getClientAssignments,
   getClientBookings,
@@ -13,6 +13,7 @@ import {
   AdminEmpty,
   AdminLoading,
   SectionCard,
+  SectionHeading,
   StatusBadge,
   clientLabel,
   fmtDate,
@@ -30,15 +31,13 @@ const SERVICE_LABEL = {
   live_program: 'Live program',
 }
 
+/* The same header every other panel on the site uses, rather than this file's
+   own smaller one: the coach moves between these blocks all day, and a heading
+   that changes shape per block makes each read as a different application. */
 function Section({ title, intro, children }) {
   return (
     <SectionCard>
-      <div className="mb-5">
-        <h3 className="font-400 font-display text-lg uppercase tracking-tight text-df-text">
-          {title}
-        </h3>
-        {intro && <p className="mt-2 text-sm leading-relaxed text-df-text-muted">{intro}</p>}
-      </div>
+      <SectionHeading title={title} intro={intro} />
       {children}
     </SectionCard>
   )
@@ -50,9 +49,11 @@ function MembershipSummary({ memberships }) {
   return (
     <div className="grid gap-2">
       {list.map(m => (
-        <div
+        <Card
           key={m.id}
-          className="bg-df-surface/60 flex flex-wrap items-center justify-between gap-2 rounded-df-lg border border-df-border px-4 py-3"
+          variant="inset"
+          padded={false}
+          className="flex flex-wrap items-center justify-between gap-2 px-4 py-3"
         >
           <div className="flex items-center gap-2">
             <Badge tone="accent" variant="soft" size="sm">
@@ -65,48 +66,40 @@ function MembershipSummary({ memberships }) {
               Renews {fmtDate(m.current_period_end)}
             </span>
           )}
-        </div>
+        </Card>
       ))}
     </div>
   )
 }
 
+/* The system's table rather than this file's own: the hand-rolled one had no
+   card fallback, so on a phone four columns became a sideways scroll nobody
+   finds. */
+const BOOKING_COLUMNS = [
+  {
+    key: 'service',
+    header: 'Service',
+    primary: true,
+    render: booking => SERVICE_LABEL[booking.service] ?? booking.service,
+  },
+  { key: 'slot', header: 'Slot', render: booking => fmtDateTime(booking.slot_start) },
+  { key: 'focus', header: 'Focus', render: booking => booking.training_focus ?? '—' },
+  {
+    key: 'status',
+    header: 'Status',
+    render: booking => <StatusBadge status={booking.status} />,
+  },
+]
+
 function BookingsList({ bookings }) {
-  const list = bookings ?? []
-  if (list.length === 0) return <AdminEmpty body="No bookings yet." />
   return (
-    <div className="overflow-x-auto rounded-df-lg border border-df-border">
-      <table className="w-full border-collapse text-left text-sm">
-        <thead>
-          <tr className="border-b border-df-border bg-df-surface-2 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-            <th scope="col" className="px-4 py-3">
-              Service
-            </th>
-            <th scope="col" className="px-4 py-3">
-              Slot
-            </th>
-            <th scope="col" className="px-4 py-3">
-              Focus
-            </th>
-            <th scope="col" className="px-4 py-3">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map(b => (
-            <tr key={b.id} className="border-b border-df-border text-df-text-muted last:border-0">
-              <td className="px-4 py-3 text-df-text">{SERVICE_LABEL[b.service] ?? b.service}</td>
-              <td className="px-4 py-3">{fmtDateTime(b.slot_start)}</td>
-              <td className="px-4 py-3">{b.training_focus ?? '—'}</td>
-              <td className="px-4 py-3">
-                <StatusBadge status={b.status} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <DataTable
+      caption="Sessions this client has booked"
+      columns={BOOKING_COLUMNS}
+      rows={bookings ?? []}
+      getRowKey={booking => booking.id}
+      empty={<AdminEmpty body="No bookings yet." />}
+    />
   )
 }
 
@@ -179,14 +172,10 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   const header = (
     <SectionCard>
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h2 className="font-400 font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
-            {clientLabel(profile)}
-          </h2>
-          {profile.email && <p className="mt-1 text-sm text-df-text-muted">{profile.email}</p>}
-          <p className="mt-1 text-xs uppercase tracking-[0.14em] text-df-text-faint">
-            Member since {fmtDate(profile.created_at)}
-          </p>
+        <div className="flex flex-col gap-1">
+          <SplitHeading size="sub" text={clientLabel(profile)} />
+          {profile.email && <p className="text-sm text-df-text-muted">{profile.email}</p>}
+          <MicroLabel tone="faint">Member since {fmtDate(profile.created_at)}</MicroLabel>
         </div>
         <div className="flex flex-wrap gap-2">
           {(memberships.value ?? []).map(m => (
@@ -253,22 +242,8 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   // program editors. emphasis="manage" leads with the program editors.
   const ordered =
     emphasis === 'review'
-      ? [
-          progressSection,
-          threadSection,
-          planSection,
-          nutritionSection,
-          bookingsSection,
-          membershipsSection,
-        ]
-      : [
-          planSection,
-          nutritionSection,
-          progressSection,
-          threadSection,
-          bookingsSection,
-          membershipsSection,
-        ]
+      ? [progressSection, threadSection, planSection, nutritionSection]
+      : [planSection, nutritionSection, progressSection, threadSection]
 
   return (
     <div className="grid gap-6">
@@ -276,6 +251,13 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
       {ordered.map((section, i) => (
         <div key={i}>{section}</div>
       ))}
+      {/* Bookings and memberships are short reference lists rather than things
+          to work in, so they share a row instead of taking a full-width panel
+          each and pushing the editors above them further off the screen. */}
+      <div className="grid gap-6 xl:grid-cols-2">
+        {bookingsSection}
+        {membershipsSection}
+      </div>
     </div>
   )
 }

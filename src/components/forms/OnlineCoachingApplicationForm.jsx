@@ -1,6 +1,16 @@
 import { useState } from 'react'
-import { ArrowRight, Loader2 } from 'lucide-react'
-import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { ArrowRight, Loader2, Mail, MapPin, Phone, User } from 'lucide-react'
+import {
+  Button,
+  Field,
+  FieldMessage,
+  Input,
+  Panel,
+  SegmentedControl,
+  Select,
+  Switch,
+  Textarea,
+} from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useFormSubmission } from './useFormSubmission'
 import { FormError, FormSuccess } from './FormFeedback'
@@ -20,7 +30,7 @@ const INITIAL_VALUES = {
 }
 
 export default function OnlineCoachingApplicationForm() {
-  const { coaching } = useContent()
+  const { coaching, forms } = useContent()
   const fields = coaching.application.fields
   const copy = coaching.application
 
@@ -30,24 +40,31 @@ export default function OnlineCoachingApplicationForm() {
     'online-coaching-application'
   )
 
-  const handleChange = key => event => {
-    const next = event.target.type === 'checkbox' ? event.target.checked : event.target.value
-    setValues(prev => ({ ...prev, [key]: next }))
+  const clearError = key => {
     if (errors[key]) setErrors(prev => ({ ...prev, [key]: undefined }))
+  }
+
+  const setValue = (key, value) => {
+    setValues(prev => ({ ...prev, [key]: value }))
+    clearError(key)
+  }
+
+  const handleChange = key => event => {
+    setValue(key, event.target.type === 'checkbox' ? event.target.checked : event.target.value)
   }
 
   const handleSubmit = async event => {
     event.preventDefault()
     const next = {}
-    if (!values.name.trim()) next.name = 'Required'
-    if (!values.email.trim()) next.email = 'Required'
-    else if (!values.email.includes('@')) next.email = 'Enter a valid email'
-    if (!values.age.trim()) next.age = 'Required'
-    if (!values.goal) next.goal = 'Pick a goal'
-    if (!values.experience) next.experience = 'Pick your experience level'
-    if (!values.equipment.trim()) next.equipment = 'Required'
-    if (!values.availability.trim()) next.availability = 'Required'
-    if (!values.consent) next.consent = 'Please confirm to continue'
+    if (!values.name.trim()) next.name = forms.required
+    if (!values.email.trim()) next.email = forms.required
+    else if (!values.email.includes('@')) next.email = forms.invalidEmail
+    if (!values.age.trim()) next.age = forms.required
+    if (!values.goal) next.goal = forms.pickOne
+    if (!values.experience) next.experience = forms.pickOne
+    if (!values.equipment.trim()) next.equipment = forms.required
+    if (!values.availability) next.availability = forms.pickOne
+    if (!values.consent) next.consent = forms.confirm
     setErrors(next)
     if (Object.keys(next).length) return
     try {
@@ -62,14 +79,11 @@ export default function OnlineCoachingApplicationForm() {
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
-    >
+    <Panel as="form" noValidate onSubmit={handleSubmit}>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={fields.name.label} error={errors.name}>
           <Input
+            icon={User}
             value={values.name}
             onChange={handleChange('name')}
             placeholder={fields.name.placeholder}
@@ -79,6 +93,7 @@ export default function OnlineCoachingApplicationForm() {
         </Field>
         <Field label={fields.email.label} error={errors.email}>
           <Input
+            icon={Mail}
             type="email"
             value={values.email}
             onChange={handleChange('email')}
@@ -87,8 +102,9 @@ export default function OnlineCoachingApplicationForm() {
             required
           />
         </Field>
-        <Field label={fields.phone.label}>
+        <Field label={fields.phone.label} optional optionalLabel={forms.optional}>
           <Input
+            icon={Phone}
             type="tel"
             value={values.phone}
             onChange={handleChange('phone')}
@@ -108,8 +124,14 @@ export default function OnlineCoachingApplicationForm() {
             required
           />
         </Field>
-        <Field label={fields.location.label} className="sm:col-span-2">
+        <Field
+          label={fields.location.label}
+          optional
+          optionalLabel={forms.optional}
+          className="sm:col-span-2"
+        >
           <Input
+            icon={MapPin}
             value={values.location}
             onChange={handleChange('location')}
             placeholder={fields.location.placeholder}
@@ -134,6 +156,22 @@ export default function OnlineCoachingApplicationForm() {
             required
           />
         </Field>
+        <Field
+          label={fields.availability.label}
+          error={errors.availability}
+          helper={fields.availability.unit}
+          className="sm:col-span-2"
+        >
+          <SegmentedControl
+            label={fields.availability.label}
+            value={values.availability}
+            onChange={next => setValue('availability', next)}
+            options={fields.availability.options.map(option => ({
+              value: option,
+              label: option,
+            }))}
+          />
+        </Field>
         <Field label={fields.equipment.label} error={errors.equipment} className="sm:col-span-2">
           <Input
             value={values.equipment}
@@ -143,42 +181,32 @@ export default function OnlineCoachingApplicationForm() {
           />
         </Field>
         <Field
-          label={fields.availability.label}
-          error={errors.availability}
+          label={fields.notes.label}
+          optional
+          optionalLabel={forms.optional}
           className="sm:col-span-2"
         >
-          <Input
-            value={values.availability}
-            onChange={handleChange('availability')}
-            placeholder={fields.availability.placeholder}
-            required
-          />
-        </Field>
-        <Field label={fields.notes.label} className="sm:col-span-2">
           <Textarea
+            autoGrow
             value={values.notes}
             onChange={handleChange('notes')}
             placeholder={fields.notes.placeholder}
-            rows={5}
+            rows={4}
+            maxRows={14}
           />
         </Field>
       </div>
 
-      <label className="mt-7 flex items-start gap-3 text-sm leading-relaxed text-df-text-muted">
-        <input
-          type="checkbox"
+      <div className="mt-7 flex flex-col gap-2 border-t border-df-border pt-6">
+        <Switch
           checked={values.consent}
           onChange={handleChange('consent')}
-          className="mt-1 h-5 w-5 shrink-0 cursor-pointer accent-df-accent-bright"
-          required
+          label={fields.consent.label}
         />
-        <span>
-          {fields.consent.label}
-          {errors.consent && <span className="ml-2 text-xs text-df-danger">{errors.consent}</span>}
-        </span>
-      </label>
+        {errors.consent && <FieldMessage error text={errors.consent} />}
+      </div>
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="mt-7 w-full sm:w-auto">
+      <Button type="submit" size="lg" disabled={isSubmitting} className="mt-6 w-full sm:w-auto">
         {isSubmitting ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -192,7 +220,7 @@ export default function OnlineCoachingApplicationForm() {
         )}
       </Button>
 
-      <FormError body={errorMessage ? `${copy.errorBody}` : undefined} />
-    </form>
+      <FormError className="mt-4" body={errorMessage ? `${copy.errorBody}` : undefined} />
+    </Panel>
   )
 }

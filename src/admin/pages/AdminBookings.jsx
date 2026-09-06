@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { Button, Card } from '@deluxfit/ds'
+import { Button, Card, MicroLabel } from '@deluxfit/ds'
 import { listAllBookings, listClients, updateBookingStatus } from '@/lib/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import {
@@ -118,8 +118,7 @@ export default function AdminBookings() {
   return (
     <SectionCard>
       <SectionHeading
-        eyebrow="Bookings"
-        title="All live sessions."
+        title="All live sessions"
         intro="Every single session and live program booking across all clients. Confirm or cancel below."
       />
 
@@ -144,9 +143,9 @@ export default function AdminBookings() {
             .filter(group => group.rows.length > 0)
             .map(group => (
               <div key={group.label} className="mb-8 last:mb-0">
-                <p className="mb-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-faint">
+                <MicroLabel tone="faint" className="mb-3">
                   {group.label}
-                </p>
+                </MicroLabel>
                 <div className="flex flex-col gap-3">{group.rows.map(renderCard)}</div>
               </div>
             ))

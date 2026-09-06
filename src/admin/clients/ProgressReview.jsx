@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ImageOff } from 'lucide-react'
-import { Badge } from '@deluxfit/ds'
+import { Badge, Card, MicroLabel, Skeleton } from '@deluxfit/ds'
 import { signedUrl } from '@/lib/adminApi'
-import { buildSparkline } from '@/lib/sparkline'
+import Sparkline from '@/components/Sparkline'
 import { AdminEmpty, fmtDate } from '../components/AdminPrimitives'
 
 // Each thumb resolves its own signed URL independently, so one slow or failed
@@ -36,9 +36,7 @@ function PhotoThumb({ path, label }) {
   }
 
   if (!url) {
-    return (
-      <div className="h-20 w-20 shrink-0 animate-pulse rounded-df-md border border-df-border bg-df-surface-2" />
-    )
+    return <Skeleton radius="md" className="h-20 w-20 shrink-0" />
   }
 
   return (
@@ -46,7 +44,7 @@ function PhotoThumb({ path, label }) {
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="block h-20 w-20 shrink-0 overflow-hidden rounded-df-md border border-df-border transition hover:border-df-accent"
+      className="block h-20 w-20 shrink-0 overflow-hidden rounded-df-md shadow-df-sm transition-shadow duration-df-base ease-df-out hover:shadow-df-lg"
     >
       <img
         src={url}
@@ -61,35 +59,6 @@ function PhotoThumb({ path, label }) {
   )
 }
 
-/** A minimal inline SVG sparkline of weight over time, oldest to newest. */
-function WeightSparkline({ points }) {
-  if (points.length < 2) return null
-  const width = 220
-  const height = 48
-  const { line, last } = buildSparkline(
-    points.map(p => p.weight),
-    { width, height }
-  )
-  const [lastX, lastY] = last
-  return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      className="h-12 w-full max-w-[220px]"
-      role="img"
-      aria-label="Weight Trend"
-    >
-      <path
-        d={line}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        className="text-df-accent"
-      />
-      <circle cx={lastX} cy={lastY} r="2.75" className="fill-df-accent-bright" />
-    </svg>
-  )
-}
-
 export default function ProgressReview({ progress }) {
   const entries = progress ?? []
   if (entries.length === 0) {
@@ -98,9 +67,9 @@ export default function ProgressReview({ progress }) {
 
   // entries arrive newest-first; sparkline wants oldest to newest.
   const weighted = [...entries]
-    .filter(e => e.weight != null)
+    .filter(entry => entry.weight != null)
     .reverse()
-    .map(e => ({ weight: Number(e.weight) }))
+    .map(entry => Number(entry.weight))
 
   const recent = entries.slice(0, 6)
   const withPhotos = entries.filter(e => e.photo_path)
@@ -109,11 +78,9 @@ export default function ProgressReview({ progress }) {
     <div className="grid gap-6">
       {weighted.length >= 2 && (
         <div>
-          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-            Weight Trend
-          </p>
-          <div className="mt-2">
-            <WeightSparkline points={weighted} />
+          <MicroLabel>Weight Trend</MicroLabel>
+          <div className="mt-2 max-w-[220px]">
+            <Sparkline values={weighted} height={48} label="Weight trend" />
           </div>
         </div>
       )}
@@ -125,10 +92,7 @@ export default function ProgressReview({ progress }) {
               ? Object.entries(entry.measurements)
               : []
           return (
-            <div
-              key={entry.id}
-              className="bg-df-surface/60 rounded-df-lg border border-df-border px-4 py-3"
-            >
+            <Card key={entry.id} variant="inset" padded={false} className="px-4 py-3">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <span className="text-sm font-600 text-df-text">{fmtDate(entry.entry_date)}</span>
                 <span className="text-sm text-df-text-muted">
@@ -148,16 +112,14 @@ export default function ProgressReview({ progress }) {
               {entry.notes && (
                 <p className="mt-2 text-sm leading-relaxed text-df-text-muted">{entry.notes}</p>
               )}
-            </div>
+            </Card>
           )
         })}
       </div>
 
       {withPhotos.length > 0 && (
         <div>
-          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-            Photos
-          </p>
+          <MicroLabel>Photos</MicroLabel>
           <div className="mt-2 flex flex-wrap gap-2">
             {withPhotos.map(entry => (
               <PhotoThumb

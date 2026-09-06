@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Loader2, Pencil, Plus, Trash2, X } from 'lucide-react'
-import { Button, Card, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { Button, Card, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import { deletePlan, savePlan } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import { AdminEmpty, StatusBadge, fmtDate } from '../components/AdminPrimitives'
 
@@ -25,6 +26,7 @@ const textToWeeks = text =>
  * Writes go through savePlan / deletePlan, then the parent reloads.
  */
 export default function PlanQuickEditor({ clientId, plans, reload }) {
+  const confirm = useConfirm()
   const list = plans ?? []
   const [form, setForm] = useState(emptyForm)
   const [open, setOpen] = useState(false)
@@ -90,7 +92,14 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
     }
   }
 
-  const handleDelete = async id => {
+  const handleDelete = async plan => {
+    const ok = await confirm({
+      title: 'Delete This Program?',
+      body: `“${plan.title}” and every week inside it will be removed from the client's portal. This cannot be undone.`,
+      confirmLabel: 'Delete Program',
+    })
+    if (!ok) return
+    const id = plan.id
     setDeletingId(id)
     setError(null)
     setSuccess(null)
@@ -107,9 +116,9 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+        <MicroLabel>
           {list.length} plan{list.length === 1 ? '' : 's'}
-        </p>
+        </MicroLabel>
         {!open && (
           <Button type="button" variant="outline" size="sm" onClick={startCreate}>
             <Plus className="h-4 w-4" aria-hidden="true" />
@@ -123,9 +132,11 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
       ) : (
         <div className="grid gap-2">
           {list.map(plan => (
-            <div
+            <Card
               key={plan.id}
-              className="bg-df-surface/60 flex items-start justify-between gap-3 rounded-df-lg border border-df-border px-4 py-3"
+              variant="inset"
+              padded={false}
+              className="flex items-start justify-between gap-3 px-4 py-3"
             >
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
@@ -156,7 +167,7 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleDelete(plan.id)}
+                  onClick={() => handleDelete(plan)}
                   disabled={deletingId === plan.id}
                   aria-label={`Delete ${plan.title}`}
                 >
@@ -167,7 +178,7 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
                   )}
                 </Button>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
@@ -176,7 +187,7 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
         <Card variant="surface">
           <form onSubmit={handleSave} className="grid gap-5">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-600 text-df-text">{form.id ? 'Edit plan' : 'New plan'}</p>
+              <p className="text-sm font-600 text-df-text">{form.id ? 'Edit Plan' : 'New Plan'}</p>
               <Button
                 type="button"
                 variant="ghost"
@@ -222,9 +233,9 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
                     Saving…
                   </>
                 ) : form.id ? (
-                  'Save plan'
+                  'Save Plan'
                 ) : (
-                  'Create plan'
+                  'Create Plan'
                 )}
               </Button>
             </div>

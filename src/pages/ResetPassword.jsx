@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
 export default function ResetPassword() {
+  const { auth, forms } = useContent()
+  const copy = auth.reset
   const { requestPasswordReset } = useAuth()
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(undefined)
@@ -16,11 +19,11 @@ export default function ResetPassword() {
   const handleSubmit = async event => {
     event.preventDefault()
     if (!email.trim()) {
-      setEmailError('Required')
+      setEmailError(forms.required)
       return
     }
     if (!email.includes('@')) {
-      setEmailError('Enter a valid email')
+      setEmailError(forms.invalidEmail)
       return
     }
     setEmailError(undefined)
@@ -29,19 +32,16 @@ export default function ResetPassword() {
     try {
       await requestPasswordReset({ email })
       setStatus('sent')
-    } catch (error) {
+    } catch {
       setStatus('error')
-      setErrorBody(error?.message || 'Could not send the reset email.')
+      setErrorBody(copy.failed)
     }
   }
 
   if (status === 'sent') {
     return (
       <AuthShell>
-        <FormSuccess
-          heading="Check your email"
-          body="If an account exists for that address, you'll get a reset link in a minute."
-        />
+        <FormSuccess heading={copy.sentHeading} body={copy.sentBody} />
       </AuthShell>
     )
   }
@@ -49,12 +49,12 @@ export default function ResetPassword() {
   return (
     <AuthShell>
       <AuthCard
-        title="Reset password"
-        subtitle="Enter the email on your account and we'll send you a reset link."
-        footerLinks={[{ href: '/login', label: 'Back to Sign In' }]}
+        title={copy.title}
+        subtitle={copy.subtitle}
+        footerLinks={[{ href: '/login', label: copy.backToSignIn }]}
       >
         <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <Field label="Email" error={emailError}>
+          <Field label={auth.emailLabel} error={emailError}>
             <Input
               type="email"
               value={email}
@@ -62,7 +62,7 @@ export default function ResetPassword() {
                 setEmail(event.target.value)
                 if (emailError) setEmailError(undefined)
               }}
-              placeholder="you@example.com"
+              placeholder={auth.emailPlaceholder}
               autoComplete="email"
             />
           </Field>
@@ -71,17 +71,17 @@ export default function ResetPassword() {
             {status === 'working' ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                Sending…
+                {copy.submitting}
               </>
             ) : (
               <>
-                Send Reset Link
+                {copy.submit}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </>
             )}
           </Button>
 
-          <FormError body={status === 'error' ? errorBody : undefined} />
+          <FormError className="mt-4" body={status === 'error' ? errorBody : undefined} />
         </form>
       </AuthCard>
     </AuthShell>

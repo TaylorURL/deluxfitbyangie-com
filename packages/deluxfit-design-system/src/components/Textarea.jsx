@@ -1,40 +1,65 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useLayoutEffect, useRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '../lib/cn'
+import { FIELD_EDGE, FIELD_SURFACE } from '../lib/field'
+
+const textareaVariants = cva([FIELD_SURFACE, 'px-3.5 py-3 leading-relaxed'].join(' '), {
+  variants: {
+    invalid: FIELD_EDGE,
+    autoGrow: { true: 'resize-none overflow-hidden', false: 'resize-y' },
+  },
+  defaultVariants: { invalid: false, autoGrow: false },
+})
 
 /**
- * Pairs with <Field> for label + helper/error wrapping.
+ * `autoGrow` lets the box follow the answer instead of making the writer
+ * scroll a three-line window: the field starts at `rows` and grows to
+ * `maxRows`, past which it scrolls. Height is measured off the content rather
+ * than counted in characters, so a pasted paragraph and a typed one settle at
+ * the same place.
  */
-const textareaVariants = cva(
-  [
-    'w-full rounded-df-sm border bg-df-surface-2 px-4 py-3 text-df-text placeholder:text-df-text-faint',
-    'transition-colors duration-150 ease-df-out',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-    'resize-y',
-  ].join(' '),
-  {
-    variants: {
-      size: { sm: 'text-sm', md: 'text-[15px]', lg: 'text-base' },
-      invalid: {
-        true: 'border-df-danger focus-visible:ring-df-danger',
-        false: 'border-df-border-input hover:border-df-border-hover',
-      },
-    },
-    defaultVariants: { size: 'md', invalid: false },
-  }
-)
-
 export const Textarea = forwardRef(function Textarea(
-  { className, rows = 5, size, invalid, ...props },
+  { className, rows = 4, maxRows = 14, invalid, autoGrow = false, onChange, ...props },
   ref
 ) {
+  const innerRef = useRef(null)
+
+  const attach = useCallback(
+    node => {
+      innerRef.current = node
+      if (typeof ref === 'function') ref(node)
+      else if (ref) ref.current = node
+    },
+    [ref]
+  )
+
+  const resize = useCallback(() => {
+    const node = innerRef.current
+    if (!node || !autoGrow) return
+    const styles = window.getComputedStyle(node)
+    const lineHeight = parseFloat(styles.lineHeight) || 24
+    const vertical = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom)
+    const ceiling = lineHeight * maxRows + vertical
+    node.style.height = 'auto'
+    const next = Math.min(node.scrollHeight, ceiling)
+    node.style.height = `${next}px`
+    node.style.overflowY = node.scrollHeight > ceiling ? 'auto' : 'hidden'
+  }, [autoGrow, maxRows])
+
+  // Measured before paint, so a field rendered with a value already in it is
+  // never drawn at the wrong height and then corrected.
+  useLayoutEffect(resize, [resize, props.value, props.defaultValue])
+
   return (
     <textarea
-      ref={ref}
+      ref={attach}
       rows={rows}
       aria-invalid={invalid || undefined}
-      className={cn(textareaVariants({ size, invalid, className }))}
+      onChange={event => {
+        resize()
+        onChange?.(event)
+      }}
+      className={cn(textareaVariants({ invalid, autoGrow, className }))}
       {...props}
     />
   )

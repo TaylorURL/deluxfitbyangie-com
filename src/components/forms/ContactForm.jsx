@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ArrowRight, Loader2 } from 'lucide-react'
-import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { ArrowRight, Loader2, Mail, User } from 'lucide-react'
+import { Button, Field, Input, Panel, Select, Textarea } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useFormSubmission } from './useFormSubmission'
 import { FormError, FormSuccess } from './FormFeedback'
@@ -8,7 +8,7 @@ import { FormError, FormSuccess } from './FormFeedback'
 const INITIAL_VALUES = { name: '', email: '', topic: '', message: '' }
 
 export default function ContactForm() {
-  const { contact } = useContent()
+  const { contact, forms } = useContent()
   const fields = contact.form.fields
   const copy = contact.form
 
@@ -24,11 +24,11 @@ export default function ContactForm() {
   const handleSubmit = async event => {
     event.preventDefault()
     const next = {}
-    if (!values.name.trim()) next.name = 'Required'
-    if (!values.email.trim()) next.email = 'Required'
-    else if (!values.email.includes('@')) next.email = 'Enter a valid email'
-    if (!values.topic) next.topic = 'Pick a topic'
-    if (!values.message.trim()) next.message = 'Required'
+    if (!values.name.trim()) next.name = forms.required
+    if (!values.email.trim()) next.email = forms.required
+    else if (!values.email.includes('@')) next.email = forms.invalidEmail
+    if (!values.topic) next.topic = forms.pickOne
+    if (!values.message.trim()) next.message = forms.required
     setErrors(next)
     if (Object.keys(next).length) return
     try {
@@ -43,14 +43,11 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
-    >
+    <Panel as="form" noValidate onSubmit={handleSubmit}>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={fields.name.label} error={errors.name}>
           <Input
+            icon={User}
             value={values.name}
             onChange={handleChange('name')}
             placeholder={fields.name.placeholder}
@@ -60,6 +57,7 @@ export default function ContactForm() {
         </Field>
         <Field label={fields.email.label} error={errors.email}>
           <Input
+            icon={Mail}
             type="email"
             value={values.email}
             onChange={handleChange('email')}
@@ -79,10 +77,12 @@ export default function ContactForm() {
         </Field>
         <Field label={fields.message.label} error={errors.message} className="sm:col-span-2">
           <Textarea
+            autoGrow
             value={values.message}
             onChange={handleChange('message')}
             placeholder={fields.message.placeholder}
-            rows={6}
+            rows={5}
+            maxRows={14}
             required
           />
         </Field>
@@ -102,7 +102,7 @@ export default function ContactForm() {
         )}
       </Button>
 
-      <FormError body={errorMessage ? `${copy.errorBody}` : undefined} />
-    </form>
+      <FormError className="mt-4" body={errorMessage ? `${copy.errorBody}` : undefined} />
+    </Panel>
   )
 }

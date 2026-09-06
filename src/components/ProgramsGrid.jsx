@@ -16,7 +16,7 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
     <Section
       id={id}
       tone="dark"
-      eyebrow={programs.eyebrow}
+      className="border-t border-df-border"
       heading={programs.heading}
       accent={programs.accent}
       subhead={programs.subhead}

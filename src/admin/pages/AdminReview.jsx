@@ -19,8 +19,7 @@ export default function AdminReview() {
   return (
     <div className="grid gap-6">
       <SectionHeading
-        eyebrow="Monthly review"
-        title="Monthly review."
+        title="Monthly review"
         intro="Review progress, photos, and measurements, and update the program, all from one place."
       />
 

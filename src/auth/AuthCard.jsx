@@ -1,13 +1,16 @@
+import { Panel } from '@deluxfit/ds'
 import { Link } from '@/router'
 
 export default function AuthCard({ title, subtitle, children, footerLinks }) {
   return (
-    <div className="bg-df-surface/85 rounded-df-2xl border border-df-border p-8 shadow-df-xl backdrop-blur-xl sm:p-10">
+    <Panel>
       <h1 className="font-400 font-display text-[clamp(2rem,6vw,2.75rem)] uppercase leading-[0.95] tracking-tight text-df-text">
         {title}
         <span className="text-df-accent">.</span>
       </h1>
-      {subtitle && <p className="mt-3 text-sm leading-relaxed text-df-text-muted">{subtitle}</p>}
+      {subtitle && (
+        <p className="mt-3 text-[15px] leading-relaxed text-df-text-muted">{subtitle}</p>
+      )}
 
       <div className="mt-7">{children}</div>
 
@@ -17,13 +20,13 @@ export default function AuthCard({ title, subtitle, children, footerLinks }) {
             <Link
               key={link.href}
               href={link.href}
-              className="text-xs font-600 uppercase tracking-[0.16em] text-df-text-muted transition-colors hover:text-df-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright"
+              className="text-[12px] font-600 uppercase tracking-[0.14em] text-df-text-muted transition-colors duration-df-fast ease-df-out hover:text-df-accent-bright"
             >
               {link.label}
             </Link>
           ))}
         </div>
       )}
-    </div>
+    </Panel>
   )
 }

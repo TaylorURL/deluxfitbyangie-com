@@ -167,7 +167,6 @@ export default function AdminAvailability() {
     <div className="flex flex-col gap-8">
       <SectionCard>
         <SectionHeading
-          eyebrow="Availability"
           title="Your Weekly Hours"
           intro="Tick the times you are open to take a live session. This is your normal week — clients only ever see the hours ticked here, minus anything already booked."
         />
@@ -189,7 +188,7 @@ export default function AdminAvailability() {
                       aria-pressed={on}
                       onClick={() => toggleHour(day.value, hour)}
                       className={cn(
-                        'min-h-[2.25rem] rounded-df-md border px-2.5 py-1 text-xs font-600 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright',
+                        'min-h-[2.25rem] rounded-df-md border px-2.5 py-1 text-xs font-600 transition-colors duration-df-fast',
                         on
                           ? 'border-df-accent bg-df-accent text-df-on-accent'
                           : 'border-df-border-input text-df-text-faint hover:border-df-border-hover hover:text-df-text'
@@ -220,7 +219,6 @@ export default function AdminAvailability() {
 
       <SectionCard>
         <SectionHeading
-          eyebrow="Availability"
           title="Specific Dates"
           intro="For a week that does not look like the others. Close a date you are away, or give it different hours. A date listed here replaces your weekly hours for that day."
         />
@@ -251,7 +249,7 @@ export default function AdminAvailability() {
               aria-pressed={draft.closed}
               onClick={() => setDraft(prev => ({ ...prev, closed: true, hours: [] }))}
               className={cn(
-                'min-h-[2.5rem] rounded-df-md border px-4 py-2 text-sm font-600 transition-colors duration-150',
+                'min-h-[2.5rem] rounded-df-md border px-4 py-2 text-sm font-600 transition-colors duration-df-fast',
                 draft.closed
                   ? 'border-df-accent bg-df-accent text-df-on-accent'
                   : 'border-df-border-input text-df-text-muted hover:border-df-border-hover'
@@ -264,7 +262,7 @@ export default function AdminAvailability() {
               aria-pressed={!draft.closed}
               onClick={() => setDraft(prev => ({ ...prev, closed: false }))}
               className={cn(
-                'min-h-[2.5rem] rounded-df-md border px-4 py-2 text-sm font-600 transition-colors duration-150',
+                'min-h-[2.5rem] rounded-df-md border px-4 py-2 text-sm font-600 transition-colors duration-df-fast',
                 !draft.closed
                   ? 'border-df-accent bg-df-accent text-df-on-accent'
                   : 'border-df-border-input text-df-text-muted hover:border-df-border-hover'
@@ -285,7 +283,7 @@ export default function AdminAvailability() {
                     aria-pressed={on}
                     onClick={() => toggleDraftHour(hour)}
                     className={cn(
-                      'min-h-[2.25rem] rounded-df-md border px-2.5 py-1 text-xs font-600 transition-colors duration-150',
+                      'min-h-[2.25rem] rounded-df-md border px-2.5 py-1 text-xs font-600 transition-colors duration-df-fast',
                       on
                         ? 'border-df-accent bg-df-accent text-df-on-accent'
                         : 'border-df-border-input text-df-text-faint hover:border-df-border-hover hover:text-df-text'

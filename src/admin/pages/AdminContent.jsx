@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { CheckCircle2, FileUp, Loader2, Plus, Save, Upload, Users, X } from 'lucide-react'
-import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import { deleteContent, listClients, listContent, saveContent, uploadMedia } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -27,11 +28,12 @@ import {
  * `uploadMedia`. The frontend never touches Supabase tables directly.
  */
 export default function AdminContent() {
+  const confirm = useConfirm()
   const { data: items, loading, error, reload } = useAsyncData(() => listContent('en'), [], [])
   const { data: clients } = useAsyncData(listClients, [], [])
 
   const [draft, setDraft] = useState(null)
-  const [pickedFile, setPickedFile] = useState(null)
+  const [upload, setUpload] = useState(null)
   const [assigning, setAssigning] = useState(false)
   const [assigned, setAssigned] = useState(() => new Set())
   const [status, setStatus] = useState('idle') // idle | saving | uploading | error
@@ -47,7 +49,7 @@ export default function AdminContent() {
 
   const resetForm = useCallback(() => {
     setDraft(null)
-    setPickedFile(null)
+    setUpload(null)
     setAssigning(false)
     setAssigned(new Set())
     setStatus('idle')
@@ -58,7 +60,7 @@ export default function AdminContent() {
   const openCreate = () => {
     setSuccess(null)
     setFormError(null)
-    setPickedFile(null)
+    setUpload(null)
     setAssigning(false)
     setAssigned(new Set())
     setStatus('idle')
@@ -69,7 +71,7 @@ export default function AdminContent() {
   const openEdit = item => {
     setSuccess(null)
     setFormError(null)
-    setPickedFile(null)
+    setUpload(null)
     setAssigning(false)
     // Assignments are synced only when the coach opens the panel — leaving it
     // closed keeps the item's existing assignments untouched on save.
@@ -86,12 +88,12 @@ export default function AdminContent() {
 
   const handleFileChange = event => {
     const file = event.target.files?.[0] ?? null
-    setPickedFile(file)
+    setUpload(file)
     setFormError(null)
   }
 
   const clearFile = () => {
-    setPickedFile(null)
+    setUpload(null)
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
@@ -119,9 +121,9 @@ export default function AdminContent() {
       // 1. The upload comes first: the item row stores the storage path, which
       //    does not exist until the file has landed.
       let mediaPath
-      if (pickedFile) {
+      if (upload) {
         setStatus('uploading')
-        const { path } = await uploadMedia(pickedFile, 'library')
+        const { path } = await uploadMedia(upload, 'library')
         mediaPath = path
       }
 
@@ -159,7 +161,12 @@ export default function AdminContent() {
   }
 
   const handleDelete = async item => {
-    if (!window.confirm(`Delete “${item.title}”? This cannot be undone.`)) return
+    const ok = await confirm({
+      title: 'Delete This Item?',
+      body: `“${item.title}” will be removed from the library for everyone it is assigned to. This cannot be undone.`,
+      confirmLabel: 'Delete Item',
+    })
+    if (!ok) return
     setBusyId(item.id)
     setFormError(null)
     setSuccess(null)
@@ -180,8 +187,7 @@ export default function AdminContent() {
       <SectionCard>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <SectionHeading
-            eyebrow="Library"
-            title="Content library."
+            title="Content library"
             intro="Upload videos, PDFs, exercise instructions, and schedules, gate them by access level, and assign them directly to clients."
           />
           {!draft && (
@@ -201,9 +207,7 @@ export default function AdminContent() {
         {draft && (
           <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5">
             <div className="flex items-center justify-between">
-              <p className="text-[11px] font-700 uppercase tracking-[0.2em] text-df-accent">
-                {isEditing ? 'Edit item' : 'New item'}
-              </p>
+              <MicroLabel tone="accent">{isEditing ? 'Edit Item' : 'New Item'}</MicroLabel>
               <Button variant="ghost" size="sm" onClick={resetForm} disabled={isWorking}>
                 <X className="h-4 w-4" aria-hidden="true" />
                 Cancel
@@ -258,10 +262,8 @@ export default function AdminContent() {
               </Field>
             </div>
 
-            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
-              <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
-                Program Placement
-              </p>
+            <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2 p-4">
+              <MicroLabel>Program Placement</MicroLabel>
               <p className="text-sm text-df-text-muted">
                 Where this sits inside a program. Leave all three blank for a standalone resource,
                 like a nutrition guide or a single demo video.
@@ -296,10 +298,8 @@ export default function AdminContent() {
               />
             </Field>
 
-            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
-              <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
-                Media Source
-              </p>
+            <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2 p-4">
+              <MicroLabel>Media Source</MicroLabel>
               <Field
                 label="External URL"
                 helper="Paste a link to a hosted video or article, or upload a file below instead."
@@ -310,14 +310,14 @@ export default function AdminContent() {
                   onChange={setField('url')}
                   placeholder="https://…"
                   autoComplete="off"
-                  disabled={Boolean(pickedFile)}
+                  disabled={Boolean(upload)}
                 />
               </Field>
 
               <div>
-                <p className="mb-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-faint">
+                <MicroLabel tone="faint" className="mb-2">
                   Or upload a file
-                </p>
+                </MicroLabel>
                 <label htmlFor="content-file-input" className="sr-only">
                   Choose a file to upload
                 </label>
@@ -327,22 +327,22 @@ export default function AdminContent() {
                   type="file"
                   onChange={handleFileChange}
                   disabled={isWorking}
-                  className="bg-df-surface-2/60 block w-full cursor-pointer rounded-df-md border border-df-border-input text-sm text-df-text-muted file:mr-4 file:cursor-pointer file:border-0 file:bg-df-surface-3 file:px-4 file:py-3 file:text-[11px] file:font-700 file:uppercase file:tracking-[0.18em] file:text-df-text hover:file:bg-df-accent-soft hover:file:text-df-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
+                  className="block w-full cursor-pointer rounded-df-md border border-df-border-input bg-df-surface-2 text-sm text-df-text-muted file:mr-4 file:cursor-pointer file:border-0 file:bg-df-surface-3 file:px-4 file:py-3 file:text-[11px] file:font-700 file:uppercase file:tracking-[0.14em] file:text-df-text hover:file:bg-df-accent-soft hover:file:text-df-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
                 />
-                {pickedFile ? (
-                  <p className="bg-df-surface-2/60 mt-2 flex items-center justify-between gap-3 rounded-df-sm border border-df-border px-3 py-2 text-xs text-df-text">
+                {upload ? (
+                  <p className="mt-2 flex items-center justify-between gap-3 rounded-df-sm border border-df-border bg-df-surface-2 px-3 py-2 text-xs text-df-text">
                     <span className="inline-flex min-w-0 items-center gap-2">
                       <FileUp
                         className="h-4 w-4 shrink-0 text-df-accent-bright"
                         aria-hidden="true"
                       />
-                      <span className="truncate font-600">{pickedFile.name}</span>
+                      <span className="truncate font-600">{upload.name}</span>
                     </span>
                     <button
                       type="button"
                       onClick={clearFile}
                       disabled={isWorking}
-                      className="shrink-0 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-faint transition-colors hover:text-df-text disabled:opacity-50"
+                      className="shrink-0 text-[11px] font-700 uppercase tracking-[0.14em] text-df-text-faint transition-colors duration-df-fast ease-df-out hover:text-df-text disabled:opacity-50"
                     >
                       Remove
                     </button>
@@ -361,12 +361,12 @@ export default function AdminContent() {
               </div>
             </div>
 
-            <div className="bg-df-surface-2/40 grid gap-3 rounded-df-md border border-df-border p-4">
+            <div className="grid gap-3 rounded-df-md border border-df-border bg-df-surface-2 p-4">
               <div className="flex items-center justify-between">
-                <p className="inline-flex items-center gap-2 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted">
+                <MicroLabel className="inline-flex items-center gap-2">
                   <Users className="h-4 w-4" aria-hidden="true" />
                   Assign to Clients
-                </p>
+                </MicroLabel>
                 {!assigning ? (
                   <Button
                     variant="outline"
@@ -377,10 +377,10 @@ export default function AdminContent() {
                     Edit Assignments
                   </Button>
                 ) : (
-                  <span className="inline-flex items-center gap-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-accent">
+                  <MicroLabel as="span" tone="accent" className="inline-flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     Editing
-                  </span>
+                  </MicroLabel>
                 )}
               </div>
               {assigning ? (
@@ -436,7 +436,7 @@ export default function AdminContent() {
       </SectionCard>
 
       <SectionCard>
-        <SectionHeading eyebrow="All items" title="Library items." />
+        <SectionHeading title="Library items" />
         <div className="mt-6">
           {loading ? (
             <AdminLoading label="Loading library…" />

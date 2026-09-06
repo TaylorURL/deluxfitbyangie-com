@@ -37,7 +37,9 @@ function CoachAttachment({ bucket, path }) {
       <video
         controls
         src={url}
-        className="mt-2 w-full max-w-xs rounded-df-md border border-df-border"
+        width="320"
+        height="180"
+        className="mt-2 aspect-video w-full max-w-xs rounded-df-md bg-df-bg object-cover shadow-df-sm"
       />
     )
   }
@@ -93,7 +95,7 @@ export default function CoachThread({ clientId, messages, reload }) {
 
   return (
     <div>
-      <div className="bg-df-surface/60 flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-lg border border-df-border p-5">
+      <div className="flex max-h-[26rem] flex-col gap-3 overflow-y-auto rounded-df-md bg-df-bg p-5 shadow-df-sm">
         {thread.length === 0 ? (
           <p className="py-8 text-center text-sm text-df-text-faint">
             No messages yet. Start the conversation below.
@@ -111,7 +113,7 @@ export default function CoachThread({ clientId, messages, reload }) {
                     'max-w-[80%] rounded-df-lg px-4 py-3 text-sm leading-relaxed',
                     fromCoach
                       ? 'bg-df-accent text-df-on-accent'
-                      : 'border border-df-border bg-df-surface-2 text-df-text'
+                      : 'bg-df-surface-2 text-df-text shadow-df-sm'
                   )}
                 >
                   {message.body}
@@ -169,7 +171,7 @@ export default function CoachThread({ clientId, messages, reload }) {
             )}
           </Button>
         </div>
-        <FormError body={error} />
+        <FormError className="mt-4" body={error} />
       </form>
     </div>
   )

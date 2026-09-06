@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react'
 import { Loader2, Plus, Save, X } from 'lucide-react'
-import { Button, Field, Input, Select, Textarea } from '@deluxfit/ds'
+import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import { deleteNutrition, getClientNutrition, listClients, saveNutrition } from '@/lib/adminApi'
+import { useConfirm } from '@/components/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -63,6 +64,7 @@ const toNumberOrUndefined = value => {
 }
 
 export default function AdminNutrition() {
+  const confirm = useConfirm()
   const {
     data: clients,
     loading: clientsLoading,
@@ -189,7 +191,12 @@ export default function AdminNutrition() {
   }
 
   const handleDelete = async plan => {
-    if (!window.confirm(`Delete “${plan.title || 'this plan'}”? This cannot be undone.`)) return
+    const ok = await confirm({
+      title: 'Delete This Nutrition Plan?',
+      body: `“${plan.title || 'This plan'}” will be removed from the client's portal, along with its macros, meals and notes. This cannot be undone.`,
+      confirmLabel: 'Delete Plan',
+    })
+    if (!ok) return
     setBusyId(plan.id)
     setFormError(null)
     setSuccess(null)
@@ -209,8 +216,7 @@ export default function AdminNutrition() {
     <div className="grid gap-6">
       <SectionCard>
         <SectionHeading
-          eyebrow="Nutrition"
-          title="Nutrition plans."
+          title="Nutrition plans"
           intro="Pick a client, then author their macro targets, meal structure, and resources."
         />
         <div className="mt-6 max-w-md">
@@ -233,18 +239,18 @@ export default function AdminNutrition() {
 
       {clientId && (
         <SectionCard>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <SectionHeading
-              eyebrow={selectedClient ? clientLabel(selectedClient) : 'Client'}
-              title="Plans."
-            />
-            {!draft && (
-              <Button onClick={openCreate} className="shrink-0">
-                <Plus className="h-4 w-4" aria-hidden="true" />
-                New Plan
-              </Button>
-            )}
-          </div>
+          <SectionHeading
+            title="Plans"
+            intro={selectedClient ? clientLabel(selectedClient) : undefined}
+            actions={
+              !draft && (
+                <Button onClick={openCreate} className="shrink-0">
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                  New Plan
+                </Button>
+              )
+            }
+          />
 
           {success && (
             <div className="mt-5">
@@ -255,9 +261,7 @@ export default function AdminNutrition() {
           {draft && (
             <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-700 uppercase tracking-[0.2em] text-df-accent">
-                  {isEditing ? 'Edit plan' : 'New plan'}
-                </p>
+                <MicroLabel tone="accent">{isEditing ? 'Edit plan' : 'New plan'}</MicroLabel>
                 <Button variant="ghost" size="sm" onClick={resetForm} disabled={isWorking}>
                   <X className="h-4 w-4" aria-hidden="true" />
                   Cancel

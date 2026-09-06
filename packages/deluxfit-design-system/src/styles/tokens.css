@@ -6,6 +6,16 @@
  * off-white text, a heavy condensed display face for headlines, and a clean
  * sans for body copy.
  *
+ * Craft layer
+ *
+ * Elevation is ring-first. Every raised thing carries a one-pixel edge before
+ * it carries any shadow, and the shadow underneath is two soft drops rather
+ * than one heavy one. That keeps a card's boundary exactly one pixel however
+ * far the light beneath it spreads, and it is what stops a dark interface
+ * reading as a stack of smudges. The alternative — a coloured bloom behind
+ * every button — makes one control look important and a screen of them look
+ * cheap, so the brand red is spent on the fill and the edge, never on a glow.
+ *
  * Theming model
  *
  * Every color is a CSS custom property under the `--df-*` namespace. Wrap the
@@ -36,51 +46,72 @@
 
   /* Display — Anton: an ultra-condensed grotesque that carries the whole
      "type specimen" identity at extreme scale. Accent — Bodoni Moda: the
-     didone the fashion press has set its mastheads in for a century, used in
-     italic for one phrase per heading. Its hairline-to-stem contrast is the
-     couture-feminine counterweight that keeps the system off gym-bro, and it
-     is the one serif on the page, chosen for that job rather than reached for
-     as a default. */
+     didone the fashion press has set its mastheads in for a century. It is the
+     one serif on the page and it holds one job, the pull quote, where a reader
+     expects a different voice from the person speaking. It is never a
+     headline and never italicised inside one: emphasis in display type is
+     carried by the accent colour, which is a decision the eye reads faster
+     than a change of face. */
   --df-font-display: 'Anton', 'Oswald', system-ui, sans-serif;
   --df-font-accent: 'Bodoni Moda', Georgia, 'Times New Roman', serif;
 
-  /* Radius scale */
+  /*
+   * Radius — four steps and no more, plus the pill. A corner is a scale
+   * reading: the eye judges how large a thing is partly by how far its corner
+   * turns, so a card and the button inside it cannot share one value without
+   * the button looking swollen. Feature panels take `lg`, cards and tiles
+   * `md`, every control and chip `sm`, and a bar, a dot or a swatch `xs`. The
+   * two above them exist for a full-bleed sheet and are used by the drawer and
+   * the modal alone.
+   */
   --df-radius-xs: 4px;
   --df-radius-sm: 6px;
-  --df-radius-md: 10px;
-  --df-radius-lg: 14px;
-  --df-radius-xl: 20px;
-  --df-radius-2xl: 28px;
+  --df-radius-md: 8px;
+  --df-radius-lg: 12px;
+  --df-radius-xl: 16px;
+  --df-radius-2xl: 20px;
   --df-radius-full: 9999px;
+
+  /* Control heights. One scale shared by input, select and button, so a field
+     and the key beside it line up without either being tuned to the other.
+     `md` is the floor a finger needs, which is why it is the default. */
+  --df-control-h-sm: 36px;
+  --df-control-h-md: 44px;
+  --df-control-h-lg: 52px;
 
   /* Motion — durations + athletic easings. The slow step is the ceiling for a
      state change: past about a third of a second the control stops reading as
      responsive and starts reading as slow. */
-  --df-duration-fast: 140ms;
-  --df-duration-base: 220ms;
-  --df-duration-slow: 280ms;
+  --df-duration-fast: 120ms;
+  --df-duration-base: 180ms;
+  --df-duration-slow: 260ms;
   --df-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --df-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  /* Elevation — layered ambient + key light so surfaces read as lifted. */
-  --df-shadow-ambient: rgba(0, 0, 0, 0.55);
-  --df-shadow-key: rgba(0, 0, 0, 0.45);
-  --df-shadow-sm: 0 1px 2px var(--df-shadow-key);
-  --df-shadow-md: 0 1px 2px var(--df-shadow-ambient), 0 6px 16px var(--df-shadow-key);
-  --df-shadow-lg: 0 2px 6px var(--df-shadow-ambient), 0 18px 40px var(--df-shadow-key);
-  --df-shadow-xl: 0 4px 10px var(--df-shadow-ambient), 0 30px 70px var(--df-shadow-key);
-
-  /* Signature red glow — used on the highlighted pricing tier + CTAs. */
-  --df-shadow-glow: 0 0 0 1px rgba(225, 29, 42, 0.45), 0 18px 60px -12px rgba(225, 29, 42, 0.55);
-  --df-shadow-glow-soft: 0 14px 50px -16px rgba(225, 29, 42, 0.45);
+  /* The measure a column of prose is held to, set in ch so it follows the type
+     size rather than a pixel width that only ever suited one of them. */
+  --df-measure: 68ch;
 
   /* The height of the fixed bar in each of its two states. Anchor scroll
      padding and every sticky offset below it read these, so a bar that changes
      height moves them with it instead of leaving them behind. */
-  --df-header-height: 4rem;
-  --df-header-height-scrolled: 3.5rem;
+  /* The floating bar's own box: its top inset plus the pill it holds. Every
+     offset that has to clear the bar reads this rather than restating it. */
+  --df-bar-inset: 0.75rem;
+  --df-bar-height: 3.5rem;
+  --df-header-height: calc(var(--df-bar-inset) + var(--df-bar-height));
 
-  /* Layering */
+  /* The bar against the bottom edge on a phone, and the room a page leaves for
+     it. Guessed at in two files before, which is how a page ends up with its
+     last row under the bar on one surface and a gap under it on the other. */
+  --df-tabbar-height: 4rem;
+  --df-tabbar-clearance: calc(var(--df-tabbar-height) + 1.5rem);
+  --df-header-height-scrolled: var(--df-header-height);
+
+  /* Layering. The scrim sits under the bar rather than over it: the bar is
+     what opened the panel, so it has to stay lit while the page behind it
+     dims. */
+  --df-z-scrim: 1050;
   --df-z-sticky: 1100;
   --df-z-overlay: 1200;
   --df-z-modal: 1300;
@@ -90,23 +121,36 @@
 .df-root,
 .df-root[data-theme='dark'],
 [data-theme='dark'] {
-  /* Surfaces — true black up through elevated charcoal */
-  --df-bg: #050505;
-  --df-bg-elevated: #0c0c0d;
-  --df-surface: #121214;
-  --df-surface-2: #1a1a1d;
-  --df-surface-3: #242428;
+  /* Native chrome the theme cannot reach any other way — the date picker's
+     indicator, a scrollbar, a spin button — is told which ground it is
+     standing on, and draws itself to match. */
+  color-scheme: dark;
+
+  /* Surfaces — near-black up through elevated charcoal. The ground is off
+     black rather than #000: a true black gives a shadow nothing to fall on
+     and turns every hairline into the only edge in the picture. */
+  --df-bg: #08080a;
+  --df-bg-elevated: #0e0e11;
+  --df-surface: #141418;
+  --df-surface-2: #1b1b20;
+  --df-surface-3: #26262c;
+
+  /* The ground a field stands on. A field the same colour as the panel behind
+     it is a label with a border; sinking it a step is what says "type here"
+     before the border has to. */
+  --df-field: #101014;
+  --df-field-hover: #16161b;
 
   /* Borders */
-  --df-border: rgba(255, 255, 255, 0.08);
+  --df-border: rgba(255, 255, 255, 0.09);
   --df-border-strong: rgba(255, 255, 255, 0.16);
-  --df-border-input: rgba(255, 255, 255, 0.24);
-  --df-border-hover: rgba(225, 29, 42, 0.55);
+  --df-border-input: rgba(255, 255, 255, 0.2);
+  --df-border-hover: rgba(255, 255, 255, 0.28);
 
   /* Text */
   --df-text: #f5f3f2;
   --df-text-muted: #a8a4a3;
-  --df-text-faint: #76726f;
+  --df-text-faint: #86817f;
 
   /* Brand red scale (50–950) */
   --df-red-50: #fff1f2;
@@ -123,10 +167,10 @@
 
   /* Accent — the crimson voice of the brand */
   --df-accent: #e11d2a;
-  --df-accent-bright: #fb3645;
+  --df-accent-bright: #fb5663;
   --df-accent-deep: #bd1521;
-  --df-accent-soft: rgba(225, 29, 42, 0.14);
-  --df-accent-softer: rgba(225, 29, 42, 0.08);
+  --df-accent-soft: rgba(225, 29, 42, 0.16);
+  --df-accent-softer: rgba(225, 29, 42, 0.09);
   --df-on-accent: #ffffff;
 
   /* Semantic */
@@ -139,7 +183,7 @@
 
   /* Overlays + glass */
   --df-overlay: rgba(0, 0, 0, 0.72);
-  --df-glass-fill: rgba(18, 18, 20, 0.72);
+  --df-glass-fill: rgba(20, 20, 24, 0.76);
   --df-glass-border: rgba(255, 255, 255, 0.1);
 
   /* Washes — the crimson bloom laid behind heroes, bands, and cards. Three
@@ -149,14 +193,21 @@
   --df-accent-wash-strong: rgba(225, 29, 42, 0.22);
   --df-accent-wash-deep: rgba(189, 21, 33, 0.22);
 
-  /* Shine — the two stops of the sweeping highlight on eyebrow type. */
-  --df-shine: #c81a27;
-  --df-shine-highlight: #ff8b95;
-
   /* Aurora — the three stops of the WebGL backdrop gradient. */
   --df-aurora-deep: #4a0910;
   --df-aurora-mid: #a81420;
   --df-aurora-black: #0d0204;
+
+  /* The furniture a drawn chart stands on: its grid, its baseline, and the
+     line that follows the pointer. */
+  --df-chart-grid: rgba(255, 255, 255, 0.07);
+  --df-chart-baseline: rgba(255, 255, 255, 0.22);
+  --df-chart-cursor: rgba(225, 29, 42, 0.5);
+
+  /* Elevation. The ink a shadow is drawn in follows the ground it falls on, so
+     both weights are restated in every theme rather than cut once for black. */
+  --df-shadow-ambient: rgba(0, 0, 0, 0.42);
+  --df-shadow-key: rgba(0, 0, 0, 0.55);
 }
 
 /* Light theme */
@@ -164,20 +215,27 @@
    shifts a half-stop deeper so it stays AA-readable on a near-white surface
    without losing its identity. */
 [data-theme='light'] {
+  color-scheme: light;
+
   --df-bg: #faf8f5;
-  --df-bg-elevated: #f1ede7;
+  --df-bg-elevated: #f2eee8;
   --df-surface: #ffffff;
   --df-surface-2: #f5f1ec;
   --df-surface-3: #e8e3dc;
 
+  /* On paper the field goes up rather than down: white against the warm
+     ground is the step that reads as an opening. */
+  --df-field: #ffffff;
+  --df-field-hover: #fffdfa;
+
   --df-border: rgba(15, 15, 15, 0.1);
   --df-border-strong: rgba(15, 15, 15, 0.18);
-  --df-border-input: rgba(15, 15, 15, 0.26);
-  --df-border-hover: rgba(189, 21, 33, 0.55);
+  --df-border-input: rgba(15, 15, 15, 0.22);
+  --df-border-hover: rgba(15, 15, 15, 0.34);
 
   --df-text: #131314;
   --df-text-muted: #4a4744;
-  --df-text-faint: #807a76;
+  --df-text-faint: #726d69;
 
   --df-red-50: #fff1f2;
   --df-red-100: #ffdfe1;
@@ -210,7 +268,7 @@
   --df-danger-soft: rgba(190, 18, 60, 0.12);
 
   --df-overlay: rgba(255, 255, 255, 0.78);
-  --df-glass-fill: rgba(255, 255, 255, 0.72);
+  --df-glass-fill: rgba(255, 255, 255, 0.76);
   --df-glass-border: rgba(15, 15, 15, 0.1);
 
   /* Washes sit lighter on cream: the same bloom at full strength turns the
@@ -220,38 +278,44 @@
   --df-accent-wash-strong: rgba(189, 21, 33, 0.13);
   --df-accent-wash-deep: rgba(129, 21, 29, 0.13);
 
-  --df-shine: #9c141e;
-  --df-shine-highlight: #e11d2a;
-
   --df-aurora-deep: #ffc4c8;
   --df-aurora-mid: #fb5663;
   --df-aurora-black: #faf8f5;
 
-  /* Lift shadows so elevation reads against a light bg without smudging. */
-  --df-shadow-ambient: rgba(15, 15, 15, 0.1);
-  --df-shadow-key: rgba(15, 15, 15, 0.08);
-  --df-shadow-glow: 0 0 0 1px rgba(189, 21, 33, 0.45), 0 18px 60px -12px rgba(189, 21, 33, 0.32);
-  --df-shadow-glow-soft: 0 14px 50px -16px rgba(189, 21, 33, 0.28);
+  --df-chart-grid: rgba(15, 15, 15, 0.09);
+  --df-chart-baseline: rgba(15, 15, 15, 0.3);
+  --df-chart-cursor: rgba(189, 21, 33, 0.4);
+
+  /* Lift shadows so elevation reads against a light bg without smudging. A
+     shadow over paper carries far less black than one over a dark ground, or
+     it reads as dirt rather than as height. */
+  --df-shadow-ambient: rgba(15, 15, 15, 0.06);
+  --df-shadow-key: rgba(15, 15, 15, 0.12);
 }
 
 /* Gray theme */
 /* Mid-tone neutral surface — useful for sections that want a quieter brand
    moment than the true-black hero but more weight than a light panel. */
 [data-theme='gray'] {
+  color-scheme: dark;
+
   --df-bg: #2a2a2e;
   --df-bg-elevated: #33333a;
   --df-surface: #3a3a42;
   --df-surface-2: #45454d;
   --df-surface-3: #54545d;
 
+  --df-field: #303036;
+  --df-field-hover: #35353c;
+
   --df-border: rgba(255, 255, 255, 0.12);
   --df-border-strong: rgba(255, 255, 255, 0.2);
-  --df-border-input: rgba(255, 255, 255, 0.28);
-  --df-border-hover: rgba(225, 29, 42, 0.55);
+  --df-border-input: rgba(255, 255, 255, 0.26);
+  --df-border-hover: rgba(255, 255, 255, 0.36);
 
   --df-text: #f2f0ee;
   --df-text-muted: #b8b4b2;
-  --df-text-faint: #8a8682;
+  --df-text-faint: #9a9692;
 
   --df-red-50: #fff1f2;
   --df-red-100: #ffdfe1;
@@ -266,9 +330,9 @@
   --df-red-950: #47070c;
 
   --df-accent: #e11d2a;
-  --df-accent-bright: #fb3645;
+  --df-accent-bright: #fb5663;
   --df-accent-deep: #bd1521;
-  --df-accent-soft: rgba(225, 29, 42, 0.16);
+  --df-accent-soft: rgba(225, 29, 42, 0.18);
   --df-accent-softer: rgba(225, 29, 42, 0.1);
   --df-on-accent: #ffffff;
 
@@ -280,7 +344,7 @@
   --df-danger-soft: rgba(244, 63, 94, 0.14);
 
   --df-overlay: rgba(0, 0, 0, 0.65);
-  --df-glass-fill: rgba(58, 58, 66, 0.72);
+  --df-glass-fill: rgba(58, 58, 66, 0.76);
   --df-glass-border: rgba(255, 255, 255, 0.12);
 
   /* A mid-tone ground swallows a low-alpha wash, so gray runs a stop hotter
@@ -290,20 +354,75 @@
   --df-accent-wash-strong: rgba(225, 29, 42, 0.26);
   --df-accent-wash-deep: rgba(189, 21, 33, 0.26);
 
-  --df-shine: #e11d2a;
-  --df-shine-highlight: #ff9aa2;
-
   --df-aurora-deep: #4a0910;
   --df-aurora-mid: #a81420;
   --df-aurora-black: #2a2a2e;
+
+  --df-chart-grid: rgba(255, 255, 255, 0.1);
+  --df-chart-baseline: rgba(255, 255, 255, 0.28);
+  --df-chart-cursor: rgba(225, 29, 42, 0.5);
+
+  --df-shadow-ambient: rgba(0, 0, 0, 0.3);
+  --df-shadow-key: rgba(0, 0, 0, 0.4);
+}
+
+/*
+ * Elevation, stated once and resolved per theme through the two ink tokens
+ * above. The ring is first in every one of them, so the edge stays exactly one
+ * pixel however far the shadow beneath it spreads.
+ *
+ * `sm` is the edge alone, for something that needs a boundary and nothing
+ * more. `md` is the card. `lg` is that card under the pointer, or a panel that
+ * has to sit above its neighbours. `xl` belongs to the drawer and the modal,
+ * which are the only two things on the site that leave the page behind.
+ *
+ * A key carries less than a card does: a button sits on the surface rather
+ * than floating over it, so its light is a contact shadow rather than a cast
+ * one. That is the whole of what replaced the red bloom.
+ */
+:root,
+[data-theme] {
+  --df-shadow-sm: 0 0 0 1px var(--df-border);
+  --df-shadow-md:
+    0 0 0 1px var(--df-border), 0 1px 2px var(--df-shadow-ambient),
+    0 8px 24px -12px var(--df-shadow-key);
+  --df-shadow-lg:
+    0 0 0 1px var(--df-border-strong), 0 2px 4px var(--df-shadow-ambient),
+    0 14px 32px -14px var(--df-shadow-key);
+  --df-shadow-xl:
+    0 0 0 1px var(--df-border-strong), 0 4px 10px var(--df-shadow-ambient),
+    0 32px 64px -24px var(--df-shadow-key);
+
+  /* What a key carries under it, and the softer step a ringed one takes. */
+  --df-key-lift: 0 1px 1px var(--df-shadow-ambient), 0 2px 5px -1px var(--df-shadow-key);
+  --df-key-lift-soft: 0 1px 2px var(--df-shadow-ambient);
+
+  /* The accent as elevation. It is the brand red drawn as an edge and a
+     contact shadow rather than as a halo, which is what lets a screen carry
+     more than one of them without any of them shouting. */
+  --df-shadow-accent:
+    0 0 0 1px var(--df-accent), 0 2px 4px var(--df-shadow-ambient),
+    0 14px 32px -14px var(--df-shadow-key);
+  --df-shadow-glow-soft: 0 0 0 1px var(--df-accent-deep), var(--df-key-lift-soft);
+
+  /* The focus signature: a solid ring on the control's own edge and a soft
+     halo outside it, so focus reads at a glance on either ground without
+     needing an offset that the control's neighbours then have to make room
+     for. */
+  --df-focus-halo: rgba(225, 29, 42, 0.28);
+  --df-ring: 0 0 0 1px var(--df-accent), 0 0 0 4px var(--df-focus-halo);
+}
+
+[data-theme='light'] {
+  --df-focus-halo: rgba(189, 21, 33, 0.22);
 }
 
 /* The bar grows once there is room for it. Both states move together, so the
    scroll padding that clears the bar is right at every width. */
 @media (min-width: 640px) {
   :root {
-    --df-header-height: 5rem;
-    --df-header-height-scrolled: 4rem;
+    --df-bar-inset: 1rem;
+    --df-bar-height: 4rem;
   }
 }
 
@@ -312,6 +431,15 @@
   background-color: var(--df-bg);
   color: var(--df-text);
   font-family: var(--df-font-sans);
+}
+
+/* A native checkbox or radio paints its own tick in the browser's blue unless
+   it is told otherwise, which is one control on the whole site answering to a
+   palette that is not this one. Set here rather than per call site, because
+   the one that gets forgotten is the one a reader notices. */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--df-accent);
 }
 
 /* Reduced motion — honor the OS preference globally. The app also wraps the

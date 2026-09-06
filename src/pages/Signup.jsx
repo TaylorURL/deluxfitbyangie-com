@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
@@ -8,6 +9,8 @@ import { useLocation } from '@/router'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
 export default function Signup() {
+  const { auth, forms } = useContent()
+  const copy = auth.signup
   const { signUp, user, role, profileLoading } = useAuth()
   const { navigate } = useLocation()
   const [values, setValues] = useState({ name: '', email: '', password: '' })
@@ -30,11 +33,11 @@ export default function Signup() {
   const handleSubmit = async event => {
     event.preventDefault()
     const next = {}
-    if (!values.name.trim()) next.name = 'Required'
-    if (!values.email.trim()) next.email = 'Required'
-    else if (!values.email.includes('@')) next.email = 'Enter a valid email'
-    if (!values.password) next.password = 'Required'
-    else if (values.password.length < 8) next.password = 'At least 8 characters'
+    if (!values.name.trim()) next.name = forms.required
+    if (!values.email.trim()) next.email = forms.required
+    else if (!values.email.includes('@')) next.email = forms.invalidEmail
+    if (!values.password) next.password = forms.required
+    else if (values.password.length < 8) next.password = auth.passwordHelper
     setErrors(next)
     if (Object.keys(next).length) return
 
@@ -50,19 +53,18 @@ export default function Signup() {
         setStatus('confirm')
       }
       // Otherwise the auth listener + redirect effect take it from here.
-    } catch (error) {
+    } catch {
+      // Supabase's own message names whether the address is already taken,
+      // which is an account's existence handed to whoever asked.
       setStatus('error')
-      setErrorBody(error?.message || 'Could not create your account.')
+      setErrorBody(copy.failed)
     }
   }
 
   if (status === 'confirm') {
     return (
       <AuthShell>
-        <FormSuccess
-          heading="Check your email"
-          body="We sent you a confirmation link. Click it to finish setting up your account."
-        />
+        <FormSuccess heading={copy.sentHeading} body={copy.sentBody} />
       </AuthShell>
     )
   }
@@ -70,29 +72,29 @@ export default function Signup() {
   return (
     <AuthShell>
       <AuthCard
-        title="Create account"
-        subtitle="Join the DeluxFit community. Members get the full library and one-on-one coaching."
-        footerLinks={[{ href: '/login', label: 'Already a Member? Sign In' }]}
+        title={copy.title}
+        subtitle={copy.subtitle}
+        footerLinks={[{ href: '/login', label: copy.haveAccount }]}
       >
         <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <Field label="Full Name" error={errors.name}>
+          <Field label={auth.nameLabel} error={errors.name}>
             <Input
               value={values.name}
               onChange={handleChange('name')}
-              placeholder="First and last name"
+              placeholder={auth.namePlaceholder}
               autoComplete="name"
             />
           </Field>
-          <Field label="Email" error={errors.email}>
+          <Field label={auth.emailLabel} error={errors.email}>
             <Input
               type="email"
               value={values.email}
               onChange={handleChange('email')}
-              placeholder="you@example.com"
+              placeholder={auth.emailPlaceholder}
               autoComplete="email"
             />
           </Field>
-          <Field label="Password" helper="At least 8 characters" error={errors.password}>
+          <Field label={auth.passwordLabel} helper={auth.passwordHelper} error={errors.password}>
             <Input
               type="password"
               value={values.password}
@@ -106,17 +108,17 @@ export default function Signup() {
             {status === 'working' ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                Creating account…
+                {copy.submitting}
               </>
             ) : (
               <>
-                Create Account
+                {copy.submit}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </>
             )}
           </Button>
 
-          <FormError body={status === 'error' ? errorBody : undefined} />
+          <FormError className="mt-4" body={status === 'error' ? errorBody : undefined} />
         </form>
       </AuthCard>
     </AuthShell>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176" role="img" aria-label="A training week: four training days and three rest days, with each session's blocks stacked by the work they carry">
+  <title>A training week</title>
+  <!-- Drawn in the site's own palette, on no ground of its own: the plate takes
+       whatever surface it is placed on. A session is a stack rather than a bar,
+       because a session is a warm-up, the work, and the finisher, and the plate
+       should say that the way the program does. -->
+
+  <g fill="none" stroke="rgba(255,255,255,0.09)">
+    <rect x="0.5" y="32.5" width="319" height="128" rx="11.5"/>
+    <line x1="0" y1="96.5" x2="320" y2="96.5" stroke-dasharray="2 4"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="9" font-weight="700" letter-spacing="1.4" fill="#86817f" text-anchor="middle">
+    <text x="27" y="16">MON</text>
+    <text x="72" y="16">TUE</text>
+    <text x="117" y="16">WED</text>
+    <text x="162" y="16">THU</text>
+    <text x="207" y="16">FRI</text>
+    <text x="252" y="16">SAT</text>
+    <text x="297" y="16">SUN</text>
+  </g>
+
+  <!-- Monday: the work in the accent, the warm-up and the finisher a step back. -->
+  <rect x="12" y="132" width="30" height="20" rx="5" fill="#81151d"/>
+  <rect x="12" y="72" width="30" height="56" rx="5" fill="#e11d2a"/>
+  <rect x="12" y="56" width="30" height="12" rx="5" fill="#bd1521"/>
+
+  <!-- Wednesday: the heaviest day of the week. -->
+  <rect x="102" y="132" width="30" height="20" rx="5" fill="#81151d"/>
+  <rect x="102" y="60" width="30" height="68" rx="5" fill="#e11d2a"/>
+  <rect x="102" y="44" width="30" height="12" rx="5" fill="#bd1521"/>
+
+  <!-- Thursday: the lighter session. -->
+  <rect x="147" y="132" width="30" height="20" rx="5" fill="#81151d"/>
+  <rect x="147" y="88" width="30" height="40" rx="5" fill="#e11d2a"/>
+
+  <!-- Saturday. -->
+  <rect x="237" y="132" width="30" height="20" rx="5" fill="#81151d"/>
+  <rect x="237" y="68" width="30" height="60" rx="5" fill="#e11d2a"/>
+  <rect x="237" y="52" width="30" height="12" rx="5" fill="#bd1521"/>
+
+  <!-- Rest days: present, and quiet. -->
+  <g fill="#26262c">
+    <rect x="57" y="132" width="30" height="20" rx="5"/>
+    <rect x="192" y="132" width="30" height="20" rx="5"/>
+    <rect x="282" y="132" width="30" height="20" rx="5"/>
+  </g>
+  <g fill="#1b1b20">
+    <rect x="57" y="118" width="30" height="10" rx="5"/>
+    <rect x="192" y="118" width="30" height="10" rx="5"/>
+    <rect x="282" y="118" width="30" height="10" rx="5"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="8" font-weight="700" letter-spacing="1.2" fill="#86817f" text-anchor="middle">
+    <text x="72" y="174">REST</text>
+    <text x="207" y="174">REST</text>
+    <text x="297" y="174">REST</text>
+  </g>
+</svg>

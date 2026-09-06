@@ -1,3 +1,4 @@
+import { cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 
 /**
@@ -30,7 +31,10 @@ export default function SocialLinks({ size = 'md' }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className={`flex ${buttonSize} items-center justify-center rounded-df-full border border-df-border text-df-text-muted transition-colors hover:border-df-accent hover:text-df-accent-bright`}
+            className={cn(
+              'flex items-center justify-center rounded-df-full border border-df-border text-df-text-muted transition-colors duration-df-fast ease-df-out hover:border-df-accent hover:text-df-accent-bright',
+              buttonSize
+            )}
           >
             {Icon === 'tiktok' ? (
               <TikTokGlyph className={iconSize} />

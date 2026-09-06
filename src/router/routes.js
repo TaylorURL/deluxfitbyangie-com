@@ -39,7 +39,25 @@ const COMPONENTS = {
   '/terms': lazy(() => import('../pages/Terms')),
 }
 
-const ROUTES = ROUTE_PATHS.map(({ path }) => ({ path, component: COMPONENTS[path] }))
+/*
+ * Which shape the route's hero is, so the placeholder standing in for the chunk
+ * can be drawn in it. A hero with a price tile beside it bottom-aligns its text
+ * column to that tile, which puts the headline a few hundred pixels lower than
+ * a hero that runs full width — and a placeholder that ignores the difference
+ * moves the headline the moment the chunk lands.
+ */
+const HERO_SHAPE = {
+  '/membership': 'aside',
+  '/online-coaching': 'aside',
+  '/single-session': 'aside',
+  '/training': 'aside',
+}
+
+const ROUTES = ROUTE_PATHS.map(({ path }) => ({
+  path,
+  component: COMPONENTS[path],
+  hero: HERO_SHAPE[path] ?? 'wide',
+}))
 
 export const NOT_FOUND = lazy(() => import('../pages/NotFound'))
 

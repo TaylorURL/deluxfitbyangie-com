@@ -1,4 +1,4 @@
-import { useInView, useMotionValue, useSpring } from 'framer-motion'
+import { useInView, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import { useCallback, useEffect, useRef } from 'react'
 
 export default function CountUp({
@@ -14,6 +14,7 @@ export default function CountUp({
   onEnd,
 }) {
   const ref = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
   const motionValue = useMotionValue(direction === 'down' ? to : from)
 
   const damping = 20 + 40 * (1 / duration)
@@ -59,13 +60,18 @@ export default function CountUp({
     [maxDecimals, separator]
   )
 
+  // A reader who has asked for less motion wants the figure, not the journey
+  // to it, so the value is written once at its destination and the spring is
+  // never started.
   useEffect(() => {
-    if (ref.current) {
-      ref.current.textContent = formatValue(direction === 'down' ? to : from)
-    }
-  }, [from, to, direction, formatValue])
+    if (!ref.current) return
+    ref.current.textContent = formatValue(
+      prefersReducedMotion ? to : direction === 'down' ? to : from
+    )
+  }, [from, to, direction, formatValue, prefersReducedMotion])
 
   useEffect(() => {
+    if (prefersReducedMotion) return undefined
     if (isInView && startWhen) {
       if (typeof onStart === 'function') onStart()
 
@@ -85,9 +91,23 @@ export default function CountUp({
         clearTimeout(durationTimeoutId)
       }
     }
-  }, [isInView, startWhen, motionValue, direction, from, to, delay, onStart, onEnd, duration])
+    return undefined
+  }, [
+    isInView,
+    startWhen,
+    motionValue,
+    direction,
+    from,
+    to,
+    delay,
+    onStart,
+    onEnd,
+    duration,
+    prefersReducedMotion,
+  ])
 
   useEffect(() => {
+    if (prefersReducedMotion) return undefined
     const unsubscribe = springValue.on('change', latest => {
       if (ref.current) {
         ref.current.textContent = formatValue(latest)
@@ -95,7 +115,7 @@ export default function CountUp({
     })
 
     return () => unsubscribe()
-  }, [springValue, formatValue])
+  }, [springValue, formatValue, prefersReducedMotion])
 
   return <span className={className} ref={ref} />
 }
