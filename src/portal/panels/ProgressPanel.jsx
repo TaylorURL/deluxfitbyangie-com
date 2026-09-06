@@ -1,13 +1,27 @@
-import { useRef, useState } from 'react'
-import { ImageIcon, Loader2, Plus } from 'lucide-react'
-import { Button, Card, Field, Input, Textarea } from '@deluxfit/ds'
+import { useState } from 'react'
+import { ImageIcon, Loader2, Plus, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import {
+  Button,
+  DataTable,
+  DateField,
+  Field,
+  FileDrop,
+  MicroLabel,
+  NumberField,
+  Panel,
+  Stat,
+  Textarea,
+} from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import { getSignedUrl, logProgress, uploadProgressPhoto } from '@/lib/portalApi'
 import { toDateKey } from '@/lib/booking'
 import { FormError } from '@/components/forms/FormFeedback'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
-import Sparkline from './Sparkline'
+import Sparkline from '@/components/Sparkline'
+
+const MotionDiv = motion.div
 
 const MEASUREMENT_KEYS = ['waist', 'hips', 'chest', 'arms', 'thighs']
 
@@ -23,11 +37,19 @@ const emptyEntry = () => ({
   thighs: '',
 })
 
+/**
+ * Logging is the one thing a client does in here every week, so it is the one
+ * screen worth making fast. Every number is a stepper rather than a keypad —
+ * a weight moves half a pound from last week and a measurement moves a
+ * quarter inch, and both are a thumb tap rather than a keyboard that covers
+ * the form. The date defaults to today and offers yesterday, which between
+ * them are almost every entry ever made.
+ */
 export default function ProgressPanel({ progress, reloadProgress }) {
   const { portal } = useContent()
   const copy = portal.progress
   const { user } = useAuth()
-  const fileInputRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   const [open, setOpen] = useState(false)
   const [values, setValues] = useState(emptyEntry)
@@ -35,7 +57,7 @@ export default function ProgressPanel({ progress, reloadProgress }) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
 
-  const handleChange = key => event => setValues(prev => ({ ...prev, [key]: event.target.value }))
+  const set = key => value => setValues(prev => ({ ...prev, [key]: value }))
 
   const handleSave = async event => {
     event.preventDefault()
@@ -63,7 +85,6 @@ export default function ProgressPanel({ progress, reloadProgress }) {
       })
       setValues(emptyEntry())
       setFile(null)
-      if (fileInputRef.current) fileInputRef.current.value = ''
       setOpen(false)
       await reloadProgress()
     } catch (saveError) {
@@ -78,171 +99,212 @@ export default function ProgressPanel({ progress, reloadProgress }) {
     if (url) window.open(url, '_blank', 'noopener,noreferrer')
   }
 
-  const trend = progress
-    .filter(entry => entry.weight != null)
-    .map(entry => Number(entry.weight))
-    .reverse()
+  const weights = progress.filter(entry => entry.weight != null).map(entry => Number(entry.weight))
+  const trend = [...weights].reverse()
+  const delta = weights.length >= 2 ? Number((weights[0] - weights[1]).toFixed(1)) : null
+
+  // What was logged last time, so an empty field shows it as a ghost and the
+  // first nudge lands beside it rather than at zero. A placeholder rather than
+  // a value: a form that arrives pre-filled invites a save that records last
+  // week's numbers again.
+  const previous = progress[0]
+  const lastLogged = key => {
+    if (key === 'weight') return previous?.weight
+    if (key === 'bodyFat') return previous?.body_fat
+    return previous?.measurements?.[copy[`${key}Label`]]
+  }
+
+  const stepper = (key, { suffix, step, max }) => {
+    const last = lastLogged(key)
+    return (
+      <NumberField
+        value={values[key]}
+        onValueChange={set(key)}
+        step={step}
+        min={0}
+        max={max}
+        suffix={suffix}
+        startFrom={last}
+        placeholder={last != null ? String(last) : undefined}
+        decrementLabel={copy.decrease}
+        incrementLabel={copy.increase}
+        aria-label={copy[`${key}Label`]}
+      />
+    )
+  }
 
   return (
     <section>
       <PanelHeading
-        eyebrow={portal.nav.progress}
         title={copy.title}
+        count={progress.length || undefined}
         actions={
-          <Button type="button" variant="outline" size="md" onClick={() => setOpen(o => !o)}>
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            {copy.addEntry}
+          <Button
+            type="button"
+            variant={open ? 'ghost' : 'primary'}
+            size="md"
+            onClick={() => setOpen(value => !value)}
+          >
+            {open ? (
+              <>
+                <X aria-hidden="true" className="h-4 w-4" />
+                {copy.cancel}
+              </>
+            ) : (
+              <>
+                <Plus aria-hidden="true" className="h-4 w-4" />
+                {copy.addEntry}
+              </>
+            )}
           </Button>
         }
       />
 
-      {trend.length >= 2 && (
-        <Card variant="surface" className="mb-6">
-          <p className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-            {copy.trendTitle}
-          </p>
-          <div className="mt-3">
-            <Sparkline values={trend} />
-          </div>
-        </Card>
-      )}
-
-      {open && (
-        <Card variant="elevated" className="mb-6">
-          <form onSubmit={handleSave} className="flex flex-col gap-5">
-            <div className="grid gap-5 sm:grid-cols-3">
-              <Field label={copy.dateLabel}>
-                <Input type="date" value={values.entryDate} onChange={handleChange('entryDate')} />
-              </Field>
-              <Field label={copy.weightLabel}>
-                <Input
-                  type="number"
-                  inputMode="decimal"
-                  value={values.weight}
-                  onChange={handleChange('weight')}
-                  placeholder="0"
-                />
-              </Field>
-              <Field label={copy.bodyFatLabel}>
-                <Input
-                  type="number"
-                  inputMode="decimal"
-                  value={values.bodyFat}
-                  onChange={handleChange('bodyFat')}
-                  placeholder="0"
-                />
-              </Field>
-            </div>
-
-            <fieldset>
-              <legend className="mb-3 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-                {copy.measurementsLabel}
-              </legend>
-              <div className="grid gap-5 sm:grid-cols-3 lg:grid-cols-5">
-                {MEASUREMENT_KEYS.map(key => (
-                  <Field key={key} label={copy[`${key}Label`]}>
-                    <Input
-                      type="number"
-                      inputMode="decimal"
-                      value={values[key]}
-                      onChange={handleChange(key)}
-                      placeholder="0"
-                    />
-                  </Field>
-                ))}
+      <AnimatePresence initial={false}>
+        {open && (
+          <MotionDiv
+            key="log-entry"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6"
+          >
+            <Panel as="form" onSubmit={handleSave} className="flex flex-col gap-6">
+              <div className="grid gap-5 sm:grid-cols-3">
+                <Field label={copy.dateLabel}>
+                  <DateField
+                    value={values.entryDate}
+                    onValueChange={set('entryDate')}
+                    shortcuts={[
+                      { label: copy.today, offset: 0 },
+                      { label: copy.yesterday, offset: -1 },
+                    ]}
+                  />
+                </Field>
+                <Field label={copy.weightLabel} optional optionalLabel={portal.optional}>
+                  {stepper('weight', { suffix: 'lb', step: 0.5, max: 999 })}
+                </Field>
+                <Field label={copy.bodyFatLabel} optional optionalLabel={portal.optional}>
+                  {stepper('bodyFat', { suffix: '%', step: 0.5, max: 100 })}
+                </Field>
               </div>
-            </fieldset>
 
-            <Field label={copy.notesLabel}>
-              <Textarea
-                value={values.notes}
-                onChange={handleChange('notes')}
-                placeholder={copy.notesPlaceholder}
-                rows={3}
-              />
-            </Field>
+              <fieldset className="min-w-0">
+                <MicroLabel as="legend" className="mb-3">
+                  {copy.measurementsLabel}
+                </MicroLabel>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {MEASUREMENT_KEYS.map(key => (
+                    <Field key={key} label={copy[`${key}Label`]}>
+                      {stepper(key, { suffix: 'in', step: 0.25, max: 200 })}
+                    </Field>
+                  ))}
+                </div>
+              </fieldset>
 
-            <Field label={copy.photoLabel}>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={event => setFile(event.target.files?.[0] ?? null)}
-                className="block w-full text-sm text-df-text-muted file:mr-4 file:rounded-df-sm file:border-0 file:bg-df-accent-soft file:px-4 file:py-2 file:text-[11px] file:font-700 file:uppercase file:tracking-[0.14em] file:text-df-accent-bright hover:file:bg-df-surface-3"
-              />
-              <p className="mt-2 text-xs text-df-text-faint">{copy.photoHelper}</p>
-            </Field>
+              <Field label={copy.notesLabel} optional optionalLabel={portal.optional}>
+                <Textarea
+                  autoGrow
+                  rows={3}
+                  value={values.notes}
+                  onChange={event => set('notes')(event.target.value)}
+                  placeholder={copy.notesPlaceholder}
+                />
+              </Field>
 
-            <Button type="submit" size="md" disabled={saving} className="self-start">
-              {saving ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  {copy.saving}
-                </>
-              ) : (
-                copy.saveEntry
-              )}
-            </Button>
-            <FormError body={error} />
-          </form>
-        </Card>
+              <Field label={copy.photoLabel} helper={copy.photoHelper}>
+                <FileDrop
+                  file={file}
+                  onFileChange={setFile}
+                  label={copy.photoDrop}
+                  clearLabel={copy.removePhoto}
+                />
+              </Field>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <Button type="submit" size="md" disabled={saving}>
+                  {saving ? (
+                    <>
+                      <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+                      {copy.saving}
+                    </>
+                  ) : (
+                    copy.saveEntry
+                  )}
+                </Button>
+                <Button type="button" variant="ghost" size="md" onClick={() => setOpen(false)}>
+                  {copy.cancel}
+                </Button>
+              </div>
+              <FormError className="mt-4" body={error} />
+            </Panel>
+          </MotionDiv>
+        )}
+      </AnimatePresence>
+
+      {trend.length >= 2 && (
+        <Panel elevation="flat" className="mb-6">
+          <div className="flex flex-wrap items-start justify-between gap-6">
+            <Stat
+              label={copy.trendTitle}
+              value={weights[0]}
+              unit="lb"
+              delta={delta}
+              deltaLabel={copy.sinceLast}
+              goodDirection="down"
+            />
+            <p className="text-[13px] tabular-nums text-df-text-faint">
+              {progress.length} {copy.entriesLogged}
+            </p>
+          </div>
+          <div className="mt-5">
+            <Sparkline values={trend} height={72} />
+          </div>
+        </Panel>
       )}
 
-      {progress.length === 0 ? (
-        <EmptyState body={copy.empty} />
-      ) : (
-        <div className="overflow-x-auto rounded-df-lg border border-df-border">
-          <table className="w-full border-collapse text-left text-sm">
-            <thead>
-              <tr className="border-b border-df-border bg-df-surface-2 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
-                <th scope="col" className="px-4 py-3">
-                  {copy.colDate}
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  {copy.colWeight}
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  {copy.colBodyFat}
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  {copy.colNotes}
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  {copy.photo}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {progress.map(entry => (
-                <tr
-                  key={entry.id}
-                  className="hover:bg-df-surface/40 border-b border-df-border text-df-text-muted transition-colors duration-150 ease-df-out last:border-0"
+      <DataTable
+        caption={copy.tableCaption}
+        rows={progress}
+        getRowKey={entry => entry.id}
+        empty={<EmptyState body={copy.empty} />}
+        columns={[
+          { key: 'entry_date', header: copy.colDate, primary: true },
+          {
+            key: 'weight',
+            header: copy.colWeight,
+            numeric: true,
+            render: entry => entry.weight ?? '—',
+          },
+          {
+            key: 'body_fat',
+            header: copy.colBodyFat,
+            numeric: true,
+            render: entry => entry.body_fat ?? '—',
+          },
+          { key: 'notes', header: copy.colNotes, render: entry => entry.notes ?? '—' },
+          {
+            key: 'photo',
+            header: copy.photo,
+            align: 'right',
+            render: entry =>
+              entry.photo_path ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleViewPhoto(entry.photo_path)}
                 >
-                  <td className="px-4 py-3 text-df-text">{entry.entry_date}</td>
-                  <td className="px-4 py-3">{entry.weight ?? '—'}</td>
-                  <td className="px-4 py-3">{entry.body_fat ?? '—'}</td>
-                  <td className="px-4 py-3">{entry.notes ?? '—'}</td>
-                  <td className="px-4 py-3">
-                    {entry.photo_path ? (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleViewPhoto(entry.photo_path)}
-                      >
-                        <ImageIcon className="h-4 w-4" aria-hidden="true" />
-                        {copy.viewPhoto}
-                      </Button>
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+                  <ImageIcon aria-hidden="true" className="h-4 w-4" />
+                  {copy.viewPhoto}
+                </Button>
+              ) : (
+                '—'
+              ),
+          },
+        ]}
+      />
     </section>
   )
 }

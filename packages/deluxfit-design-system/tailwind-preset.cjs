@@ -55,6 +55,8 @@ module.exports = {
           'border-strong': dfColor('border-strong'),
           'border-input': dfColor('border-input'),
           'border-hover': dfColor('border-hover'),
+          field: dfColor('field'),
+          'field-hover': dfColor('field-hover'),
           text: dfColor('text'),
           'text-muted': dfColor('text-muted'),
           'text-faint': dfColor('text-faint'),
@@ -73,6 +75,9 @@ module.exports = {
           overlay: dfColor('overlay'),
           'glass-fill': dfColor('glass-fill'),
           'glass-border': dfColor('glass-border'),
+          'chart-grid': dfColor('chart-grid'),
+          'chart-baseline': dfColor('chart-baseline'),
+          'chart-cursor': dfColor('chart-cursor'),
         },
       },
       fontFamily: {
@@ -95,49 +100,66 @@ module.exports = {
         'df-md': 'var(--df-shadow-md)',
         'df-lg': 'var(--df-shadow-lg)',
         'df-xl': 'var(--df-shadow-xl)',
-        'df-glow': 'var(--df-shadow-glow)',
         'df-glow-soft': 'var(--df-shadow-glow-soft)',
+        'df-key': 'var(--df-key-lift)',
+        'df-key-soft': 'var(--df-key-lift-soft)',
+        'df-ring': 'var(--df-ring)',
+        'df-accent': 'var(--df-shadow-accent)',
+      },
+      height: {
+        'df-bar': 'var(--df-bar-height)',
+        'df-tabbar': 'var(--df-tabbar-height)',
+        'df-control-sm': 'var(--df-control-h-sm)',
+        'df-control': 'var(--df-control-h-md)',
+        'df-control-lg': 'var(--df-control-h-lg)',
+      },
+      minHeight: {
+        'df-control-sm': 'var(--df-control-h-sm)',
+        'df-control': 'var(--df-control-h-md)',
+        'df-control-lg': 'var(--df-control-h-lg)',
+      },
+      maxWidth: {
+        'df-measure': 'var(--df-measure)',
+      },
+      transitionDuration: {
+        'df-fast': 'var(--df-duration-fast)',
+        'df-base': 'var(--df-duration-base)',
+        'df-slow': 'var(--df-duration-slow)',
       },
       transitionTimingFunction: {
         'df-out': 'cubic-bezier(0.22, 1, 0.36, 1)',
         'df-in-out': 'cubic-bezier(0.77, 0, 0.175, 1)',
       },
       zIndex: {
+        scrim: '1050',
         sticky: '1100',
         overlay: '1200',
         modal: '1300',
       },
       keyframes: {
-        'df-fade-up': {
-          from: { opacity: '0', transform: 'translateY(14px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        'df-pop-in': {
-          from: { opacity: '0', transform: 'scale(0.96)' },
-          to: { opacity: '1', transform: 'scale(1)' },
-        },
         'df-marquee': {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
-        'df-glow-pulse': {
-          '0%, 100%': { opacity: '0.55' },
-          '50%': { opacity: '1' },
+        /* The placeholder sweep. It travels on transform alone, which is what
+           keeps a screen of forty of them off the main thread. */
+        'df-shimmer': {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(100%)' },
         },
-        'df-acc-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'df-acc-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+        /* The first screen's own arrival. It travels without ever being
+           transparent, so the headline stays the paint the load is measured
+           by, and it runs off the compositor rather than off a frame loop -
+           which is what makes it arrive in a tab the browser has throttled. */
+        'df-rise': {
+          from: { transform: 'translateY(24px)' },
+          to: { transform: 'translateY(0)' },
         },
       },
       animation: {
-        'df-fade-up': 'df-fade-up 280ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
-        'df-pop-in': 'df-pop-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'df-marquee': 'df-marquee 28s linear infinite',
-        'df-glow-pulse': 'df-glow-pulse 3.2s ease-in-out infinite',
+        'df-shimmer': 'df-shimmer 1.6s cubic-bezier(0.22, 1, 0.36, 1) infinite',
+        'df-rise': 'df-rise 550ms cubic-bezier(0.22, 1, 0.36, 1) both',
       },
     },
   },

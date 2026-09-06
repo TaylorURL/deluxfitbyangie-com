@@ -30,7 +30,7 @@ export default function BrandLogo({ alt, inverted = true, className }) {
       alt={alt}
       draggable="false"
       className={cn(
-        'w-auto select-none',
+        'w-auto select-none object-contain',
         inverted ? '[filter:invert(1)_hue-rotate(180deg)]' : '[filter:invert(0)_hue-rotate(0deg)]',
         className
       )}

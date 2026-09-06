@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button, Field, Input } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
@@ -9,6 +10,8 @@ import { roleLandingPath } from '@/auth/roles'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
 export default function UpdatePassword() {
+  const { auth, forms } = useContent()
+  const copy = auth.update
   const { updatePassword, role } = useAuth()
   const { navigate } = useLocation()
   const [values, setValues] = useState({ password: '', confirm: '' })
@@ -24,10 +27,10 @@ export default function UpdatePassword() {
   const handleSubmit = async event => {
     event.preventDefault()
     const next = {}
-    if (!values.password) next.password = 'Required'
-    else if (values.password.length < 8) next.password = 'At least 8 characters'
-    if (!values.confirm) next.confirm = 'Required'
-    else if (values.confirm !== values.password) next.confirm = 'Passwords do not match'
+    if (!values.password) next.password = forms.required
+    else if (values.password.length < 8) next.password = auth.passwordHelper
+    if (!values.confirm) next.confirm = forms.required
+    else if (values.confirm !== values.password) next.confirm = copy.mismatch
     setErrors(next)
     if (Object.keys(next).length) return
 
@@ -36,22 +39,19 @@ export default function UpdatePassword() {
     try {
       await updatePassword({ password: values.password })
       setStatus('done')
-    } catch (error) {
+    } catch {
       setStatus('error')
-      setErrorBody(error?.message || 'Could not update your password.')
+      setErrorBody(copy.failed)
     }
   }
 
   if (status === 'done') {
     return (
       <AuthShell>
-        <FormSuccess
-          heading="Password updated"
-          body="You're signed in. Heading to your dashboard…"
-        />
+        <FormSuccess heading={copy.doneHeading} body={copy.doneBody} />
         <div className="mt-6">
           <Button onClick={() => navigate(roleLandingPath(role))} size="lg" block>
-            Continue
+            {copy.continueLabel}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
@@ -61,12 +61,9 @@ export default function UpdatePassword() {
 
   return (
     <AuthShell>
-      <AuthCard
-        title="Set new password"
-        subtitle="Pick something strong. You'll use it the next time you sign in."
-      >
+      <AuthCard title={copy.title} subtitle={copy.subtitle}>
         <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <Field label="New Password" helper="At least 8 characters" error={errors.password}>
+          <Field label={copy.newLabel} helper={auth.passwordHelper} error={errors.password}>
             <Input
               type="password"
               value={values.password}
@@ -75,7 +72,7 @@ export default function UpdatePassword() {
               autoComplete="new-password"
             />
           </Field>
-          <Field label="Confirm Password" error={errors.confirm}>
+          <Field label={copy.confirmLabel} error={errors.confirm}>
             <Input
               type="password"
               value={values.confirm}
@@ -89,17 +86,17 @@ export default function UpdatePassword() {
             {status === 'working' ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                Updating…
+                {copy.submitting}
               </>
             ) : (
               <>
-                Update Password
+                {copy.submit}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </>
             )}
           </Button>
 
-          <FormError body={status === 'error' ? errorBody : undefined} />
+          <FormError className="mt-4" body={status === 'error' ? errorBody : undefined} />
         </form>
       </AuthCard>
     </AuthShell>

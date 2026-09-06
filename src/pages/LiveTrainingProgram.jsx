@@ -1,28 +1,29 @@
-import { ArrowRight, Check } from 'lucide-react'
-import {
-  Badge,
-  Button,
-  Container,
-  Reveal,
-  Section,
-  SectionEyebrow,
-  SectionIndex,
-  SplitHeading,
-  StatBlock,
-} from '@deluxfit/ds'
+import { Container, Reveal, Section, SplitHeading, StatBlock } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import ServicePriceTile from '@/components/ServicePriceTile'
 import PhotoBand from '@/components/PhotoBand'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import BookingCalendar from '@/components/BookingCalendar'
-import AnimatedPrice from '@/components/AnimatedPrice'
-import { SpotlightCard } from '@/components/reactbits'
+import ArtPlate from '@/components/ArtPlate'
+
+/**
+ * The weekly figure is multiplied out of the session price rather than written
+ * beside it. The two were separate strings before, so moving the price left
+ * the week's total behind, still quoting the old one.
+ */
+const weeklyTotal = (price, sessions) => {
+  const [, symbol = '', amount] = String(price).match(/^(\D*)([\d.,]+)/) ?? []
+  if (!amount) return null
+  return `${symbol}${Number(amount.replace(/,/g, '')) * sessions}`
+}
 
 export default function LiveTrainingProgram() {
   const { training, services } = useContent()
   const service = services.liveProgram
+  const { sessionsPerWeek } = training.recommendation
+  const weekly = weeklyTotal(service.price, sessionsPerWeek)
 
   return (
     <>
@@ -33,7 +34,13 @@ export default function LiveTrainingProgram() {
         subhead={training.hero.subhead}
         primary={{ label: training.hero.primaryCta, href: training.hero.primaryCtaHref }}
         secondary={{ label: training.hero.secondaryCta, href: training.hero.secondaryCtaHref }}
-        aside={<ServicePriceTile service={service} />}
+        aside={
+          <ServicePriceTile
+            includes={service.includes}
+            note={service.recommendation}
+            service={service}
+          />
+        }
       />
 
       <PhotoBand
@@ -44,45 +51,50 @@ export default function LiveTrainingProgram() {
       />
 
       <IncludesGrid
-        eyebrow={training.includesEyebrow}
         heading={training.includesHeading}
         accent={training.includesAccent}
         items={training.includes}
       />
 
       <Section
-        eyebrow={training.recommendation.eyebrow}
         heading={training.recommendation.heading}
         accent={training.recommendation.accent}
-        index="02"
         containerSize="md"
       >
         <Reveal>
           <div className="grid grid-cols-1 gap-y-8 border-t border-df-border pt-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:pt-10 lg:grid-cols-3">
             <StatBlock
-              value={<AnimatedPrice value={service.price} />}
-              label="per session"
+              value={service.price}
+              label={training.recommendation.perSessionLabel}
               size="giant"
               align="left"
               accent
             />
             <StatBlock
-              value={<AnimatedPrice value="3" />}
-              label="sessions / week recommended"
+              value={sessionsPerWeek}
+              label={training.recommendation.sessionsLabel}
               size="giant"
               align="left"
             />
-            <StatBlock
-              value={<AnimatedPrice value="$150" />}
-              label="per week at 3 sessions"
-              size="giant"
-              align="left"
-              accent
+            {weekly && (
+              <StatBlock
+                value={weekly}
+                label={training.recommendation.weeklyLabel}
+                size="giant"
+                align="left"
+                accent
+              />
+            )}
+          </div>
+          <div className="mt-8 grid items-center gap-8 sm:grid-cols-[1.2fr_1fr] sm:gap-10">
+            <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
+              {training.recommendation.body}
+            </p>
+            <ArtPlate
+              src="/art/training-week.svg"
+              alt="A training week: four training days and three rest days"
             />
           </div>
-          <p className="mt-8 max-w-2xl text-base leading-relaxed text-df-text-muted sm:mt-10 sm:text-lg">
-            {training.recommendation.body}
-          </p>
         </Reveal>
       </Section>
 
@@ -96,21 +108,17 @@ export default function LiveTrainingProgram() {
         />
         <Container size="md">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <SectionIndex>03</SectionIndex>
-              <SectionEyebrow>{training.bookSection.eyebrow}</SectionEyebrow>
-            </div>
             <SplitHeading
               text={training.bookSection.heading}
               accent={training.bookSection.accent}
-              className="mt-5 text-[clamp(2rem,8vw,3.5rem)] leading-[0.95] sm:mt-6"
+              className="mt-5 sm:mt-6"
             />
             <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {training.bookSection.body}
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-8 sm:mt-10">
+          <Reveal delay={0.1} className="mt-8">
             <BookingCalendar service="live_program" />
           </Reveal>
         </Container>
@@ -118,50 +126,5 @@ export default function LiveTrainingProgram() {
 
       <ProgramsGrid id="programs" highlightServiceId="live-program" />
     </>
-  )
-}
-
-function ServicePriceTile({ service }) {
-  return (
-    <SpotlightCard
-      spotlightColor="var(--df-accent-wash-soft)"
-      className="!bg-df-surface/85 !rounded-df-2xl !border-df-border !p-6 shadow-df-xl backdrop-blur-xl sm:!p-8"
-    >
-      <Badge tone="accent" variant="soft" size="md" className="w-fit">
-        {service.eyebrow}
-      </Badge>
-      <p className="font-400 mt-4 font-display text-xl uppercase tracking-[0.02em] text-df-text-muted sm:mt-5">
-        {service.name}
-      </p>
-      <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-5 sm:pb-6">
-        <AnimatedPrice
-          value={service.price}
-          className="font-400 font-display text-[clamp(2.75rem,11vw,4.5rem)] tabular-nums leading-[0.82] text-df-text"
-        />
-        <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
-      </div>
-      <p className="mt-4 text-[11px] font-700 uppercase tracking-[0.22em] text-df-text-faint">
-        {service.recommendation}
-      </p>
-      <ul className="mt-6 flex flex-col gap-3">
-        {service.includes.map(feature => (
-          <li key={feature} className="flex items-start gap-3 text-sm text-df-text-muted">
-            <span
-              className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-df-full bg-df-accent-soft text-df-accent-bright"
-              aria-hidden="true"
-            >
-              <Check className="h-3 w-3" strokeWidth={3} />
-            </span>
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <Button asChild size="lg" block className="mt-7">
-        <Link href={service.ctaHref}>
-          {service.ctaLabel}
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </Button>
-    </SpotlightCard>
   )
 }

@@ -1,23 +1,12 @@
-import { ArrowRight, Check } from 'lucide-react'
-import {
-  Badge,
-  Button,
-  Container,
-  Reveal,
-  Section,
-  SectionEyebrow,
-  SectionIndex,
-  SplitHeading,
-} from '@deluxfit/ds'
+import { Container, Reveal, Section, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { Link } from '@/router'
 import PageHero from '@/components/PageHero'
+import ServicePriceTile from '@/components/ServicePriceTile'
 import PhotoBand from '@/components/PhotoBand'
+import ArtPlate from '@/components/ArtPlate'
 import IncludesGrid from '@/components/IncludesGrid'
 import ProgramsGrid from '@/components/ProgramsGrid'
 import OnlineCoachingApplicationForm from '@/components/forms/OnlineCoachingApplicationForm'
-import AnimatedPrice from '@/components/AnimatedPrice'
-import { SpotlightCard } from '@/components/reactbits'
 
 export default function OnlineCoaching() {
   const { coaching, services } = useContent()
@@ -38,7 +27,9 @@ export default function OnlineCoaching() {
           label: coaching.hero.secondaryCta,
           href: coaching.hero.secondaryCtaHref,
         }}
-        aside={<ServicePriceTile service={service} />}
+        aside={
+          <ServicePriceTile includes={service.includes.slice(0, 6)} recommended service={service} />
+        }
       />
 
       <PhotoBand
@@ -48,17 +39,23 @@ export default function OnlineCoaching() {
       />
 
       <IncludesGrid
-        eyebrow={coaching.includesEyebrow}
         heading={coaching.includesHeading}
         accent={coaching.includesAccent}
         items={coaching.includes}
-      />
+      >
+        <ArtPlate
+          src="/art/training-week.svg"
+          alt="A training week: four training days and three rest days"
+        />
+        <ArtPlate
+          src="/art/progression-block.svg"
+          alt="A twelve-week block: load rising in three waves, each starting above the last"
+        />
+      </IncludesGrid>
 
       <Section
-        eyebrow={coaching.communication.eyebrow}
         heading={coaching.communication.heading}
         accent={coaching.communication.accent}
-        index="02"
         containerSize="md"
       >
         <Reveal>
@@ -84,10 +81,8 @@ export default function OnlineCoaching() {
       </Section>
 
       <Section
-        eyebrow={coaching.bestFor.eyebrow}
         heading={coaching.bestFor.heading}
         accent={coaching.bestFor.accent}
-        index="03"
         containerSize="md"
       >
         <Reveal>
@@ -107,21 +102,17 @@ export default function OnlineCoaching() {
         />
         <Container size="md">
           <Reveal className="flex flex-col items-start">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <SectionIndex>04</SectionIndex>
-              <SectionEyebrow>{coaching.applicationSection.eyebrow}</SectionEyebrow>
-            </div>
             <SplitHeading
               text={coaching.applicationSection.heading}
               accent={coaching.applicationSection.accent}
-              className="mt-5 text-[clamp(2rem,8vw,3.5rem)] leading-[0.95] sm:mt-6"
+              className="mt-5 sm:mt-6"
             />
             <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {coaching.applicationSection.body}
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-8 sm:mt-10">
+          <Reveal delay={0.1} className="mt-8">
             <OnlineCoachingApplicationForm />
           </Reveal>
         </Container>
@@ -129,47 +120,5 @@ export default function OnlineCoaching() {
 
       <ProgramsGrid id="programs" highlightServiceId="coaching" />
     </>
-  )
-}
-
-function ServicePriceTile({ service }) {
-  return (
-    <SpotlightCard
-      spotlightColor="var(--df-accent-wash-strong)"
-      className="!bg-df-surface/85 !rounded-df-2xl !border-df-accent !p-6 shadow-df-glow-soft backdrop-blur-xl sm:!p-8"
-    >
-      <Badge tone="accent" variant="solid" size="md" className="w-fit">
-        {service.eyebrow}
-      </Badge>
-      <p className="font-400 mt-4 font-display text-xl uppercase tracking-[0.02em] text-df-text-muted sm:mt-5">
-        {service.name}
-      </p>
-      <div className="mt-4 flex items-end gap-2 border-b border-df-border pb-5 sm:pb-6">
-        <AnimatedPrice
-          value={service.price}
-          className="font-400 font-display text-[clamp(2.75rem,11vw,4.5rem)] tabular-nums leading-[0.82] text-df-text"
-        />
-        <span className="pb-2 text-sm text-df-text-faint">{service.period}</span>
-      </div>
-      <ul className="mt-6 flex flex-col gap-3">
-        {service.includes.slice(0, 6).map(feature => (
-          <li key={feature} className="flex items-start gap-3 text-sm text-df-text-muted">
-            <span
-              className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-df-full bg-df-accent text-df-on-accent"
-              aria-hidden="true"
-            >
-              <Check className="h-3 w-3" strokeWidth={3} />
-            </span>
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <Button asChild size="lg" block className="mt-7">
-        <Link href={service.ctaHref}>
-          {service.ctaLabel}
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </Button>
-    </SpotlightCard>
   )
 }

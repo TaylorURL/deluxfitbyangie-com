@@ -24,7 +24,6 @@ import {
   ShieldCheck,
   Users,
   Library,
-  Home,
   HandHeart,
   GraduationCap,
   HeartPulse,
@@ -44,7 +43,7 @@ const services = {
     id: 'membership',
     slug: 'membership',
     href: '/membership',
-    eyebrow: 'Service 01',
+    eyebrow: 'Membership',
     name: 'Delux Fit Membership',
     tagline: 'General fitness content for everyone, on your time.',
     price: '$14.99',
@@ -73,7 +72,7 @@ const services = {
     id: 'coaching',
     slug: 'online-coaching',
     href: '/online-coaching',
-    eyebrow: 'Service 02',
+    eyebrow: 'Online Coaching',
     name: 'Personalized Online Coaching',
     tagline: 'A program built around your goals and fitness level.',
     price: '$150',
@@ -104,7 +103,7 @@ const services = {
     id: 'single-session',
     slug: 'single-session',
     href: '/single-session',
-    eyebrow: 'Service 03',
+    eyebrow: 'Single Session',
     name: 'Single Live Training Session',
     tagline: 'A one-time private live session with Angie.',
     price: '$75',
@@ -128,7 +127,7 @@ const services = {
     id: 'live-program',
     slug: 'training',
     href: '/training',
-    eyebrow: 'Service 04',
+    eyebrow: 'Live Training',
     name: 'Live Online Personal Training Program',
     tagline: 'Ongoing live personal training, the closest thing to in-person.',
     price: '$50',
@@ -252,6 +251,9 @@ const en = {
   ],
 
   header: {
+    programs: 'Programs',
+    programsPanelLabel: 'The Programs',
+    menu: 'Menu',
     primaryCta: 'Apply Now',
     primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Client Login',
@@ -277,12 +279,86 @@ const en = {
     switchToSpanish: 'Switch to Spanish',
   },
 
+  forms: {
+    required: 'Required',
+    invalidEmail: 'Enter a valid email',
+    pickOne: 'Choose an option',
+    optional: 'Optional',
+    confirm: 'Please confirm to continue',
+  },
+
+  notFound: {
+    eyebrow: '404',
+    heading: 'Page not found.',
+    accent: 'not found',
+    body: 'The page you’re looking for doesn’t exist. Head back to the home page and try the navigation from there.',
+    cta: 'Back to Home',
+  },
+
+  gallery: {
+    heading: 'Real reps. Real grit.',
+    accent: 'grit',
+    subhead:
+      'Studio portraits and gym sessions from the DeluxFit shoot, the same energy Angie brings to every program.',
+  },
+
+  auth: {
+    emailLabel: 'Email',
+    emailPlaceholder: 'you@example.com',
+    passwordLabel: 'Password',
+    passwordHelper: 'At least 8 characters',
+    nameLabel: 'Full Name',
+    namePlaceholder: 'First and last name',
+    login: {
+      title: 'Sign in',
+      subtitle: 'Welcome back. Pick up right where you left off.',
+      submit: 'Sign In',
+      submitting: 'Signing in…',
+      failed: 'Could not sign in. Check the email and password and try again.',
+      createAccount: 'Create an Account',
+      forgotPassword: 'Forgot Password?',
+    },
+    signup: {
+      title: 'Create account',
+      subtitle:
+        'Join the DeluxFit community. Members get the full library and one-on-one coaching.',
+      submit: 'Create Account',
+      submitting: 'Creating your account…',
+      failed: 'Could not create your account. Check the details and try again.',
+      haveAccount: 'Already a Member? Sign In',
+      sentHeading: 'Check your email',
+      sentBody: 'We sent you a confirmation link. Click it to finish setting up your account.',
+    },
+    reset: {
+      title: 'Reset password',
+      subtitle: 'Enter the email on your account and we’ll send you a reset link.',
+      submit: 'Send Reset Link',
+      submitting: 'Sending…',
+      failed: 'Could not send the reset link. Try again in a moment.',
+      backToSignIn: 'Back to Sign In',
+      sentHeading: 'Check your email',
+      sentBody: 'If an account exists for that address, you’ll get a reset link in a minute.',
+    },
+    update: {
+      title: 'Set new password',
+      subtitle: 'Pick something strong. You’ll use it the next time you sign in.',
+      newLabel: 'New Password',
+      confirmLabel: 'Confirm Password',
+      submit: 'Save Password',
+      submitting: 'Saving…',
+      failed: 'Could not save the new password. Try again in a moment.',
+      mismatch: 'The two passwords do not match',
+      doneHeading: 'Password updated',
+      doneBody: 'You’re signed in. Heading to your dashboard…',
+      continueLabel: 'Continue',
+    },
+  },
+
   services,
 
   home: {
     hero: {
       badge: 'Now coaching new online clients',
-      slogan: 'DISCIPLINE OVER EXCUSES',
       headline: ['Discipline over', 'excuses.'],
       subhead:
         'Memberships, personalized online coaching, and live 1-on-1 training with certified personal trainer Angie.',
@@ -290,16 +366,18 @@ const en = {
       primaryCtaHref: '#programs',
       secondaryCta: 'Apply for Coaching',
       secondaryCtaHref: '/online-coaching#apply',
-      trust: {
-        pillarValue: '1:1',
-        pillarLabel: 'personalized coaching',
-        tagline: 'Membership · Coaching · Live Training',
-      },
       imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
     },
 
+    marquee: [
+      'Personalized programming',
+      'Live 1-on-1 coaching',
+      'Strength, fat loss, muscle gain',
+      'Coaching from a certified trainer',
+      'Home or gym',
+    ],
+
     intro: {
-      eyebrow: 'Meet Angie',
       heading: 'A coach who builds the program around the person, not the other way around.',
       accent: 'around the person',
       body: [
@@ -309,14 +387,6 @@ const en = {
       ctaLabel: 'Read My Story',
       ctaHref: '/about',
       imageAlt: 'Angie coaching a client through a leg-press set',
-    },
-
-    servicesSection: {
-      eyebrow: 'Choose how we work together',
-      heading: 'Four ways to train with DeluxFit by Angie.',
-      accent: 'Four ways',
-      subhead:
-        'A general membership, personalized online coaching, a single live session, or an ongoing live training program, pick the level of support that fits where you are right now.',
     },
 
     transformationCallout: {
@@ -349,7 +419,6 @@ const en = {
     },
 
     closing: {
-      eyebrow: 'Ready to start?',
       heading: 'Pick the program that fits where you are.',
       accent: 'fits where you are',
       subhead:
@@ -364,20 +433,18 @@ const en = {
   about: {
     hero: {
       eyebrow: 'About Angie',
-      heading:
-        'Hi, I’m Angie, and I built DeluxFit to coach people the way I always wanted to be coached.',
-      accent: 'coach people the way I always wanted to be coached',
-      tagline: 'Certified Personal Trainer · Online & Live',
+      heading: 'The coach I always wanted.',
+      accent: 'always wanted',
+      subhead:
+        'I am Angie, a certified personal trainer. I built DeluxFit to coach people the way I wished someone had coached me.',
       imageAlt: 'Angie coaching a client through a leg-press set',
     },
     mission: {
-      eyebrow: 'The mission',
       heading: 'Discipline over excuses.',
       accent: 'over excuses',
       body: 'Delux Fit helps clients achieve their fitness goals through discipline, accountability, education, and personalized coaching.',
     },
     story: {
-      eyebrow: 'My story',
       heading: 'Training changed more than my body.',
       accent: 'more than my body',
       paragraphs: [
@@ -401,7 +468,6 @@ const en = {
       ],
     },
     philosophy: {
-      eyebrow: 'Coaching philosophy',
       heading: 'Personalized, professional, sustainable.',
       accent: 'sustainable',
       pillars: [
@@ -438,11 +504,11 @@ const en = {
   /* MEMBERSHIP — Service 01 · $14.99 / month */
   membership: {
     hero: {
-      eyebrow: 'Service 01 · Delux Fit Membership',
-      heading: 'General fitness content, built for self-guided training.',
-      accent: 'self-guided training',
+      eyebrow: 'Delux Fit Membership',
+      heading: 'Fitness content, on your own time.',
+      accent: 'on your own time',
       subhead:
-        'For $14.99 a month you get access to general (non-personalized) fitness content and educational resources designed for the public, workout programs, an exercise library, training videos, and more.',
+        'General training programs, an exercise library and fitness education, for $14.99 a month.',
       primaryCta: 'Sign Up for $14.99 a Month',
       primaryCtaHref: '#sign-up',
       secondaryCta: 'Compare Programs',
@@ -450,7 +516,6 @@ const en = {
     },
     notPersonalizedCallout:
       'This is an entry-level membership. The content is GENERAL and NOT personalized. For a program built around your goals, see Personalized Online Coaching.',
-    includesEyebrow: 'What’s included',
     includesHeading: 'Everything you need to train consistently.',
     includesAccent: 'train consistently',
     includes: [
@@ -506,34 +571,49 @@ const en = {
       },
     ],
     bestFor: {
-      eyebrow: 'Who it’s for',
       heading: 'Who is the Delux Fit membership for?',
       accent: 'membership for?',
       body: 'If you’re self-motivated and want a structured library to train from, the membership is the most affordable way to train with DeluxFit. For a personalized program built around your goals, see Online Coaching. For live, real-time sessions with Angie, see the Single Session or the Live Online Personal Training Program.',
     },
     signupSection: {
       id: 'sign-up',
-      eyebrow: 'Sign up',
       heading: 'Start the membership at $14.99 a month.',
       accent: '$14.99 / month',
       body: 'Sign up below to start your $14.99/month membership and unlock the general content library. Cancel anytime.',
+    },
+    signupForm: {
+      nameLabel: 'Full Name',
+      namePlaceholder: 'Your name',
+      emailLabel: 'Email',
+      emailPlaceholder: 'you@example.com',
+      notesLabel: 'Anything Angie should know?',
+      notesPlaceholder: 'Goals, schedule, equipment access',
+      notesHelper: 'It goes straight to Angie with your sign-up.',
+      submitLabel: 'Sign Up for $14.99 a Month',
+      submittingLabel: 'Starting checkout…',
+      required: 'Required',
+      invalidEmail: 'Enter a valid email',
+      successHeading: 'You’re on the list.',
+      successBody:
+        'Thanks for signing up. Angie will send your access details and onboarding info by email.',
+      errorBody: 'Please try again in a moment.',
+      followUp: 'Angie will follow up with your access details.',
     },
   },
 
   /* ONLINE COACHING — Service 02 · $150 / month */
   coaching: {
     hero: {
-      eyebrow: 'Service 02 · Personalized Online Coaching',
-      heading: 'Personalized online coaching, designed around you.',
-      accent: 'designed around you',
+      eyebrow: 'Personalized Online Coaching',
+      heading: 'Coaching designed around you.',
+      accent: 'around you',
       subhead:
-        'For $150 a month you get customized coaching built around your goals and fitness level, a personalized plan, monthly reviews, progress tracking, and direct messaging with Angie through the platform.',
+        'A plan built for your goals, monthly reviews, progress tracking, and direct messaging with Angie.',
       primaryCta: 'Apply Now',
       primaryCtaHref: '#apply',
       secondaryCta: 'Compare Programs',
       secondaryCtaHref: '/#programs',
     },
-    includesEyebrow: 'What’s included',
     includesHeading: 'Everything you need, built around you, adjusted as you progress.',
     includesAccent: 'adjusted as you progress',
     includes: [
@@ -592,7 +672,6 @@ const en = {
       },
     ],
     communication: {
-      eyebrow: 'How we communicate',
       heading: 'All communication happens inside the Delux Fit platform.',
       accent: 'inside the Delux Fit platform',
       body: 'There is no personal phone access. You message Angie directly through the platform, and she responds within up to 72 business hours.',
@@ -603,14 +682,12 @@ const en = {
       ],
     },
     bestFor: {
-      eyebrow: 'Who it’s for',
       heading: 'Who is online coaching for?',
       accent: 'online coaching for?',
       body: 'If you want a program built specifically for you that you can follow on your own time, with monthly coaching from Angie, Online Coaching is the fit. If you also want live, real-time coaching, add a Single Session or the Live Online Personal Training Program.',
     },
     applicationSection: {
       id: 'apply',
-      eyebrow: 'Apply for coaching',
       heading: 'Tell Angie about your goals.',
       accent: 'your goals',
       body: 'Fill out the application below. Angie reviews every application personally and follows up with next steps for onboarding before any payment is taken.',
@@ -653,8 +730,9 @@ const en = {
         },
         availability: {
           label: 'How many days per week can you train?',
-          placeholder: 'e.g. 3-4 days',
           required: true,
+          options: ['1-2', '3-4', '5-6', '7'],
+          unit: 'days a week',
         },
         notes: {
           label: 'Anything else Angie should know?',
@@ -672,17 +750,15 @@ const en = {
   /* SINGLE LIVE TRAINING SESSION — Service 03 · $75 / session */
   session: {
     hero: {
-      eyebrow: 'Service 03 · Single Live Training Session',
-      heading: 'A one-time live session, try Delux Fit before you commit.',
+      eyebrow: 'Single Live Training Session',
+      heading: 'One live session, before you commit.',
       accent: 'before you commit',
-      subhead:
-        '$75 per session, 45-60 minutes. A one-time private live virtual session with Angie, perfect for trying Delux Fit, learning proper technique, form correction, motivation, Q&A, and a personalized workout experience.',
+      subhead: 'A private virtual session with Angie, 45 to 60 minutes, for $75.',
       primaryCta: 'Book a Session',
       primaryCtaHref: '#book',
       secondaryCta: 'Compare Programs',
       secondaryCtaHref: '/#programs',
     },
-    perfectForEyebrow: 'Perfect for',
     perfectForHeading: 'One private session, built entirely around you.',
     perfectForAccent: 'around you',
     perfectFor: [
@@ -693,16 +769,8 @@ const en = {
       { icon: MessageSquare, title: 'Q&A' },
       { icon: Dumbbell, title: 'A personalized workout experience' },
     ],
-    sessionDetails: {
-      eyebrow: 'Session details',
-      length: '45-60 minutes',
-      price: '$75 per session',
-      bestFor:
-        'A one-time private live virtual session with Angie. No commitment, book a single session and experience Delux Fit firsthand.',
-    },
     bookSection: {
       id: 'book',
-      eyebrow: 'Book a session',
       heading: 'Pick a date and time and train with Angie live.',
       accent: 'train with Angie live',
       body: 'Select a date, a time, your training focus, and your fitness goal below. Your appointment is booked through the calendar and confirmed automatically.',
@@ -712,17 +780,16 @@ const en = {
   /* LIVE ONLINE PERSONAL TRAINING PROGRAM — Service 04 · $50 / session */
   training: {
     hero: {
-      eyebrow: 'Service 04 · Live Online Personal Training Program',
-      heading: 'Ongoing live training, the closest thing to in-person.',
-      accent: 'closest thing to in-person',
+      eyebrow: 'Live Online Training Program',
+      heading: 'The closest thing to in-person.',
+      accent: 'in-person',
       subhead:
-        '$50 per session. Ongoing live personal training over Zoom with Angie present for the entire session, live coaching, real-time corrections, accountability, and a personalized workout structure every time.',
+        'Ongoing live training over Zoom, with Angie present for the whole session, at $50 a session.',
       primaryCta: 'Get Started',
       primaryCtaHref: '#book',
       secondaryCta: 'Compare Programs',
       secondaryCtaHref: '/#programs',
     },
-    includesEyebrow: 'What’s included',
     includesHeading: 'Live coaching, on Zoom, in real time.',
     includesAccent: 'in real time',
     includes: [
@@ -754,21 +821,16 @@ const en = {
       },
     ],
     recommendation: {
-      eyebrow: 'How often',
       heading: 'Recommended minimum 3 sessions per week.',
       accent: '3 sessions per week',
       body: 'For the best results we recommend a minimum of 3 sessions per week. Example: 3 sessions/week = $150/week. This is ongoing, the closest experience to in-person training, from anywhere.',
-    },
-    sessionDetails: {
-      eyebrow: 'Program details',
-      length: 'Ongoing, book as many sessions as you need',
-      price: '$50 per session',
-      bestFor:
-        'Best for clients who want hands-on, live coaching and direct interaction during every workout, on an ongoing basis.',
+      perSessionLabel: 'per session',
+      sessionsPerWeek: 3,
+      sessionsLabel: 'sessions a week recommended',
+      weeklyLabel: 'a week at that pace',
     },
     bookSection: {
       id: 'book',
-      eyebrow: 'Book sessions',
       heading: 'Pick your times and train with Angie live.',
       accent: 'train with Angie live',
       body: 'Select a date, a time, your training focus, and your fitness goal below. Book one session or several across the week, we recommend a minimum of 3 per week.',
@@ -827,11 +889,11 @@ const en = {
       heading: 'Real clients, real progress.',
       accent: 'real progress',
       subhead:
-        'Client success stories, reviews, and transformation photos are published here as Angie’s clients finish their programs, in their own words, with their permission.',
+        'Stories are published here as clients finish their programs, in their own words and with their permission.',
     },
+    marquee: ['Real results', 'Real grit', 'Discipline over excuses', 'Earned, not claimed'],
     storiesNote:
       'Every quote on this page belongs to a client who finished a program. Nothing here is written on their behalf.',
-    storiesEyebrow: 'Client stories',
     storiesHeading: 'What clients say.',
     storiesAccent: 'clients say',
     storiesEmpty: {
@@ -856,10 +918,15 @@ const en = {
       heading: 'Get in touch with Angie.',
       accent: 'with Angie',
       subhead:
-        'Questions about the membership, online coaching, or live training? Send a message below, Angie reads and responds to every one personally. (Active coaching clients communicate inside the Delux Fit platform.)',
+        'Questions about the membership, coaching or live training? Send a message and Angie answers it personally.',
     },
-    socialEyebrow: 'Follow along',
+    formHeading: 'Tell Angie what you’d like to talk about.',
+    formAccent: 'talk about',
     socialHeading: 'Social',
+    socialBody:
+      'Angie posts coaching tips, workouts, and behind-the-scenes content across these channels.',
+    directNote:
+      'Looking to sign up, apply for coaching, or book a 1-on-1 session? The fastest path is directly through the matching service page. Those forms route straight to Angie.',
     form: {
       submitLabel: 'Send Message',
       submittingLabel: 'Sending…',
@@ -894,7 +961,6 @@ const en = {
 
   /* PROGRAMS GRID — shared section used on Home + service pages */
   programs: {
-    eyebrow: 'Programs',
     heading: 'Pick the level of support that fits.',
     accent: 'level of support',
     subhead: 'Four ways to train. Every price and every inclusion is listed on the card.',
@@ -903,6 +969,7 @@ const en = {
   /* LEGAL — privacy and terms, one component renders both */
   legal: {
     lastUpdatedLabel: 'Last updated',
+    contactCta: 'Contact Angie',
     lastUpdated: 'February 2026',
     privacy: {
       eyebrow: 'Privacy',
@@ -994,6 +1061,11 @@ const en = {
   /* CLIENT PORTAL — member dashboard */
   portal: {
     backToSite: 'Back to Site',
+    sectionsLabel: 'Portal Sections',
+    more: 'More',
+    moreLabel: 'More Sections',
+    close: 'Close',
+    optional: 'Optional',
     backToHome: 'Back to DeluxFit',
     brandLockup: 'Client Portal',
     auth: {
@@ -1018,7 +1090,7 @@ const en = {
       genericError: 'Something went wrong. Please check your details and try again.',
     },
     nav: {
-      overview: 'Overview',
+      overview: 'Today',
       plan: 'My Plan',
       progress: 'Progress',
       nutrition: 'Nutrition',
@@ -1071,6 +1143,16 @@ const en = {
       colWeight: 'Weight',
       colBodyFat: 'Body Fat',
       colNotes: 'Notes',
+      cancel: 'Cancel',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      decrease: 'Decrease',
+      increase: 'Increase',
+      photoDrop: 'Add a progress photo',
+      removePhoto: 'Remove Photo',
+      entriesLogged: 'entries logged',
+      sinceLast: 'since last entry',
+      tableCaption: 'Every progress entry you have logged',
     },
     bookings: {
       title: 'Your sessions',
@@ -1078,6 +1160,7 @@ const en = {
       bookCta: 'Book a Session',
       upcoming: 'Upcoming',
       past: 'Past',
+      status: { pending: 'Pending', confirmed: 'Confirmed', canceled: 'Canceled' },
     },
     messages: {
       title: 'Messages with Angie',
@@ -1150,6 +1233,8 @@ const en = {
       startTracking: 'Start Tracking',
       viewProgress: 'View Progress',
       entries: 'entries logged',
+      daysAway: 'days away',
+      sinceLast: 'since last entry',
     },
     loading: 'Loading…',
     offlineNotice: 'The portal couldn’t reach the server. Some data may be unavailable right now.',

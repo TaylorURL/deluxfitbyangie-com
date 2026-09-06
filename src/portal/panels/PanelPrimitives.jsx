@@ -1,60 +1,8 @@
-import { Badge, Button } from '@deluxfit/ds'
-import { Link } from '@/router'
-
-export function PanelHeading({ eyebrow, title, intro, actions }) {
-  return (
-    <header className="mb-8 border-b border-df-border pb-6">
-      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-        <div className="min-w-0">
-          {eyebrow && (
-            <span className="inline-flex items-center gap-3 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
-              <span className="h-px w-7 bg-df-accent" aria-hidden="true" />
-              {eyebrow}
-            </span>
-          )}
-          <h2 className="font-400 mt-3 font-display text-[clamp(1.875rem,4vw,2.75rem)] uppercase leading-[0.95] tracking-tight text-df-text">
-            {title}
-            <span className="text-df-accent">.</span>
-          </h2>
-        </div>
-        {actions && <div className="flex shrink-0 items-center gap-3">{actions}</div>}
-      </div>
-      {intro && (
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-df-text-muted">{intro}</p>
-      )}
-    </header>
-  )
-}
-
-export function EmptyState({ title, body, ctaLabel, ctaHref }) {
-  return (
-    <div className="bg-df-surface/60 rounded-df-xl border border-dashed border-df-border-strong px-6 py-14 text-center sm:py-16">
-      <span aria-hidden="true" className="mx-auto mb-6 block h-px w-10 bg-df-accent" />
-      {title && (
-        <p className="font-400 font-display text-xl uppercase tracking-[0.02em] text-df-text sm:text-2xl">
-          {title}
-        </p>
-      )}
-      {body && (
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-df-text-muted">{body}</p>
-      )}
-      {ctaLabel && ctaHref && (
-        <Button asChild variant="outline" size="md" className="mt-7">
-          <Link href={ctaHref}>{ctaLabel}</Link>
-        </Button>
-      )}
-    </div>
-  )
-}
-
-export function StatusPill({ active, activeLabel, inactiveLabel }) {
-  return (
-    <Badge tone={active ? 'positive' : 'neutral'} variant={active ? 'soft' : 'outline'} size="md">
-      <span
-        aria-hidden="true"
-        className={`h-1.5 w-1.5 rounded-df-full ${active ? 'bg-df-positive' : 'bg-df-text-faint'}`}
-      />
-      {active ? activeLabel : inactiveLabel}
-    </Badge>
-  )
-}
+/**
+ * The panel header and the empty state used to live here, and the coach panel
+ * kept its own pair beside them — two headings at two sizes and two empty
+ * states with two different marks, for one application seen from two sides.
+ * Both now come from the design system; this file is the import path the
+ * portal already had.
+ */
+export { EmptyState, PanelHeading } from '@deluxfit/ds'

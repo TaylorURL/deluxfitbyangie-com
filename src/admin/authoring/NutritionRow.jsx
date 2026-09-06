@@ -1,5 +1,5 @@
 import { Pencil, Trash2, Utensils } from 'lucide-react'
-import { Badge, Button, cn } from '@deluxfit/ds'
+import { Badge, Button, MicroLabel, cn } from '@deluxfit/ds'
 import { StatusBadge, fmtDate } from '../components/AdminPrimitives'
 
 export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
@@ -16,10 +16,10 @@ export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
   return (
     <li
       className={cn(
-        'flex flex-col gap-4 rounded-df-md border p-4',
-        isActive
-          ? 'border-df-accent/40 bg-df-accent-soft/40'
-          : 'bg-df-surface-2/50 border-df-border'
+        'flex flex-col gap-4 rounded-df-md p-4',
+        // `bg-df-accent-soft` is already an alpha; putting a further /40 on it
+        // left the active row all but the same colour as the inactive one.
+        isActive ? 'bg-df-accent-softer shadow-df-glow-soft' : 'bg-df-surface-2 shadow-df-sm'
       )}
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -46,11 +46,11 @@ export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
                 ))}
               </div>
             )}
-            <p className="mt-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-faint">
+            <MicroLabel tone="faint" className="mt-2">
               {meals.length} {meals.length === 1 ? 'meal' : 'meals'}
               <span aria-hidden="true"> · </span>
               Created {fmtDate(plan.created_at)}
-            </p>
+            </MicroLabel>
           </div>
         </div>
 
@@ -92,14 +92,14 @@ export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
                 href={row.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-df-sm border border-df-border bg-df-surface px-3 py-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-muted transition-colors hover:border-df-border-strong hover:text-df-accent-bright"
+                className="inline-flex items-center gap-2 rounded-df-sm border border-df-border bg-df-surface px-3 py-2 text-[11px] font-700 uppercase tracking-[0.14em] text-df-text-muted transition-colors duration-df-fast ease-df-out hover:border-df-border-strong hover:text-df-accent-bright"
               >
                 {row.label || row.url}
               </a>
             ) : (
               <span
                 key={index}
-                className="inline-flex items-center gap-2 rounded-df-sm border border-df-border bg-df-surface px-3 py-2 text-[11px] font-600 uppercase tracking-[0.16em] text-df-text-muted"
+                className="inline-flex items-center gap-2 rounded-df-sm border border-df-border bg-df-surface px-3 py-2 text-[11px] font-700 uppercase tracking-[0.14em] text-df-text-muted"
               >
                 {row?.label}
               </span>

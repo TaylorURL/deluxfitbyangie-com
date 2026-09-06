@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { ArrowRight, Loader2 } from 'lucide-react'
-import { Button, Field, Input } from '@deluxfit/ds'
+import { ArrowRight, Loader2, Mail, User } from 'lucide-react'
+import { Button, Field, Input, Panel, Textarea } from '@deluxfit/ds'
+import { useContent } from '@/i18n'
 import { submitForm } from '@/lib/formSubmission'
 import { startCheckout } from '@/lib/payments'
 import { FormError, FormSuccess } from './FormFeedback'
@@ -14,6 +15,9 @@ const STATUS = { idle: 'idle', working: 'working', success: 'success', error: 'e
  * charge.
  */
 export default function MembershipSignupForm() {
+  const { membership, forms } = useContent()
+  const copy = membership.signupForm
+
   const [values, setValues] = useState({ name: '', email: '', notes: '' })
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState(STATUS.idle)
@@ -28,9 +32,9 @@ export default function MembershipSignupForm() {
   const handleSubmit = async event => {
     event.preventDefault()
     const nextErrors = {}
-    if (!values.name.trim()) nextErrors.name = 'Required'
-    if (!values.email.trim()) nextErrors.email = 'Required'
-    else if (!values.email.includes('@')) nextErrors.email = 'Enter a valid email'
+    if (!values.name.trim()) nextErrors.name = copy.required
+    if (!values.email.trim()) nextErrors.email = copy.required
+    else if (!values.email.includes('@')) nextErrors.email = copy.invalidEmail
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) return
 
@@ -45,7 +49,7 @@ export default function MembershipSignupForm() {
       setNotice(result.message)
       setStatus(STATUS.success)
     } catch (error) {
-      setErrorBody(error?.message || 'Please try again in a moment.')
+      setErrorBody(error?.message || copy.errorBody)
       setStatus(STATUS.error)
     }
   }
@@ -53,38 +57,33 @@ export default function MembershipSignupForm() {
   if (status === STATUS.success) {
     return (
       <FormSuccess
-        heading="You’re on the list."
-        body={
-          notice
-            ? `${notice} Angie will follow up with your access details.`
-            : 'Thanks for signing up. Angie will send your access details and onboarding info by email.'
-        }
+        heading={copy.successHeading}
+        body={notice ? `${notice} ${copy.followUp}` : copy.successBody}
       />
     )
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={handleSubmit}
-      className="rounded-df-2xl border border-df-border bg-df-surface p-5 shadow-df-lg sm:px-8 sm:py-9"
-    >
+    <Panel as="form" noValidate onSubmit={handleSubmit}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Full Name" error={errors.name}>
+        <Field label={copy.nameLabel} error={errors.name}>
           <Input
+            icon={User}
             value={values.name}
             onChange={handleChange('name')}
-            placeholder="Your name"
+            placeholder={copy.namePlaceholder}
             autoComplete="name"
             required
           />
         </Field>
-        <Field label="Email" error={errors.email}>
+        <Field label={copy.emailLabel} error={errors.email}>
           <Input
+            icon={Mail}
             type="email"
+            inputMode="email"
             value={values.email}
             onChange={handleChange('email')}
-            placeholder="you@example.com"
+            placeholder={copy.emailPlaceholder}
             autoComplete="email"
             required
           />
@@ -92,11 +91,19 @@ export default function MembershipSignupForm() {
       </div>
 
       <Field
-        label="Anything Angie should know? (optional)"
-        helper="Goals, schedule, equipment access. All optional."
+        label={copy.notesLabel}
+        helper={copy.notesHelper}
+        optional
+        optionalLabel={forms.optional}
         className="mt-5"
       >
-        <Input value={values.notes} onChange={handleChange('notes')} placeholder="Optional notes" />
+        <Textarea
+          autoGrow
+          rows={2}
+          value={values.notes}
+          onChange={handleChange('notes')}
+          placeholder={copy.notesPlaceholder}
+        />
       </Field>
 
       <Button
@@ -107,18 +114,18 @@ export default function MembershipSignupForm() {
       >
         {status === STATUS.working ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-            Starting checkout…
+            <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+            {copy.submittingLabel}
           </>
         ) : (
           <>
-            Sign Up for $14.99 a Month
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            {copy.submitLabel}
+            <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </>
         )}
       </Button>
 
-      <FormError body={status === STATUS.error ? errorBody : undefined} />
-    </form>
+      <FormError className="mt-4" body={status === STATUS.error ? errorBody : undefined} />
+    </Panel>
   )
 }

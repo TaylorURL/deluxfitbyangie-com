@@ -3,6 +3,7 @@ import { Container } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { useContent } from '@/i18n'
 import BrandLogo from '@/components/BrandLogo'
+import ShellAction from '@/components/ShellAction'
 import { useAuth } from '@/auth/useAuth'
 import { studioYear } from '@/lib/timezone'
 
@@ -23,43 +24,22 @@ export default function PortalShell({ children }) {
             <a
               href="/"
               aria-label={brand.fullName}
-              className="inline-flex shrink-0 items-center rounded-df-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-4 focus-visible:ring-offset-df-bg"
+              className="inline-flex shrink-0 items-center rounded-df-sm transition-opacity duration-df-fast ease-df-out hover:opacity-80"
             >
               <BrandLogo alt={brand.fullName} className="h-7 sm:h-10" />
             </a>
             <div className="flex items-center gap-2 sm:gap-3">
               {isStaff && (
-                <a
+                <ShellAction
+                  native
                   href="/admin"
-                  aria-label={header.adminAria}
-                  className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-accent bg-df-accent-softer px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-accent-bright transition-colors hover:bg-df-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-4 sm:tracking-[0.2em]"
-                >
-                  <ShieldCheck aria-hidden="true" className="h-4 w-4" />
-                  <span className="hidden sm:inline">{header.admin}</span>
-                </a>
-              )}
-              {user && (
-                <button
-                  type="button"
-                  onClick={signOut}
-                  aria-label={portal.auth.signOut}
-                  className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-4 sm:tracking-[0.2em]"
-                >
-                  <LogOut aria-hidden="true" className="h-4 w-4" />
-                  <span className="hidden sm:inline">{portal.auth.signOut}</span>
-                </button>
-              )}
-              <a
-                href="/"
-                aria-label={portal.backToSite}
-                className="group inline-flex h-11 items-center gap-2 rounded-df-sm border border-df-border-strong px-3 text-[11px] font-700 uppercase tracking-[0.18em] text-df-text-muted transition-colors hover:border-df-border-hover hover:bg-df-surface-2 hover:text-df-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg sm:px-4 sm:tracking-[0.2em]"
-              >
-                <ArrowLeft
-                  aria-hidden="true"
-                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+                  tone="accent"
+                  icon={ShieldCheck}
+                  label={header.admin}
                 />
-                <span className="hidden sm:inline">{portal.backToSite}</span>
-              </a>
+              )}
+              {user && <ShellAction onClick={signOut} icon={LogOut} label={portal.auth.signOut} />}
+              <ShellAction native href="/" icon={ArrowLeft} label={portal.backToSite} />
             </div>
           </div>
         </Container>

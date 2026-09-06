@@ -25,6 +25,11 @@ id_ed25519
 # Vercel CLI link state (project/org ids) is per-machine.
 .vercel
 
+# Agent tooling state: the dev-server launch config is per-machine, and the
+# worktrees live inside the checkout they were cut from.
+.claude/launch.json
+.claude/worktrees/
+
 # Windows folder metadata
 desktop.ini
 

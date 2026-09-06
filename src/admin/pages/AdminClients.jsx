@@ -29,8 +29,7 @@ export default function AdminClients() {
   return (
     <div className="grid gap-6">
       <SectionHeading
-        eyebrow="Clients"
-        title="Client hub."
+        title="Client hub"
         intro="Browse every client, drill into one, and manage their plan, nutrition, progress, and messages."
       />
 
@@ -66,7 +65,7 @@ export default function AdminClients() {
                     type="button"
                     onClick={() => setSelected(client.id)}
                     className={cn(
-                      'rounded-df-md border px-3 py-3 text-left transition',
+                      'rounded-df-md border px-3 py-3 text-left transition-colors duration-df-fast ease-df-out',
                       active
                         ? 'border-df-accent bg-df-accent-soft'
                         : 'border-transparent hover:border-df-border hover:bg-df-surface-2'

@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
+import { MicroLabel } from './MicroLabel'
 
 const VALUE_SIZE = {
   md: 'text-[clamp(2.5rem,6vw,3.5rem)]',
@@ -21,7 +22,11 @@ export const StatBlock = forwardRef(function StatBlock(
   return (
     <div
       ref={ref}
-      className={cn(align === 'center' ? 'text-center' : 'text-left', className)}
+      className={cn(
+        'flex flex-col gap-3',
+        align === 'center' ? 'items-center text-center' : 'items-start text-left',
+        className
+      )}
       {...props}
     >
       <div
@@ -33,14 +38,9 @@ export const StatBlock = forwardRef(function StatBlock(
       >
         {value}
       </div>
-      <div
-        className={cn(
-          'mt-3 text-[11px] font-600 uppercase tracking-[0.2em] text-df-text-muted',
-          size === 'giant' && 'sm:text-xs'
-        )}
-      >
+      <MicroLabel as="div" className={cn(size === 'giant' && 'sm:text-xs')}>
         {label}
-      </div>
+      </MicroLabel>
     </div>
   )
 })

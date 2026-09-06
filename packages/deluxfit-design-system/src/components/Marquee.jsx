@@ -2,6 +2,18 @@ import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 
 /**
+ * A strip of short labels travelling sideways, forever, with no visible seam.
+ *
+ * The list is drawn twice and the track moves exactly one list's width, so the
+ * moment the first copy leaves the frame the second is standing where it
+ * started — the loop has no join to notice. The second copy is `aria-hidden`,
+ * because a reader listening to the page should hear the labels once.
+ *
+ * It travels on a keyframe rather than on a frame loop, which is what lets the
+ * mask fade its ends without a repaint and what makes `animation-play-state`
+ * enough to stop it under the pointer. Under a reduced-motion preference it
+ * does not move at all; the labels are still there to read.
+ *
  * @param {object} props
  * @param {React.ReactNode[]} props.items
  */

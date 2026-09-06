@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BookOpen, ExternalLink, FileText, Loader2, PlayCircle } from 'lucide-react'
-import { Badge, Button, Card, cn } from '@deluxfit/ds'
+import { Badge, Button, Card, MicroLabel, SegmentedControl, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { getSignedUrl } from '@/lib/portalApi'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
@@ -125,12 +125,7 @@ function LibraryCard({ item, copy, coachingLabel }) {
 
   if (item.url) {
     return (
-      <a
-        href={item.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group block focus-visible:outline-none"
-      >
+      <a href={item.url} target="_blank" rel="noopener noreferrer" className="group block">
         {inner}
       </a>
     )
@@ -150,7 +145,7 @@ export default function LibraryPanel({ content, entitlements }) {
   if (!entitlements.hasMembership && !entitlements.hasCoaching) {
     return (
       <section>
-        <PanelHeading eyebrow={portal.nav.library} title={copy.title} />
+        <PanelHeading title={copy.title} />
         <EmptyState
           title={copy.gatedTitle}
           body={copy.gatedBody}
@@ -172,26 +167,15 @@ export default function LibraryPanel({ content, entitlements }) {
 
   return (
     <section>
-      <PanelHeading eyebrow={portal.nav.library} title={copy.title} intro={copy.intro} />
+      <PanelHeading title={copy.title} intro={copy.intro} />
 
-      <div className="mb-6 flex flex-wrap gap-2">
-        {filters.map(filter => (
-          <button
-            key={filter.id}
-            type="button"
-            aria-pressed={category === filter.id}
-            onClick={() => setCategory(filter.id)}
-            className={cn(
-              'inline-flex min-h-11 items-center rounded-df-full border px-4 text-[11px] font-700 uppercase tracking-[0.16em] transition-colors duration-150 ease-df-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-df-accent-bright focus-visible:ring-offset-2 focus-visible:ring-offset-df-bg active:translate-y-px',
-              category === filter.id
-                ? 'border-df-accent bg-df-accent text-df-on-accent'
-                : 'border-df-border-strong text-df-text-muted hover:border-df-border-hover hover:text-df-text'
-            )}
-          >
-            {filter.label}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        className="mb-6 sm:w-auto"
+        label={copy.title}
+        value={category}
+        onChange={setCategory}
+        options={filters.map(filter => ({ value: filter.id, label: filter.label }))}
+      />
 
       {visible.length === 0 ? (
         <EmptyState body={copy.empty} />
@@ -199,24 +183,22 @@ export default function LibraryPanel({ content, entitlements }) {
         <div className="flex flex-col gap-10">
           {groups.map(group => (
             <div key={group.key}>
-              <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
-                {group.program ?? copy.resourcesGroup}
-              </h3>
+              <SplitHeading as="h3" size="card" text={group.program ?? copy.resourcesGroup} />
               <div className="mt-4 flex flex-col gap-6">
                 {group.weeks.map(({ week, days }) => (
                   <div key={week ?? 'no-week'}>
                     {week != null && (
-                      <p className="text-[11px] font-700 uppercase tracking-[0.18em] text-df-accent-bright">
+                      <MicroLabel tone="accent">
                         {copy.weekLabel} {week}
-                      </p>
+                      </MicroLabel>
                     )}
                     <div className="mt-3 flex flex-col gap-5">
                       {days.map(({ day, items }) => (
                         <div key={day ?? 'no-day'}>
                           {day != null && (
-                            <p className="mb-3 text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-muted">
+                            <MicroLabel className="mb-3">
                               {copy.dayLabel} {day}
-                            </p>
+                            </MicroLabel>
                           )}
                           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             {items.map(item => (

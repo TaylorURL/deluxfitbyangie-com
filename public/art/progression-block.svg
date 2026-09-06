@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176" role="img" aria-label="A twelve-week block: load rising in three waves, each starting above the last and backing off before it climbs again">
+  <title>A twelve-week block</title>
+  <!-- Three waves of four weeks. Each backs off and starts again higher than the
+       one before, which is the shape of the thing and the reason a straight line
+       up is the wrong picture. Every week carries a lighter cap: the volume that
+       came off as the load went on. -->
+
+  <g stroke="rgba(255,255,255,0.09)" stroke-width="1">
+    <line x1="0" y1="152.5" x2="320" y2="152.5"/>
+    <line x1="0" y1="116.5" x2="320" y2="116.5" stroke-dasharray="2 4"/>
+    <line x1="0" y1="80.5" x2="320" y2="80.5" stroke-dasharray="2 4"/>
+    <line x1="0" y1="44.5" x2="320" y2="44.5" stroke-dasharray="2 4"/>
+  </g>
+
+  <!-- Wave one. -->
+  <g fill="#81151d">
+    <rect x="8" y="122" width="16" height="30" rx="4"/>
+    <rect x="32" y="110" width="16" height="42" rx="4"/>
+    <rect x="56" y="98" width="16" height="54" rx="4"/>
+    <rect x="80" y="130" width="16" height="22" rx="4"/>
+  </g>
+  <g fill="#47070c">
+    <rect x="8" y="114" width="16" height="8" rx="4"/>
+    <rect x="32" y="104" width="16" height="7" rx="3.5"/>
+    <rect x="56" y="93" width="16" height="6" rx="3"/>
+  </g>
+
+  <!-- Wave two, starting where wave one peaked. -->
+  <g fill="#bd1521">
+    <rect x="112" y="98" width="16" height="54" rx="4"/>
+    <rect x="136" y="86" width="16" height="66" rx="4"/>
+    <rect x="160" y="70" width="16" height="82" rx="4"/>
+    <rect x="184" y="110" width="16" height="42" rx="4"/>
+  </g>
+  <g fill="#81151d">
+    <rect x="112" y="90" width="16" height="8" rx="4"/>
+    <rect x="136" y="80" width="16" height="7" rx="3.5"/>
+    <rect x="160" y="65" width="16" height="6" rx="3"/>
+  </g>
+
+  <!-- Wave three. -->
+  <g fill="#e11d2a">
+    <rect x="216" y="70" width="16" height="82" rx="4"/>
+    <rect x="240" y="54" width="16" height="98" rx="4"/>
+    <rect x="264" y="30" width="16" height="122" rx="4"/>
+    <rect x="288" y="90" width="16" height="62" rx="4"/>
+  </g>
+  <g fill="#bd1521">
+    <rect x="216" y="62" width="16" height="8" rx="4"/>
+    <rect x="240" y="48" width="16" height="7" rx="3.5"/>
+    <rect x="264" y="25" width="16" height="6" rx="3"/>
+  </g>
+
+  <!-- The peak of each wave, marked. -->
+  <g fill="#fb5663">
+    <circle cx="64" cy="86" r="2.5"/>
+    <circle cx="168" cy="58" r="2.5"/>
+    <circle cx="272" cy="18" r="2.5"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="8" font-weight="700" letter-spacing="1.2" fill="#86817f">
+    <text x="8" y="170">WEEKS 1-4</text>
+    <text x="112" y="170">WEEKS 5-8</text>
+    <text x="216" y="170">WEEKS 9-12</text>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-import { Card } from '@deluxfit/ds'
+import { Card, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
@@ -13,7 +13,7 @@ export default function PlanPanel({ plans, entitlements }) {
 
   return (
     <section>
-      <PanelHeading eyebrow={portal.nav.plan} title={copy.title} />
+      <PanelHeading title={copy.title} />
       {plans.length === 0 ? (
         <EmptyState
           title={entitlements.hasCoaching ? undefined : copy.gatedTitle}
@@ -25,9 +25,7 @@ export default function PlanPanel({ plans, entitlements }) {
         <div className="flex flex-col gap-5">
           {plans.map(plan => (
             <Card key={plan.id} variant="surface">
-              <h3 className="font-400 font-display text-xl uppercase tracking-[0.01em] text-df-text">
-                {plan.title}
-              </h3>
+              <SplitHeading as="h3" size="card" text={plan.title} />
               {plan.summary && (
                 <p className="mt-2 text-[15px] leading-relaxed text-df-text-muted">
                   {plan.summary}
