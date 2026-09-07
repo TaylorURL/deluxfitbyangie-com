@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { submitForm } from '@/lib/formSubmission'
+import { submitForm } from '@/lib/api/formSubmission'
 
 const STATUS = {
   idle: 'idle',

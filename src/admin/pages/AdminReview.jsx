@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Field } from '@deluxfit/ds'
-import { listClients } from '@/lib/adminApi'
+import { listClients } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -9,7 +9,7 @@ import {
   SectionCard,
   SectionHeading,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 import ClientDetail from '../clients/ClientDetail'
 
 export default function AdminReview() {

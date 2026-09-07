@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 import { Dumbbell, Loader2, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
 import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
-import { deletePlan, getClientPlans, listClients, savePlan } from '@/lib/adminApi'
-import { useConfirm } from '@/components/ConfirmDialog'
+import { deletePlan, getClientPlans, listClients, savePlan } from '@/lib/api/adminApi'
+import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -14,7 +14,7 @@ import {
   clientLabel,
   fmtDate,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 
 /**
  * Every write goes through the staff-only `upsert-plan` edge function via the

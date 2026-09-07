@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { Input, cn } from '@deluxfit/ds'
-import { listClients } from '@/lib/adminApi'
+import { listClients } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -11,7 +11,7 @@ import {
   clientLabel,
   fmtDate,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 import ClientDetail from '../clients/ClientDetail'
 
 export default function AdminClients() {

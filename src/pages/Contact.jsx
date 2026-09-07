@@ -1,8 +1,8 @@
 import { Container, Reveal, Section, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import PageHero from '@/components/PageHero'
+import PageHero from '@/components/sections/PageHero'
 import ContactForm from '@/components/forms/ContactForm'
-import SocialLinks from '@/components/SocialLinks'
+import SocialLinks from '@/components/layout/SocialLinks'
 import { SpotlightCard } from '@/components/reactbits'
 
 export default function Contact() {

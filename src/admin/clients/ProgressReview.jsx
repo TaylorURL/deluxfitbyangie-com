@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ImageOff } from 'lucide-react'
 import { Badge, Card, MicroLabel, Skeleton } from '@deluxfit/ds'
-import { signedUrl } from '@/lib/adminApi'
-import Sparkline from '@/components/Sparkline'
-import { AdminEmpty, fmtDate } from '../components/AdminPrimitives'
+import { signedUrl } from '@/lib/api/adminApi'
+import Sparkline from '@/components/ui/Sparkline'
+import { AdminEmpty, fmtDate } from '../AdminPrimitives'
 
 // Each thumb resolves its own signed URL independently, so one slow or failed
 // photo never holds up the rest of the strip.

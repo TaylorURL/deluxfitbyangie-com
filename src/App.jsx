@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react'
-import SiteShell from './components/SiteShell'
-import RouteFallback from './components/RouteFallback'
+import SiteShell from './components/layout/SiteShell'
+import RouteFallback from './components/layout/RouteFallback'
 import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
 import { useContent, useLanguage } from './i18n'
 import { absoluteUrl, SITE_SHARE_IMAGE } from './config/site'
@@ -19,10 +19,10 @@ import { absoluteUrl, SITE_SHARE_IMAGE } from './config/site'
 const STANDALONE_ROUTES = [
   { path: '/portal', component: lazy(() => import('./portal/ClientPortal')) },
   { path: '/admin', component: lazy(() => import('./admin/AdminApp')) },
-  { path: '/login', component: lazy(() => import('./pages/Login')) },
-  { path: '/signup', component: lazy(() => import('./pages/Signup')) },
-  { path: '/reset-password', component: lazy(() => import('./pages/ResetPassword')) },
-  { path: '/update-password', component: lazy(() => import('./pages/UpdatePassword')) },
+  { path: '/login', component: lazy(() => import('./pages/auth/Login')) },
+  { path: '/signup', component: lazy(() => import('./pages/auth/Signup')) },
+  { path: '/reset-password', component: lazy(() => import('./pages/auth/ResetPassword')) },
+  { path: '/update-password', component: lazy(() => import('./pages/auth/UpdatePassword')) },
 ]
 
 function matchStandalone(pathname) {

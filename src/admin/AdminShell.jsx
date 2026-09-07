@@ -4,8 +4,8 @@ import { Container, MicroLabel, cn } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { Link, useLocation } from '@/router'
 import { useAuth } from '@/auth/useAuth'
-import BrandLogo from '@/components/BrandLogo'
-import ShellAction from '@/components/ShellAction'
+import BrandLogo from '@/components/layout/BrandLogo'
+import ShellAction from '@/components/layout/ShellAction'
 import { ADMIN_ROUTES, matchAdminRoute } from './routes'
 
 const MotionSpan = motion.span

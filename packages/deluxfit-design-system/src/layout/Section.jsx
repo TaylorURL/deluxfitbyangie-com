@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
 import { cn } from '../lib/cn'
 import { Container } from './Container'
-import { SectionEyebrow } from '../components/SectionEyebrow'
-import { SplitHeading } from '../components/SplitHeading'
-import { Reveal } from '../components/Reveal'
+import { SectionEyebrow } from '../components/typography/SectionEyebrow'
+import { SplitHeading } from '../components/typography/SplitHeading'
+import { Reveal } from '../components/motion/Reveal'
 
 /* The rhythm the hand-written sections already keep. `lg` used to run half
    again past it, which is why a page built from both read as two pages. */

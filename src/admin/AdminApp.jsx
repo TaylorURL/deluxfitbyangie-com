@@ -1,5 +1,5 @@
 import ProtectedRoute from '@/auth/ProtectedRoute'
-import { ConfirmProvider } from '@/components/ConfirmDialog'
+import { ConfirmProvider } from '@/components/ui/ConfirmDialog'
 import AdminShell from './AdminShell'
 
 export default function AdminApp() {
