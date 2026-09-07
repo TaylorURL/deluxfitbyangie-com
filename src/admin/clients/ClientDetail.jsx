@@ -8,7 +8,7 @@ import {
   getClientPlans,
   getClientProfile,
   getClientProgress,
-} from '@/lib/adminApi'
+} from '@/lib/api/adminApi'
 import {
   AdminEmpty,
   AdminLoading,
@@ -19,7 +19,7 @@ import {
   fmtDate,
   fmtDateTime,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 import { FormError } from '@/components/forms/FormFeedback'
 import ProgressReview from './ProgressReview'
 import CoachThread from './CoachThread'

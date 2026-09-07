@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Loader2, Pencil, Plus, Trash2, X } from 'lucide-react'
 import { Badge, Button, Card, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
-import { deleteNutrition, saveNutrition } from '@/lib/adminApi'
-import { useConfirm } from '@/components/ConfirmDialog'
+import { deleteNutrition, saveNutrition } from '@/lib/api/adminApi'
+import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
-import { AdminEmpty, StatusBadge, fmtDate } from '../components/AdminPrimitives'
+import { AdminEmpty, StatusBadge, fmtDate } from '../AdminPrimitives'
 
 const emptyForm = () => ({
   id: null,

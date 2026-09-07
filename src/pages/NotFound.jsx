@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Button, Container, Reveal, SectionEyebrow, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
-import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 import { DecryptedText } from '@/components/reactbits'
 
 export default function NotFound() {

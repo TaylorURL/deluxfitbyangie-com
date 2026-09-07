@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button, Card, MicroLabel } from '@deluxfit/ds'
-import { listAllBookings, listClients, updateBookingStatus } from '@/lib/adminApi'
+import { listAllBookings, listClients, updateBookingStatus } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import {
   SectionCard,
@@ -13,7 +13,7 @@ import {
   fmtDateTime,
   mapById,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 
 const SERVICE_LABEL = {
   single_session: 'Single Live Session',

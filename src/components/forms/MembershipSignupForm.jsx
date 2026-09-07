@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { ArrowRight, Loader2, Mail, User } from 'lucide-react'
 import { Button, Field, Input, Panel, Textarea } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { submitForm } from '@/lib/formSubmission'
-import { startCheckout } from '@/lib/payments'
+import { submitForm } from '@/lib/api/formSubmission'
+import { startCheckout } from '@/lib/api/payments'
 import { FormError, FormSuccess } from './FormFeedback'
 
 const STATUS = { idle: 'idle', working: 'working', success: 'success', error: 'error' }

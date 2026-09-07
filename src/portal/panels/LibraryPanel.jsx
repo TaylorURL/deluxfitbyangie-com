@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BookOpen, ExternalLink, FileText, Loader2, PlayCircle } from 'lucide-react'
 import { Badge, Button, Card, MicroLabel, SegmentedControl, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { getSignedUrl } from '@/lib/portalApi'
+import { getSignedUrl } from '@/lib/api/portalApi'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
 
 const MEDIA_ICON = { video: PlayCircle, article: BookOpen, pdf: FileText }

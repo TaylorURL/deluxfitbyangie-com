@@ -11,7 +11,7 @@ import {
   getPlans,
   getProfile,
   getProgressEntries,
-} from '@/lib/portalApi'
+} from '@/lib/api/portalApi'
 
 export function usePortalData() {
   const { user } = useAuth()

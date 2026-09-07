@@ -3,8 +3,8 @@ import { Container } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
-import BrandLogo from '@/components/BrandLogo'
-import ShellAction from '@/components/ShellAction'
+import BrandLogo from '@/components/layout/BrandLogo'
+import ShellAction from '@/components/layout/ShellAction'
 import { studioYear } from '@/lib/timezone'
 
 export default function AuthShell({ children }) {

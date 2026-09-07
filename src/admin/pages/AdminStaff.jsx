@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Loader2, Send } from 'lucide-react'
 import { Button, Field, Input, Panel, Select } from '@deluxfit/ds'
-import { inviteUser } from '@/lib/inviteApi'
-import { listStaff } from '@/lib/adminApi'
+import { inviteUser } from '@/lib/api/inviteApi'
+import { listStaff } from '@/lib/api/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   SectionCard,
@@ -12,7 +12,7 @@ import {
   clientLabel,
   fmtDate,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 
 /**
  * Every invite goes through the `invite-user` edge function, which checks that

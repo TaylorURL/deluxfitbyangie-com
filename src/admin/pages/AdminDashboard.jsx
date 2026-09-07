@@ -2,9 +2,9 @@ import { ArrowUpRight, CalendarClock, CreditCard, Dumbbell, Users } from 'lucide
 import { MicroLabel, Panel } from '@deluxfit/ds'
 import { Link } from '@/router'
 import { useAuth } from '@/auth/useAuth'
-import { listClients, listAllMemberships, listAllBookings } from '@/lib/adminApi'
+import { listClients, listAllMemberships, listAllBookings } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
-import { SectionCard, AdminLoading, MetricTile, useAsyncData } from '../components/AdminPrimitives'
+import { SectionCard, AdminLoading, MetricTile, useAsyncData } from '../AdminPrimitives'
 import { ADMIN_ROUTES } from '../routes'
 
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000

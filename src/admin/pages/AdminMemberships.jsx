@@ -1,8 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button, Field, Select } from '@deluxfit/ds'
-import { listAllMemberships, listClients, saveMembership, removeMembership } from '@/lib/adminApi'
-import { useConfirm } from '@/components/ConfirmDialog'
+import {
+  listAllMemberships,
+  listClients,
+  saveMembership,
+  removeMembership,
+} from '@/lib/api/adminApi'
+import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   SectionCard,
@@ -15,7 +20,7 @@ import {
   fmtDate,
   mapById,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 
 const PRODUCTS = ['membership', 'coaching']
 const STATUSES = ['active', 'canceled', 'past_due', 'incomplete']

@@ -1,11 +1,11 @@
 import { Container, Reveal, Section, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import PageHero from '@/components/PageHero'
-import ServicePriceTile from '@/components/ServicePriceTile'
-import PhotoBand from '@/components/PhotoBand'
-import ArtPlate from '@/components/ArtPlate'
-import IncludesGrid from '@/components/IncludesGrid'
-import ProgramsGrid from '@/components/ProgramsGrid'
+import PageHero from '@/components/sections/PageHero'
+import ServicePriceTile from '@/components/sections/ServicePriceTile'
+import PhotoBand from '@/components/media/PhotoBand'
+import ArtPlate from '@/components/media/ArtPlate'
+import IncludesGrid from '@/components/sections/IncludesGrid'
+import ProgramsGrid from '@/components/sections/ProgramsGrid'
 import OnlineCoachingApplicationForm from '@/components/forms/OnlineCoachingApplicationForm'
 
 export default function OnlineCoaching() {

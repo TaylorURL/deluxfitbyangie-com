@@ -5,7 +5,7 @@ import './index.css'
 import App from './App'
 import { LanguageProvider } from './i18n'
 import AuthProvider from './auth/AuthProvider'
-import ClickSparkLayer from '@/components/ClickSparkLayer'
+import ClickSparkLayer from '@/components/effects/ClickSparkLayer'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

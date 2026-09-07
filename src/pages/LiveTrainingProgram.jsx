@@ -1,12 +1,12 @@
 import { Container, Reveal, Section, SplitHeading, StatBlock } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import PageHero from '@/components/PageHero'
-import ServicePriceTile from '@/components/ServicePriceTile'
-import PhotoBand from '@/components/PhotoBand'
-import IncludesGrid from '@/components/IncludesGrid'
-import ProgramsGrid from '@/components/ProgramsGrid'
-import BookingCalendar from '@/components/BookingCalendar'
-import ArtPlate from '@/components/ArtPlate'
+import PageHero from '@/components/sections/PageHero'
+import ServicePriceTile from '@/components/sections/ServicePriceTile'
+import PhotoBand from '@/components/media/PhotoBand'
+import IncludesGrid from '@/components/sections/IncludesGrid'
+import ProgramsGrid from '@/components/sections/ProgramsGrid'
+import BookingCalendar from '@/components/forms/BookingCalendar'
+import ArtPlate from '@/components/media/ArtPlate'
 
 /**
  * The weekly figure is multiplied out of the session price rather than written

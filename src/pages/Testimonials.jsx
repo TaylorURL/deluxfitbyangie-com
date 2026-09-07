@@ -10,9 +10,9 @@ import {
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
-import PageHero from '@/components/PageHero'
-import PhotoBand from '@/components/PhotoBand'
-import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import PageHero from '@/components/sections/PageHero'
+import PhotoBand from '@/components/media/PhotoBand'
+import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 
 export default function Testimonials() {
   const { testimonials } = useContent()

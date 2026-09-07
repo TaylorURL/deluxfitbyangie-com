@@ -1,11 +1,11 @@
 import { Info } from 'lucide-react'
 import { Container, Reveal, Section, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import PageHero from '@/components/PageHero'
-import ServicePriceTile from '@/components/ServicePriceTile'
-import PhotoBand from '@/components/PhotoBand'
-import IncludesGrid from '@/components/IncludesGrid'
-import ProgramsGrid from '@/components/ProgramsGrid'
+import PageHero from '@/components/sections/PageHero'
+import ServicePriceTile from '@/components/sections/ServicePriceTile'
+import PhotoBand from '@/components/media/PhotoBand'
+import IncludesGrid from '@/components/sections/IncludesGrid'
+import ProgramsGrid from '@/components/sections/ProgramsGrid'
 import MembershipSignupForm from '@/components/forms/MembershipSignupForm'
 
 export default function Membership() {
