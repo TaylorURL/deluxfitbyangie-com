@@ -13,7 +13,7 @@ import { Link } from '@/router'
 import { formatDateTime } from '@/lib/datetime'
 import CountUp from '@/components/reactbits/CountUp'
 import { EmptyState } from './panels/PanelPrimitives'
-import Sparkline from '@/components/Sparkline'
+import Sparkline from '@/components/ui/Sparkline'
 
 const SERVICE_LABEL = {
   single_session: 'Single Live Session',

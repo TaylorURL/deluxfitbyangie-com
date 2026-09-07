@@ -15,11 +15,11 @@ import {
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
-import { getSignedUrl, logProgress, uploadProgressPhoto } from '@/lib/portalApi'
-import { toDateKey } from '@/lib/booking'
+import { getSignedUrl, logProgress, uploadProgressPhoto } from '@/lib/api/portalApi'
+import { toDateKey } from '@/lib/api/booking'
 import { FormError } from '@/components/forms/FormFeedback'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
-import Sparkline from '@/components/Sparkline'
+import Sparkline from '@/components/ui/Sparkline'
 
 const MotionDiv = motion.div
 

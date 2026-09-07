@@ -1,10 +1,10 @@
 import { Container, Reveal, Section, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import PageHero from '@/components/PageHero'
-import ServicePriceTile from '@/components/ServicePriceTile'
-import PhotoBand from '@/components/PhotoBand'
-import ProgramsGrid from '@/components/ProgramsGrid'
-import BookingCalendar from '@/components/BookingCalendar'
+import PageHero from '@/components/sections/PageHero'
+import ServicePriceTile from '@/components/sections/ServicePriceTile'
+import PhotoBand from '@/components/media/PhotoBand'
+import ProgramsGrid from '@/components/sections/ProgramsGrid'
+import BookingCalendar from '@/components/forms/BookingCalendar'
 import { SpotlightCard } from '@/components/reactbits'
 
 export default function SingleSession() {

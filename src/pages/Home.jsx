@@ -13,11 +13,11 @@ import {
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
-import FramedPhoto from '@/components/FramedPhoto'
+import FramedPhoto from '@/components/media/FramedPhoto'
 import { imageBox, imageSrcSet } from '@/lib/images'
-import PhotoGallery from '@/components/PhotoGallery'
-import ProgramsGrid from '@/components/ProgramsGrid'
-import AnimatedBackdrop from '@/components/AnimatedBackdrop'
+import PhotoGallery from '@/components/media/PhotoGallery'
+import ProgramsGrid from '@/components/sections/ProgramsGrid'
+import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 
 const HOME_GALLERY = [
   {

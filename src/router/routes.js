@@ -35,8 +35,8 @@ const COMPONENTS = {
   '/training': lazy(() => import('../pages/LiveTrainingProgram')),
   '/testimonials': lazy(() => import('../pages/Testimonials')),
   '/contact': lazy(() => import('../pages/Contact')),
-  '/privacy': lazy(() => import('../pages/Privacy')),
-  '/terms': lazy(() => import('../pages/Terms')),
+  '/privacy': lazy(() => import('../pages/legal/Privacy')),
+  '/terms': lazy(() => import('../pages/legal/Terms')),
 }
 
 /*

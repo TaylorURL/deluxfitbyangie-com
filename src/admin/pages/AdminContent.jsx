@@ -1,8 +1,14 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { CheckCircle2, FileUp, Loader2, Plus, Save, Upload, Users, X } from 'lucide-react'
 import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
-import { deleteContent, listClients, listContent, saveContent, uploadMedia } from '@/lib/adminApi'
-import { useConfirm } from '@/components/ConfirmDialog'
+import {
+  deleteContent,
+  listClients,
+  listContent,
+  saveContent,
+  uploadMedia,
+} from '@/lib/api/adminApi'
+import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -10,7 +16,7 @@ import {
   SectionCard,
   SectionHeading,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 import ContentRow from '../content/ContentRow'
 import ClientAssignList from '../content/ClientAssignList'
 import {

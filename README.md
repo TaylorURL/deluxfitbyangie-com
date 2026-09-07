@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.36.19-e11d2a?style=for-the-badge" alt="Version 2026.36.19" />
+  <img src="https://img.shields.io/badge/version-2026.37.0-e11d2a?style=for-the-badge" alt="Version 2026.37.0" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
@@ -151,13 +151,22 @@ deluxfitbyangie-com/
 ├── src/
 │   ├── router/                    Hand-rolled SPA router (path match + <Link>)
 │   ├── pages/                     Home, Membership, OnlineCoaching, SingleSession,
-│   │                              LiveTrainingProgram, About, Testimonials, Contact,
-│   │                              Privacy, Terms, auth
-│   ├── components/                Site chrome, forms, photo layouts, reactbits effects
+│   │                              LiveTrainingProgram, About, Testimonials, Contact
+│   │   ├── auth/                  Login, Signup, ResetPassword, UpdatePassword
+│   │   └── legal/                 LegalPage and the Privacy and Terms wrappers
+│   ├── components/
+│   │   ├── layout/                Site chrome: shell, header, footer, brand mark
+│   │   ├── sections/              Page-composition blocks: hero, grids, price tile
+│   │   ├── media/                 Photo layouts and the drawn art plates
+│   │   ├── forms/                 Funnel forms, the booking calendar, submit hook
+│   │   ├── effects/               Wrappers over the vendored canvas backdrops
+│   │   ├── ui/                    Shared primitives the DS does not carry
+│   │   └── reactbits/             Vendored reactbits.dev source
 │   ├── auth/                      Supabase Auth provider, protected routes, roles
 │   ├── portal/                    Signed-in member portal and its panels
 │   ├── admin/                     Staff-gated coach dashboard
-│   ├── lib/                       payments, booking, portal/admin APIs, image sources
+│   ├── lib/                       datetime, timezone, image sources, sparkline
+│   │   └── api/                   Supabase data layer: payments, booking, portal/admin
 │   ├── i18n/                      English + Spanish content trees
 │   └── config/supabase.js         Browser Supabase client
 ├── api/version.js                 Reports the commit the deployment was built from

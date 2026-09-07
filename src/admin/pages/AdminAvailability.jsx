@@ -7,7 +7,7 @@ import {
   removeAvailabilityOverride,
   saveAvailabilityOverride,
   saveStandingAvailability,
-} from '@/lib/adminApi'
+} from '@/lib/api/adminApi'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   SectionCard,
@@ -15,7 +15,7 @@ import {
   AdminEmpty,
   AdminLoading,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 
 const WEEKDAYS = [
   { value: 0, label: 'Sunday' },

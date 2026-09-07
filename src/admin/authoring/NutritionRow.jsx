@@ -1,6 +1,6 @@
 import { Pencil, Trash2, Utensils } from 'lucide-react'
 import { Badge, Button, MicroLabel, cn } from '@deluxfit/ds'
-import { StatusBadge, fmtDate } from '../components/AdminPrimitives'
+import { StatusBadge, fmtDate } from '../AdminPrimitives'
 
 export default function NutritionRow({ plan, onEdit, onDelete, busy }) {
   const isActive = plan.status === 'active'

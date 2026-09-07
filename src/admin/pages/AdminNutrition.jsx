@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 import { Loader2, Plus, Save, X } from 'lucide-react'
 import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
-import { deleteNutrition, getClientNutrition, listClients, saveNutrition } from '@/lib/adminApi'
-import { useConfirm } from '@/components/ConfirmDialog'
+import { deleteNutrition, getClientNutrition, listClients, saveNutrition } from '@/lib/api/adminApi'
+import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -12,7 +12,7 @@ import {
   SectionHeading,
   clientLabel,
   useAsyncData,
-} from '../components/AdminPrimitives'
+} from '../AdminPrimitives'
 import RepeatableSection from '../authoring/RepeatableSection'
 import NutritionRow from '../authoring/NutritionRow'
 

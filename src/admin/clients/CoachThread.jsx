@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Loader2, Paperclip, Send } from 'lucide-react'
 import { Button, Textarea, cn } from '@deluxfit/ds'
-import { sendCoachMessage, signedUrl, uploadMedia } from '@/lib/adminApi'
+import { sendCoachMessage, signedUrl, uploadMedia } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
-import { fmtDateTime } from '../components/AdminPrimitives'
+import { fmtDateTime } from '../AdminPrimitives'
 
 const isVideo = path => /\.(mp4|webm|mov|m4v)$/i.test(path || '')
 

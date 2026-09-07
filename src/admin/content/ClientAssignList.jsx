@@ -1,5 +1,5 @@
 import { Button, MicroLabel } from '@deluxfit/ds'
-import { clientLabel } from '../components/AdminPrimitives'
+import { clientLabel } from '../AdminPrimitives'
 
 // Per-client assignment is independent of entitlement — a client picked here
 // can view the item regardless of what they've paid for.
