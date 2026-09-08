@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@/auth/useAuth'
 import { useLanguage } from '@/i18n'
+import { previewContent, previewEntitlements } from './preview'
 import {
   deriveEntitlements,
   getBookings,
@@ -13,8 +14,14 @@ import {
   getProgressEntries,
 } from '@/lib/api/portalApi'
 
-export function usePortalData() {
-  const { user } = useAuth()
+/**
+ * @param {object} [options]
+ * @param {'membership'|'coaching'|null} [options.previewLevel] - render the
+ *        portal under a client's access rules instead of the caller's own.
+ *        Honoured for staff only; a client already sees their own gate.
+ */
+export function usePortalData({ previewLevel = null } = {}) {
+  const { user, isStaff } = useAuth()
   const { locale } = useLanguage()
   const userId = user?.id
 
@@ -75,9 +82,16 @@ export function usePortalData() {
     setState(prev => ({ ...prev, messages }))
   }, [userId])
 
+  // Staff read every library row, so the preview has to put the client's gate
+  // back in front of them: the entitlements that level carries, over the rows
+  // that level can read.
+  const preview = isStaff ? previewEntitlements(previewLevel) : null
+
   return {
     ...state,
-    entitlements: deriveEntitlements(state.memberships),
+    content: preview ? previewContent(state.content, previewLevel) : state.content,
+    entitlements: preview ?? deriveEntitlements(state.memberships),
+    previewLevel: preview ? previewLevel : null,
     reloadProgress,
     reloadMessages,
   }

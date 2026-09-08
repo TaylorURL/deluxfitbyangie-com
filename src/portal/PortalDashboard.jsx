@@ -15,6 +15,8 @@ import { useAuth } from '@/auth/useAuth'
 import { usePortalData } from './usePortalData'
 import { MoreSheet, PHONE_PRIMARY, Rail, TabBar } from './PortalNav'
 import PortalIdentity from './PortalIdentity'
+import PortalPreviewBar from './PortalPreviewBar'
+import { previewHref, readPreviewLevel } from './preview'
 import TodayView from './TodayView'
 import PlanPanel from './panels/PlanPanel'
 import ProgressPanel from './panels/ProgressPanel'
@@ -86,8 +88,9 @@ function PortalLoadingSkeleton({ label }) {
 
 export default function PortalDashboard() {
   const { portal } = useContent()
-  const { user } = useAuth()
-  const data = usePortalData()
+  const { user, isStaff } = useAuth()
+  const [previewLevel, setPreviewLevel] = useState(readPreviewLevel)
+  const data = usePortalData({ previewLevel })
   const prefersReducedMotion = useReducedMotion()
   const [activeId, setActiveId] = useState(readHash)
   const [moreOpen, setMoreOpen] = useState(false)
@@ -103,6 +106,21 @@ export default function PortalDashboard() {
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  // The previewed level lives in the query rather than in state alone, so the
+  // back button leaves the preview the same way it leaves a panel and the URL
+  // reopens on the level it names.
+  useEffect(() => {
+    const onPopState = () => setPreviewLevel(readPreviewLevel())
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  const selectPreview = useCallback(level => {
+    setPreviewLevel(level)
+    window.history.pushState(null, '', previewHref(level))
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
   const select = useCallback(id => {
@@ -146,6 +164,8 @@ export default function PortalDashboard() {
 
   return (
     <Container size="xl">
+      {isStaff && <PortalPreviewBar level={data.previewLevel} onChange={selectPreview} />}
+
       <PortalIdentity displayName={displayName} entitlements={data.entitlements} />
 
       {/* The tab bar is fixed to the bottom of the viewport, so the end of the
