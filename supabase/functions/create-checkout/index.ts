@@ -7,6 +7,9 @@
 //   * single_session / live_program -> mode 'payment'
 //   * live_program uses `quantity` (number of sessions).
 //
+// Promotion codes are enabled on every session, so a coupon created in Stripe
+// can be redeemed at checkout and, on a subscription, rides the renewals.
+//
 // If STRIPE_SECRET_KEY is missing, returns { configured:false } WITHOUT ever
 // faking a charge.
 
@@ -141,6 +144,14 @@ Deno.serve(async req => {
   form.set('line_items[0][price]', priceId)
   form.set('line_items[0][quantity]', String(lineQuantity))
   if (customerEmail) form.set('customer_email', customerEmail)
+
+  // Show the promotion-code field on the Checkout page, so a code created in
+  // Stripe (Product catalog > Coupons) is redeemable without a price of its
+  // own here. On a subscription Stripe carries the coupon onto the
+  // subscription itself, so a code whose duration is `forever` keeps
+  // discounting every renewal rather than the first invoice alone — which is
+  // what a standing rate for one client needs.
+  form.set('allow_promotion_codes', 'true')
 
   // Metadata so the webhook can resolve which membership / booking to update.
   form.set('metadata[product]', product)

@@ -598,6 +598,11 @@ const en = {
         'Thanks for signing up. Angie will send your access details and onboarding info by email.',
       errorBody: 'Please try again in a moment.',
       followUp: 'Angie will follow up with your access details.',
+      accountFirstHeading: 'Create your account first.',
+      accountFirstBody:
+        'The membership lives in your client portal, so your subscription has to belong to an account. Create one now — it takes a moment — and you will come straight back here to subscribe.',
+      accountFirstCta: 'Create My Account',
+      accountFirstSignIn: 'Already have an account? Sign in',
     },
   },
 
@@ -1068,6 +1073,25 @@ const en = {
     optional: 'Optional',
     backToHome: 'Back to DeluxFit',
     brandLockup: 'Client Portal',
+    preview: {
+      staffLabel: 'Coach view',
+      staffBody:
+        'As the coach you can see every item in the library, whatever it is gated to. Preview the portal to check what a client is actually given.',
+      previewAs: 'Preview as',
+      levelLabel: {
+        membership: 'Member',
+        coaching: 'Coaching Client',
+      },
+      activeLabel: 'Client preview',
+      levelBody: {
+        membership:
+          'Previewing as a member. This is exactly what the Delux Fit membership unlocks.',
+        coaching:
+          'Previewing as a coaching client. This is exactly what personalized online coaching unlocks.',
+      },
+      ownData: 'Your own plan, nutrition, progress, sessions and messages are still your own.',
+      exit: 'Exit Preview',
+    },
     auth: {
       signInTitle: 'Client Login',
       signUpTitle: 'Create your account',
