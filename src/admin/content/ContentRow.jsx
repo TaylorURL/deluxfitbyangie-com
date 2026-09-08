@@ -8,6 +8,15 @@ import {
   mediaTypeLabel,
 } from './contentMeta'
 
+/**
+ * Every label sitting beside an icon is wrapped in a span rather than left as
+ * bare text. A page translator swaps a loose text node for a <font> of its own
+ * while React goes on holding the node it rendered, so the next insert beside
+ * it hands the parent a reference that is no longer its child and the row
+ * throws mid-redraw instead of updating. Wrapped, the element the reconciler
+ * points at stays put and the translator rewrites only what is inside it.
+ */
+
 /** "Glute Growth · W2 D3" — only the parts the item actually carries. */
 const placementLabel = item =>
   [item.program, item.week ? `W${item.week}` : null, item.day ? `D${item.day}` : null]
@@ -57,15 +66,15 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
           {hasUpload ? (
             <>
               <FileUp className="h-3.5 w-3.5" aria-hidden="true" />
-              Uploaded File
+              <span>Uploaded File</span>
             </>
           ) : hasUrl ? (
             <>
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-              External Link
+              <span>External Link</span>
             </>
           ) : (
-            'No media'
+            <span>No media</span>
           )}
           <span aria-hidden="true">·</span>
           <span>Sort {Number.isFinite(item.sort) ? item.sort : 0}</span>
@@ -75,11 +84,11 @@ export default function ContentRow({ item, onEdit, onDelete, busy }) {
       <div className="flex shrink-0 items-center gap-2">
         <Button variant="outline" size="sm" onClick={() => onEdit(item)} disabled={busy}>
           <Pencil className="h-4 w-4" aria-hidden="true" />
-          Edit
+          <span>Edit</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => onDelete(item)} disabled={busy}>
           <Trash2 className="h-4 w-4" aria-hidden="true" />
-          Delete
+          <span>Delete</span>
         </Button>
       </div>
     </li>

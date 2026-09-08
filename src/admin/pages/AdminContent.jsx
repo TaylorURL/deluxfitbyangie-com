@@ -203,13 +203,13 @@ export default function AdminContent() {
             <Button asChild variant="secondary" className="shrink-0">
               <a href="/portal?preview=membership#library">
                 <Eye className="h-4 w-4" aria-hidden="true" />
-                Preview As A Client
+                <span>Preview As A Client</span>
               </a>
             </Button>
             {!draft && (
               <Button onClick={openCreate} className="shrink-0">
                 <Plus className="h-4 w-4" aria-hidden="true" />
-                New Item
+                <span>New Item</span>
               </Button>
             )}
           </div>
@@ -227,7 +227,7 @@ export default function AdminContent() {
               <MicroLabel tone="accent">{isEditing ? 'Edit Item' : 'New Item'}</MicroLabel>
               <Button variant="ghost" size="sm" onClick={resetForm} disabled={isWorking}>
                 <X className="h-4 w-4" aria-hidden="true" />
-                Cancel
+                <span>Cancel</span>
               </Button>
             </div>
 
@@ -372,7 +372,7 @@ export default function AdminContent() {
                 {status === 'uploading' && (
                   <p className="mt-2 inline-flex items-center gap-2 text-xs font-600 uppercase tracking-[0.16em] text-df-accent-bright">
                     <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                    Uploading file…
+                    <span>Uploading file…</span>
                   </p>
                 )}
               </div>
@@ -382,7 +382,7 @@ export default function AdminContent() {
               <div className="flex items-center justify-between">
                 <MicroLabel className="inline-flex items-center gap-2">
                   <Users className="h-4 w-4" aria-hidden="true" />
-                  Assign to Clients
+                  <span>Assign to Clients</span>
                 </MicroLabel>
                 {!assigning ? (
                   <Button
@@ -396,7 +396,7 @@ export default function AdminContent() {
                 ) : (
                   <MicroLabel as="span" tone="accent" className="inline-flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                    Editing
+                    <span>Editing</span>
                   </MicroLabel>
                 )}
               </div>
@@ -433,17 +433,17 @@ export default function AdminContent() {
                 {isWorking ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                    {status === 'uploading' ? 'Uploading…' : 'Saving…'}
+                    <span>{status === 'uploading' ? 'Uploading…' : 'Saving…'}</span>
                   </>
                 ) : isEditing ? (
                   <>
                     <Save className="h-4 w-4" aria-hidden="true" />
-                    Save Changes
+                    <span>Save Changes</span>
                   </>
                 ) : (
                   <>
                     <Upload className="h-4 w-4" aria-hidden="true" />
-                    Create Item
+                    <span>Create Item</span>
                   </>
                 )}
               </Button>

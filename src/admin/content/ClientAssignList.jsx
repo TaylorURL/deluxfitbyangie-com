@@ -15,7 +15,9 @@ export default function ClientAssignList({ clients, selected, onToggle, onClear,
   return (
     <div className="rounded-df-md border border-df-border bg-df-surface-2">
       <div className="flex items-center justify-between border-b border-df-border px-3 py-2">
-        <MicroLabel>{selected.size} selected</MicroLabel>
+        <MicroLabel>
+          <span>{selected.size} selected</span>
+        </MicroLabel>
         <Button
           variant="ghost"
           size="sm"
