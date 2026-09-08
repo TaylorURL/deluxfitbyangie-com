@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { Button, Field, Select } from '@deluxfit/ds'
+import { Button, Field, MicroLabel, Select } from '@deluxfit/ds'
 import {
   listAllMemberships,
   listClients,
@@ -28,6 +28,15 @@ const STATUSES = ['active', 'canceled', 'past_due', 'incomplete']
 const PRODUCT_LABEL = {
   membership: 'Membership',
   coaching: 'Coaching',
+}
+
+// What each product actually unlocks, said where the choice is made rather
+// than in a document beside the app.
+const PRODUCT_HELPER = {
+  membership:
+    'The general content library: programs, workout videos and education. Not personalized.',
+  coaching:
+    'Their own plan, nutrition, monthly progress reviews and direct messaging — and everything Membership unlocks, so a coaching client never needs both.',
 }
 
 const loadMemberships = () => Promise.all([listAllMemberships(), listClients()])
@@ -191,14 +200,14 @@ function GrantForm({ clients, onSaved }) {
     <SectionCard>
       <SectionHeading
         title="Grant a membership"
-        intro="Create or update a membership for a client without going through Stripe."
+        intro="Granting access opens the portal straight away and charges nobody. Billing is the separate half: a client who subscribes on the website is charged by Stripe and granted access automatically, and a client granted access here is not billed at all until you set that up in Stripe."
       />
 
       <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-5 sm:grid-cols-3">
         <Field label="Client" className="sm:col-span-3">
           <ClientSelect clients={clients} value={userId} onChange={setUserId} />
         </Field>
-        <Field label="Product">
+        <Field label="Product" helper={PRODUCT_HELPER[product]}>
           <Select value={product} onChange={event => setProduct(event.target.value)}>
             {PRODUCTS.map(item => (
               <option key={item} value={item}>
@@ -207,7 +216,7 @@ function GrantForm({ clients, onSaved }) {
             ))}
           </Select>
         </Field>
-        <Field label="Status">
+        <Field label="Status" helper="Only an active record unlocks anything.">
           <Select value={status} onChange={event => setStatus(event.target.value)}>
             {STATUSES.map(item => (
               <option key={item} value={item}>
@@ -235,11 +244,22 @@ function GrantForm({ clients, onSaved }) {
         <div className="mt-5">
           <FormSuccess
             heading="Membership saved"
-            body="The membership record was created or updated."
+            body="The client can sign in and use it now. Nothing was charged."
           />
         </div>
       )}
       {state === 'error' && <FormError body={errorBody} />}
+
+      <div className="mt-6 rounded-df-lg border border-df-border bg-df-surface-2 px-5 py-4">
+        <MicroLabel tone="accent">Charging a client a different rate</MicroLabel>
+        <p className="mt-2 text-sm leading-relaxed text-df-text-muted">
+          Create a coupon in Stripe under Product Catalog, add a promotion code to it, and set its
+          duration to <span className="text-df-text">Forever</span> so the discount applies to every
+          renewal rather than the first month alone. The client enters that code on the checkout
+          page when they subscribe on the website, and is billed the reduced rate from then on —
+          access and cancellation behave the same as any other member.
+        </p>
+      </div>
     </SectionCard>
   )
 }

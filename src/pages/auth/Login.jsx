@@ -5,7 +5,7 @@ import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
-import { roleLandingPath } from '@/auth/roles'
+import { nextIsAllowedForRole, roleLandingPath } from '@/auth/roles'
 import { useLocation } from '@/router'
 import { FormError } from '@/components/forms/FormFeedback'
 
@@ -109,15 +109,4 @@ export default function Login() {
       </AuthCard>
     </AuthShell>
   )
-}
-
-/**
- * Allow ?next= only when it points inside the surface the role can use.
- * Prevents bouncing a client into /admin via a crafted login link.
- */
-function nextIsAllowedForRole(next, role) {
-  if (typeof next !== 'string' || !next.startsWith('/')) return false
-  if (next.startsWith('/admin')) return role === 'staff'
-  if (next.startsWith('/portal')) return role === 'client' || role === 'staff'
-  return true
 }

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { CheckCircle2, FileUp, Loader2, Plus, Save, Upload, Users, X } from 'lucide-react'
+import { CheckCircle2, Eye, FileUp, Loader2, Plus, Save, Upload, Users, X } from 'lucide-react'
 import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds'
 import {
   deleteContent,
@@ -194,14 +194,25 @@ export default function AdminContent() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <SectionHeading
             title="Content library"
-            intro="Upload videos, PDFs, exercise instructions, and schedules, gate them by access level, and assign them directly to clients."
+            intro="Upload videos, PDFs, exercise instructions, and schedules, gate them by access level, and assign them directly to clients. Public is visible to anyone, Membership to members and coaching clients, and Coaching to coaching clients only."
           />
-          {!draft && (
-            <Button onClick={openCreate} className="shrink-0">
-              <Plus className="h-4 w-4" aria-hidden="true" />
-              New Item
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            {/* This page shows the whole library because the coach may read
+                every row; the portal preview is where she sees the subset a
+                client is given. */}
+            <Button asChild variant="secondary" className="shrink-0">
+              <a href="/portal?preview=membership#library">
+                <Eye className="h-4 w-4" aria-hidden="true" />
+                Preview As A Client
+              </a>
             </Button>
-          )}
+            {!draft && (
+              <Button onClick={openCreate} className="shrink-0">
+                <Plus className="h-4 w-4" aria-hidden="true" />
+                New Item
+              </Button>
+            )}
+          </div>
         </div>
 
         {success && (

@@ -5,6 +5,7 @@ import { useContent } from '@/i18n'
 import { useAuth } from '@/auth/useAuth'
 import AuthShell from '@/auth/AuthShell'
 import AuthCard from '@/auth/AuthCard'
+import { nextIsAllowedForRole } from '@/auth/roles'
 import { useLocation } from '@/router'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 
@@ -21,7 +22,13 @@ export default function Signup() {
   useEffect(() => {
     if (status === 'confirm') return
     if (user && !profileLoading && role) {
-      navigate('/portal', { replace: true })
+      // A visitor sent here to create an account before checking out goes back
+      // to the page that sent them, now signed in, rather than being dropped
+      // in an empty portal to find their way back.
+      const params =
+        typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+      const next = params?.get('next')
+      navigate(next && nextIsAllowedForRole(next, role) ? next : '/portal', { replace: true })
     }
   }, [user, role, profileLoading, status, navigate])
 
