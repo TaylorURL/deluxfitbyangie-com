@@ -112,14 +112,11 @@ export const getClientAssignments = userId =>
 
 // Library / bookings / memberships (cross-client reads)
 
-export const listContent = (locale = 'en') =>
-  rows(
-    supabase
-      .from('content_items')
-      .select('*')
-      .eq('locale', locale)
-      .order('sort', { ascending: true })
-  )
+// The whole library, in one language-independent list. The authoring form and
+// the portal have to agree on which rows exist, so neither one filters on the
+// `locale` stamp the row carries.
+export const listContent = () =>
+  rows(supabase.from('content_items').select('*').order('sort', { ascending: true }))
 
 export const listAllBookings = () =>
   rows(supabase.from('bookings').select('*').order('slot_start', { ascending: false }))

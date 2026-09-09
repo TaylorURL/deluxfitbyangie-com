@@ -35,7 +35,7 @@ import {
  */
 export default function AdminContent() {
   const confirm = useConfirm()
-  const { data: items, loading, error, reload } = useAsyncData(() => listContent('en'), [], [])
+  const { data: items, loading, error, reload } = useAsyncData(listContent, [], [])
   const { data: clients } = useAsyncData(listClients, [], [])
 
   const [draft, setDraft] = useState(null)
@@ -147,7 +147,6 @@ export default function AdminContent() {
         program: draft.program.trim() || undefined,
         week: Number(draft.week) || undefined,
         day: Number(draft.day) || undefined,
-        locale: 'en',
       }
       if (mediaPath) payload.mediaPath = mediaPath
       else if (draft.url.trim()) payload.url = draft.url.trim()

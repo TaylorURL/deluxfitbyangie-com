@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@/auth/useAuth'
-import { useLanguage } from '@/i18n'
 import { previewContent, previewEntitlements } from './preview'
 import {
   deriveEntitlements,
@@ -22,7 +21,6 @@ import {
  */
 export function usePortalData({ previewLevel = null } = {}) {
   const { user, isStaff } = useAuth()
-  const { locale } = useLanguage()
   const userId = user?.id
 
   const [state, setState] = useState({
@@ -48,7 +46,7 @@ export function usePortalData({ previewLevel = null } = {}) {
         getProgressEntries(userId),
         getBookings(userId),
         getMessages(userId),
-        getContentItems(locale),
+        getContentItems(),
         getNutritionPlan(userId),
       ])
     setState({
@@ -63,7 +61,7 @@ export function usePortalData({ previewLevel = null } = {}) {
       nutrition: nutrition.plan,
       nutritionError: nutrition.error,
     })
-  }, [userId, locale])
+  }, [userId])
 
   useEffect(() => {
     setState(prev => ({ ...prev, loading: true }))
