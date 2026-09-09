@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { LanguageContext } from './context'
+import { importChunk } from '../lib/chunk'
 import { DEFAULT_LOCALE, LOCALES, isSupportedLocale, loadContent, loadedContent } from './locales'
 
 const STORAGE_KEY = 'deluxfit:locale'
@@ -36,8 +37,11 @@ const INITIAL_LOCALE = detectInitialLocale()
 
 // The request for a non-default tree goes out as this module evaluates rather
 // than when the provider mounts, so it overlaps the rest of the boot instead of
-// queueing behind the first render.
-if (INITIAL_LOCALE !== DEFAULT_LOCALE) loadContent(INITIAL_LOCALE)
+// queueing behind the first render. Nothing is waiting on it here — it is the
+// effect below that renders off the tree and the effect that asks again if this
+// one came back empty handed, so a failure is swallowed rather than left to
+// reject into a page that has not been drawn yet.
+if (INITIAL_LOCALE !== DEFAULT_LOCALE) loadContent(INITIAL_LOCALE).catch(() => {})
 
 export default function LanguageProvider({ children }) {
   const [locale, setLocaleState] = useState(INITIAL_LOCALE)
@@ -51,7 +55,12 @@ export default function LanguageProvider({ children }) {
   useEffect(() => {
     if (content) return
     let active = true
-    loadContent(locale).then(next => {
+    // A tree that is not the default one is a chunk, and a chunk the current
+    // build no longer has would leave this provider holding `null` forever —
+    // which renders as nothing at all, since there is no copy to draw a page
+    // with. `importChunk` retries it and, failing that, reloads onto the build
+    // that does have the file.
+    importChunk(() => loadContent(locale)).then(next => {
       if (active) setContent(next)
     })
     return () => {
@@ -80,7 +89,7 @@ export default function LanguageProvider({ children }) {
       setLocaleState(code)
       return
     }
-    loadContent(code).then(next => {
+    importChunk(() => loadContent(code)).then(next => {
       setContent(next)
       setLocaleState(code)
     })
