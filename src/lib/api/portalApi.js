@@ -74,15 +74,20 @@ export const getMessages = async userId => {
   ).then(rows => rows ?? [])
 }
 
-/** Content library items the user is entitled to or assigned (RLS does the gating). */
-export const getContentItems = locale =>
-  safeSelect(
-    supabase
-      .from('content_items')
-      .select('*')
-      .eq('locale', locale)
-      .order('sort', { ascending: true })
-  ).then(rows => rows ?? [])
+/**
+ * Content library items the user is entitled to or assigned (RLS does the
+ * gating).
+ *
+ * Deliberately not filtered by the reader's interface language. The library is
+ * the coach's own uploaded media, titled in whatever language she wrote, and
+ * there is one of each file — a video is not re-recorded per locale the way the
+ * site's own copy is translated. Gating it on the language the reader happens
+ * to be browsing in could only ever hide her work from the people it is for.
+ */
+export const getContentItems = () =>
+  safeSelect(supabase.from('content_items').select('*').order('sort', { ascending: true })).then(
+    rows => rows ?? []
+  )
 
 /**
  * The client's active personalized nutrition plan (newest active first),
