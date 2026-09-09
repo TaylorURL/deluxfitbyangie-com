@@ -1,5 +1,5 @@
 import { supabase } from '@/config/supabase'
-import { invokeOk, resolveSignedUrl } from '@/lib/api/functions'
+import { invokeOk, isConnectionLost, resolveSignedUrl } from '@/lib/api/functions'
 
 /**
  * ADMIN API — the coach/staff data layer.
@@ -178,17 +178,39 @@ export const saveAvailabilityOverride = override =>
 export const removeAvailabilityOverride = date =>
   invoke('upsert-availability', { deleteOverride: date })
 
+// A coach's library file is a training video, so the body spends seconds or
+// minutes on the wire and a connection that drops anywhere in that window ends
+// the whole upload. Retrying is safe here and nowhere else: a request that
+// never reached the function wrote nothing, and the function names every
+// object with a fresh id, so a repeat cannot land twice or overwrite.
+const UPLOAD_ATTEMPTS = 3
+const RETRY_PAUSE_MS = 1500
+
+const pause = ms =>
+  new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+
 /**
  * Upload coach media (library video/PDF, message feedback) to the private
  * `library-media` bucket via the staff-only `upload-media` function. Returns
  * { bucket, path }.
  */
 export async function uploadMedia(file, prefix = 'library') {
-  const form = new FormData()
-  form.append('file', file, file.name)
-  form.append('prefix', prefix)
-  const data = await invokeOk('upload-media', form, 'Upload failed')
-  return { bucket: data.bucket, path: data.path }
+  for (let attempt = 1; ; attempt += 1) {
+    // The form is rebuilt each time: a body that has already been handed to
+    // fetch cannot be sent a second time.
+    const form = new FormData()
+    form.append('file', file, file.name)
+    form.append('prefix', prefix)
+    try {
+      const data = await invokeOk('upload-media', form, 'Upload failed')
+      return { bucket: data.bucket, path: data.path }
+    } catch (error) {
+      if (attempt >= UPLOAD_ATTEMPTS || !isConnectionLost(error)) throw error
+      await pause(RETRY_PAUSE_MS * attempt)
+    }
+  }
 }
 
 /** Resolve a signed URL for a private object (shared broker with the portal). */
