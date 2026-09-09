@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AuthContext } from './useAuth'
+import { importChunk } from '@/lib/chunk'
 
 /*
  * The client is fetched rather than imported.
@@ -16,7 +17,7 @@ const clientWaiters = []
 
 function client() {
   if (!clientPromise) {
-    clientPromise = import('@/config/supabase').then(m => m.supabase)
+    clientPromise = importChunk(() => import('@/config/supabase')).then(m => m.supabase)
     while (clientWaiters.length) clientWaiters.pop()()
   }
   return clientPromise
