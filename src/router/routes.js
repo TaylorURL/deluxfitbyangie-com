@@ -13,8 +13,8 @@
  * rather than from the file tree.
  */
 
-import { lazy } from 'react'
 import Home from '../pages/Home'
+import { lazyChunk } from '../lib/chunk'
 import { ROUTE_PATHS } from './paths'
 
 /*
@@ -28,15 +28,15 @@ import { ROUTE_PATHS } from './paths'
  */
 const COMPONENTS = {
   '/': Home,
-  '/about': lazy(() => import('../pages/About')),
-  '/membership': lazy(() => import('../pages/Membership')),
-  '/online-coaching': lazy(() => import('../pages/OnlineCoaching')),
-  '/single-session': lazy(() => import('../pages/SingleSession')),
-  '/training': lazy(() => import('../pages/LiveTrainingProgram')),
-  '/testimonials': lazy(() => import('../pages/Testimonials')),
-  '/contact': lazy(() => import('../pages/Contact')),
-  '/privacy': lazy(() => import('../pages/legal/Privacy')),
-  '/terms': lazy(() => import('../pages/legal/Terms')),
+  '/about': lazyChunk(() => import('../pages/About')),
+  '/membership': lazyChunk(() => import('../pages/Membership')),
+  '/online-coaching': lazyChunk(() => import('../pages/OnlineCoaching')),
+  '/single-session': lazyChunk(() => import('../pages/SingleSession')),
+  '/training': lazyChunk(() => import('../pages/LiveTrainingProgram')),
+  '/testimonials': lazyChunk(() => import('../pages/Testimonials')),
+  '/contact': lazyChunk(() => import('../pages/Contact')),
+  '/privacy': lazyChunk(() => import('../pages/legal/Privacy')),
+  '/terms': lazyChunk(() => import('../pages/legal/Terms')),
 }
 
 /*
@@ -59,7 +59,7 @@ const ROUTES = ROUTE_PATHS.map(({ path }) => ({
   hero: HERO_SHAPE[path] ?? 'wide',
 }))
 
-export const NOT_FOUND = lazy(() => import('../pages/NotFound'))
+export const NOT_FOUND = lazyChunk(() => import('../pages/NotFound'))
 
 /**
  * Normalize a pathname by stripping trailing slashes (except root) and

@@ -1,7 +1,8 @@
-import { Suspense, lazy } from 'react'
+import { Suspense } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { hexToUnitRgb, useTokenColors } from '@deluxfit/ds'
 import { documentDrawsInSoftware } from '@/lib/softwareRenderer'
+import { lazyChunk } from '@/lib/chunk'
 
 /*
  * The three canvases carry `ogl` and their shaders — around 64KB that renders
@@ -11,9 +12,9 @@ import { documentDrawsInSoftware } from '@/lib/softwareRenderer'
  * screen is still being painted. Behind `lazy` the route renders on its own and
  * the backdrop arrives into the finished page.
  */
-const Aurora = lazy(() => import('@/components/reactbits/Aurora'))
-const Particles = lazy(() => import('@/components/reactbits/Particles'))
-const Threads = lazy(() => import('@/components/reactbits/Threads'))
+const Aurora = lazyChunk(() => import('@/components/reactbits/Aurora'))
+const Particles = lazyChunk(() => import('@/components/reactbits/Particles'))
+const Threads = lazyChunk(() => import('@/components/reactbits/Threads'))
 
 /*
  * Whether this machine draws in software, read once for the module. The head

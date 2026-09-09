@@ -163,6 +163,17 @@ const [tag, src] = entry
 const graph = [...html.matchAll(/^[ \t]*<link rel="modulepreload"[^>]*href="([^"]+)"[^>]*>\n/gm)]
 for (const [line] of graph) html = html.replace(line, '')
 const chunks = JSON.stringify([src, ...graph.map(([, href]) => href)])
+
+/*
+ * The entry is the one chunk nothing in the app can recover, because failing to
+ * load it is what stops the app from existing. It fails the same way any other
+ * does — a document out of a cache older than the build names a file the deploy
+ * has since deleted — and the edge answers a path it has no file for with this
+ * same page, which reaches the module loader as HTML. `src/lib/chunk.js` covers
+ * every chunk below this one; this covers this one, on the same terms and with
+ * the same key, so between them a reader is reloaded onto the current build
+ * once and never twice.
+ */
 const boot =
   `    <script type="module">requestAnimationFrame(() => requestAnimationFrame(() => {\n` +
   `      for (const href of ${chunks}) {\n` +
@@ -172,7 +183,17 @@ const boot =
   `        link.href = href\n` +
   `        document.head.appendChild(link)\n` +
   `      }\n` +
-  `      import(${JSON.stringify(src)})\n` +
+  `      import(${JSON.stringify(src)}).catch(() => {\n` +
+  `        try {\n` +
+  `          const key = 'deluxfit:chunk-reload'\n` +
+  `          const last = Number(sessionStorage.getItem(key)) || 0\n` +
+  `          if (Date.now() - last < 30000) return\n` +
+  `          sessionStorage.setItem(key, String(Date.now()))\n` +
+  `        } catch (ignored) {\n` +
+  `          return\n` +
+  `        }\n` +
+  `        location.reload()\n` +
+  `      })\n` +
   `    }))</script>\n`
 html = html.replace(tag, boot)
 

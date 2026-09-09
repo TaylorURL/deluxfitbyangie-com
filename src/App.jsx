@@ -1,5 +1,6 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import SiteShell from './components/layout/SiteShell'
+import { lazyChunk } from './lib/chunk'
 import RouteFallback from './components/layout/RouteFallback'
 import { matchRoute, NOT_FOUND, normalizePath, useLocation } from './router'
 import { useContent, useLanguage } from './i18n'
@@ -17,12 +18,12 @@ import { absoluteUrl, SITE_SHARE_IMAGE } from './config/site'
  * back-to-site treatment, no SiteShell chrome.
  */
 const STANDALONE_ROUTES = [
-  { path: '/portal', component: lazy(() => import('./portal/ClientPortal')) },
-  { path: '/admin', component: lazy(() => import('./admin/AdminApp')) },
-  { path: '/login', component: lazy(() => import('./pages/auth/Login')) },
-  { path: '/signup', component: lazy(() => import('./pages/auth/Signup')) },
-  { path: '/reset-password', component: lazy(() => import('./pages/auth/ResetPassword')) },
-  { path: '/update-password', component: lazy(() => import('./pages/auth/UpdatePassword')) },
+  { path: '/portal', component: lazyChunk(() => import('./portal/ClientPortal')) },
+  { path: '/admin', component: lazyChunk(() => import('./admin/AdminApp')) },
+  { path: '/login', component: lazyChunk(() => import('./pages/auth/Login')) },
+  { path: '/signup', component: lazyChunk(() => import('./pages/auth/Signup')) },
+  { path: '/reset-password', component: lazyChunk(() => import('./pages/auth/ResetPassword')) },
+  { path: '/update-password', component: lazyChunk(() => import('./pages/auth/UpdatePassword')) },
 ]
 
 function matchStandalone(pathname) {
