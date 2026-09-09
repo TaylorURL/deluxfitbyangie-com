@@ -8,10 +8,23 @@
  * app is still on the wire and the app lands on top of it without a jump. The
  * app replaces the whole root on mount; nothing here survives it.
  *
- * The shell is for the home page in English. A small inline script hides it on
- * every other path and for every other locale, so those readers get the shell
- * they had before rather than a flash of the wrong page. The locale rule is the
- * provider's own: a stored choice first, then the browser's languages.
+ * The shell is for the home page in English. Every other path and every other
+ * locale gets the bare root it had before rather than a flash of the wrong
+ * page. The locale rule is the provider's own: a stored choice first, then the
+ * browser's languages.
+ *
+ * That decision withholds the markup rather than hiding it, and the difference
+ * is a download. One document is served for every route, so the hero's
+ * photograph is named twice in it — by the preload in the head and by the
+ * `img` in the shell — and both are `fetchpriority="high"`. A rule that only
+ * sets `display:none` leaves each of them standing: the browser fetches a
+ * photograph the page will never show, at the priority of one it will, against
+ * the images the route does show. It then hands the app a root to mount into
+ * and the element is destroyed mid-flight, which is an aborted image load and
+ * is indistinguishable from a broken one. So the shell is parked in a
+ * `template`, whose contents fetch nothing until something clones them, and
+ * the preload is parked on `data-` attributes; the script below promotes both,
+ * together, only on the page they belong to.
  *
  * The markup mirrors Home.jsx's hero. A change to that hero's structure or
  * classes belongs here too, or the app will land a few pixels off the shell.
@@ -91,15 +104,42 @@ const shell = `<div id="df-first-screen" class="min-h-dvh"><div class="flex min-
    app's first frame is the shell's last one. Under reduced motion neither
    moves and the shell sits at rest. */
 const style =
-  '<style>@media (prefers-reduced-motion:no-preference){.df-first-line{transform:translateY(.4em)}.df-first-photo{transform:translateY(20px)}}.df-no-first-screen #df-first-screen{display:none}</style>'
+  '<style>@media (prefers-reduced-motion:no-preference){.df-first-line{transform:translateY(.4em)}.df-first-photo{transform:translateY(20px)}}</style>'
 
+/*
+ * The decision, and the half of it that has to be made in the head.
+ *
+ * The hero's preload is written into `index.html` with its href parked on a
+ * `data-` attribute, so the scanner has nothing to act on and the fetch waits
+ * on this. On the home page the attributes are handed back — the candidate
+ * list and the sizes before the href, or the browser starts choosing from a
+ * list it has not been given yet — and the preload runs from the end of the
+ * head, a few hundred microseconds of parsing later than it used to and still
+ * ahead of everything the body asks for. Anywhere else it never runs at all.
+ */
 const codes = JSON.stringify(Object.keys(locales))
-const guard = `<script>(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";var l=null;try{l=localStorage.getItem("deluxfit:locale")}catch(e){}if(!l){var t=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];for(var i=0;i<t.length;i++){var b=String(t[i]||"").toLowerCase().split("-")[0];if(${codes}.indexOf(b)>=0){l=b;break}}}if(p!=="/"||(l&&l!=="en"))document.documentElement.classList.add("df-no-first-screen")}catch(e){}})()</script>`
+const guard = `<script>(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";var l=null;try{l=localStorage.getItem("deluxfit:locale")}catch(e){}if(!l){var t=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];for(var i=0;i<t.length;i++){var b=String(t[i]||"").toLowerCase().split("-")[0];if(${codes}.indexOf(b)>=0){l=b;break}}}if(p!=="/"||(l&&l!=="en")){document.documentElement.classList.add("df-no-first-screen");return}var k=document.querySelector("link[data-df-href]");if(!k)return;var s=k.getAttribute("data-df-imagesrcset");if(s)k.setAttribute("imagesrcset",s);var z=k.getAttribute("data-df-imagesizes");if(z)k.setAttribute("imagesizes",z);k.setAttribute("href",k.getAttribute("data-df-href"))}catch(e){}})()</script>`
+
+/*
+ * The other half, beside the markup it governs.
+ *
+ * The shell is parsed into a `template`, so its photograph is not requested by
+ * the act of the document arriving. This runs the instant the parser clears
+ * the template — before it has found a frame to paint in, so a home reader
+ * still sees the first screen in the first frame — and clones the contents
+ * into the root the app will mount over.
+ */
+const insert = `<script>(function(){try{if(document.documentElement.classList.contains("df-no-first-screen"))return;var t=document.getElementById("df-first-screen-source");var r=document.getElementById("root");if(t&&r)r.appendChild(t.content.cloneNode(true))}catch(e){}})()</script>`
 
 let html = readFileSync(dist, 'utf8')
 if (!html.includes('<div id="root"></div>'))
   throw new Error('dist/index.html carries no empty root')
-html = html.replace('<div id="root"></div>', `<div id="root">${shell}</div>`)
+if (!html.includes('data-df-href='))
+  throw new Error('dist/index.html carries no parked hero preload for the guard to hand back')
+html = html.replace(
+  '<div id="root"></div>',
+  `<template id="df-first-screen-source">${shell}</template><div id="root"></div>${insert}`
+)
 html = html.replace('</head>', `${style}${guard}</head>`)
 
 const entry = html.match(/^[ \t]*<script type="module" crossorigin src="([^"]+)"><\/script>\n/m)
