@@ -199,14 +199,20 @@
          phone-sized file and the element asks for the file that arrived. It is
          requested ahead of the faces below: they are the same priority, so the
          order they are written in is the order they are asked for, and text set
-         in a fallback is on screen while the metric waits on this. -->
+         in a fallback is on screen while the metric waits on this.
+
+         The href waits on a `data-` attribute because this document is served
+         for every route, and a preload the route has no element for is a
+         high-priority download of a photograph nobody is shown, taken out of
+         the budget of the images they are. `scripts/first-screen.js` writes the
+         script that hands the attributes back on the one page the hero is on. -->
     <link
       rel="preload"
       as="image"
       fetchpriority="high"
-      href="/brand/studio-portrait-dumbbells.webp"
-      imagesrcset="/brand/studio-portrait-dumbbells-480.webp 480w, /brand/studio-portrait-dumbbells-800.webp 800w, /brand/studio-portrait-dumbbells-1200.webp 1200w, /brand/studio-portrait-dumbbells.webp 1600w"
-      imagesizes="(min-width: 640px) 18rem, 15rem"
+      data-df-href="/brand/studio-portrait-dumbbells.webp"
+      data-df-imagesrcset="/brand/studio-portrait-dumbbells-480.webp 480w, /brand/studio-portrait-dumbbells-800.webp 800w, /brand/studio-portrait-dumbbells-1200.webp 1200w, /brand/studio-portrait-dumbbells.webp 1600w"
+      data-df-imagesizes="(min-width: 640px) 18rem, 15rem"
     />
     <!-- The two faces the first screen sets most of its type in. They are
          same-origin, so the connection is already open; requesting them here
@@ -364,18 +370,32 @@
                 // that fetch fails. Reporting a hint the browser chose not to use
                 // files a ticket for behaviour that is by design.
                 var rel = (event.target.rel || '').toLowerCase()
+                var tag = event.target.tagName.toLowerCase()
                 if (
-                  event.target.tagName.toLowerCase() === 'link' &&
+                  tag === 'link' &&
                   (rel === 'preload' || rel === 'modulepreload' || rel === 'prefetch')
                 ) {
                   return
                 }
+                // An element the document no longer holds was taken out from
+                // under its own fetch — the app mounting over markup that was
+                // there to be replaced, or a component unmounting. The browser
+                // reports the abort as an error, but nothing was ever going to
+                // be drawn from it and there is nothing behind it to fix.
+                if (event.target.isConnected === false) {
+                  return
+                }
+                // `src` is what the markup asked for; `currentSrc` is the
+                // candidate the browser chose out of `srcset` and actually
+                // went and fetched. Naming the first files a ticket against a
+                // file that may never have been requested, and leaves the one
+                // that failed unnamed.
                 report(
                   'resource',
                   'Failed to load ' +
-                    event.target.tagName.toLowerCase() +
+                    tag +
                     ': ' +
-                    (event.target.src || event.target.href || '')
+                    (event.target.currentSrc || event.target.src || event.target.href || '')
                 )
               } else {
                 report('uncaught', event.message, event.error && event.error.stack)
