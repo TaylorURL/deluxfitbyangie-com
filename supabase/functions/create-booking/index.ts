@@ -9,6 +9,17 @@ import { corsHeaders, json } from '../_shared/cors.ts'
 
 const SLOT_MINUTES = 60
 
+// The confirmation mail is HTML, so every value read off the request body has to
+// be neutralised before it is interpolated. Resend renders what it is handed.
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 Deno.serve(async req => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -107,10 +118,9 @@ Deno.serve(async req => {
             from: 'DeluxFit by Angie <bookings@deluxfitbyangie.com>',
             to,
             subject: 'Your DeluxFit session is confirmed',
-            html: `<p>Hi ${guestName ?? 'there'}, your ${service.replace(
-              '_',
-              ' '
-            )} on ${start.toUTCString()} is confirmed.</p>`,
+            html: `<p>Hi ${escapeHtml(guestName ?? 'there')}, your ${escapeHtml(
+              service.replace('_', ' ')
+            )} on ${escapeHtml(start.toUTCString())} is confirmed.</p>`,
           }),
         })
       } catch (_e) {
