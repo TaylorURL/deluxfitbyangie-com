@@ -17,7 +17,18 @@ const clientWaiters = []
 
 function client() {
   if (!clientPromise) {
-    clientPromise = importChunk(() => import('@/config/supabase')).then(m => m.supabase)
+    clientPromise = importChunk(() => import('@/config/supabase'))
+      .then(m => m.supabase)
+      .catch(error => {
+        // The cache is what makes every caller after the first free, and it is
+        // the wrong thing to keep when what it holds is a failure: a chunk the
+        // deploy took away would be handed to every later caller for the rest
+        // of the visit, long after a reload has put a build on the page that
+        // has the file. Forgetting it costs one more request and lets the next
+        // ask actually succeed.
+        clientPromise = null
+        throw error
+      })
     while (clientWaiters.length) clientWaiters.pop()()
   }
   return clientPromise
@@ -98,29 +109,43 @@ export default function AuthProvider({ children }) {
     const hydrate = () => {
       if (hydrated) return
       hydrated = true
-      client().then(async supabase => {
-        const verify = async nextSession => {
-          if (!nextSession) {
+      client()
+        .then(async supabase => {
+          const verify = async nextSession => {
+            if (!nextSession) {
+              if (!active) return
+              setSession(null)
+              setUser(null)
+              setLoading(false)
+              return
+            }
+            const { data, error } = await supabase.auth.getUser()
             if (!active) return
-            setSession(null)
-            setUser(null)
+            setSession(error ? null : nextSession)
+            setUser(error ? null : (data.user ?? null))
             setLoading(false)
-            return
           }
-          const { data, error } = await supabase.auth.getUser()
-          if (!active) return
-          setSession(error ? null : nextSession)
-          setUser(error ? null : (data.user ?? null))
-          setLoading(false)
-        }
 
-        const { data } = await supabase.auth.getSession()
-        if (!active) return
-        await verify(data.session ?? null)
-        listener = supabase.auth.onAuthStateChange((_event, nextSession) => {
-          verify(nextSession ?? null)
-        }).data
-      })
+          const { data } = await supabase.auth.getSession()
+          if (!active) return
+          await verify(data.session ?? null)
+          listener = supabase.auth.onAuthStateChange((_event, nextSession) => {
+            verify(nextSession ?? null)
+          }).data
+        })
+        .catch(() => {
+          // The SDK could not be fetched, so there is no way to ask who this
+          // visitor is. Leaving `loading` set would hold every surface that waits
+          // on it — the header, the portal — spinning for the rest of the visit,
+          // and the rejection would escape into the page on top of that. Signed
+          // out is the only answer available and it is better than no answer:
+          // nothing here grants access, so a reader who is really signed in sees
+          // the signed-out header and gets their session back on the next load.
+          if (!active) return
+          setSession(null)
+          setUser(null)
+          setLoading(false)
+        })
     }
 
     if (hasAccountToResolve()) {
@@ -171,6 +196,14 @@ export default function AuthProvider({ children }) {
           setProfile(data ?? null)
           lastLoadedUserIdRef.current = userId
         }
+        setProfileLoading(false)
+      })
+      .catch(() => {
+        // Same as the hydrate above: no client means no profile, and the flag
+        // has to come down either way or every surface reading it waits out the
+        // visit.
+        if (!active) return
+        setProfile(null)
         setProfileLoading(false)
       })
     return () => {
