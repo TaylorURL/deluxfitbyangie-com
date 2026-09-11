@@ -60,9 +60,30 @@ export default function LanguageProvider({ children }) {
     // which renders as nothing at all, since there is no copy to draw a page
     // with. `importChunk` retries it and, failing that, reloads onto the build
     // that does have the file.
-    importChunk(() => loadContent(locale)).then(next => {
-      if (active) setContent(next)
-    })
+    importChunk(() => loadContent(locale))
+      .then(next => {
+        if (active) setContent(next)
+      })
+      .catch(() => {
+        /*
+         * The reload is allowed once per visit, so the second time through it
+         * declines and the retry is the end of the road. Left there this
+         * provider goes on holding `null` and the reader sits in front of an
+         * empty document — and because the failure arrives as a rejected
+         * promise rather than a throw during render, the boundary above never
+         * hears about it and nothing draws in its place.
+         *
+         * The default tree rides in the entry bundle and so is always already
+         * in hand. Falling back to it costs the reader the language they asked
+         * for and keeps them the page, which is the better half of that trade.
+         * The locale moves with the copy so no surface is left labelled as a
+         * language it is not, and their choice is persisted again the moment
+         * they use the switcher — by then on a build that has the chunk.
+         */
+        if (!active) return
+        setContent(loadedContent(DEFAULT_LOCALE))
+        setLocaleState(DEFAULT_LOCALE)
+      })
     return () => {
       active = false
     }
@@ -89,10 +110,17 @@ export default function LanguageProvider({ children }) {
       setLocaleState(code)
       return
     }
-    importChunk(() => loadContent(code)).then(next => {
-      setContent(next)
-      setLocaleState(code)
-    })
+    importChunk(() => loadContent(code))
+      .then(next => {
+        setContent(next)
+        setLocaleState(code)
+      })
+      .catch(() => {
+        // The language the reader asked for cannot be fetched. They stay on the
+        // one they were already reading, which is drawn and correct, rather
+        // than the rejection escaping into the page. Their click goes nowhere,
+        // and that is the whole of the damage.
+      })
   }, [])
 
   const value = useMemo(() => {
