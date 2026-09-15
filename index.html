@@ -355,6 +355,42 @@
           }
           return parts.join(' ')
         }
+        // A script this document loads from another origin without
+        // `crossorigin` is one the browser will not let the page read, so an
+        // exception escaping it arrives stripped of everything. Every script
+        // here is either same-origin or carries `crossorigin="anonymous"`
+        // against an origin that sends the matching header, so today this
+        // returns nothing — but it is checked at the moment it matters rather
+        // than assumed, because the day a tag goes in without the attribute is
+        // the day the assumption stops being true and the site goes blind.
+        function opaqueOrigins() {
+          var found = []
+          try {
+            var tags = document.querySelectorAll('script[src]')
+            for (var i = 0; i < tags.length; i += 1) {
+              var src = String(tags[i].src || '')
+              if (src.indexOf('//') < 0) continue
+              var origin = src.split('/').slice(0, 3).join('/')
+              if (origin === location.origin) continue
+              if (tags[i].crossOrigin) continue
+              if (found.indexOf(origin) < 0) found.push(origin)
+            }
+          } catch (ignored) {}
+          return found
+        }
+        // The browser withholds the detail of a cross-origin exception on
+        // purpose: no error object, no file, no line, and `Script error.` in
+        // place of the message. Nothing in that event names anything, so a
+        // report of it can only ever be a ticket against an unknown line of an
+        // unknown file. Because none of this page's own scripts can produce
+        // one, the thrower is code put into the page from outside it — an
+        // in-app browser's injected bridge, or an extension — which is not the
+        // site's to fix. It is still held for the page's own console, and it
+        // is still reported, naming the script, whenever the page really is
+        // carrying one the browser cannot read.
+        function muted(event) {
+          return !event.error && !event.filename && !event.lineno && !event.colno
+        }
         // Capture phase, because element load failures fire error events that do not bubble.
         window.addEventListener(
           'error',
@@ -397,8 +433,27 @@
                     ': ' +
                     (event.target.currentSrc || event.target.src || event.target.href || '')
                 )
+              } else if (muted(event)) {
+                var opaque = opaqueOrigins()
+                if (opaque.length) {
+                  report(
+                    'uncaught',
+                    event.message +
+                      ' (thrown by a script loaded without CORS from ' +
+                      opaque.join(', ') +
+                      ')'
+                  )
+                } else {
+                  hold('uncaught', event.message, '')
+                }
               } else {
-                report('uncaught', event.message, event.error && event.error.stack)
+                // An exception with no error object behind it still knows where
+                // it happened. Sending the message alone threw that away and
+                // left the report naming no file and no line.
+                var where = event.filename
+                  ? 'at ' + event.filename + ':' + (event.lineno || 0) + ':' + (event.colno || 0)
+                  : ''
+                report('uncaught', event.message, (event.error && event.error.stack) || where)
               }
             } finally {
               if (!loud) event.preventDefault()
