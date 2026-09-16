@@ -9,6 +9,7 @@ import {
 } from '@/lib/api/adminApi'
 import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
+import { removeMembershipPrompt } from '../confirmations'
 import {
   SectionCard,
   SectionHeading,
@@ -66,11 +67,7 @@ export default function AdminMemberships() {
   const handleRemove = async membership => {
     const name = clientLabel(clientMap.get(membership.user_id))
     const product = PRODUCT_LABEL[membership.product] ?? membership.product
-    const ok = await confirm({
-      title: 'Remove This Membership?',
-      body: `${name} loses access to everything the ${product.toLowerCase()} unlocks. Stripe is not touched: cancel the subscription there as well, or it keeps billing.`,
-      confirmLabel: 'Remove Membership',
-    })
+    const ok = await confirm(removeMembershipPrompt(name, product))
     if (!ok) return
     setBusyKey(`${membership.id}:remove`)
     setWriteError(null)

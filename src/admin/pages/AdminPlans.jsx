@@ -4,6 +4,7 @@ import { Button, Field, Input, MicroLabel, Select, Textarea } from '@deluxfit/ds
 import { deletePlan, getClientPlans, listClients, savePlan } from '@/lib/api/adminApi'
 import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
+import { deleteProgramPrompt } from '../confirmations'
 import {
   AdminEmpty,
   AdminLoading,
@@ -146,11 +147,7 @@ export default function AdminPlans() {
   }
 
   const handleDelete = async plan => {
-    const ok = await confirm({
-      title: 'Delete This Program?',
-      body: `“${plan.title}” and every week inside it will be removed from the client's portal. This cannot be undone.`,
-      confirmLabel: 'Delete Program',
-    })
+    const ok = await confirm(deleteProgramPrompt(plan))
     if (!ok) return
     setBusyId(plan.id)
     setFormError(null)

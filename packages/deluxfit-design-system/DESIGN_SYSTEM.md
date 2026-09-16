@@ -75,6 +75,11 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   `elevation`: `flat` · `raised`; `padded`; `as` to render it as the form itself.
 - **Card**: the surface a reader reads. Ring-first, no border of its own; `interactive`
   deepens the ring rather than lifting the card.
+- **PanelHeading**: one panel header, composed the same way everywhere — title, the `count`
+  that qualifies it, then the `actions`. The portal and the coach panel share it rather than
+  keeping a copy each.
+- **EmptyState**: nothing here yet, said as a state. Dashed edge, and the way out where there
+  is one, as a plain anchor the app's own click handler routes.
 - **PricingCard**: tier name, price, period, feature list, a recommended state named by its
   edge rather than by being scaled up, and an anchor CTA — an internal path stays in the app,
   an absolute URL opens in a new tab with `rel="noopener noreferrer"`.
@@ -96,6 +101,8 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   `SegmentedControl`'s selected ground travels on a shared layout id.
 - **SectionEyebrow / SplitHeading**: uppercase kickers, and display headings on a three-step
   scale (`page` · `section` · `sub`) with one phrase carried in the accent colour.
+- **MicroLabel**: the smallest label in the system — the word above a figure, a legend, a
+  column head. One tracking and one weight, in `md` and the denser `xs`.
 - **Marquee**: scrolling logo/label strip that loops without a visible seam (pauses on hover, freezes under reduced
   motion).
 
