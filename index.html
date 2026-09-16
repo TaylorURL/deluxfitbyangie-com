@@ -268,6 +268,47 @@
           }
           return true
         }
+        // The same fault where the stack test above cannot reach it. An
+        // in-app browser injects its bridge into the page rather than loading
+        // it from a URL, and WebKit files an injected script's frames under
+        // the document's own address — so the stack names this site on every
+        // line and `extensionOnly` correctly answers that nothing in it is an
+        // extension. The frames are foreign all the same.
+        //
+        // What answers it without a scheme to read is the message. iOS hands a
+        // web page no native bridge of its own: `window.webkit` exists only
+        // where a WKWebView host put it there, `messageHandlers` only where
+        // that host also installed a handler to receive on, and in Safari the
+        // whole path is undefined. Nothing this site serves reaches for it —
+        // the site is a web page, it has no native host to talk to, and it
+        // would have nothing to say to one if it did.
+        //
+        // So a throw evaluating that path is the host's own bridge failing to
+        // find the handler it was written against. An iPhone opening the home
+        // page from an Instagram ad is the one that arrives: the app injects a
+        // `sendDataToNative` bridge, calls it from `sendPageHideMessage` as the
+        // page goes away, and the handler is not there. The giveaway is the
+        // coordinate it files under — `:1:1325`, where line 1 of this document
+        // is `<!doctype html>` and has no column 1325. None of that code is on
+        // the site, none of it is reachable from the site, and it fails the
+        // same way on every page that app opens. Nothing a visitor sees is
+        // touched: the bridge is called on the way out, after the page is done.
+        //
+        // Both halves are required, the same as the extension test above. The
+        // stack must name no script this site serves, so a frame from the
+        // bundle means the site's own code is in the call chain and the report
+        // stands.
+        var nativeBridge = /\bwebkit\.messageHandlers\b/
+        function nativeBridgeOnly(message, stack) {
+          if (!nativeBridge.test(String(message || ''))) return false
+          var urls = String(stack || '').match(/\bhttps?:\/\/[^\s)'"]+/gi)
+          if (!urls) return false
+          var page = location.origin + location.pathname
+          for (var i = 0; i < urls.length; i += 1) {
+            if (urls[i].replace(/:\d+:\d+$/, '').split(/[?#]/)[0] !== page) return false
+          }
+          return true
+        }
         // A request the page makes writes its own failure to the console when it
         // fails, and a collector that cannot be reached would then be the loudest
         // thing on the page. The same request issued inside a worker writes
@@ -323,6 +364,7 @@
           hold(kind, message, stack)
           if (sent >= 10) return // a page stuck in an error loop stops at ten
           if (extensionOnly(stack)) return
+          if (nativeBridgeOnly(message, stack)) return
           sent += 1
           try {
             send(
