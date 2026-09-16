@@ -21,7 +21,7 @@ const CURRENT_YEAR = studioYear()
  * with the slogan set in solid above it.
  */
 export default function Footer({ children, className }) {
-  const { brand, footer, nav, header } = useContent()
+  const { brand, footer, nav } = useContent()
 
   return (
     <footer
@@ -47,8 +47,8 @@ export default function Footer({ children, className }) {
             className="max-w-[14ch]"
           />
           <Button asChild size="lg" className="w-full shrink-0 sm:w-auto">
-            <Link href={header.primaryCtaHref}>
-              {header.primaryCta}
+            <Link href={footer.ctaHref}>
+              {footer.cta}
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>

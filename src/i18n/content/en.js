@@ -97,6 +97,7 @@ const services = {
     responseTime: 'Response time: up to 72 business hours',
     ctaLabel: 'Apply Now',
     ctaHref: '/online-coaching#apply',
+    badgeLabel: 'Most Personalized',
     cardCta: 'Apply Now',
   },
   singleSession: {
@@ -1055,6 +1056,8 @@ const en = {
   },
 
   footer: {
+    cta: 'Apply for Coaching',
+    ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
       { label: 'Privacy Policy', href: '/privacy' },
@@ -1253,10 +1256,10 @@ const en = {
       latestFromCoach: 'Latest from Angie',
       noMessages: 'No messages yet. Say hello to start the conversation.',
       openMessages: 'Open Messages',
-      messagesLocked: 'Direct messaging unlocks with coaching',
+      messagesLocked: 'Join coaching to message Angie directly.',
       libraryTitle: 'Continue training',
       openLibrary: 'Open the Library',
-      libraryLocked: 'The library unlocks with a membership',
+      libraryLocked: 'Join the membership to open the library.',
       planProgress: 'of the plan complete',
       streak: 'Entries this month',
       quickActions: 'Quick actions',
