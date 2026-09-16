@@ -4,6 +4,11 @@ import { cn } from '../../lib/cn'
 import { Card } from './Card'
 
 /**
+ * A client's words, with the figure they earned set above them in the display
+ * face. The quote takes the one serif on the site: a reader expects a
+ * different voice from the person speaking, and the italic didone is that
+ * voice.
+ *
  * @param {object} props
  * @param {string} props.quote
  * @param {string} props.name
@@ -17,10 +22,22 @@ export const Testimonial = forwardRef(function Testimonial(
   ref
 ) {
   return (
-    <Card ref={ref} variant="elevated" className={cn('flex h-full flex-col', className)} {...props}>
+    <Card
+      ref={ref}
+      variant="elevated"
+      className={cn('relative flex h-full flex-col overflow-hidden', className)}
+      {...props}
+    >
+      <span
+        aria-hidden="true"
+        className="font-400 pointer-events-none absolute -right-2 -top-6 select-none font-accent text-[9rem] italic leading-none text-df-accent opacity-[0.12]"
+      >
+        &rdquo;
+      </span>
+
       {(metric || result) && (
         <div className="flex items-baseline justify-between gap-4 border-b border-df-border pb-5">
-          <span className="font-400 font-display text-[clamp(2.25rem,5vw,3.25rem)] leading-[0.85] tracking-tight text-df-accent-bright">
+          <span className="font-400 font-display text-[clamp(2.5rem,5vw,3.75rem)] leading-[0.85] tracking-[-0.02em] text-df-accent-bright">
             {metric ?? result}
           </span>
           <div className="flex gap-1" aria-label={`${rating} out of 5 stars`}>
@@ -38,7 +55,7 @@ export const Testimonial = forwardRef(function Testimonial(
         </div>
       )}
 
-      <blockquote className="mt-6 flex-1 font-accent text-lg italic leading-relaxed text-df-text sm:text-xl">
+      <blockquote className="mt-6 flex-1 font-accent text-xl italic leading-relaxed text-df-text sm:text-2xl">
         “{quote}”
       </blockquote>
 
@@ -54,7 +71,7 @@ export const Testimonial = forwardRef(function Testimonial(
             className="h-11 w-11 rounded-df-full object-cover ring-2 ring-df-border-strong"
           />
         ) : (
-          <span className="font-400 flex h-11 w-11 items-center justify-center rounded-df-full bg-df-accent-soft font-display text-lg text-df-accent-bright">
+          <span className="font-400 flex h-11 w-11 items-center justify-center rounded-df-full bg-df-accent bg-df-accent-gradient font-display text-lg text-df-on-accent">
             {name?.charAt(0) ?? '?'}
           </span>
         )}

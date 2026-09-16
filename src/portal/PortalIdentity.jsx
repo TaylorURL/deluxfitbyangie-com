@@ -1,10 +1,11 @@
-import { Badge, MicroLabel } from '@deluxfit/ds'
+import { Badge } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 
 /**
- * Whose portal this is, said once at the top of it. The monogram is the first
- * letter of the name on the account rather than a photograph: nobody uploads
- * one, and an empty avatar ring is a hole in the page every time it renders.
+ * Whose portal this is, said once at the top of it on a phone, where there is
+ * no rail to carry it. The monogram is the first letter of the name on the
+ * account rather than a photograph: nobody uploads one, and an empty avatar
+ * ring is a hole in the page every time it renders.
  */
 export default function PortalIdentity({ displayName, entitlements }) {
   const { portal } = useContent()
@@ -12,34 +13,31 @@ export default function PortalIdentity({ displayName, entitlements }) {
   const monogram = (displayName.trim()[0] || '·').toUpperCase()
 
   return (
-    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-b border-df-border pb-6">
-      <div className="flex min-w-0 items-center gap-4">
+    <header className="flex items-center justify-between gap-4 lg:hidden">
+      <div className="flex min-w-0 items-center gap-3">
         <span
           aria-hidden="true"
-          className="font-400 flex h-12 w-12 shrink-0 items-center justify-center rounded-df-md bg-df-accent-soft font-display text-2xl leading-none text-df-accent-bright"
+          className="font-400 flex h-11 w-11 shrink-0 items-center justify-center rounded-df-full bg-df-accent bg-df-accent-gradient font-display text-xl leading-none text-df-on-accent"
         >
           {monogram}
         </span>
         <div className="min-w-0">
-          <MicroLabel size="xs" tone="faint">
+          <p className="text-[10px] font-700 uppercase tracking-[0.2em] text-df-text-faint">
             {portal.brandLockup}
-          </MicroLabel>
-          <h1 className="font-400 truncate font-display text-2xl uppercase leading-tight tracking-tight text-df-text sm:text-3xl">
-            {displayName}
-          </h1>
+          </p>
+          <p className="truncate text-[15px] font-600 text-df-text">{displayName}</p>
         </div>
       </div>
 
       {(hasMembership || hasCoaching) && (
-        <div className="hidden flex-wrap items-center gap-2 sm:flex">
-          {hasMembership && (
-            <Badge tone="positive" variant="soft" size="md">
-              {portal.overview.membershipStatus}
-            </Badge>
-          )}
-          {hasCoaching && (
-            <Badge tone="accent" variant="soft" size="md">
+        <div className="flex shrink-0 items-center gap-1.5">
+          {hasCoaching ? (
+            <Badge tone="accent" variant="solid" size="sm">
               {portal.overview.coachingStatus}
+            </Badge>
+          ) : (
+            <Badge tone="positive" variant="soft" size="sm">
+              {portal.overview.membershipStatus}
             </Badge>
           )}
         </div>

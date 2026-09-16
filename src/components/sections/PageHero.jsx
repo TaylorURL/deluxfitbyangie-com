@@ -4,6 +4,11 @@ import { Link } from '@/router'
 import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 
 /**
+ * The first screen of every inner page. The headline fills the column; behind
+ * it the ground carries a dot grid and one large crimson bloom off the top
+ * corner, so the page opens on the brand before a word is read. The grain on
+ * top is what keeps the black from reading as an unloaded screen.
+ *
  * @param {object} props
  * @param {string} props.eyebrow
  * @param {string} props.heading - the page's h1; every route that renders this
@@ -17,21 +22,29 @@ import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 export default function PageHero({ eyebrow, heading, accent, subhead, primary, secondary, aside }) {
   const hasAside = Boolean(aside)
   return (
-    <section className="relative isolate overflow-hidden bg-df-bg pb-12 pt-[calc(var(--df-header-height)+1.5rem)] sm:pb-16">
+    <section className="df-grain relative isolate overflow-hidden bg-df-bg pb-14 pt-[calc(var(--df-header-height)+2rem)] sm:pb-20 sm:pt-[calc(var(--df-header-height)+3.5rem)]">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_85%_5%,var(--df-accent-wash-soft),transparent_60%)]"
+        className="df-grid pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(70%_60%_at_50%_0%,#000,transparent_80%)]"
       />
-      <AnimatedBackdrop variant="aurora" opacity={0.4} />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 right-[-10%] -z-10 h-[38rem] w-[38rem] rounded-df-full bg-[radial-gradient(closest-side,var(--df-accent-wash-strong),transparent)] blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-px bg-[linear-gradient(90deg,transparent,var(--df-accent),transparent)] opacity-60"
+      />
+      <AnimatedBackdrop variant="aurora" opacity={0.35} />
       <Container size="lg">
         <div
           className={
             hasAside
-              ? 'grid items-end gap-10 sm:gap-12 lg:grid-cols-[1.35fr_1fr]'
+              ? 'grid items-end gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16'
               : 'flex flex-col items-start'
           }
         >
-          <div className="flex max-w-3xl animate-df-rise flex-col items-start motion-reduce:animate-none">
+          <div className="flex max-w-4xl animate-df-rise flex-col items-start motion-reduce:animate-none">
             {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
             {heading && (
               <SplitHeading
@@ -39,16 +52,16 @@ export default function PageHero({ eyebrow, heading, accent, subhead, primary, s
                 size="page"
                 text={heading}
                 accent={accent}
-                className="mt-5 max-w-[17ch] sm:mt-6"
+                className="mt-7 max-w-[15ch] sm:mt-8"
               />
             )}
             {subhead && (
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-df-text-muted sm:mt-8 sm:text-xl">
                 {subhead}
               </p>
             )}
             {(primary || secondary) && (
-              <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
                 {primary && (
                   <Button asChild size="lg" className="w-full sm:w-auto">
                     <Link href={primary.href}>

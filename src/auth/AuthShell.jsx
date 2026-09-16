@@ -1,11 +1,14 @@
 import { ArrowLeft } from 'lucide-react'
-import { Container } from '@deluxfit/ds'
+import { Container, SplitHeading } from '@deluxfit/ds'
 import SplitRail from '@taylorurl/split-rail'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import BrandLogo from '@/components/layout/BrandLogo'
 import ShellAction from '@/components/layout/ShellAction'
 import { studioYear } from '@/lib/timezone'
+import { imageBox, imageSrcSet } from '@/lib/images'
+
+const PANEL_PHOTO = '/brand/studio-red-mat-seated.webp'
 
 export default function AuthShell({ children }) {
   const { brand, portal } = useContent()
@@ -32,8 +35,43 @@ export default function AuthShell({ children }) {
         </Container>
       </header>
 
-      <main className="flex flex-1 items-start px-5 py-10 sm:items-center sm:py-16">
-        <div className="mx-auto w-full max-w-md">{children}</div>
+      {/* The card alone in the middle of a wide screen is a form in a void.
+          Past the desktop breakpoint the left five columns carry a photograph
+          under the slogan, so the sign-in reads as a door into the same site
+          rather than a widget from somewhere else. The phone gets the card
+          alone: there is no room beside it, and the photo would only push the
+          first field below the fold. */}
+      <main className="flex flex-1">
+        <div className="grid w-full lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          <aside
+            aria-hidden="true"
+            className="relative hidden overflow-hidden border-r border-df-border bg-df-surface lg:block"
+          >
+            <img
+              src={PANEL_PHOTO}
+              srcSet={imageSrcSet(PANEL_PHOTO)}
+              sizes="(min-width: 1024px) 42vw, 0px"
+              width={imageBox(PANEL_PHOTO)?.width}
+              height={imageBox(PANEL_PHOTO)?.height}
+              alt=""
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover object-[55%_30%]"
+            />
+            <div className="from-df-bg/90 via-df-bg/20 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-10 xl:p-14">
+              <SplitHeading
+                as="p"
+                size="section"
+                text={`${brand.slogan}.`}
+                accent="."
+                className="max-w-[12ch]"
+              />
+            </div>
+          </aside>
+          <div className="flex items-start px-5 py-10 sm:items-center sm:py-16">
+            <div className="mx-auto w-full max-w-md">{children}</div>
+          </div>
+        </div>
       </main>
 
       <footer className="border-t border-df-border">

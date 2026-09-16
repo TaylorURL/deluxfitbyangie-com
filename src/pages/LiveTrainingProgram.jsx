@@ -59,35 +59,32 @@ export default function LiveTrainingProgram() {
       <Section
         heading={training.recommendation.heading}
         accent={training.recommendation.accent}
-        containerSize="md"
+        layout="split"
       >
         <Reveal>
-          <div className="grid grid-cols-1 gap-y-8 border-t border-df-border pt-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 sm:pt-10 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-y-8 border-t border-df-border pt-8 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-10 sm:pt-10">
             <StatBlock
               value={service.price}
               label={training.recommendation.perSessionLabel}
-              size="giant"
               align="left"
               accent
             />
             <StatBlock
               value={sessionsPerWeek}
               label={training.recommendation.sessionsLabel}
-              size="giant"
               align="left"
             />
             {weekly && (
               <StatBlock
                 value={weekly}
                 label={training.recommendation.weeklyLabel}
-                size="giant"
                 align="left"
                 accent
               />
             )}
           </div>
-          <div className="mt-8 grid items-center gap-8 sm:grid-cols-[1.2fr_1fr] sm:gap-10">
-            <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
+          <div className="mt-10 grid items-center gap-8 sm:grid-cols-[1.2fr_1fr] sm:gap-10">
+            <p className="max-w-[52ch] text-base leading-relaxed text-df-text-muted sm:text-lg">
               {training.recommendation.body}
             </p>
             <ArtPlate

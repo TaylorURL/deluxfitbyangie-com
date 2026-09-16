@@ -64,13 +64,22 @@
    * two above them exist for a full-bleed sheet and are used by the drawer and
    * the modal alone.
    */
-  --df-radius-xs: 4px;
-  --df-radius-sm: 6px;
-  --df-radius-md: 8px;
-  --df-radius-lg: 12px;
-  --df-radius-xl: 16px;
-  --df-radius-2xl: 20px;
+  --df-radius-xs: 6px;
+  --df-radius-sm: 10px;
+  --df-radius-md: 14px;
+  --df-radius-lg: 20px;
+  --df-radius-xl: 28px;
+  --df-radius-2xl: 36px;
   --df-radius-full: 9999px;
+
+  /*
+   * The ground's texture. A dark interface with nothing on it reads as a
+   * screen that has not loaded; a fine grain and a faint dot grid give the
+   * eye something to measure the type against. Both are drawn by the
+   * stylesheet alone, at an opacity the reader feels rather than sees.
+   */
+  --df-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --df-grid-size: 32px;
 
   /* Control heights. One scale shared by input, select and button, so a field
      and the key beside it line up without either being tuned to the other.
@@ -173,6 +182,23 @@
   --df-accent-softer: rgba(225, 29, 42, 0.09);
   --df-on-accent: #ffffff;
 
+  /* The red as a surface. A filled key, the recommended tier's header and the
+     focus card on the dashboard take the gradient rather than the flat fill:
+     it is the same crimson with a light on it, which is what makes a red
+     block read as a thing with a form rather than as a warning. */
+  --df-accent-gradient: linear-gradient(135deg, #ff4d59 0%, #e11d2a 48%, #a8121c 100%);
+  --df-accent-gradient-hover: linear-gradient(135deg, #ff5f6a 0%, #ec2431 48%, #b3141e 100%);
+
+  /* The light that falls on a raised surface: a one-pixel highlight along its
+     top edge, and a gradient that runs a shade lighter at the top than at the
+     bottom. Together they are what lets a card on a black ground read as lit
+     from above rather than cut out of paper. */
+  --df-edge-light: rgba(255, 255, 255, 0.07);
+  --df-surface-gradient: linear-gradient(180deg, #1c1c21 0%, #141418 100%);
+  --df-surface-gradient-elevated: linear-gradient(180deg, #232329 0%, #1a1a1f 100%);
+  --df-grid-ink: rgba(255, 255, 255, 0.075);
+  --df-grid: radial-gradient(circle at 1px 1px, var(--df-grid-ink) 1px, transparent 1.5px);
+
   /* Semantic */
   --df-positive: #34d399;
   --df-positive-soft: rgba(52, 211, 153, 0.14);
@@ -260,6 +286,14 @@
   --df-accent-softer: rgba(189, 21, 33, 0.06);
   --df-on-accent: #ffffff;
 
+  --df-accent-gradient: linear-gradient(135deg, #e11d2a 0%, #bd1521 52%, #9c141e 100%);
+  --df-accent-gradient-hover: linear-gradient(135deg, #ec2431 0%, #c8171f 52%, #a5151f 100%);
+  --df-edge-light: rgba(255, 255, 255, 0.85);
+  --df-surface-gradient: linear-gradient(180deg, #ffffff 0%, #faf7f3 100%);
+  --df-surface-gradient-elevated: linear-gradient(180deg, #ffffff 0%, #f5f1ec 100%);
+  --df-grid-ink: rgba(15, 15, 15, 0.1);
+  --df-grid: radial-gradient(circle at 1px 1px, var(--df-grid-ink) 1px, transparent 1.5px);
+
   --df-positive: #047857;
   --df-positive-soft: rgba(4, 120, 87, 0.12);
   --df-warning: #b45309;
@@ -336,6 +370,14 @@
   --df-accent-softer: rgba(225, 29, 42, 0.1);
   --df-on-accent: #ffffff;
 
+  --df-accent-gradient: linear-gradient(135deg, #ff4d59 0%, #e11d2a 48%, #a8121c 100%);
+  --df-accent-gradient-hover: linear-gradient(135deg, #ff5f6a 0%, #ec2431 48%, #b3141e 100%);
+  --df-edge-light: rgba(255, 255, 255, 0.09);
+  --df-surface-gradient: linear-gradient(180deg, #42424a 0%, #3a3a42 100%);
+  --df-surface-gradient-elevated: linear-gradient(180deg, #4c4c55 0%, #45454d 100%);
+  --df-grid-ink: rgba(255, 255, 255, 0.1);
+  --df-grid: radial-gradient(circle at 1px 1px, var(--df-grid-ink) 1px, transparent 1.5px);
+
   --df-positive: #34d399;
   --df-positive-soft: rgba(52, 211, 153, 0.14);
   --df-warning: #fbbf24;
@@ -384,14 +426,14 @@
 [data-theme] {
   --df-shadow-sm: 0 0 0 1px var(--df-border);
   --df-shadow-md:
-    0 0 0 1px var(--df-border), 0 1px 2px var(--df-shadow-ambient),
-    0 8px 24px -12px var(--df-shadow-key);
+    inset 0 1px 0 var(--df-edge-light), 0 0 0 1px var(--df-border),
+    0 1px 2px var(--df-shadow-ambient), 0 12px 32px -14px var(--df-shadow-key);
   --df-shadow-lg:
-    0 0 0 1px var(--df-border-strong), 0 2px 4px var(--df-shadow-ambient),
-    0 14px 32px -14px var(--df-shadow-key);
+    inset 0 1px 0 var(--df-edge-light), 0 0 0 1px var(--df-border-strong),
+    0 2px 4px var(--df-shadow-ambient), 0 20px 48px -18px var(--df-shadow-key);
   --df-shadow-xl:
-    0 0 0 1px var(--df-border-strong), 0 4px 10px var(--df-shadow-ambient),
-    0 32px 64px -24px var(--df-shadow-key);
+    inset 0 1px 0 var(--df-edge-light), 0 0 0 1px var(--df-border-strong),
+    0 4px 10px var(--df-shadow-ambient), 0 40px 80px -28px var(--df-shadow-key);
 
   /* What a key carries under it, and the softer step a ringed one takes. */
   --df-key-lift: 0 1px 1px var(--df-shadow-ambient), 0 2px 5px -1px var(--df-shadow-key);
@@ -401,8 +443,9 @@
      contact shadow rather than as a halo, which is what lets a screen carry
      more than one of them without any of them shouting. */
   --df-shadow-accent:
-    0 0 0 1px var(--df-accent), 0 2px 4px var(--df-shadow-ambient),
-    0 14px 32px -14px var(--df-shadow-key);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px var(--df-accent),
+    0 2px 4px var(--df-shadow-ambient), 0 20px 48px -18px var(--df-shadow-key),
+    0 0 48px -12px var(--df-accent-soft);
   --df-shadow-glow-soft: 0 0 0 1px var(--df-accent-deep), var(--df-key-lift-soft);
 
   /* The focus signature: a solid ring on the control's own edge and a soft
@@ -431,6 +474,50 @@
   background-color: var(--df-bg);
   color: var(--df-text);
   font-family: var(--df-font-sans);
+}
+
+/*
+ * The two textures, as classes a section asks for rather than as something the
+ * whole page wears. Grain sits on the heroes and the closing bands, where a
+ * flat black would otherwise read as unloaded; the grid sits behind a panel of
+ * figures, where it says the surface is measured.
+ */
+.df-grain {
+  position: relative;
+}
+.df-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--df-grain);
+  background-size: 160px 160px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+[data-theme='light'] .df-grain::before {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+.df-grid {
+  background-image: var(--df-grid);
+  background-size: var(--df-grid-size) var(--df-grid-size);
+}
+
+/* Display type drawn as an outline. It is the wordmark as a watermark and the
+   figure behind a figure: the same face at the same size with the ink taken
+   out, so it holds the composition without competing with the line set in
+   solid beside it. */
+.df-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--df-border-strong);
+  paint-order: stroke fill;
+}
+.df-outline-accent {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--df-accent);
+  paint-order: stroke fill;
 }
 
 /* A native checkbox or radio paints its own tick in the browser's blue unless

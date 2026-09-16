@@ -26,12 +26,12 @@ import { SplitHeading } from '../typography/SplitHeading'
  */
 export function PanelHeading({ title, count, intro, actions, className }) {
   return (
-    <header className={cn('mb-7 border-b border-df-border pb-5', className)}>
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <SplitHeading size="sub" text={`${title}.`} accent="." className="min-w-0" />
+    <header className={cn('mb-7 flex flex-col gap-3', className)}>
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+        <div className="flex min-w-0 items-end gap-3">
+          <SplitHeading size="section" text={`${title}.`} accent="." className="min-w-0" />
           {count != null && (
-            <Badge tone="neutral" variant="soft" size="md" className="tabular-nums">
+            <Badge tone="neutral" variant="soft" size="md" className="mb-2 tabular-nums">
               {count}
             </Badge>
           )}
@@ -39,9 +39,7 @@ export function PanelHeading({ title, count, intro, actions, className }) {
         {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
       </div>
       {intro && (
-        <p className="mt-3 max-w-df-measure text-[15px] leading-relaxed text-df-text-muted">
-          {intro}
-        </p>
+        <p className="max-w-df-measure text-[15px] leading-relaxed text-df-text-muted">{intro}</p>
       )}
     </header>
   )

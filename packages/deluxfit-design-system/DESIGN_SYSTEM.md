@@ -47,23 +47,32 @@ Tokens are the single source of truth, exposed two ways:
    plus a literal `red-*` / `brand-*` crimson scale. The app's `tailwind.config.js` extends
    this preset.
 
-| Group     | Examples                                                                                                                                                       |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Surfaces  | `bg-df-bg`, `bg-df-surface`, `bg-df-surface-2`, `bg-df-surface-3`                                                                                              |
-| Borders   | `border-df-border`, `border-df-border-strong`, `border-df-border-hover`                                                                                        |
-| Text      | `text-df-text`, `text-df-text-muted`, `text-df-text-faint`                                                                                                     |
-| Accent    | `bg-df-accent`, `text-df-accent-bright`, `bg-df-accent-soft`                                                                                                   |
-| Brand red | `text-red-600`, `bg-brand-700` (literal 50-950 crimson scale)                                                                                                  |
-| Semantic  | `text-df-positive`, `text-df-warning`, `text-df-danger`                                                                                                        |
-| Fields    | `bg-df-field`, `bg-df-field-hover`, `border-df-border-input`                                                                                                   |
-| Radii     | `rounded-df-xs` (4px) · `sm` (6) · `md` (8) · `lg` (12) · `xl` (16) · `2xl` (20) · `full`                                                                      |
-| Shadows   | `shadow-df-sm` · `md` · `lg` · `xl` (ring first, then ambient, then key), `shadow-df-key` / `key-soft` (a control's contact light), `shadow-df-ring` (focus)   |
-| Controls  | `h-df-control-sm` (36px) · `h-df-control` (44) · `h-df-control-lg` (52); `h-df-bar` for the floating navigation bar                                            |
-| Widths    | `max-w-df-measure` (68ch, the reading measure)                                                                                                                 |
-| Fonts     | `font-display` (Anton), `font-accent` (Bodoni Moda, pull quotes only), `font-sans` (Inter)                                                                     |
-| Motion    | `duration-df-fast` (120ms) · `df-base` (180) · `df-slow` (260); `ease-df-out`, `ease-df-in-out`; `animate-df-rise`, `animate-df-shimmer`, `animate-df-marquee` |
+| Group     | Examples                                                                                                                                                                       |
+| :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Surfaces  | `bg-df-bg`, `bg-df-surface`, `bg-df-surface-2`, `bg-df-surface-3`                                                                                                              |
+| Borders   | `border-df-border`, `border-df-border-strong`, `border-df-border-hover`                                                                                                        |
+| Text      | `text-df-text`, `text-df-text-muted`, `text-df-text-faint`                                                                                                                     |
+| Accent    | `bg-df-accent`, `text-df-accent-bright`, `bg-df-accent-soft`                                                                                                                   |
+| Brand red | `text-red-600`, `bg-brand-700` (literal 50-950 crimson scale)                                                                                                                  |
+| Semantic  | `text-df-positive`, `text-df-warning`, `text-df-danger`                                                                                                                        |
+| Fields    | `bg-df-field`, `bg-df-field-hover`, `border-df-border-input`                                                                                                                   |
+| Radii     | `rounded-df-xs` (6px) · `sm` (10) · `md` (14) · `lg` (20) · `xl` (28) · `2xl` (36) · `full`                                                                                    |
+| Gradients | `bg-df-accent-gradient` (the red with a light on it, for a filled key, a band, the focus card), `bg-df-surface-gradient` / `-elevated` (a card lit from above)                 |
+| Textures  | `.df-grain` (a fine noise over a hero or a closing band), `.df-grid` (the dot grid behind a panel of figures), `.df-outline` (display type as a hairline)                      |
+| Shadows   | `shadow-df-sm` · `md` · `lg` · `xl` (an edge light, then the ring, then ambient, then key), `shadow-df-key` / `key-soft` (a control's contact light), `shadow-df-ring` (focus) |
+| Controls  | `h-df-control-sm` (36px) · `h-df-control` (44) · `h-df-control-lg` (52); `h-df-bar` for the floating navigation bar                                                            |
+| Widths    | `max-w-df-measure` (68ch, the reading measure)                                                                                                                                 |
+| Fonts     | `font-display` (Anton), `font-accent` (Bodoni Moda, pull quotes only), `font-sans` (Inter)                                                                                     |
+| Motion    | `duration-df-fast` (120ms) · `df-base` (180) · `df-slow` (260); `ease-df-out`, `ease-df-in-out`; `animate-df-rise`, `animate-df-shimmer`, `animate-df-marquee`                 |
 
 ## Components
+
+The language in one paragraph: the display face runs large and tight, every key is a pill,
+the eyebrow is a chip with a live red dot, a raised surface is lit from above by a one-pixel
+highlight and a gradient that runs a shade lighter at the top, and the brand red is spent on
+three things only: the filled key, the band across the recommended tier, and the one focus
+card on the dashboard. The `SplitHeading` scale has five steps (`hero`, `page`, `section`,
+`sub`, `card`) and every heading on the site is chosen from it.
 
 All components are `cva`-based, composable, accessible, and theme-bound.
 
@@ -82,7 +91,9 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   is one, as a plain anchor the app's own click handler routes.
 - **PricingCard**: tier name, price, period, feature list, a recommended state named by its
   edge rather than by being scaled up, and an anchor CTA — an internal path stays in the app,
-  an absolute URL opens in a new tab with `rel="noopener noreferrer"`.
+  an absolute URL opens in a new tab with `rel="noopener noreferrer"`. The card is its own
+  container: past twenty-five rems of content width the tier and figure take a left column
+  and the inclusions run beside them, which is the shape it holds in a two-across grid.
 - **Testimonial**: quote, star rating, avatar (monogram fallback), name, result.
 - **Stat / StatBlock**: a figure with its unit and, where there is one, the change from
   before — carried by an arrow as well as a colour, with `goodDirection` deciding which way
@@ -110,7 +121,10 @@ All components are `cva`-based, composable, accessible, and theme-bound.
 
 - **Container**: width-capped, centered, responsive gutters (`sm` to `full`).
 - **Section**: vertical rhythm band with an optional reveal-on-scroll header
-  (eyebrow, then heading, then subhead) and inner Container.
+  (eyebrow, then heading, then subhead) and inner Container. `layout="split"` puts the
+  header in a column of its own on a wide screen and holds it there while the content beside
+  it scrolls, which is the shape a run of prose takes instead of one heading over a wall of
+  text with half the screen empty.
 
 ## Motion
 
@@ -125,6 +139,17 @@ reconsidered as the page's largest paint. So the first screen arrives on the
 compositor rather than on a frame loop, which is also what makes it arrive in a
 tab the browser has throttled. `onMount` and `fade={false}` give `Reveal` the
 same two properties where a component needs them.
+
+## Figma
+
+The system lives in Figma as well, at
+[DeluxFit by Angie](https://www.figma.com/design/NrUxA2MvrolnUwDUxcPbpJ): the `--df-*`
+tokens as variables (a `Color` collection with Dark, Light and Gray modes, plus Primitives,
+Spacing, Radius and Sizing), the type ramp as text styles, the ring-first elevation scale as
+effect styles, the components above as token-bound component sets, every public route drawn
+at 1440 with the home page at 390, and the signed-in surfaces: the login pair and the client
+portal's Today view on the Auth & Portal page. Each variable carries its CSS name in its code
+syntax, so Dev Mode reads the same token the stylesheet does.
 
 ## Exports
 

@@ -40,6 +40,11 @@ const TONE_THEME = { dark: 'dark', light: 'light', gray: 'gray' }
  * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.containerSize='lg'] - inner Container width
  * @param {boolean} [props.bare] - skip the inner Container/header entirely
  * @param {'dark'|'light'|'gray'} [props.tone] - section surface context
+ * @param {'stack'|'split'} [props.layout='stack'] - where the header sits. `stack`
+ *   puts it above the content; `split` puts it in a column of its own on a wide
+ *   screen and holds it there while the content beside it scrolls, which is
+ *   what stops a page of prose reading as one heading over a wall of text with
+ *   half the screen empty
  */
 export const Section = forwardRef(function Section(
   {
@@ -53,6 +58,7 @@ export const Section = forwardRef(function Section(
     containerSize = 'lg',
     bare = false,
     tone,
+    layout = 'stack',
     children,
     as: Component = 'section',
     ...props
@@ -60,15 +66,20 @@ export const Section = forwardRef(function Section(
   ref
 ) {
   const hasHeader = Boolean(eyebrow || heading || subhead)
-  const centered = align === 'center'
+  const centered = align === 'center' && layout !== 'split'
+  const split = layout === 'split' && hasHeader
   const themeAttr = tone ? TONE_THEME[tone] : undefined
 
   return (
     <Component
       ref={ref}
       data-theme={themeAttr}
+      // `clip` rather than `hidden`: both contain the washes a section paints
+      // past its own edge, but `hidden` also makes the section the thing a
+      // sticky child sticks to, which pins the split header to a box that
+      // scrolls away with it rather than to the screen.
       className={cn(
-        'relative overflow-hidden',
+        'relative overflow-clip',
         themeAttr && 'bg-df-bg text-df-text',
         SPACE[space] ?? SPACE.lg,
         className
@@ -80,13 +91,19 @@ export const Section = forwardRef(function Section(
       ) : (
         <Container
           size={containerSize}
-          className={cn('flex flex-col', hasHeader && 'gap-8 sm:gap-12')}
+          className={cn(
+            split
+              ? 'grid gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-x-16'
+              : cn('flex flex-col', hasHeader && 'gap-8 sm:gap-12')
+          )}
         >
           {hasHeader && (
             <Reveal
               className={cn(
                 'flex flex-col',
-                centered ? 'items-center text-center' : 'items-start text-left'
+                centered ? 'items-center text-center' : 'items-start text-left',
+                split &&
+                  'lg:sticky lg:top-[calc(var(--df-header-height)+2rem)] lg:col-span-5 lg:self-start'
               )}
             >
               {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
@@ -94,7 +111,11 @@ export const Section = forwardRef(function Section(
                 <SplitHeading
                   text={heading}
                   accent={accent}
-                  className={cn('mt-4 sm:mt-6', centered ? 'max-w-[18ch]' : 'max-w-[20ch]')}
+                  className={cn(
+                    'mt-4 sm:mt-6',
+                    centered ? 'max-w-[18ch]' : 'max-w-[20ch]',
+                    split && 'lg:max-w-[14ch]'
+                  )}
                 />
               )}
               {subhead && (
@@ -109,7 +130,7 @@ export const Section = forwardRef(function Section(
               )}
             </Reveal>
           )}
-          <div>{children}</div>
+          <div className={cn(split && 'min-w-0 lg:col-span-7')}>{children}</div>
         </Container>
       )}
     </Component>

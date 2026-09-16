@@ -12,9 +12,9 @@ import { cn } from '../../lib/cn'
  * box. Where two files style the same kind of surface differently, one of them
  * is wrong even though both look fine alone.
  */
-const panelVariants = cva('rounded-df-lg bg-df-surface', {
+const panelVariants = cva('rounded-df-xl bg-df-surface bg-df-surface-gradient', {
   variants: {
-    elevation: { flat: 'shadow-df-sm', raised: 'shadow-df-md' },
+    elevation: { flat: 'shadow-df-sm', raised: 'shadow-df-lg' },
     padded: { true: 'p-5 sm:p-8', false: '' },
   },
   defaultVariants: { elevation: 'raised', padded: true },

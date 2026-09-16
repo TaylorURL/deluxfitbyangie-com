@@ -23,7 +23,12 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
     >
       <AnimatedBackdrop variant="particles" opacity={0.5} />
 
-      <div className="grid items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
+      {/* Two by two rather than four across. At four across inside the reading
+          width each card is under three hundred pixels, which sets the price
+          small and wraps every inclusion; at two across the card is wide enough
+          to lay the figure beside the list, and four programs still fit one
+          screen. */}
+      <div className="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-2">
         {ordered.map((service, index) => (
           <Reveal key={service.id} delay={index * 0.06} className="flex">
             <PricingCardLink
