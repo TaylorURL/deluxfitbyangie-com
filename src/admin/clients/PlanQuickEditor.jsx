@@ -5,6 +5,7 @@ import { deletePlan, savePlan } from '@/lib/api/adminApi'
 import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import { AdminEmpty, StatusBadge, fmtDate } from '../AdminPrimitives'
+import { deleteProgramPrompt } from '../confirmations'
 
 const emptyForm = () => ({ id: null, title: '', summary: '', status: 'draft', weeks: '' })
 
@@ -93,11 +94,7 @@ export default function PlanQuickEditor({ clientId, plans, reload }) {
   }
 
   const handleDelete = async plan => {
-    const ok = await confirm({
-      title: 'Delete This Program?',
-      body: `“${plan.title}” and every week inside it will be removed from the client's portal. This cannot be undone.`,
-      confirmLabel: 'Delete Program',
-    })
+    const ok = await confirm(deleteProgramPrompt(plan))
     if (!ok) return
     const id = plan.id
     setDeletingId(id)

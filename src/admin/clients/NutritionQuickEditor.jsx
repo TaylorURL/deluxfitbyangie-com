@@ -5,6 +5,7 @@ import { deleteNutrition, saveNutrition } from '@/lib/api/adminApi'
 import { useConfirm } from '@/components/ui/ConfirmDialog'
 import { FormError, FormSuccess } from '@/components/forms/FormFeedback'
 import { AdminEmpty, StatusBadge, fmtDate } from '../AdminPrimitives'
+import { deleteNutritionPlanPrompt } from '../confirmations'
 
 const emptyForm = () => ({
   id: null,
@@ -124,11 +125,7 @@ export default function NutritionQuickEditor({ clientId, nutrition, reload }) {
   }
 
   const handleDelete = async plan => {
-    const ok = await confirm({
-      title: 'Delete This Nutrition Plan?',
-      body: `“${plan.title || 'This plan'}” will be removed from the client's portal, along with its macros, meals and notes. This cannot be undone.`,
-      confirmLabel: 'Delete Plan',
-    })
+    const ok = await confirm(deleteNutritionPlanPrompt(plan))
     if (!ok) return
     const id = plan.id
     setDeleting(true)

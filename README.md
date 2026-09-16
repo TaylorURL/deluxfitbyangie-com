@@ -56,7 +56,7 @@ Most trainer sites sell a service and then hand the client off to a spreadsheet 
 | UI | React 19 + a hand-rolled SPA router (no `react-router`) |
 | Build & dev | Vite 7 (Node `22.x`) |
 | Styling | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens), Anton / Bodoni Moda / Inter self-hosted from `public/fonts` |
-| Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl` |
+| Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl`, `@taylorurl/split-rail` for the attribution rail |
 | Backend | Supabase: Auth, Postgres + RLS, 15 Deno edge functions |
 | Payments | Stripe Checkout, driven entirely from the edge functions |
 | i18n | Custom English / Spanish content trees |
@@ -73,7 +73,7 @@ npm run dev           # Vite dev server
 npm run build         # production build to dist/
 ```
 
-No environment configuration is required. The Supabase URL and publishable key are baked into `src/config/supabase.js`, so the app runs as-is.
+No environment configuration is required. The Supabase URL and publishable key are baked into `src/config/supabase.js`, so the app runs as-is. `.env.example` lists the two overrides that exist, for pointing a clone at a different Supabase project.
 
 | Variable | Purpose |
 | :--- | :--- |
@@ -133,6 +133,7 @@ flowchart TD
 ```
 deluxfitbyangie-com/
 ├── public/
+│   ├── art/                       Drawn SVG plates: the training week and the progression block
 │   ├── brand/                     Studio + gym brand photography (WebP, 480/800/1200/full)
 │   ├── fonts/                     Anton, Inter and Bodoni Moda, latin subsets
 │   ├── deluxfit-logo.webp         Wordmark used across the app
@@ -151,7 +152,7 @@ deluxfitbyangie-com/
 ├── src/
 │   ├── router/                    Hand-rolled SPA router (path match + <Link>)
 │   ├── pages/                     Home, Membership, OnlineCoaching, SingleSession,
-│   │                              LiveTrainingProgram, About, Testimonials, Contact
+│   │                              LiveTrainingProgram, About, Testimonials, Contact, NotFound
 │   │   ├── auth/                  Login, Signup, ResetPassword, UpdatePassword
 │   │   └── legal/                 LegalPage and the Privacy and Terms wrappers
 │   ├── components/
@@ -165,12 +166,13 @@ deluxfitbyangie-com/
 │   ├── auth/                      Supabase Auth provider, protected routes, roles
 │   ├── portal/                    Signed-in member portal and its panels
 │   ├── admin/                     Staff-gated coach dashboard
-│   ├── lib/                       datetime, timezone, image sources, sparkline
+│   ├── lib/                       datetime, timezone, image sources, sparkline, lazy-chunk
+│   │                              loading, software-renderer detection
 │   │   └── api/                   Supabase data layer: payments, booking, portal/admin
 │   ├── i18n/                      English + Spanish content trees
-│   └── config/supabase.js         Browser Supabase client
+│   └── config/                    Browser Supabase client and the canonical site origin
 ├── api/version.js                 Reports the commit the deployment was built from
-├── vite.config.js                 `@` and `@deluxfit/ds` aliases, chunking
+├── vite.config.js                 `@` and `@deluxfit/ds` aliases, chunking, sitemap.xml
 └── vercel.json                    SPA rewrites + security headers
 ```
 

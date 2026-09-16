@@ -19,6 +19,7 @@ import {
 } from '../AdminPrimitives'
 import ContentRow from '../content/ContentRow'
 import ClientAssignList from '../content/ClientAssignList'
+import { deleteLibraryItemPrompt } from '../confirmations'
 import {
   ACCESS_LEVEL_OPTIONS,
   CATEGORY_OPTIONS,
@@ -166,11 +167,7 @@ export default function AdminContent() {
   }
 
   const handleDelete = async item => {
-    const ok = await confirm({
-      title: 'Delete This Item?',
-      body: `“${item.title}” will be removed from the library for everyone it is assigned to. This cannot be undone.`,
-      confirmLabel: 'Delete Item',
-    })
+    const ok = await confirm(deleteLibraryItemPrompt(item))
     if (!ok) return
     setBusyId(item.id)
     setFormError(null)
