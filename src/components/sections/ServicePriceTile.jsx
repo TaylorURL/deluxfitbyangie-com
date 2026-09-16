@@ -96,7 +96,7 @@ export default function ServicePriceTile({ service, includes, note, recommended 
         </Button>
         {recommended && (
           <Badge tone="accent" variant="soft" size="sm" className="mt-4 w-fit">
-            Most Personalized
+            {service.badgeLabel}
           </Badge>
         )}
       </div>

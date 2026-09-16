@@ -92,6 +92,7 @@ const services = {
     responseTime: 'Tiempo de respuesta: hasta 72 horas hábiles',
     ctaLabel: 'Aplicar Ahora',
     ctaHref: '/online-coaching#apply',
+    badgeLabel: 'Más Personalizado',
     cardCta: 'Aplicar Ahora',
   },
   singleSession: {
@@ -1061,6 +1062,8 @@ const es = {
   },
 
   footer: {
+    cta: 'Aplicar a Coaching',
+    ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
       { label: 'Política de Privacidad', href: '/privacy' },
@@ -1262,10 +1265,10 @@ const es = {
       latestFromCoach: 'Lo último de Angie',
       noMessages: 'Aún no hay mensajes. Saluda para empezar la conversación.',
       openMessages: 'Abrir Mensajes',
-      messagesLocked: 'La mensajería directa se desbloquea con el coaching',
+      messagesLocked: 'Únete al coaching para escribirle directamente a Angie.',
       libraryTitle: 'Sigue entrenando',
       openLibrary: 'Abrir la Biblioteca',
-      libraryLocked: 'La biblioteca se desbloquea con la membresía',
+      libraryLocked: 'Únete a la membresía para abrir la biblioteca.',
       planProgress: 'del plan completado',
       streak: 'Registros este mes',
       quickActions: 'Acciones rápidas',
