@@ -51,17 +51,18 @@ Most trainer sites sell a service and then hand the client off to a spreadsheet 
 
 ## Stack
 
-| Layer | Technology |
-| :--- | :--- |
-| UI | React 19 + a hand-rolled SPA router (no `react-router`) |
-| Build & dev | Vite 7 (Node `22.x`) |
-| Styling | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens), Anton / Bodoni Moda / Inter self-hosted from `public/fonts` |
+| Layer               | Technology                                                                                                                                                                                     |
+| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| UI                  | React 19 + a hand-rolled SPA router (no `react-router`)                                                                                                                                        |
+| Build & dev         | Vite 7 (Node `22.x`)                                                                                                                                                                           |
+| Styling             | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens), Anton / Bodoni Moda / Inter self-hosted from `public/fonts`                                                      |
+| Design              | [Figma](https://www.figma.com/design/NrUxA2MvrolnUwDUxcPbpJ): tokens as variables, the type and elevation scales as styles, the components, and every route at 1440                            |
 | Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl`, `@taylorurl/split-rail` for the attribution rail |
-| Backend | Supabase: Auth, Postgres + RLS, 15 Deno edge functions |
-| Payments | Stripe Checkout, driven entirely from the edge functions |
-| i18n | Custom English / Spanish content trees |
-| Analytics | First-party and cookieless, from a shared tracker script |
-| Hosting | Vercel (SPA rewrites + security headers) |
+| Backend             | Supabase: Auth, Postgres + RLS, 15 Deno edge functions                                                                                                                                         |
+| Payments            | Stripe Checkout, driven entirely from the edge functions                                                                                                                                       |
+| i18n                | Custom English / Spanish content trees                                                                                                                                                         |
+| Analytics           | First-party and cookieless, from a shared tracker script                                                                                                                                       |
+| Hosting             | Vercel (SPA rewrites + security headers)                                                                                                                                                       |
 
 ## Getting started
 
@@ -70,29 +71,32 @@ Requires Node `22.x`.
 ```bash
 npm install
 npm run dev           # Vite dev server
+                      # /portal?demo=1 opens the client portal on a filled-in
+                      # account, without signing in; the route exists on the
+                      # dev server only
 npm run build         # production build to dist/
 ```
 
 No environment configuration is required. The Supabase URL and publishable key are baked into `src/config/supabase.js`, so the app runs as-is. `.env.example` lists the two overrides that exist, for pointing a clone at a different Supabase project.
 
-| Variable | Purpose |
-| :--- | :--- |
-| `VITE_SUPABASE_URL` | Optional override for the Supabase project URL. |
+| Variable                 | Purpose                                            |
+| :----------------------- | :------------------------------------------------- |
+| `VITE_SUPABASE_URL`      | Optional override for the Supabase project URL.    |
 | `VITE_SUPABASE_ANON_KEY` | Optional override for the browser publishable key. |
 
 Stripe secrets, the service-role key, and price ids live in the Supabase project, never in this repo. When Stripe is not configured, `create-checkout` returns `{ configured: false }` and the UI says so instead of faking a charge.
 
 ### Scripts
 
-| Script | Does |
-| :--- | :--- |
-| `npm run dev` | Start the Vite dev server. |
-| `npm run build` | Production build to `dist/`. |
-| `npm run preview` | Serve the production build locally. |
-| `npm run lint` | Lint with ESLint. |
-| `npm run lint:fix` | Lint and auto-fix. |
-| `npm run format` | Format `src/**` and `packages/**` with Prettier. |
-| `npm run format:check` | Check formatting without writing. |
+| Script                 | Does                                             |
+| :--------------------- | :----------------------------------------------- |
+| `npm run dev`          | Start the Vite dev server.                       |
+| `npm run build`        | Production build to `dist/`.                     |
+| `npm run preview`      | Serve the production build locally.              |
+| `npm run lint`         | Lint with ESLint.                                |
+| `npm run lint:fix`     | Lint and auto-fix.                               |
+| `npm run format`       | Format `src/**` and `packages/**` with Prettier. |
+| `npm run format:check` | Check formatting without writing.                |
 
 ## Architecture
 
@@ -122,11 +126,11 @@ flowchart TD
 
 ## Deeper docs
 
-| Document | Covers |
-| :--- | :--- |
-| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md) | The append-only migration set, what each file adds, and the RLS isolation self-test. The `.sql` files are gitignored; this is the tracked record. |
-| [`supabase/functions/EDGE_FUNCTIONS.md`](supabase/functions/EDGE_FUNCTIONS.md) | Every edge function, its auth gate, deploy commands, and required secrets. |
-| [`packages/deluxfit-design-system/DESIGN_SYSTEM.md`](packages/deluxfit-design-system/DESIGN_SYSTEM.md) | `--df-*` tokens, the Tailwind preset, and the component catalog. |
+| Document                                                                                               | Covers                                                                                                                                            |
+| :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md)                                                 | The append-only migration set, what each file adds, and the RLS isolation self-test. The `.sql` files are gitignored; this is the tracked record. |
+| [`supabase/functions/EDGE_FUNCTIONS.md`](supabase/functions/EDGE_FUNCTIONS.md)                         | Every edge function, its auth gate, deploy commands, and required secrets.                                                                        |
+| [`packages/deluxfit-design-system/DESIGN_SYSTEM.md`](packages/deluxfit-design-system/DESIGN_SYSTEM.md) | `--df-*` tokens, the Tailwind preset, and the component catalog.                                                                                  |
 
 ## Project structure
 

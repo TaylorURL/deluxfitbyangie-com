@@ -1,22 +1,14 @@
 import { Fragment } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import {
-  Button,
-  Card,
-  Container,
-  Marquee,
-  Reveal,
-  SectionEyebrow,
-  SplitHeading,
-  cn,
-} from '@deluxfit/ds'
+import { Button, Container, Marquee, Reveal, SectionEyebrow, SplitHeading, cn } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/media/FramedPhoto'
 import { imageBox, imageSrcSet } from '@/lib/images'
 import PhotoGallery from '@/components/media/PhotoGallery'
 import ProgramsGrid from '@/components/sections/ProgramsGrid'
+import PillarGrid from '@/components/sections/PillarGrid'
 import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 
 const HOME_GALLERY = [
@@ -82,37 +74,43 @@ const LINE_STAGGER = {
 }
 
 export default function Home() {
-  const { home, gallery } = useContent()
+  const { home, gallery, brand } = useContent()
   const { hero, intro, transformationCallout, closing } = home
   const prefersReducedMotion = useReducedMotion()
   const lastIndex = hero.headline.length - 1
 
   return (
     <>
+      {/* The first screen is a poster: the headline at the largest size the
+          site sets anything, the photograph beside it in the red frame, and
+          the facts under a rule. The ground carries the dot grid and one
+          crimson bloom off the top corner, so the brand is on the page before
+          a word of it is read. */}
       <section
         id="top"
         data-theme="dark"
-        className="relative isolate overflow-hidden bg-df-bg text-df-text"
+        className="df-grain relative isolate overflow-hidden bg-df-bg text-df-text"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,var(--df-accent-wash-soft),transparent_60%)]"
+          className="df-grid pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(75%_65%_at_30%_0%,#000,transparent_85%)]"
         />
-        <AnimatedBackdrop variant="aurora" opacity={0.45} />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-48 right-[-12%] -z-10 h-[44rem] w-[44rem] rounded-df-full bg-[radial-gradient(closest-side,var(--df-accent-wash-strong),transparent)] blur-3xl"
+        />
+        <AnimatedBackdrop variant="aurora" opacity={0.4} />
 
         <Container
           size="lg"
-          className="pb-12 pt-[calc(var(--df-header-height)+1.5rem)] sm:pb-16 lg:pb-20"
+          className="pb-14 pt-[calc(var(--df-header-height)+2rem)] sm:pb-20 sm:pt-[calc(var(--df-header-height)+3.5rem)]"
         >
-          <div className="grid items-end gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+          <div className="grid items-end gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             <div className="min-w-0">
-              <span className="inline-flex items-center gap-3 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright">
-                <span className="h-px w-7 bg-df-accent" aria-hidden="true" />
-                {hero.badge}
-              </span>
+              <SectionEyebrow>{hero.badge}</SectionEyebrow>
 
               <MotionH1
-                className="font-400 mt-6 pb-[0.14em] font-display text-[clamp(2.75rem,10vw,6.5rem)] uppercase leading-[0.86] tracking-[-0.015em] text-df-text sm:mt-8"
+                className="font-400 mt-7 pb-[0.1em] font-display text-[clamp(3.25rem,10vw,7.5rem)] uppercase leading-[0.84] tracking-[-0.025em] text-df-text sm:mt-9"
                 variants={prefersReducedMotion ? undefined : LINE_STAGGER}
                 initial={prefersReducedMotion ? false : 'hidden'}
                 animate={prefersReducedMotion ? undefined : 'visible'}
@@ -136,11 +134,11 @@ export default function Home() {
                 ))}
               </MotionH1>
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-8 sm:text-lg">
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-df-text-muted sm:mt-9 sm:text-xl">
                 {hero.subhead}
               </p>
 
-              <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row">
+              <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row">
                 <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href={hero.primaryCtaHref}>
                     {hero.primaryCta}
@@ -148,13 +146,34 @@ export default function Home() {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-                  <Link href={hero.secondaryCtaHref}>{hero.secondaryCta}</Link>
+                  <Link href={hero.secondaryCtaHref}>
+                    {hero.secondaryCta}
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
                 </Button>
               </div>
+
+              {/* The three facts a visitor is weighing before they scroll: how
+                  many ways in, what the cheapest one costs, and that the live
+                  option is one-to-one. They sit under a rule rather than in a
+                  row of chips, so they read as the small print of the headline
+                  rather than as three more things asking to be clicked. */}
+              <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-4 border-t border-df-border pt-7 sm:mt-14 sm:gap-8">
+                {hero.facts.map(({ value, label }) => (
+                  <div key={label} className="flex flex-col gap-2">
+                    <dd className="font-400 order-first font-display text-[clamp(1.75rem,4vw,2.75rem)] tabular-nums leading-none tracking-[-0.02em] text-df-text">
+                      {value}
+                    </dd>
+                    <dt className="text-[11px] font-700 uppercase tracking-[0.16em] text-df-text-faint">
+                      {label}
+                    </dt>
+                  </div>
+                ))}
+              </dl>
             </div>
 
             <MotionDiv
-              className="relative mx-auto w-full max-w-[15rem] sm:max-w-[18rem] lg:mx-0 lg:justify-self-end"
+              className="relative mx-auto w-full max-w-[18rem] sm:max-w-[24rem] lg:max-w-none lg:justify-self-stretch"
               initial={prefersReducedMotion ? false : { y: 20 }}
               animate={prefersReducedMotion ? undefined : { y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
@@ -164,47 +183,53 @@ export default function Home() {
                 alt={hero.imageAlt}
                 aspect="aspect-[4/5]"
                 priority
+                caption={brand.fullName}
                 // The frame this photograph fills is capped well short of the
                 // column that holds it, and the default describes the column.
                 // The head preloads this file against the same widths, so the
                 // two have to name one candidate or the preload is spent on a
                 // file the element then declines to use.
-                sizes="(min-width: 640px) 18rem, 15rem"
+                sizes="(min-width: 1024px) 28rem, (min-width: 640px) 22rem, 16rem"
               />
             </MotionDiv>
           </div>
         </Container>
-
-        <div className="border-y border-df-border bg-df-bg-elevated py-5">
-          <Marquee items={home.marquee} />
-        </div>
       </section>
 
-      <section className="overflow-hidden border-t border-df-border bg-df-bg py-16 text-df-text sm:py-28">
+      {/* The ticker: the brand red as a full band between the first screen and
+          the second. It is the one place on the page the red is loud. */}
+      <Marquee tone="accent" items={home.marquee} />
+
+      <section className="overflow-hidden bg-df-bg py-16 text-df-text sm:py-32">
         <Container size="lg">
-          <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-            <Reveal className="relative order-last lg:order-first">
-              <div
-                aria-hidden="true"
-                className="absolute -inset-4 -z-10 rounded-df-2xl bg-df-accent-soft blur-3xl"
-              />
+          <div className="grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+            <Reveal className="relative order-last mx-auto w-full max-w-md lg:order-first lg:max-w-none">
               <FramedPhoto
                 src="/brand/studio-kettlebell-portrait.webp"
                 alt={intro.imageAlt}
                 aspect="aspect-[4/5]"
+                offset="left"
               />
             </Reveal>
 
             <Reveal delay={0.1} className="flex flex-col items-start">
-              <SplitHeading text={intro.heading} accent={intro.accent} className="mt-6" />
-              <div className="mt-6 flex flex-col gap-4">
+              <SectionEyebrow>{intro.eyebrow}</SectionEyebrow>
+              <SplitHeading
+                text={intro.heading}
+                accent={intro.accent}
+                className="mt-7 max-w-[16ch]"
+              />
+              <div className="mt-8 flex max-w-xl flex-col gap-5">
                 {intro.body.map(paragraph => (
-                  <p key={paragraph} className="text-base leading-relaxed text-df-text-muted">
+                  <p
+                    key={paragraph}
+                    className="text-base leading-relaxed text-df-text-muted sm:text-lg"
+                  >
                     {paragraph}
                   </p>
                 ))}
               </div>
-              <Button asChild size="lg" variant="outline" className="mt-6">
+              <Button asChild size="lg" variant="secondary" className="mt-8">
                 <Link href={intro.ctaHref}>
                   {intro.ctaLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -219,7 +244,7 @@ export default function Home() {
 
       <section
         data-theme="light"
-        className="overflow-hidden border-t border-df-border bg-df-bg-elevated py-16 text-df-text sm:py-28"
+        className="df-grain overflow-hidden bg-df-bg py-16 text-df-text sm:py-32"
       >
         <Container size="lg">
           <Reveal className="flex flex-col items-start">
@@ -227,36 +252,17 @@ export default function Home() {
             <SplitHeading
               text={transformationCallout.heading}
               accent={transformationCallout.accent}
-              className="mt-5 max-w-[20ch]"
+              className="mt-7 max-w-[18ch]"
             />
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-df-text-muted sm:text-xl">
               {transformationCallout.body}
             </p>
           </Reveal>
 
-          <div className="mt-8 grid gap-4 sm:mt-12 sm:grid-cols-3 sm:gap-4">
-            {transformationCallout.pillars.map(({ icon: Icon, title, description }, index) => (
-              <Reveal key={title} delay={index * 0.06}>
-                <Card variant="surface" className="relative flex h-full flex-col overflow-hidden">
-                  <span
-                    className="flex h-12 w-12 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
-                    aria-hidden="true"
-                  >
-                    <Icon className="h-6 w-6" strokeWidth={2} />
-                  </span>
-                  <h3 className="font-400 mt-5 font-display text-2xl uppercase tracking-[0.01em] text-df-text">
-                    {title}
-                  </h3>
-                  <p className="mt-5 text-[15px] leading-relaxed text-df-text-muted">
-                    {description}
-                  </p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
+          <PillarGrid items={transformationCallout.pillars} className="mt-12 sm:mt-16" />
 
-          <Reveal delay={0.2} className="mt-8 sm:mt-12">
-            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+          <Reveal delay={0.2} className="mt-10 sm:mt-12">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href={transformationCallout.ctaHref}>
                 {transformationCallout.ctaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -268,28 +274,24 @@ export default function Home() {
 
       <section
         data-theme="dark"
-        className="relative isolate overflow-hidden border-t border-df-border bg-df-bg py-16 text-df-text sm:py-28"
+        className="relative isolate overflow-hidden bg-df-bg py-16 text-df-text sm:py-32"
       >
         <AnimatedBackdrop variant="particles" opacity={0.5} />
         <Container size="lg">
-          <Reveal className="flex flex-col items-start">
-            <SplitHeading
-              text={gallery.heading}
-              accent={gallery.accent}
-              className="mt-5 max-w-[20ch]"
-            />
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+          <Reveal className="flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <SplitHeading text={gallery.heading} accent={gallery.accent} className="max-w-[14ch]" />
+            <p className="max-w-md text-base leading-relaxed text-df-text-muted sm:pb-2 sm:text-lg">
               {gallery.subhead}
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-8 sm:mt-12">
+          <Reveal delay={0.1} className="mt-10 sm:mt-14">
             <PhotoGallery items={HOME_GALLERY} />
           </Reveal>
         </Container>
       </section>
 
-      <section className="relative isolate overflow-hidden border-y border-df-border bg-df-bg py-16 text-df-text sm:py-28">
+      <section className="df-grain relative isolate overflow-hidden bg-df-bg py-24 text-df-text sm:py-40">
         <img
           src="/brand/gym-back-squat-discipline.webp"
           srcSet={imageSrcSet('/brand/gym-back-squat-discipline.webp')}
@@ -300,28 +302,28 @@ export default function Home() {
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-15 [filter:grayscale(0.9)_contrast(1.05)]"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-30 [filter:grayscale(0.85)_contrast(1.1)]"
         />
         <div
           aria-hidden="true"
-          className="via-df-bg/85 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-df-bg to-df-bg"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--df-bg)_0%,rgba(8,8,10,0.55)_45%,var(--df-bg)_100%)]"
         />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_70%_at_50%_120%,var(--df-accent-wash-deep),transparent_70%)]"
         />
         <Container size="lg">
-          <Reveal className="flex flex-col items-start">
+          <Reveal className="flex flex-col items-center text-center">
             <SplitHeading
-              size="page"
+              size="hero"
               text={closing.heading}
               accent={closing.accent}
-              className="mt-6 max-w-[20ch]"
+              className="max-w-[12ch]"
             />
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:text-lg">
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-df-text-muted sm:text-xl">
               {closing.subhead}
             </p>
-            <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href={closing.primaryCtaHref}>
                   {closing.primaryCta}

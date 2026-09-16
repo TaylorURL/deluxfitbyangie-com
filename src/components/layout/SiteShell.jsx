@@ -33,12 +33,12 @@ export default function SiteShell({ children }) {
       </main>
       {/*
         The phone's action bar is pinned to the bottom edge, so it takes no
-        height of its own and the last line of the footer would finish
-        underneath it. The room goes on the footer as padding rather than into
-        a spacer of its own: a spacer is an element, and an element's box still
-        sits under the bar even when the content above it clears.
+        height of its own and the rail that closes the footer would finish
+        underneath it. The room is a margin under the footer rather than
+        padding inside it, so the rail stays the footer's last line and the
+        page ground shows through the gap.
       */}
-      <Footer className="pb-[var(--df-tabbar-clearance)] lg:pb-12">
+      <Footer className="mb-[var(--df-tabbar-clearance)] lg:mb-0">
         <SplitRail version={__BUILD_VERSION__} />
       </Footer>
     </div>

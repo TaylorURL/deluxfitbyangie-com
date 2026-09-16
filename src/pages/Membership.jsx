@@ -56,10 +56,10 @@ export default function Membership() {
       <Section
         heading={membership.bestFor.heading}
         accent={membership.bestFor.accent}
-        containerSize="md"
+        layout="split"
       >
         <Reveal>
-          <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
+          <p className="max-w-[62ch] text-base leading-relaxed text-df-text-muted sm:text-lg">
             {membership.bestFor.body}
           </p>
         </Reveal>
