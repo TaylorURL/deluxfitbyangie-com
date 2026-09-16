@@ -92,6 +92,7 @@ const services = {
     responseTime: 'Tiempo de respuesta: hasta 72 horas hábiles',
     ctaLabel: 'Aplicar Ahora',
     ctaHref: '/online-coaching#apply',
+    badgeLabel: 'Más Personalizado',
     cardCta: 'Aplicar Ahora',
   },
   singleSession: {
@@ -363,6 +364,11 @@ const es = {
       secondaryCta: 'Aplicar a Coaching',
       secondaryCtaHref: '/online-coaching#apply',
       imageAlt: 'Angie en sentadilla en una máquina Smith, vista desde atrás',
+      facts: [
+        { value: '4', label: 'Programas' },
+        { value: '$14.99', label: 'Al mes para empezar' },
+        { value: '1 a 1', label: 'En vivo por video' },
+      ],
     },
 
     marquee: [
@@ -374,6 +380,7 @@ const es = {
     ],
 
     intro: {
+      eyebrow: 'Conoce a Angie',
       heading: 'Una coach que construye el programa alrededor de la persona, no al revés.',
       accent: 'alrededor de la persona',
       body: [
@@ -979,6 +986,7 @@ const es = {
 
   /* LEGAL — privacidad y terminos, un componente renderiza ambos */
   legal: {
+    contentsLabel: 'Contenido',
     lastUpdatedLabel: 'Última actualización',
     contactCta: 'Escribir a Angie',
     lastUpdated: 'Febrero de 2026',
@@ -1054,6 +1062,8 @@ const es = {
   },
 
   footer: {
+    cta: 'Aplicar a Coaching',
+    ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
       { label: 'Política de Privacidad', href: '/privacy' },
@@ -1247,6 +1257,23 @@ const es = {
       grams: 'g',
     },
     hero: {
+      thisWeek: 'Esta semana',
+      todayLabel: 'Hoy',
+      bookedLabel: 'Sesión',
+      restLabel: 'Descanso',
+      messagesTitle: 'Mensajes',
+      latestFromCoach: 'Lo último de Angie',
+      noMessages: 'Aún no hay mensajes. Saluda para empezar la conversación.',
+      openMessages: 'Abrir Mensajes',
+      messagesLocked: 'Únete al coaching para escribirle directamente a Angie.',
+      libraryTitle: 'Sigue entrenando',
+      openLibrary: 'Abrir la Biblioteca',
+      libraryLocked: 'Únete a la membresía para abrir la biblioteca.',
+      planProgress: 'del plan completado',
+      streak: 'Registros este mes',
+      quickActions: 'Acciones rápidas',
+      logEntry: 'Registrar Entrada',
+      dateFormat: 'long',
       eyebrow: 'Hoy',
       nextSession: 'Próxima sesión',
       noUpcoming: 'Aún no tienes sesiones próximas',

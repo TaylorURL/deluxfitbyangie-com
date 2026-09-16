@@ -56,7 +56,7 @@ export default function OnlineCoaching() {
       <Section
         heading={coaching.communication.heading}
         accent={coaching.communication.accent}
-        containerSize="md"
+        layout="split"
       >
         <Reveal>
           <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
@@ -83,10 +83,12 @@ export default function OnlineCoaching() {
       <Section
         heading={coaching.bestFor.heading}
         accent={coaching.bestFor.accent}
-        containerSize="md"
+        layout="split"
+        space="md"
+        className="border-t border-df-border"
       >
         <Reveal>
-          <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">
+          <p className="max-w-[62ch] text-base leading-relaxed text-df-text-muted sm:text-lg">
             {coaching.bestFor.body}
           </p>
         </Reveal>

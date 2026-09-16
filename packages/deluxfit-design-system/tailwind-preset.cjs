@@ -95,6 +95,16 @@ module.exports = {
         'df-2xl': 'var(--df-radius-2xl)',
         'df-full': 'var(--df-radius-full)',
       },
+      /* Named apart from the colour utilities on purpose: `bg-df-accent` is
+         the flat fill, `bg-df-accent-gradient` is the same red with a light on
+         it, and a class that could mean either would mean neither. */
+      backgroundImage: {
+        'df-accent-gradient': 'var(--df-accent-gradient)',
+        'df-accent-gradient-hover': 'var(--df-accent-gradient-hover)',
+        'df-surface-gradient': 'var(--df-surface-gradient)',
+        'df-surface-gradient-elevated': 'var(--df-surface-gradient-elevated)',
+        'df-grid': 'var(--df-grid)',
+      },
       boxShadow: {
         'df-sm': 'var(--df-shadow-sm)',
         'df-md': 'var(--df-shadow-md)',

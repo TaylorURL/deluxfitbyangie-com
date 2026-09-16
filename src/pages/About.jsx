@@ -6,7 +6,8 @@ import FramedPhoto from '@/components/media/FramedPhoto'
 import PhotoBand from '@/components/media/PhotoBand'
 import PhotoGallery from '@/components/media/PhotoGallery'
 import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
-import { DecryptedText, SpotlightCard } from '@/components/reactbits'
+import { DecryptedText } from '@/components/reactbits'
+import PillarGrid from '@/components/sections/PillarGrid'
 
 const ABOUT_GALLERY = [
   {
@@ -100,8 +101,8 @@ export default function About() {
         </Container>
       </section>
 
-      <Section heading={about.story.heading} accent={about.story.accent} containerSize="md">
-        <div className="flex flex-col gap-5">
+      <Section heading={about.story.heading} accent={about.story.accent} layout="split">
+        <div className="flex max-w-[62ch] flex-col gap-5">
           {about.story.paragraphs.map(paragraph => (
             <Reveal key={paragraph}>
               <p className="text-base leading-relaxed text-df-text-muted sm:text-lg">{paragraph}</p>
@@ -114,8 +115,9 @@ export default function About() {
         eyebrow={about.credentials.eyebrow}
         heading={about.credentials.heading}
         accent={about.credentials.accent}
+        layout="split"
       >
-        <ul className="grid gap-x-8 sm:grid-cols-2">
+        <ul className="flex flex-col border-b border-df-border">
           {about.credentials.items.map(item => (
             <Reveal key={item} as="li">
               <div className="flex items-start gap-3 border-t border-df-border py-5">
@@ -145,27 +147,7 @@ export default function About() {
       />
 
       <Section heading={about.philosophy.heading} accent={about.philosophy.accent}>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {about.philosophy.pillars.map(({ icon: Icon, title, description }, index) => (
-            <Reveal key={title} delay={index * 0.06} className="flex">
-              <SpotlightCard
-                spotlightColor="var(--df-accent-wash-soft)"
-                className="flex h-full w-full flex-col"
-              >
-                <span
-                  className="flex h-12 w-12 items-center justify-center rounded-df-lg bg-df-accent-soft text-df-accent-bright"
-                  aria-hidden="true"
-                >
-                  <Icon className="h-6 w-6" strokeWidth={2} />
-                </span>
-                <h3 className="font-400 mt-6 font-display text-2xl uppercase tracking-[0.01em] text-df-text">
-                  {title}
-                </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-df-text-muted">{description}</p>
-              </SpotlightCard>
-            </Reveal>
-          ))}
-        </div>
+        <PillarGrid items={about.philosophy.pillars} />
       </Section>
 
       <Section eyebrow="In session" heading="How she trains." accent="trains.">

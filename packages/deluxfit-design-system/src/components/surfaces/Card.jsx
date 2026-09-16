@@ -8,6 +8,10 @@ import { cn } from '../../lib/cn'
  * spreads. `border` is left off deliberately — the ring is the border, and a
  * second one beside it doubles the hairline.
  *
+ * A raised card is lit from above: its ground runs a shade lighter at the top
+ * than at the bottom and a one-pixel highlight sits along its top edge. On a
+ * black page that is the difference between a card and a darker rectangle.
+ *
  * `inset` is the row that lives inside a Panel — a membership, a logged set,
  * a message. It steps its ground down rather than up and takes the ring
  * alone, because a row that casts a drop shadow inside a surface reads as
@@ -19,16 +23,16 @@ import { cn } from '../../lib/cn'
  * lifts under a finger has already been tapped by the time it finishes.
  */
 const cardVariants = cva(
-  'rounded-df-md transition-[box-shadow,background-color] duration-df-base ease-df-out',
+  'rounded-df-lg transition-[box-shadow,background-color] duration-df-base ease-df-out',
   {
     variants: {
       variant: {
-        surface: 'bg-df-surface shadow-df-sm',
-        elevated: 'bg-df-surface-2 shadow-df-md',
+        surface: 'bg-df-surface bg-df-surface-gradient shadow-df-md',
+        elevated: 'bg-df-surface-2 bg-df-surface-gradient-elevated shadow-df-lg',
         inset: 'bg-df-surface-2 shadow-df-sm',
         glass: 'bg-df-glass-fill shadow-df-md backdrop-blur-xl',
       },
-      padded: { true: 'p-5 sm:p-6', false: '' },
+      padded: { true: 'p-5 sm:p-7', false: '' },
       interactive: { true: 'hover:shadow-df-lg', false: '' },
     },
     defaultVariants: { variant: 'surface', padded: true, interactive: false },

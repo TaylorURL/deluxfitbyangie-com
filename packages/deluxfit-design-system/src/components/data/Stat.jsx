@@ -37,7 +37,7 @@ export function Stat({
         {label}
       </MicroLabel>
 
-      <p className="font-400 flex items-baseline gap-1.5 font-display text-[clamp(1.75rem,5vw,2.25rem)] tabular-nums leading-none tracking-tight text-df-text">
+      <p className="font-400 flex items-baseline gap-1.5 font-display text-[clamp(2.25rem,5vw,3rem)] tabular-nums leading-none tracking-[-0.02em] text-df-text">
         {value}
         {unit && (
           <span className="font-sans text-[13px] font-600 uppercase tracking-[0.1em] text-df-text-muted">

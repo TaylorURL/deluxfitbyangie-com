@@ -97,6 +97,7 @@ const services = {
     responseTime: 'Response time: up to 72 business hours',
     ctaLabel: 'Apply Now',
     ctaHref: '/online-coaching#apply',
+    badgeLabel: 'Most Personalized',
     cardCta: 'Apply Now',
   },
   singleSession: {
@@ -367,6 +368,11 @@ const en = {
       secondaryCta: 'Apply for Coaching',
       secondaryCtaHref: '/online-coaching#apply',
       imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
+      facts: [
+        { value: '4', label: 'Programs' },
+        { value: '$14.99', label: 'A month to start' },
+        { value: '1-on-1', label: 'Live over video' },
+      ],
     },
 
     marquee: [
@@ -378,6 +384,7 @@ const en = {
     ],
 
     intro: {
+      eyebrow: 'Meet Angie',
       heading: 'A coach who builds the program around the person, not the other way around.',
       accent: 'around the person',
       body: [
@@ -973,6 +980,7 @@ const en = {
 
   /* LEGAL — privacy and terms, one component renders both */
   legal: {
+    contentsLabel: 'Contents',
     lastUpdatedLabel: 'Last updated',
     contactCta: 'Contact Angie',
     lastUpdated: 'February 2026',
@@ -1048,6 +1056,8 @@ const en = {
   },
 
   footer: {
+    cta: 'Apply for Coaching',
+    ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
       { label: 'Privacy Policy', href: '/privacy' },
@@ -1238,6 +1248,23 @@ const en = {
       grams: 'g',
     },
     hero: {
+      thisWeek: 'This week',
+      todayLabel: 'Today',
+      bookedLabel: 'Session',
+      restLabel: 'Rest',
+      messagesTitle: 'Messages',
+      latestFromCoach: 'Latest from Angie',
+      noMessages: 'No messages yet. Say hello to start the conversation.',
+      openMessages: 'Open Messages',
+      messagesLocked: 'Join coaching to message Angie directly.',
+      libraryTitle: 'Continue training',
+      openLibrary: 'Open the Library',
+      libraryLocked: 'Join the membership to open the library.',
+      planProgress: 'of the plan complete',
+      streak: 'Entries this month',
+      quickActions: 'Quick actions',
+      logEntry: 'Log an Entry',
+      dateFormat: 'long',
       eyebrow: 'Today',
       nextSession: 'Next session',
       noUpcoming: 'No upcoming sessions yet',

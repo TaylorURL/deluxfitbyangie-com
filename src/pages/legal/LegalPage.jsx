@@ -9,12 +9,18 @@ import PageHero from '@/components/sections/PageHero'
  * standfirst, and a run of headed prose, so one component draws whichever
  * document its route hands it.
  *
+ * On a wide screen the run of prose takes the right two thirds and a list of
+ * its headings holds the left, pinned while the prose scrolls past it. A
+ * legal page is read for one section, not front to back, and a contents list
+ * is how a reader finds that section without scrolling for it.
+ *
  * @param {object} props
  * @param {'privacy'|'terms'} props.document - which document under `legal`
  */
 export default function LegalPage({ document }) {
   const { legal } = useContent()
   const doc = legal[document]
+  const anchor = index => `section-${index + 1}`
 
   return (
     <>
@@ -29,17 +35,47 @@ export default function LegalPage({ document }) {
           title, and repeating it puts the same sentence in the h1 and the h2
           under it. */}
       <Section>
-        <div className="flex flex-col gap-10 sm:gap-12">
-          {doc.sections.map(({ heading, body }, index) => (
-            <Reveal key={heading} delay={index * 0.04}>
-              <section className="max-w-[70ch]">
-                <SplitHeading size="sub" text={heading} />
-                <p className="mt-4 text-sm leading-relaxed text-df-text-muted sm:text-base">
-                  {body}
-                </p>
-              </section>
-            </Reveal>
-          ))}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <nav
+            aria-label={legal.contentsLabel}
+            className="lg:sticky lg:top-[calc(var(--df-header-height)+2rem)] lg:col-span-4 lg:self-start"
+          >
+            <MicroLabel tone="faint">{legal.contentsLabel}</MicroLabel>
+            <ol className="mt-4 flex flex-col border-t border-df-border">
+              {doc.sections.map(({ heading }, index) => (
+                <li key={heading}>
+                  <a
+                    href={`#${anchor(index)}`}
+                    className="flex min-h-11 items-baseline gap-4 border-b border-df-border py-3 text-sm text-df-text-muted transition-colors duration-df-fast ease-df-out hover:text-df-text"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="font-400 font-display text-base tabular-nums leading-none text-df-accent-bright"
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    {heading}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className="flex flex-col gap-10 sm:gap-12 lg:col-span-8">
+            {doc.sections.map(({ heading, body }, index) => (
+              <Reveal key={heading} delay={index * 0.04}>
+                <section
+                  id={anchor(index)}
+                  className="max-w-[70ch] scroll-mt-[calc(var(--df-header-height)+2rem)]"
+                >
+                  <SplitHeading size="sub" text={heading} />
+                  <p className="mt-4 text-sm leading-relaxed text-df-text-muted sm:text-base">
+                    {body}
+                  </p>
+                </section>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </Section>
 

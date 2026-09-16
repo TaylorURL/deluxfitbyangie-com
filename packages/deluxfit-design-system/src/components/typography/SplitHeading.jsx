@@ -10,28 +10,36 @@ import { cn } from '../../lib/cn'
  * recognisable tell in generated design, and it costs the headline its line:
  * two faces at two widths never sit on one baseline the way one face does.
  *
- * Four sizes, and no fifth. Every heading on the site used to name its own
+ * Five sizes, and no sixth. Every heading on the site used to name its own
  * clamp, which is how a page ended up with an h2 larger than the h1 above it —
  * each one looked right alone. The scale lives here now, so a heading is
  * chosen from it rather than measured against the last page.
  *
- * `card` is the step below `sub`: the title of one card inside a grid of them,
- * which is a heading a page can carry a dozen of and so is the one that must
- * not grow.
+ * The scale runs large and tight. Anton is a poster face: it is drawn to be
+ * read from across a room, and set small it loses the condensed weight that
+ * is the whole reason it was chosen. So the page title fills the column, the
+ * section title is a statement rather than a label, and the leading closes
+ * to the point where the lines nearly touch.
+ *
+ * `hero` is the one step above `page`, for the first screen of the home page
+ * alone. `card` is the step below `sub`: the title of one card inside a grid
+ * of them, which is a heading a page can carry a dozen of and so is the one
+ * that must not grow.
  *
  * @param {object} props
  * @param {string} props.text - the full heading copy
  * @param {string} [props.accent] - the substring to set in the accent colour
- * @param {'page'|'section'|'sub'|'card'} [props.size='section']
+ * @param {'hero'|'page'|'section'|'sub'|'card'} [props.size='section']
  * @param {string} [props.as='h2'] - heading element
  */
-const headingVariants = cva('font-400 font-display uppercase tracking-[-0.01em] text-df-text', {
+const headingVariants = cva('font-400 font-display uppercase text-df-text', {
   variants: {
     size: {
-      page: 'pb-[0.12em] text-[clamp(2.25rem,7vw,4.5rem)] leading-[0.9]',
-      section: 'text-[clamp(1.875rem,5vw,3.25rem)] leading-[0.95]',
-      sub: 'text-[clamp(1.5rem,3.5vw,2.25rem)] leading-[1.05]',
-      card: 'text-xl leading-[1.15] tracking-[0.01em]',
+      hero: 'pb-[0.1em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.84] tracking-[-0.025em]',
+      page: 'pb-[0.1em] text-[clamp(2.75rem,8.5vw,6rem)] leading-[0.86] tracking-[-0.02em]',
+      section: 'text-[clamp(2.25rem,6vw,4.25rem)] leading-[0.9] tracking-[-0.02em]',
+      sub: 'text-[clamp(1.625rem,4vw,2.5rem)] leading-[0.98] tracking-[-0.01em]',
+      card: 'text-[1.375rem] leading-[1.08] tracking-[0]',
     },
   },
   defaultVariants: { size: 'section' },
