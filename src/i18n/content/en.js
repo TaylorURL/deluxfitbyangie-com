@@ -66,6 +66,7 @@ const services = {
     ],
     ctaLabel: 'Sign Up',
     ctaHref: '/membership#sign-up',
+    badgeLabel: 'Most Popular',
     cardCta: 'Sign Up',
   },
   coaching: {
@@ -122,6 +123,7 @@ const services = {
     ],
     ctaLabel: 'Book a Session',
     ctaHref: '/single-session#book',
+    badgeLabel: 'Try It First',
     cardCta: 'Book a Session',
   },
   liveProgram: {
@@ -146,6 +148,7 @@ const services = {
     ],
     ctaLabel: 'Get Started',
     ctaHref: '/training#book',
+    badgeLabel: 'Closest to In-Person',
     cardCta: 'Book Sessions',
   },
 }
