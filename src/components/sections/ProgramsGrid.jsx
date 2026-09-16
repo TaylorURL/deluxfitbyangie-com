@@ -43,12 +43,6 @@ export default function ProgramsGrid({ id = 'programs', highlightServiceId }) {
   )
 }
 
-const BADGE_LABEL = {
-  coaching: 'Most Personalized',
-  'single-session': 'Try It First',
-  'live-program': 'Closest to In-Person',
-}
-
 /**
  * Feeds a service entry into PricingCard. The bullet list is `includes` on
  * most services and `perfectFor` on the single session, which describes what
@@ -66,7 +60,7 @@ function PricingCardLink({ service, highlighted, className }) {
       ctaLabel={service.cardCta}
       ctaHref={service.href}
       highlighted={highlighted}
-      badgeLabel={BADGE_LABEL[service.id] ?? 'Most Popular'}
+      badgeLabel={service.badgeLabel}
     />
   )
 }
