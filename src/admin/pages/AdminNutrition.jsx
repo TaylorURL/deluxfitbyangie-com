@@ -15,6 +15,7 @@ import {
 } from '../AdminPrimitives'
 import RepeatableSection from '../authoring/RepeatableSection'
 import NutritionRow from '../authoring/NutritionRow'
+import { deleteNutritionPlanPrompt } from '../confirmations'
 
 /**
  * Every write goes through the staff-only `upsert-nutrition` edge function via
@@ -191,11 +192,7 @@ export default function AdminNutrition() {
   }
 
   const handleDelete = async plan => {
-    const ok = await confirm({
-      title: 'Delete This Nutrition Plan?',
-      body: `“${plan.title || 'This plan'}” will be removed from the client's portal, along with its macros, meals and notes. This cannot be undone.`,
-      confirmLabel: 'Delete Plan',
-    })
+    const ok = await confirm(deleteNutritionPlanPrompt(plan))
     if (!ok) return
     setBusyId(plan.id)
     setFormError(null)
