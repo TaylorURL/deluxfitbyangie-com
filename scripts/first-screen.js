@@ -229,6 +229,50 @@ const inlined = await new Beasties({
   logLevel: 'silent',
 }).process(html)
 
+/*
+ * The sheet itself, when it is not there to be switched on.
+ *
+ * The stylesheet is hashed and every deploy writes a new name and deletes the
+ * last one, so a reader holding a document from the previous build asks for a
+ * file that has gone — the same window `src/lib/chunk.js` and the boot script
+ * above cover for the modules. The sheet had no cover at all, and it is the
+ * worst of the three to lose: the inlined rules above carry the first screen
+ * and nothing else, so what the reader is left looking at is the raw document
+ * — the skip link visible, the logo at its intrinsic size, every section a
+ * bullet list of underlined text — and it stays that way, because a `link`
+ * that failed is simply done. Nothing retries it and nothing notices.
+ *
+ * So the element carries its own `onerror`, written by the parser rather than
+ * attached afterwards, because a listener added by a later script is added
+ * after the request it wants to hear about may already have failed. One retry
+ * answers a request lost on the wire; the sheet that answers it is a plain
+ * one, since by then there is no paint left to protect. A second failure is a
+ * file that has genuinely gone, and the only document that names a sheet which
+ * exists is the current one — fetched once, on the same key and the same
+ * window as the module recovery, so between them a reader is reloaded onto the
+ * current build once and never twice.
+ */
+const sheetGuard =
+  `<script>window.__dfStylesheetGone=(function(){` +
+  `var retried=false;` +
+  `function reload(){try{var k='deluxfit:chunk-reload';` +
+  `var last=Number(sessionStorage.getItem(k))||0;` +
+  `if(Date.now()-last<30000)return;` +
+  `sessionStorage.setItem(k,String(Date.now()))}catch(e){return}location.reload()}` +
+  `return function(link){if(retried)return reload();retried=true;` +
+  `setTimeout(function(){var retry=document.createElement('link');` +
+  `retry.rel='stylesheet';retry.crossOrigin='';retry.href=link.href;` +
+  `retry.onerror=reload;document.head.appendChild(retry)},600)}})()</script>`
+
 // Beasties stamps the element it treated as the document; the page does not
 // need to carry that.
-writeFileSync(dist, inlined.replace(' data-beasties-container', ''))
+let out = inlined.replace(' data-beasties-container', '')
+
+const sheet = out.match(/<link rel="stylesheet"[^>]*media="print" onload="this\.media='all'">/)
+if (!sheet) throw new Error('dist/index.html carries no deferred stylesheet to cover')
+out = out.replace(
+  sheet[0],
+  sheetGuard + sheet[0].slice(0, -1) + ' onerror="window.__dfStylesheetGone(this)">'
+)
+
+writeFileSync(dist, out)
