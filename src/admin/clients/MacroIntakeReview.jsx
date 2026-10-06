@@ -163,7 +163,7 @@ export default function MacroIntakeReview({ clientId, intake, currentPlan, reloa
         <div className="border-df-warning/50 flex items-start gap-3 rounded-df-md border bg-df-warning-soft px-3 py-3 text-sm text-df-text">
           <TriangleAlert aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-df-warning" />
           <div className="grid gap-1">
-            <span className="font-600">The calculator gave no numbers for this client.</span>
+            <span className="font-600">No numbers were calculated for this client.</span>
             <span className="text-df-text-muted">
               {result.reasons.map(reason => REASON_LABEL[reason]).join(' · ')}. Enter the targets
               yourself before publishing.
