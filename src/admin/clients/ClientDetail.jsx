@@ -2,6 +2,7 @@ import { Badge, Card, DataTable, MicroLabel, SplitHeading } from '@deluxfit/ds'
 import {
   getClientAssignments,
   getClientBookings,
+  getClientMacroIntakes,
   getClientMemberships,
   getClientMessages,
   getClientNutrition,
@@ -25,6 +26,7 @@ import ProgressReview from './ProgressReview'
 import CoachThread from './CoachThread'
 import PlanQuickEditor from './PlanQuickEditor'
 import NutritionQuickEditor from './NutritionQuickEditor'
+import MacroIntakeReview from './MacroIntakeReview'
 
 const SERVICE_LABEL = {
   single_session: 'Single session',
@@ -104,10 +106,10 @@ function BookingsList({ bookings }) {
 }
 
 /**
- * The hub reads eight sources, one per section. Settling them separately is
+ * The hub reads nine sources, one per section. Settling them separately is
  * what keeps a section's failure inside that section: gathered under a single
  * Promise.all, one unreachable table replaces the whole hub with its error
- * message and the seven readable sections go with it.
+ * message and the eight readable sections go with it.
  */
 const settle = result =>
   result.status === 'fulfilled'
@@ -115,17 +117,27 @@ const settle = result =>
     : { value: null, error: result.reason?.message || 'Could not load.' }
 
 async function loadClient(clientId) {
-  const [profile, memberships, plans, nutrition, progress, bookings, messages, assignments] =
-    await Promise.allSettled([
-      getClientProfile(clientId),
-      getClientMemberships(clientId),
-      getClientPlans(clientId),
-      getClientNutrition(clientId),
-      getClientProgress(clientId),
-      getClientBookings(clientId),
-      getClientMessages(clientId),
-      getClientAssignments(clientId),
-    ])
+  const [
+    profile,
+    memberships,
+    plans,
+    nutrition,
+    progress,
+    bookings,
+    messages,
+    assignments,
+    macroIntakes,
+  ] = await Promise.allSettled([
+    getClientProfile(clientId),
+    getClientMemberships(clientId),
+    getClientPlans(clientId),
+    getClientNutrition(clientId),
+    getClientProgress(clientId),
+    getClientBookings(clientId),
+    getClientMessages(clientId),
+    getClientAssignments(clientId),
+    getClientMacroIntakes(clientId),
+  ])
   return {
     profile: settle(profile),
     memberships: settle(memberships),
@@ -135,6 +147,7 @@ async function loadClient(clientId) {
     bookings: settle(bookings),
     messages: settle(messages),
     assignments: settle(assignments),
+    macroIntakes: settle(macroIntakes),
   }
 }
 
@@ -166,7 +179,8 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
     return <AdminEmpty body="This client could not be found." />
   }
 
-  const { memberships, plans, nutrition, progress, bookings, messages } = data
+  const { memberships, plans, nutrition, progress, bookings, messages, macroIntakes } = data
+  const pendingIntake = (macroIntakes.value ?? []).find(row => row.status === 'pending')
   const profile = data.profile.value
 
   const header = (
@@ -219,7 +233,20 @@ export default function ClientDetail({ clientId, emphasis = 'manage' }) {
   const nutritionSection = (
     <Section title="Nutrition" intro="Macros, meal structure, resources, and notes.">
       <SectionResult result={nutrition}>
-        {rows => <NutritionQuickEditor clientId={clientId} nutrition={rows} reload={reload} />}
+        {rows => (
+          <div className="grid gap-4">
+            {pendingIntake && (
+              <MacroIntakeReview
+                key={`${pendingIntake.id}-${pendingIntake.updated_at}`}
+                clientId={clientId}
+                intake={pendingIntake}
+                currentPlan={(rows ?? []).find(plan => plan.status === 'active') ?? null}
+                reload={reload}
+              />
+            )}
+            <NutritionQuickEditor clientId={clientId} nutrition={rows} reload={reload} />
+          </div>
+        )}
       </SectionResult>
     </Section>
   )
