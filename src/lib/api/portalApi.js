@@ -111,40 +111,7 @@ export const getNutritionPlan = async userId => {
   return { plan: data ?? null, error: null }
 }
 
-/** The client's newest macro calculator answers, or null when none were sent. */
-export const getMacroIntake = userId =>
-  safeSelect(
-    supabase
-      .from('macro_intakes')
-      .select('id, status, created_at, updated_at')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-  )
-
-// Mutations — routed through edge functions or security-definer database
-// functions (never direct table writes)
-
-/**
- * Send the macro calculator answers through `submit_macro_intake()`, which
- * checks the caller holds coaching and replaces an earlier answer still
- * waiting on review. Weight and height arrive here already in kg and cm.
- */
-export async function submitMacroIntake(intake) {
-  const { data, error } = await supabase.rpc('submit_macro_intake', {
-    p_sex: intake.sex,
-    p_age: intake.age,
-    p_weight_kg: Number(intake.weightKg.toFixed(1)),
-    p_height_cm: Number(intake.heightCm.toFixed(1)),
-    p_activity: intake.activity,
-    p_goal: intake.goal,
-    p_pregnant_or_breastfeeding: intake.pregnantOrBreastfeeding,
-    p_medical_conditions: intake.medicalConditions || null,
-  })
-  if (error) throw new Error(error.message || 'Could not send your answers.')
-  return data
-}
+// Mutations — all routed through edge functions (never direct table writes)
 
 /** Insert a progress entry via the `log-progress` edge function. */
 export async function logProgress(entry) {
