@@ -6,7 +6,6 @@ import PhotoBand from '@/components/media/PhotoBand'
 import ArtPlate from '@/components/media/ArtPlate'
 import IncludesGrid from '@/components/sections/IncludesGrid'
 import ProgramsGrid from '@/components/sections/ProgramsGrid'
-import OnlineCoachingApplicationForm from '@/components/forms/OnlineCoachingApplicationForm'
 
 export default function OnlineCoaching() {
   const { coaching, services } = useContent()
@@ -112,10 +111,6 @@ export default function OnlineCoaching() {
             <p className="mt-5 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-6 sm:text-lg">
               {coaching.applicationSection.body}
             </p>
-          </Reveal>
-
-          <Reveal delay={0.1} className="mt-8">
-            <OnlineCoachingApplicationForm />
           </Reveal>
         </Container>
       </section>

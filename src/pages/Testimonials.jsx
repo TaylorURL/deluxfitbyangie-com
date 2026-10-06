@@ -9,6 +9,7 @@ import {
   Testimonial,
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
+import { imageBox, imageSrcSet } from '@/lib/images'
 import { Link } from '@/router'
 import PageHero from '@/components/sections/PageHero'
 import PhotoBand from '@/components/media/PhotoBand'
@@ -44,6 +45,31 @@ export default function Testimonials() {
       <div className="mt-12 border-y border-df-border bg-df-bg-elevated py-5 sm:mt-16">
         <Marquee items={testimonials.marquee} />
       </div>
+
+      <Section
+        heading={testimonials.transformationsHeading}
+        accent={testimonials.transformationsAccent}
+      >
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          {testimonials.transformations.map(({ src, alt }, index) => (
+            <Reveal key={src} delay={(index % 3) * 0.06}>
+              <figure className="overflow-hidden rounded-df-lg border border-df-border-strong bg-df-surface">
+                <img
+                  src={src}
+                  srcSet={imageSrcSet(src)}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  width={imageBox(src)?.width}
+                  height={imageBox(src)?.height}
+                  alt={alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-auto w-full"
+                />
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       <Section heading={testimonials.storiesHeading} accent={testimonials.storiesAccent}>
         {testimonials.items?.length ? (

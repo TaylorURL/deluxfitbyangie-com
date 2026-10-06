@@ -91,10 +91,10 @@ const services = {
     communicationNote:
       'Toda la comunicación ocurre dentro de la plataforma Delux Fit, no hay acceso telefónico personal. El tiempo de respuesta es de hasta 72 horas hábiles.',
     responseTime: 'Tiempo de respuesta: hasta 72 horas hábiles',
-    ctaLabel: 'Aplicar Ahora',
+    ctaLabel: 'Próximamente',
     ctaHref: '/online-coaching#apply',
     badgeLabel: 'Más Personalizado',
-    cardCta: 'Aplicar Ahora',
+    cardCta: 'Próximamente',
   },
   singleSession: {
     id: 'single-session',
@@ -254,7 +254,7 @@ const es = {
     programs: 'Programas',
     programsPanelLabel: 'Los Programas',
     menu: 'Menú',
-    primaryCta: 'Aplicar Ahora',
+    primaryCta: 'Coaching Próximamente',
     primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Acceso Clientes',
     clientLoginAria: 'Portal de Acceso para Clientes',
@@ -364,7 +364,7 @@ const es = {
         'Membresías, coaching online personalizado y entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie.',
       primaryCta: 'Ver los Programas',
       primaryCtaHref: '#programs',
-      secondaryCta: 'Aplicar a Coaching',
+      secondaryCta: 'Coaching Próximamente',
       secondaryCtaHref: '/online-coaching#apply',
       imageAlt: 'Angie en sentadilla en una máquina Smith, vista desde atrás',
       facts: [
@@ -429,7 +429,7 @@ const es = {
       accent: 'encaja contigo',
       subhead:
         'Suscríbete a la membresía, aplica al coaching personalizado o reserva una sesión de entrenamiento en vivo, y arrancamos desde ahí.',
-      primaryCta: 'Aplicar a Coaching',
+      primaryCta: 'Coaching Próximamente',
       primaryCtaHref: '/online-coaching#apply',
       secondaryCta: 'Reservar Sesión',
       secondaryCtaHref: '/single-session#book',
@@ -620,7 +620,7 @@ const es = {
       accent: 'para ti',
       subhead:
         'Un plan para tus metas, revisiones mensuales, seguimiento de progreso y mensajería directa con Angie.',
-      primaryCta: 'Aplicar Ahora',
+      primaryCta: 'Próximamente',
       primaryCtaHref: '#apply',
       secondaryCta: 'Comparar programas',
       secondaryCtaHref: '/#programs',
@@ -699,9 +699,9 @@ const es = {
     },
     applicationSection: {
       id: 'apply',
-      heading: 'Cuéntale a Angie sobre tus metas.',
-      accent: 'tus metas',
-      body: 'Llena la aplicación de abajo. Angie revisa cada una personalmente y responde con los siguientes pasos antes de cobrar.',
+      heading: 'El coaching vuelve pronto.',
+      accent: 'vuelve pronto',
+      body: 'El coaching online personalizado está en pausa por ahora, así que las aplicaciones están cerradas. Pronto estará disponible otra vez.',
     },
     application: {
       submitLabel: 'Enviar Aplicación',
@@ -917,12 +917,44 @@ const es = {
     ],
     storiesNote:
       'Cada cita de esta página pertenece a una clienta que terminó su programa. Nada de lo que aparece aquí se escribió en su nombre.',
+    transformationsHeading: 'Transformaciones.',
+    transformationsAccent: 'Transformaciones',
+    transformations: [
+      {
+        src: '/brand/transformation-1.webp',
+        alt: 'Antes y después: en la playa y luego junto a un auto, visiblemente más delgada',
+      },
+      {
+        src: '/brand/transformation-2.webp',
+        alt: 'Antes y después: vista lateral en ropa de entrenamiento, con una figura más firme y tonificada',
+      },
+      {
+        src: '/brand/transformation-3.webp',
+        alt: 'Antes y después: vista frontal, flexionando, con más definición en brazos, cintura y piernas',
+      },
+      {
+        src: '/brand/transformation-4.webp',
+        alt: 'Antes y después: vista de espalda, flexionando, con espalda, glúteos y piernas más definidos',
+      },
+      {
+        src: '/brand/transformation-5.webp',
+        alt: 'Antes y después: vista lateral, con el abdomen más plano y los glúteos más llenos',
+      },
+      {
+        src: '/brand/transformation-6.webp',
+        alt: 'Antes y después: vista lateral, con la cintura más estrecha y más forma en glúteos y piernas',
+      },
+      {
+        src: '/brand/transformation-7.webp',
+        alt: 'Antes y después: vista frontal, flexionando, con la cintura más delgada y brazos y piernas más definidos',
+      },
+    ],
     storiesHeading: 'Lo que dicen las clientas.',
     storiesAccent: 'dicen las clientas',
     storiesEmpty: {
       heading: 'Las primeras historias todavía se están ganando.',
       body: 'Angie publica la historia de una clienta cuando termina su programa, en sus propias palabras y con su permiso. Empieza un programa y la tuya puede ser una de ellas.',
-      ctaLabel: 'Aplicar a Coaching',
+      ctaLabel: 'Coaching Próximamente',
       ctaHref: '/online-coaching#apply',
     },
     cta: {
@@ -930,7 +962,7 @@ const es = {
       accent: 'historias reales',
       subhead:
         'Elige un programa y empieza. Tu transformación puede ser la siguiente que destaquemos aquí, con tu permiso.',
-      primary: { label: 'Aplicar a Coaching', href: '/online-coaching#apply' },
+      primary: { label: 'Coaching Próximamente', href: '/online-coaching#apply' },
       secondary: { label: 'Reservar Sesión', href: '/single-session#book' },
     },
   },
@@ -1065,7 +1097,7 @@ const es = {
   },
 
   footer: {
-    cta: 'Aplicar a Coaching',
+    cta: 'Coaching Próximamente',
     ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
@@ -1155,7 +1187,7 @@ const es = {
       title: 'Mi plan personalizado',
       empty:
         'Todavía no se ha asignado un plan personalizado. Los planes personalizados están disponibles con el Coaching Online Personalizado.',
-      emptyCta: 'Aplicar a Coaching',
+      emptyCta: 'Coaching Próximamente',
       gatedTitle: 'Los planes personalizados son parte del coaching',
       gatedBody:
         'Tus planes de entrenamiento asignados aparecen aquí cuando eres clienta activa de coaching.',
@@ -1249,7 +1281,7 @@ const es = {
       gatedTitle: 'La guía de nutrición es parte del coaching',
       gatedBody:
         'Tu plan de nutrición personalizado aparece aquí cuando eres clienta activa de coaching.',
-      gatedCta: 'Aplicar a Coaching',
+      gatedCta: 'Coaching Próximamente',
       caloriesLabel: 'Calorías Diarias',
       proteinLabel: 'Proteína',
       carbsLabel: 'Carbohidratos',

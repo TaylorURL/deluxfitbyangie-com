@@ -96,10 +96,10 @@ const services = {
     communicationNote:
       'All communication happens inside the Delux Fit platform, there is no personal phone access. Response time is up to 72 business hours.',
     responseTime: 'Response time: up to 72 business hours',
-    ctaLabel: 'Apply Now',
+    ctaLabel: 'Coming Soon',
     ctaHref: '/online-coaching#apply',
     badgeLabel: 'Most Personalized',
-    cardCta: 'Apply Now',
+    cardCta: 'Coming Soon',
   },
   singleSession: {
     id: 'single-session',
@@ -258,7 +258,7 @@ const en = {
     programs: 'Programs',
     programsPanelLabel: 'The Programs',
     menu: 'Menu',
-    primaryCta: 'Apply Now',
+    primaryCta: 'Coaching Coming Soon',
     primaryCtaHref: '/online-coaching#apply',
     clientLogin: 'Client Login',
     clientLoginAria: 'Client Login Portal',
@@ -368,7 +368,7 @@ const en = {
         'Memberships, personalized online coaching, and live 1-on-1 training with certified personal trainer Angie.',
       primaryCta: 'See the Programs',
       primaryCtaHref: '#programs',
-      secondaryCta: 'Apply for Coaching',
+      secondaryCta: 'Coaching Coming Soon',
       secondaryCtaHref: '/online-coaching#apply',
       imageAlt: 'Angie mid-squat at a Smith machine, shot from behind',
       facts: [
@@ -433,7 +433,7 @@ const en = {
       accent: 'fits where you are',
       subhead:
         'Sign up for the membership, apply for personalized coaching, or book a live training session, and we’ll go from there.',
-      primaryCta: 'Apply for Coaching',
+      primaryCta: 'Coaching Coming Soon',
       primaryCtaHref: '/online-coaching#apply',
       secondaryCta: 'Book a Session',
       secondaryCtaHref: '/single-session#book',
@@ -624,7 +624,7 @@ const en = {
       accent: 'around you',
       subhead:
         'A plan built for your goals, monthly reviews, progress tracking, and direct messaging with Angie.',
-      primaryCta: 'Apply Now',
+      primaryCta: 'Coming Soon',
       primaryCtaHref: '#apply',
       secondaryCta: 'Compare Programs',
       secondaryCtaHref: '/#programs',
@@ -703,9 +703,9 @@ const en = {
     },
     applicationSection: {
       id: 'apply',
-      heading: 'Tell Angie about your goals.',
-      accent: 'your goals',
-      body: 'Fill out the application below. Angie reviews every application personally and follows up with next steps for onboarding before any payment is taken.',
+      heading: 'Coaching opens again soon.',
+      accent: 'again soon',
+      body: 'Personalized online coaching is paused for now, so applications are closed. It will be available again soon.',
     },
     application: {
       submitLabel: 'Submit Application',
@@ -909,12 +909,44 @@ const en = {
     marquee: ['Real results', 'Real grit', 'Discipline over excuses', 'Earned, not claimed'],
     storiesNote:
       'Every quote on this page belongs to a client who finished a program. Nothing here is written on their behalf.',
+    transformationsHeading: 'Transformations.',
+    transformationsAccent: 'Transformations',
+    transformations: [
+      {
+        src: '/brand/transformation-1.webp',
+        alt: 'Before and after: at the beach, then standing beside a car, visibly slimmer',
+      },
+      {
+        src: '/brand/transformation-2.webp',
+        alt: 'Before and after: side view in training clothes, with a firmer, more toned figure',
+      },
+      {
+        src: '/brand/transformation-3.webp',
+        alt: 'Before and after: front view, flexing, with more definition in the arms, waist and legs',
+      },
+      {
+        src: '/brand/transformation-4.webp',
+        alt: 'Before and after: back view, flexing, with a more defined back, glutes and legs',
+      },
+      {
+        src: '/brand/transformation-5.webp',
+        alt: 'Before and after: side view, with a flatter midsection and fuller glutes',
+      },
+      {
+        src: '/brand/transformation-6.webp',
+        alt: 'Before and after: side view, with a tighter waist and more shape in the glutes and legs',
+      },
+      {
+        src: '/brand/transformation-7.webp',
+        alt: 'Before and after: front view, flexing, with a leaner waist and more defined arms and legs',
+      },
+    ],
     storiesHeading: 'What clients say.',
     storiesAccent: 'clients say',
     storiesEmpty: {
       heading: 'The first stories are still being earned.',
       body: 'Angie publishes a client’s story once they finish their program, in their own words and with their permission. Start a program and yours can be one of them.',
-      ctaLabel: 'Apply for Coaching',
+      ctaLabel: 'Coaching Coming Soon',
       ctaHref: '/online-coaching#apply',
     },
     cta: {
@@ -922,7 +954,7 @@ const en = {
       accent: 'real stories',
       subhead:
         'Pick a program and start. Your transformation can be the next one we feature here, with your permission.',
-      primary: { label: 'Apply for Coaching', href: '/online-coaching#apply' },
+      primary: { label: 'Coaching Coming Soon', href: '/online-coaching#apply' },
       secondary: { label: 'Book a Session', href: '/single-session#book' },
     },
   },
@@ -1059,7 +1091,7 @@ const en = {
   },
 
   footer: {
-    cta: 'Apply for Coaching',
+    cta: 'Coaching Coming Soon',
     ctaHref: '/online-coaching#apply',
     legalLabel: 'Legal',
     legal: [
@@ -1150,7 +1182,7 @@ const en = {
       title: 'My personalized plan',
       empty:
         'No personalized plan has been assigned yet. Personalized plans are available with Personalized Online Coaching.',
-      emptyCta: 'Apply for Coaching',
+      emptyCta: 'Coaching Coming Soon',
       gatedTitle: 'Personalized plans are part of coaching',
       gatedBody: 'Your assigned workout plans appear here once you’re an active coaching client.',
     },
@@ -1240,7 +1272,7 @@ const en = {
       gatedTitle: 'Nutrition guidance is part of coaching',
       gatedBody:
         'Your personalized nutrition plan appears here once you’re an active coaching client.',
-      gatedCta: 'Apply for Coaching',
+      gatedCta: 'Coaching Coming Soon',
       caloriesLabel: 'Daily Calories',
       proteinLabel: 'Protein',
       carbsLabel: 'Carbs',
