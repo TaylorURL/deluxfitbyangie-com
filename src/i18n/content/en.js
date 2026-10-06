@@ -157,7 +157,7 @@ const en = {
   meta: {
     title: 'DeluxFit by Angie: Online Fitness Coaching, Memberships and Live Training',
     description:
-      'DeluxFit by Angie offers a $14.99/month fitness membership, $150/month personalized online coaching, $75 single live training sessions, and a $50/session live online personal training program with certified personal trainer Angie.',
+      'DeluxFit by Angie offers a $14.99/month fitness membership, $150/month personalized online coaching (coming soon), $75 single live training sessions, and a $50/session live online personal training program with certified personal trainer Angie.',
   },
 
   /*
@@ -170,7 +170,7 @@ const en = {
     '/': {
       title: 'DeluxFit by Angie: Online Fitness Coaching',
       description:
-        'Memberships, personalized online coaching, and live one-on-one training with certified personal trainer Angie. Discipline over excuses.',
+        'Memberships and live one-on-one training with certified personal trainer Angie, with personalized online coaching coming soon. Discipline over excuses.',
       breadcrumb: 'Home',
     },
     '/about': {
@@ -186,9 +186,9 @@ const en = {
       breadcrumb: 'Membership',
     },
     '/online-coaching': {
-      title: 'Personalized Online Coaching: $150 a Month',
+      title: 'Personalized Online Coaching: Coming Soon',
       description:
-        'A workout plan, a training schedule, and monthly progress reviews built around your goals, with direct messaging to Angie, for $150 a month.',
+        'Personalized online coaching with Angie is paused and coming soon: a workout plan, a training schedule, and monthly progress reviews built around your goals.',
       breadcrumb: 'Online Coaching',
     },
     '/single-session': {
@@ -230,7 +230,7 @@ const en = {
     notFound: {
       title: 'Page Not Found',
       description:
-        'This page does not exist. Head back to the programs to find the membership, personalized online coaching, or live training with Angie.',
+        'This page does not exist. Head back to the programs to find the membership or live training with Angie.',
       breadcrumb: 'Not Found',
     },
   },
@@ -362,10 +362,10 @@ const en = {
 
   home: {
     hero: {
-      badge: 'Now coaching new online clients',
+      badge: 'Online coaching coming soon',
       headline: ['Discipline over', 'excuses.'],
       subhead:
-        'Memberships, personalized online coaching, and live 1-on-1 training with certified personal trainer Angie.',
+        'Memberships and live 1-on-1 training with certified personal trainer Angie, with personalized online coaching coming soon.',
       primaryCta: 'See the Programs',
       primaryCtaHref: '#programs',
       secondaryCta: 'Coaching Coming Soon',
@@ -432,7 +432,7 @@ const en = {
       heading: 'Pick the program that fits where you are.',
       accent: 'fits where you are',
       subhead:
-        'Sign up for the membership, apply for personalized coaching, or book a live training session, and we’ll go from there.',
+        'Sign up for the membership or book a live training session, and we’ll go from there.',
       primaryCta: 'Coaching Coming Soon',
       primaryCtaHref: '/online-coaching#apply',
       secondaryCta: 'Book a Session',
@@ -504,8 +504,7 @@ const en = {
     cta: {
       heading: 'Ready to train together?',
       accent: 'train together',
-      subhead:
-        'Browse the membership, apply for personalized coaching, or book a live online session.',
+      subhead: 'Browse the membership or book a live online session.',
       primary: { label: 'See the Programs', href: '/#programs' },
       secondary: { label: 'Contact Angie', href: '/contact' },
     },
@@ -973,7 +972,7 @@ const en = {
     socialBody:
       'Angie posts coaching tips, workouts, and behind-the-scenes content across these channels.',
     directNote:
-      'Looking to sign up, apply for coaching, or book a 1-on-1 session? The fastest path is directly through the matching service page. Those forms route straight to Angie.',
+      'Looking to sign up or book a 1-on-1 session? The fastest path is directly through the matching service page. Those forms route straight to Angie.',
     form: {
       submitLabel: 'Send Message',
       submittingLabel: 'Sending…',

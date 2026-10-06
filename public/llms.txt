@@ -1,9 +1,9 @@
 # DeluxFit by Angie
 
-> Fitness memberships, personalized online coaching, and live one-on-one
-> training delivered by Angie, a certified personal trainer. Every program is
-> run by her directly: no templates, no resold plans. The site is available in
-> English and Spanish.
+> Fitness memberships, personalized online coaching (coming soon), and live
+> one-on-one training delivered by Angie, a certified personal trainer. Every
+> program is run by her directly: no templates, no resold plans. The site is
+> available in English and Spanish.
 
 Four programs are sold, and they are separate products rather than tiers of one
 thing. Prices below are exact.
@@ -18,7 +18,8 @@ thing. Prices below are exact.
   $150 a month. A workout plan and training schedule built around the client's
   goals, monthly progress reviews and check-ins, basic nutrition guidance, and
   direct messaging to Angie inside the platform. Response time is up to 72
-  business hours. There is no live session and no phone access.
+  business hours. There is no live session and no phone access. Paused for now
+  and coming soon; not open for sign-up.
 - [Single Live Training Session](https://www.deluxfitbyangie.com/single-session):
   $75 for one 45 to 60 minute private live session over video. A one-off, meant
   for trying the coaching, learning technique, and form correction.

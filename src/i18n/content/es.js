@@ -152,7 +152,7 @@ const es = {
   meta: {
     title: 'DeluxFit by Angie: Coaching Online, Membresías y Entrenamiento en Vivo',
     description:
-      'DeluxFit by Angie ofrece una membresía de fitness por $14.99/mes, coaching online personalizado por $150/mes, sesiones de entrenamiento en vivo por $75 y un programa de entrenamiento personal en vivo por $50/sesión con la entrenadora personal certificada Angie.',
+      'DeluxFit by Angie ofrece una membresía de fitness por $14.99/mes, coaching online personalizado por $150/mes (próximamente), sesiones de entrenamiento en vivo por $75 y un programa de entrenamiento personal en vivo por $50/sesión con la entrenadora personal certificada Angie.',
   },
 
   /*
@@ -166,7 +166,7 @@ const es = {
     '/': {
       title: 'DeluxFit by Angie: Coaching de Fitness Online',
       description:
-        'Membresías, coaching online personalizado y entrenamiento en vivo uno a uno con la entrenadora personal certificada Angie. Disciplina sobre excusas.',
+        'Membresías y entrenamiento en vivo uno a uno con la entrenadora certificada Angie, con coaching online personalizado próximamente. Disciplina sobre excusas.',
       breadcrumb: 'Inicio',
     },
     '/about': {
@@ -182,9 +182,9 @@ const es = {
       breadcrumb: 'Membresía',
     },
     '/online-coaching': {
-      title: 'Coaching Online Personalizado: $150 al Mes',
+      title: 'Coaching Online Personalizado: Próximamente',
       description:
-        'Un plan de entrenamiento, un calendario y revisiones mensuales de progreso hechos para tus metas, con mensajería directa a Angie, por $150 al mes.',
+        'El coaching online personalizado con Angie está en pausa y llega pronto: un plan de entrenamiento, un calendario y revisiones mensuales hechos para tus metas.',
       breadcrumb: 'Coaching Online',
     },
     '/single-session': {
@@ -226,7 +226,7 @@ const es = {
     notFound: {
       title: 'Página No Encontrada',
       description:
-        'Esta página no existe. Vuelve a los programas para encontrar la membresía, el coaching online personalizado o el entrenamiento en vivo con Angie.',
+        'Esta página no existe. Vuelve a los programas para encontrar la membresía o el entrenamiento en vivo con Angie.',
       breadcrumb: 'No Encontrada',
     },
   },
@@ -358,10 +358,10 @@ const es = {
 
   home: {
     hero: {
-      badge: 'Aceptando nuevos clientes online',
+      badge: 'Coaching online próximamente',
       headline: ['Disciplina sobre', 'excusas.'],
       subhead:
-        'Membresías, coaching online personalizado y entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie.',
+        'Membresías y entrenamiento 1 a 1 en vivo con la entrenadora personal certificada Angie, con coaching online personalizado próximamente.',
       primaryCta: 'Ver los Programas',
       primaryCtaHref: '#programs',
       secondaryCta: 'Coaching Próximamente',
@@ -428,7 +428,7 @@ const es = {
       heading: 'Elige el programa que encaja contigo.',
       accent: 'encaja contigo',
       subhead:
-        'Suscríbete a la membresía, aplica al coaching personalizado o reserva una sesión de entrenamiento en vivo, y arrancamos desde ahí.',
+        'Suscríbete a la membresía o reserva una sesión de entrenamiento en vivo, y arrancamos desde ahí.',
       primaryCta: 'Coaching Próximamente',
       primaryCtaHref: '/online-coaching#apply',
       secondaryCta: 'Reservar Sesión',
@@ -500,8 +500,7 @@ const es = {
     cta: {
       heading: '¿Lista para entrenar juntas?',
       accent: 'entrenar juntas',
-      subhead:
-        'Explora la membresía, aplica al coaching personalizado o reserva una sesión en vivo online.',
+      subhead: 'Explora la membresía o reserva una sesión en vivo online.',
       primary: { label: 'Ver los Programas', href: '/#programs' },
       secondary: { label: 'Contactar a Angie', href: '/contact' },
     },
@@ -981,7 +980,7 @@ const es = {
     socialBody:
       'Angie publica consejos de entrenamiento, rutinas y contenido detrás de cámaras en estos canales.',
     directNote:
-      '¿Quieres registrarte, aplicar al coaching o reservar una sesión 1 a 1? El camino más rápido es la página del servicio que te interesa. Esos formularios llegan directo a Angie.',
+      '¿Quieres registrarte o reservar una sesión 1 a 1? El camino más rápido es la página del servicio que te interesa. Esos formularios llegan directo a Angie.',
     form: {
       submitLabel: 'Enviar Mensaje',
       submittingLabel: 'Enviando…',
