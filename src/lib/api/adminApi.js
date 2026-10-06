@@ -78,6 +78,32 @@ export const getClientNutrition = userId =>
       .order('created_at', { ascending: false })
   )
 
+/** Every set of macro calculator answers a client has sent, newest first. */
+export const getClientMacroIntakes = userId =>
+  rows(
+    supabase
+      .from('macro_intakes')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+  )
+
+/** Clients whose macro calculator answers are waiting on review. */
+export const listPendingMacroIntakes = () =>
+  rows(
+    supabase
+      .from('macro_intakes')
+      .select('id, user_id, created_at')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false })
+  )
+
+/** Mark macro calculator answers reviewed, through `resolve_macro_intake()`. */
+export async function resolveMacroIntake(id) {
+  const { error } = await supabase.rpc('resolve_macro_intake', { p_id: id })
+  if (error) throw new Error(error.message)
+}
+
 export const getClientMemberships = userId =>
   rows(supabase.from('memberships').select('*').eq('user_id', userId))
 

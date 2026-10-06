@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
-import { Input, cn } from '@deluxfit/ds'
-import { listClients } from '@/lib/api/adminApi'
+import { Badge, Input, cn } from '@deluxfit/ds'
+import { listClients, listPendingMacroIntakes } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import {
   AdminEmpty,
@@ -17,7 +17,17 @@ import ClientDetail from '../clients/ClientDetail'
 export default function AdminClients() {
   const { data: clients, loading, error } = useAsyncData(listClients, [], [])
   const [selected, setSelected] = useState(null)
+  // Who has macro calculator answers waiting, read again on each selection so
+  // a badge clears once its answers are published. A failed read only costs
+  // the badge, never the list.
+  const { data: pending } = useAsyncData(
+    () => listPendingMacroIntakes().catch(() => []),
+    [selected],
+    []
+  )
   const [query, setQuery] = useState('')
+
+  const awaiting = useMemo(() => new Set((pending ?? []).map(row => row.user_id)), [pending])
 
   const filtered = useMemo(() => {
     const list = clients ?? []
@@ -71,8 +81,15 @@ export default function AdminClients() {
                         : 'border-transparent hover:border-df-border hover:bg-df-surface-2'
                     )}
                   >
-                    <span className="block truncate text-sm font-600 text-df-text">
-                      {clientLabel(client)}
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="block truncate text-sm font-600 text-df-text">
+                        {clientLabel(client)}
+                      </span>
+                      {awaiting.has(client.id) && (
+                        <Badge tone="warning" variant="soft" size="sm" className="shrink-0">
+                          Macros to Review
+                        </Badge>
+                      )}
                     </span>
                     {client.email && (
                       <span className="block truncate text-xs text-df-text-muted">
