@@ -366,10 +366,10 @@ export default function Header() {
             <Menu aria-hidden="true" className="h-4 w-4" />
             {header.menu}
           </button>
-          <Button asChild size="md" className="flex-1">
+          <Button asChild size="md" className="min-w-0 flex-1">
             <Link href={header.primaryCtaHref}>
               {header.primaryCta}
-              <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              <ArrowUpRight aria-hidden="true" className="h-4 w-4 max-[399px]:hidden" />
             </Link>
           </Button>
         </div>

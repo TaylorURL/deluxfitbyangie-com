@@ -43,6 +43,13 @@ const SOURCES = {
   '/brand/studio-red-mat-seated.webp': { width: 1600, height: 2240, variants: [480, 800, 1200] },
   '/brand/studio-seated-portrait.webp': { width: 1600, height: 2400, variants: [480, 800, 1200] },
   '/brand/studio-step-up-dumbbell.webp': { width: 1600, height: 2400, variants: [480, 800, 1200] },
+  '/brand/transformation-1.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-2.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-3.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-4.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-5.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-6.webp': { width: 1080, height: 1350, variants: [480, 800] },
+  '/brand/transformation-7.webp': { width: 1080, height: 1350, variants: [480, 800] },
   '/deluxfit-logo.webp': { width: 946, height: 308, variants: [320, 640] },
 }
 

@@ -3,15 +3,8 @@ import { Card, MicroLabel, SplitHeading } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
 import { FormError } from '@/components/forms/FormFeedback'
 import { EmptyState, PanelHeading } from './PanelPrimitives'
-import MacroIntake from './MacroIntake'
 
-export default function NutritionPanel({
-  nutrition,
-  nutritionError,
-  entitlements,
-  macroIntake,
-  reloadNutrition,
-}) {
+export default function NutritionPanel({ nutrition, nutritionError, entitlements }) {
   const { portal } = useContent()
   const copy = portal.nutrition
 
@@ -38,13 +31,11 @@ export default function NutritionPanel({
     )
   }
 
-  // With nothing published yet, the client answers the calculator's questions
-  // and Angie works out the numbers from them.
   if (!nutrition) {
     return (
       <section>
         <PanelHeading title={copy.title} />
-        <MacroIntake intake={macroIntake} reloadNutrition={reloadNutrition} />
+        <EmptyState body={copy.empty} />
       </section>
     )
   }

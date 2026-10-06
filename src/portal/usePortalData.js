@@ -5,7 +5,6 @@ import {
   deriveEntitlements,
   getBookings,
   getContentItems,
-  getMacroIntake,
   getMemberships,
   getMessages,
   getNutritionPlan,
@@ -35,32 +34,21 @@ export function usePortalData({ previewLevel = null } = {}) {
     content: [],
     nutrition: null,
     nutritionError: null,
-    macroIntake: null,
   })
 
   const loadAll = useCallback(async () => {
     if (!userId) return
-    const [
-      profile,
-      memberships,
-      plans,
-      progress,
-      bookings,
-      messages,
-      content,
-      nutrition,
-      macroIntake,
-    ] = await Promise.all([
-      getProfile(userId),
-      getMemberships(userId),
-      getPlans(userId),
-      getProgressEntries(userId),
-      getBookings(userId),
-      getMessages(userId),
-      getContentItems(),
-      getNutritionPlan(userId),
-      getMacroIntake(userId),
-    ])
+    const [profile, memberships, plans, progress, bookings, messages, content, nutrition] =
+      await Promise.all([
+        getProfile(userId),
+        getMemberships(userId),
+        getPlans(userId),
+        getProgressEntries(userId),
+        getBookings(userId),
+        getMessages(userId),
+        getContentItems(),
+        getNutritionPlan(userId),
+      ])
     setState({
       loading: false,
       profile,
@@ -72,7 +60,6 @@ export function usePortalData({ previewLevel = null } = {}) {
       content,
       nutrition: nutrition.plan,
       nutritionError: nutrition.error,
-      macroIntake,
     })
   }, [userId])
 
@@ -85,20 +72,6 @@ export function usePortalData({ previewLevel = null } = {}) {
     if (!userId) return
     const progress = await getProgressEntries(userId)
     setState(prev => ({ ...prev, progress }))
-  }, [userId])
-
-  const reloadNutrition = useCallback(async () => {
-    if (!userId) return
-    const [nutrition, macroIntake] = await Promise.all([
-      getNutritionPlan(userId),
-      getMacroIntake(userId),
-    ])
-    setState(prev => ({
-      ...prev,
-      nutrition: nutrition.plan,
-      nutritionError: nutrition.error,
-      macroIntake,
-    }))
   }, [userId])
 
   const reloadMessages = useCallback(async () => {
@@ -119,6 +92,5 @@ export function usePortalData({ previewLevel = null } = {}) {
     previewLevel: preview ? previewLevel : null,
     reloadProgress,
     reloadMessages,
-    reloadNutrition,
   }
 }

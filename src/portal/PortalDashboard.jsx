@@ -178,8 +178,6 @@ export default function PortalDashboard({ demo }) {
     progress: data.progress,
     nutrition: data.nutrition,
     nutritionError: data.nutritionError,
-    macroIntake: data.macroIntake,
-    reloadNutrition: data.reloadNutrition,
     bookings: data.bookings,
     messages: data.messages,
     content: data.content,

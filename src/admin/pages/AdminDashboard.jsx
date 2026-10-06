@@ -1,13 +1,8 @@
-import { Apple, ArrowUpRight, CalendarClock, CreditCard, Dumbbell, Users } from 'lucide-react'
+import { ArrowUpRight, CalendarClock, CreditCard, Dumbbell, Users } from 'lucide-react'
 import { MicroLabel, Panel } from '@deluxfit/ds'
 import { Link } from '@/router'
 import { useAuth } from '@/auth/useAuth'
-import {
-  listAllBookings,
-  listAllMemberships,
-  listClients,
-  listPendingMacroIntakes,
-} from '@/lib/api/adminApi'
+import { listClients, listAllMemberships, listAllBookings } from '@/lib/api/adminApi'
 import { FormError } from '@/components/forms/FormFeedback'
 import { SectionCard, AdminLoading, MetricTile, useAsyncData } from '../AdminPrimitives'
 import { ADMIN_ROUTES } from '../routes'
@@ -15,11 +10,10 @@ import { ADMIN_ROUTES } from '../routes'
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000
 
 const loadMetrics = async () => {
-  const [clients, memberships, bookings, pendingMacros] = await Promise.all([
+  const [clients, memberships, bookings] = await Promise.all([
     listClients(),
     listAllMemberships(),
     listAllBookings(),
-    listPendingMacroIntakes(),
   ])
 
   const now = Date.now()
@@ -35,7 +29,6 @@ const loadMetrics = async () => {
       const start = new Date(b.slot_start).getTime()
       return start >= now && start <= weekEnd && b.status !== 'canceled'
     }).length,
-    pendingMacros: pendingMacros.length,
   }
 }
 
@@ -53,12 +46,6 @@ const TILES = [
     label: 'Bookings This Week',
     icon: CalendarClock,
     hint: 'Next 7 days, excl. canceled',
-  },
-  {
-    key: 'pendingMacros',
-    label: 'Macros to Review',
-    icon: Apple,
-    hint: 'Calculator answers waiting in Clients',
   },
 ]
 
@@ -96,7 +83,7 @@ export default function AdminDashboard() {
             <FormError body={error} />
           </SectionCard>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {TILES.map(({ key, label, icon, hint }) => (
               <MetricTile
                 key={key}
