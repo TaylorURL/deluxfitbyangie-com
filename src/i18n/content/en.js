@@ -705,7 +705,7 @@ const en = {
       id: 'apply',
       heading: 'Coaching opens again soon.',
       accent: 'again soon',
-      body: 'Personalized online coaching is paused for now, so applications are closed. It will be available again soon.',
+      body: 'Personalized online coaching is paused, so applications are closed for now.',
     },
     application: {
       submitLabel: 'Submit Application',
