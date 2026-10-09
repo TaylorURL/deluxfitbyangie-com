@@ -9,7 +9,7 @@ import {
   Testimonial,
 } from '@deluxfit/ds'
 import { useContent } from '@/i18n'
-import { imageBox, imageSrcSet } from '@/lib/images'
+import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 import { Link } from '@/router'
 import PageHero from '@/components/sections/PageHero'
 import PhotoBand from '@/components/media/PhotoBand'
@@ -63,6 +63,7 @@ export default function Testimonials() {
                   alt={alt}
                   loading="lazy"
                   decoding="async"
+                  onError={recoverImage}
                   className="block h-auto w-full"
                 />
               </figure>
