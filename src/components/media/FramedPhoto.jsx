@@ -1,5 +1,5 @@
 import { cn } from '@deluxfit/ds'
-import { imageBox, imageSrcSet } from '@/lib/images'
+import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 
 /**
  * A photograph in the site's frame: the image itself under a hairline, and a
@@ -55,6 +55,7 @@ export default function FramedPhoto({
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : undefined}
           decoding={priority ? 'sync' : 'async'}
+          onError={recoverImage}
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div
