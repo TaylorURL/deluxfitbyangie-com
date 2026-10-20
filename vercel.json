@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!assets/|fonts/|brand/).*)",
+      "source": "/((?!assets/|fonts/|brand/|art/)(?!.*\\.[^/]*$).*)",
       "destination": "/index.html"
     }
   ],
@@ -55,6 +55,24 @@
     },
     {
       "source": "/brand/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/art/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/(deluxfit-logo.*\\.webp)",
       "headers": [
         {
           "key": "Cache-Control",

@@ -1,4 +1,5 @@
 import { cn } from '@deluxfit/ds'
+import { recoverImage } from '@/lib/images'
 
 /**
  * A drawn plate: the site's own picture of a thing a photograph cannot show.
@@ -14,6 +15,11 @@ import { cn } from '@deluxfit/ds'
  * and the file's own title is the accessible name — `alt` is not restated here
  * because two descriptions of one drawing eventually disagree.
  *
+ * A plate whose request dies asks again on the same terms as a photograph.
+ * The drawing is the only thing on the page saying what the week is shaped
+ * like, so an empty box where it goes leaves the section making a claim it no
+ * longer shows.
+ *
  * @param {object} props
  * @param {string} props.src - a file under /art
  * @param {string} props.alt - what the drawing shows
@@ -28,6 +34,7 @@ export default function ArtPlate({ src, alt, className }) {
       loading="lazy"
       decoding="async"
       draggable="false"
+      onError={recoverImage}
       className={cn('h-auto w-full select-none', className)}
     />
   )
