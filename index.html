@@ -468,13 +468,23 @@
                 // went and fetched. Naming the first files a ticket against a
                 // file that may never have been requested, and leaves the one
                 // that failed unnamed.
-                report(
-                  'resource',
-                  'Failed to load ' +
-                    tag +
-                    ': ' +
-                    (event.target.currentSrc || event.target.src || event.target.href || '')
-                )
+                var where = event.target.currentSrc || event.target.src || event.target.href || ''
+                // An image already recovering has been reported: its first
+                // failure filed this same fault. Everything after that is
+                // src/lib/images.js asking again, and an ask that fails while
+                // the file is still away is the same fault rather than a new
+                // one. Reporting each of them turns one photograph into five
+                // faults and buries whether the reader ever saw the picture.
+                // That file says so once, naming the asks and the span, if the
+                // recovery runs out; until then this is held for the page's
+                // own console and nothing is filed.
+                var recovering =
+                  tag === 'img' && event.target.dataset && event.target.dataset.retrySpent
+                if (recovering) {
+                  hold('resource', 'Failed to load ' + tag + ': ' + where + ' (asking again)')
+                  return
+                }
+                report('resource', 'Failed to load ' + tag + ': ' + where)
               } else if (muted(event)) {
                 var opaque = opaqueOrigins()
                 if (opaque.length) {
