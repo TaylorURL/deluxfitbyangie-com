@@ -111,22 +111,38 @@ export function imageSrcSet(src) {
  * where asking is known to be worth it, and it is the moment a reader is
  * looking at the page waiting for it to come right.
  *
- * The retry carries a parameter the first request did not, because an `img`
- * handed the `src` it already holds does nothing at all — the attribute has
- * not changed, so there is no new fetch to make. A distinct URL is what makes
- * it a second request rather than a no-op, and it reaches the same file: the
- * origin serves these by path and ignores the query. The token counts every
- * ask the element has ever made and never goes back, so an ask after the
- * connection returns is still a URL the browser has not seen.
+ * ASK FOR THE SAME FILE. An `img` handed the `src` it already holds does
+ * nothing at all — the attribute has not changed, so there is no new fetch to
+ * make — but a URL the first request did not carry is not the way round it.
+ * The edge caches these by their whole URL, so `?retry=1` is a second cache
+ * key: it misses the edge that is already holding a healthy copy of the file
+ * and goes to the origin, every attempt, which makes each retry slower and
+ * likelier to fail than the request it is recovering. It also puts a URL that
+ * is not a file on this site into everything that watches the site, so one
+ * photograph failing is reported as a fault against several different
+ * addresses.
  *
- * The attempts are counted separately from that token, and the count starts
- * again when the connection does, so a file that is genuinely gone on a
- * healthy connection costs a bounded handful of requests and stops rather
- * than retrying for as long as the page is open.
+ * Taking the attributes off and putting the same values straight back is a
+ * relevant mutation, so the element runs its own selection again and makes a
+ * fresh request for exactly the URL the markup asked for. Both halves happen
+ * in one go: the element's work is queued rather than immediate, so an
+ * attribute cleared and restored in the same breath is one new request and
+ * not a request for nothing followed by a request for the file.
  *
- * The report still goes out on the first failure — the handler in the entry
- * document is on `window` in the capture phase and runs before this one — so
- * a recovery that works is still visible as a fault that happened.
+ * The attempts are counted, and the count starts again when the connection
+ * does, so a file that is genuinely gone on a healthy connection costs a
+ * bounded handful of requests and stops rather than retrying for as long as
+ * the page is open.
+ *
+ * WHAT IS REPORTED IS THE OUTCOME, NOT EACH ATTEMPT. The first failure is
+ * reported by the handler in the entry document, which is on `window` in the
+ * capture phase and runs before this one, so a recovery that works is still
+ * visible as a fault that happened. The attempts after it are this code
+ * asking again, and each of them failing is the same fault rather than a new
+ * one; the entry document holds them for the page's own console and leaves
+ * them to this file, which reports once if the recovery runs out and says how
+ * many asks over how long — which is the thing worth knowing and the thing a
+ * single report of a single dead request cannot say.
  */
 const RECOVERY_ATTEMPTS = 4
 
@@ -141,35 +157,33 @@ const waiting = new Set()
 
 let watchingTheConnection = false
 
-function retriedUrl(url, token) {
-  if (!url) return url
-  return `${url}${url.includes('?') ? '&' : '?'}retry=${token}`
-}
-
-function retriedSrcSet(srcSet, token) {
-  return srcSet
-    .split(',')
-    .map(candidate => candidate.trim())
-    .filter(Boolean)
-    .map(candidate => {
-      const [url, ...descriptor] = candidate.split(/\s+/)
-      return [retriedUrl(url, token), ...descriptor].join(' ')
-    })
-    .join(', ')
-}
-
-/** Asks for the URLs the markup wanted, under a token no earlier ask used. */
+/** Asks for the URLs the markup wanted, again, exactly as they were written. */
 function askAgain(image) {
   if (!image.isConnected) {
     waiting.delete(image)
     return
   }
-  const token = Number(image.dataset.retry || 0) + 1
-  image.dataset.retry = String(token)
   const src = image.dataset.retryFrom
   const srcSet = image.dataset.retryFromSet
-  if (srcSet) image.setAttribute('srcset', retriedSrcSet(srcSet, token))
-  if (src) image.setAttribute('src', retriedUrl(src, token))
+  image.removeAttribute('srcset')
+  image.removeAttribute('src')
+  if (srcSet) image.setAttribute('srcset', srcSet)
+  if (src) image.setAttribute('src', src)
+}
+
+/**
+ * Says once that a photograph never came back, with the shape of the failure
+ * in it. `console.error` is where the entry document is listening, so this
+ * travels the same way every other fault on the page does.
+ */
+function reportRecoveryFailed(image) {
+  if (image.dataset.retryGaveUp !== undefined) return
+  image.dataset.retryGaveUp = ''
+  const asks = RECOVERY_ATTEMPTS + 1
+  const seconds = Math.round(RECOVERY_DELAYS_MS.reduce((total, ms) => total + ms, 0) / 1000)
+  console.error(
+    `Failed to load img: ${image.dataset.retryFrom || '(no src)'} - still failing after ${asks} asks over ${seconds}s`
+  )
 }
 
 /**
@@ -189,6 +203,7 @@ function watchTheConnection() {
       // A connection that has come back is new information rather than one
       // more go at the old one, so the attempts start again with it.
       image.dataset.retrySpent = '0'
+      delete image.dataset.retryGaveUp
       askAgain(image)
     }
   })
@@ -217,7 +232,10 @@ export function recoverImage(event) {
   // spent on nothing. The handler above makes it when there is a connection.
   if (navigator.onLine === false) return
   const spent = Number(image.dataset.retrySpent || 0)
-  if (spent >= RECOVERY_ATTEMPTS) return
+  if (spent >= RECOVERY_ATTEMPTS) {
+    reportRecoveryFailed(image)
+    return
+  }
   image.dataset.retrySpent = String(spent + 1)
   window.setTimeout(() => askAgain(image), RECOVERY_DELAYS_MS[spent])
 }
