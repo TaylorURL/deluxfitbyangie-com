@@ -1,5 +1,5 @@
 import { cn } from '@deluxfit/ds'
-import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
+import { imageArrived, imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 
 const LOGO = '/deluxfit-logo.webp'
 
@@ -30,6 +30,7 @@ export default function BrandLogo({ alt, inverted = true, className }) {
       alt={alt}
       draggable="false"
       onError={recoverImage}
+      onLoad={imageArrived}
       className={cn(
         'w-auto select-none object-contain',
         inverted ? '[filter:invert(1)_hue-rotate(180deg)]' : '[filter:invert(0)_hue-rotate(0deg)]',

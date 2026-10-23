@@ -1,5 +1,5 @@
 import { cn } from '@deluxfit/ds'
-import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
+import { imageArrived, imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 
 /**
  * Renders an asymmetric, masonry-style layout that mixes tall portraits with
@@ -35,6 +35,7 @@ export default function PhotoGallery({ items, className }) {
             loading="lazy"
             decoding="async"
             onError={recoverImage}
+            onLoad={imageArrived}
             className={cn(
               'absolute inset-0 h-full w-full object-cover transition-transform duration-df-slow ease-df-out group-hover:scale-[1.04]',
               objectPosition
