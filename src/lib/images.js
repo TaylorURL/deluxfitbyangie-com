@@ -159,7 +159,12 @@ let watchingTheConnection = false
 
 /** Asks for the URLs the markup wanted, again, exactly as they were written. */
 function askAgain(image) {
-  if (!image.isConnected) {
+  // An ask that outlived what it was asking over: the element has gone, or the
+  // picture arrived while this one was waiting its turn. Taking `src` off an
+  // image that has nothing to put back blanks a photograph the reader can
+  // already see, so a spent ask stops here rather than running on what it was
+  // handed when it was queued.
+  if (!image.isConnected || image.dataset.retryFrom === undefined || image.naturalWidth > 0) {
     waiting.delete(image)
     return
   }
@@ -207,6 +212,54 @@ function watchTheConnection() {
       askAgain(image)
     }
   })
+}
+
+/*
+ * GIVE THE BUDGET BACK WHEN THE PICTURE ARRIVES.
+ *
+ * The recovery keeps its working state on the element: the URLs the markup
+ * asked for, how many asks have been spent, and whether it has given up. All
+ * of it is written on the first failure and none of it was ever taken off
+ * again, so an image that failed once and then drew carried the marks of that
+ * failure for the rest of the visit - and the marks are what the recovery and
+ * the reporter both read.
+ *
+ * That makes a connection that interrupts more than once behave nothing like
+ * a connection that interrupts once. The second interruption is held rather
+ * than filed, because the entry document reads `retrySpent` as "this is the
+ * same fault still going" and the element has carried it since the first one.
+ * The asks come out of a budget of four that was never refilled, so the
+ * fourth interruption of a visit is the one that exhausts it: the photograph
+ * is abandoned where it stands, the frame stays empty for the rest of the
+ * visit even though the connection came back long ago, and the one line that
+ * says so reports five asks over twenty-two seconds for a failure that was
+ * actually four separate interruptions spread across the whole visit.
+ *
+ * A reader on a connection that drops in and out is exactly the reader this
+ * recovery exists for, and it is exactly the reader it stopped working for.
+ * A picture that is on the screen is the end of the fault that lost it, so
+ * arriving is what clears the marks: the next interruption is a new fault,
+ * filed once and given the whole budget, and the reader gets the same repair
+ * on the fourth one as on the first.
+ */
+
+/**
+ * Takes the recovery's marks off an image that has drawn.
+ *
+ * Wire it to `onLoad` on any `img` carrying `recoverImage`. An image that
+ * never failed has no marks and this does nothing to it.
+ *
+ * @param {{ currentTarget: HTMLImageElement }} event - the element's own load event
+ */
+export function imageArrived(event) {
+  const image = event?.currentTarget
+  if (!image) return
+  waiting.delete(image)
+  if (image.dataset.retryFrom === undefined) return
+  delete image.dataset.retrySpent
+  delete image.dataset.retryGaveUp
+  delete image.dataset.retryFrom
+  delete image.dataset.retryFromSet
 }
 
 /**
