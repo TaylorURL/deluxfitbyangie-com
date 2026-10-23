@@ -251,18 +251,32 @@ const inlined = await new Beasties({
  * exists is the current one — fetched once, on the same key and the same
  * window as the module recovery, so between them a reader is reloaded onto the
  * current build once and never twice.
+ *
+ * WHAT IS REPORTED IS THE OUTCOME, NOT EACH ASK — the rule `src/lib/images.js`
+ * already follows for a photograph. An ask that failed and was answered by the
+ * next one is not a reader who lost the page, and the reader this covers never
+ * sees anything: the retry lands, the sheet switches on, and the only trace is
+ * a fault filed against a file that is sitting on the deploy answering every
+ * request made for it. So the element is marked as one that recovers, which
+ * the entry document reads as "hold this for the page's own console", and the
+ * one thing said out loud is the outcome the reader actually got: the sheet is
+ * still missing after both asks and there is no current document to be carried
+ * to, so what is on screen is the raw document and it stays that way.
  */
 const sheetGuard =
   `<script>window.__dfStylesheetGone=(function(){` +
   `var retried=false;` +
-  `function reload(){try{var k='deluxfit:chunk-reload';` +
+  `function gone(href){console.error('Failed to load link: '+href+` +
+  `' - still failing after 2 asks, and the current document was not fetched')}` +
+  `function reload(href){try{var k='deluxfit:chunk-reload';` +
   `var last=Number(sessionStorage.getItem(k))||0;` +
-  `if(Date.now()-last<30000)return;` +
-  `sessionStorage.setItem(k,String(Date.now()))}catch(e){return}location.reload()}` +
-  `return function(link){if(retried)return reload();retried=true;` +
+  `if(Date.now()-last<30000)return gone(href);` +
+  `sessionStorage.setItem(k,String(Date.now()))}catch(e){return gone(href)}location.reload()}` +
+  `return function(link){var href=link.href;if(retried)return reload(href);retried=true;` +
   `setTimeout(function(){var retry=document.createElement('link');` +
-  `retry.rel='stylesheet';retry.crossOrigin='';retry.href=link.href;` +
-  `retry.onerror=reload;document.head.appendChild(retry)},600)}})()</script>`
+  `retry.rel='stylesheet';retry.crossOrigin='';retry.setAttribute('data-df-recovers','');` +
+  `retry.href=href;retry.onerror=function(){reload(href)};` +
+  `document.head.appendChild(retry)},600)}})()</script>`
 
 // Beasties stamps the element it treated as the document; the page does not
 // need to carry that.
@@ -272,7 +286,9 @@ const sheet = out.match(/<link rel="stylesheet"[^>]*media="print" onload="this\.
 if (!sheet) throw new Error('dist/index.html carries no deferred stylesheet to cover')
 out = out.replace(
   sheet[0],
-  sheetGuard + sheet[0].slice(0, -1) + ' onerror="window.__dfStylesheetGone(this)">'
+  sheetGuard +
+    sheet[0].slice(0, -1) +
+    ' data-df-recovers onerror="window.__dfStylesheetGone(this)">'
 )
 
 writeFileSync(dist, out)
