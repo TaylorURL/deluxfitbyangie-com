@@ -1,5 +1,5 @@
 import { cn } from '@deluxfit/ds'
-import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
+import { imageArrived, imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 
 /**
  * A photograph run the full width of the page between two sections. It is
@@ -49,6 +49,7 @@ export default function PhotoBand({
           fetchPriority={priority ? 'high' : undefined}
           decoding={priority ? 'sync' : 'async'}
           onError={recoverImage}
+          onLoad={imageArrived}
           className={cn(
             'absolute inset-0 h-full w-full object-cover [filter:grayscale(0.7)_contrast(1.08)]',
             objectPosition
