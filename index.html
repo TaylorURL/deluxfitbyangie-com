@@ -480,7 +480,22 @@
                 // own console and nothing is filed.
                 var recovering =
                   tag === 'img' && event.target.dataset && event.target.dataset.retrySpent
-                if (recovering) {
+                // The deferred stylesheet is covered the same way, and from the
+                // first ask rather than the second. `scripts/first-screen.js`
+                // writes an `onerror` onto it that asks again and then fetches
+                // the current document, and it marks the element as one that
+                // recovers. One ask lost on the wire is answered by the next
+                // one in six hundred milliseconds, with nothing on screen to
+                // show it happened — the sheet switches on and the reader has
+                // the whole page. That handler says so out loud when the asking
+                // is over and the sheet is still not there, which is the case
+                // where the reader is left with the raw document; until then
+                // this is held for the page's own console and nothing is filed.
+                var recovers =
+                  tag === 'link' &&
+                  rel === 'stylesheet' &&
+                  event.target.hasAttribute('data-df-recovers')
+                if (recovering || recovers) {
                   hold('resource', 'Failed to load ' + tag + ': ' + where + ' (asking again)')
                   return
                 }
