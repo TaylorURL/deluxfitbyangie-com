@@ -469,17 +469,43 @@
                 // file that may never have been requested, and leaves the one
                 // that failed unnamed.
                 var where = event.target.currentSrc || event.target.src || event.target.href || ''
-                // An image already recovering has been reported: its first
-                // failure filed this same fault. Everything after that is
-                // src/lib/images.js asking again, and an ask that fails while
-                // the file is still away is the same fault rather than a new
-                // one. Reporting each of them turns one photograph into five
-                // faults and buries whether the reader ever saw the picture.
-                // That file says so once, naming the asks and the span, if the
-                // recovery runs out; until then this is held for the page's
-                // own console and nothing is filed.
-                var recovering =
-                  tag === 'img' && event.target.dataset && event.target.dataset.retrySpent
+                // A photograph this site serves is asked for again when its
+                // fetch fails, and the ask that works leaves the reader with
+                // the picture and nothing to be told about. So WHAT IS
+                // REPORTED IS THE OUTCOME, NOT THE ASK - the rule
+                // src/lib/images.js was written to and the one the deferred
+                // stylesheet below already follows. It was honoured here only
+                // from the second ask onward, because the mark it was read off
+                // is written by the recovery and the recovery had not run yet;
+                // the first ask of every failure was filed regardless, which
+                // is a fault filed for a picture the reader got.
+                //
+                // One interruption of a page load is enough to lose every
+                // image in flight at that instant, and each of them then files
+                // its own report: a connection away for under a second fills
+                // the queue with one fault per photograph on the page, every
+                // one of them already answered by the time anybody reads it,
+                // and a real failure is somewhere in among them.
+                //
+                // The recovery claims an element as it takes it on, and it
+                // runs on the element's own error handler, which is dispatched
+                // after this one. So the decision waits a task: an image
+                // nothing has claimed by then is an image nothing is going to
+                // ask for again, and that is the one that is filed. An image
+                // whose recovery runs out is reported by src/lib/images.js,
+                // naming the asks and the span - which is the outcome the
+                // reader actually got and the thing worth knowing.
+                if (tag === 'img' && event.target.dataset) {
+                  var image = event.target
+                  var asked = 'Failed to load img: ' + where
+                  hold('resource', asked + ' (asking again)')
+                  window.setTimeout(function () {
+                    if (image.dataset.retryFrom !== undefined) return
+                    if (image.naturalWidth > 0) return
+                    report('resource', asked)
+                  }, 0)
+                  return
+                }
                 // The deferred stylesheet is covered the same way, and from the
                 // first ask rather than the second. `scripts/first-screen.js`
                 // writes an `onerror` onto it that asks again and then fetches
@@ -495,7 +521,7 @@
                   tag === 'link' &&
                   rel === 'stylesheet' &&
                   event.target.hasAttribute('data-df-recovers')
-                if (recovering || recovers) {
+                if (recovers) {
                   hold('resource', 'Failed to load ' + tag + ': ' + where + ' (asking again)')
                   return
                 }
