@@ -5,7 +5,7 @@ import { Button, Container, Marquee, Reveal, SectionEyebrow, SplitHeading, cn } 
 import { useContent } from '@/i18n'
 import { Link } from '@/router'
 import FramedPhoto from '@/components/media/FramedPhoto'
-import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
+import { imageArrived, imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 import PhotoGallery from '@/components/media/PhotoGallery'
 import ProgramsGrid from '@/components/sections/ProgramsGrid'
 import PillarGrid from '@/components/sections/PillarGrid'
@@ -303,6 +303,7 @@ export default function Home() {
           loading="lazy"
           decoding="async"
           onError={recoverImage}
+          onLoad={imageArrived}
           className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-[35%_30%] opacity-30 [filter:grayscale(0.85)_contrast(1.1)]"
         />
         <div

@@ -6,7 +6,7 @@ import { Link } from '@/router'
 import BrandLogo from '@/components/layout/BrandLogo'
 import ShellAction from '@/components/layout/ShellAction'
 import { studioYear } from '@/lib/timezone'
-import { imageBox, imageSrcSet, recoverImage } from '@/lib/images'
+import { imageArrived, imageBox, imageSrcSet, recoverImage } from '@/lib/images'
 
 const PANEL_PHOTO = '/brand/studio-red-mat-seated.webp'
 
@@ -56,6 +56,7 @@ export default function AuthShell({ children }) {
               alt=""
               decoding="async"
               onError={recoverImage}
+              onLoad={imageArrived}
               className="absolute inset-0 h-full w-full object-cover object-[55%_30%]"
             />
             <div className="from-df-bg/90 via-df-bg/20 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent" />

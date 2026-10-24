@@ -1,5 +1,5 @@
 import { cn } from '@deluxfit/ds'
-import { recoverImage } from '@/lib/images'
+import { imageArrived, recoverImage } from '@/lib/images'
 
 /**
  * A drawn plate: the site's own picture of a thing a photograph cannot show.
@@ -35,6 +35,7 @@ export default function ArtPlate({ src, alt, className }) {
       decoding="async"
       draggable="false"
       onError={recoverImage}
+      onLoad={imageArrived}
       className={cn('h-auto w-full select-none', className)}
     />
   )
