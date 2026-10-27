@@ -41,6 +41,8 @@ The edge functions are documented in [supabase/functions/EDGE_FUNCTIONS.md](supa
 
 React 19, Vite 7, Tailwind CSS 3, Framer Motion, Supabase (auth, Postgres, edge functions) and Stripe. Hosted on Vercel.
 
----
+## License
 
-Built and maintained by [TaylorURL](https://www.taylorurl.com). Proprietary, see [LICENSE.md](LICENSE.md).
+Proprietary. Copyright (c) 2026 TaylorURL LLC, all rights reserved. See [LICENSE.md](LICENSE.md).
+
+Built and maintained by [TaylorURL](https://www.taylorurl.com).
