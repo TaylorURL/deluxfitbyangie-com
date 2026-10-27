@@ -8,7 +8,7 @@
 <p align="center">Website and client app for Angie, a certified personal trainer.</p>
 <p align="center"><a href="https://www.deluxfitbyangie.com">deluxfitbyangie.com</a></p>
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.44.0-e11d2a?style=for-the-badge" alt="Version 2026.44.0" />
+  <img src="https://img.shields.io/badge/version-2026.44.1-e11d2a?style=for-the-badge" alt="Version 2026.44.1" />
 </p>
 
 Angie sells memberships and live one-on-one training online. People buy a program on the site, then sign in to a portal with their plan, nutrition, progress, bookings and a message thread with Angie. She runs her side from a coach dashboard in the same app.
