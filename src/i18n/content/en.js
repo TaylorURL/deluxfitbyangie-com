@@ -912,32 +912,56 @@ const en = {
     transformationsAccent: 'Transformations',
     transformations: [
       {
-        src: '/brand/transformation-1.webp',
-        alt: 'Before and after: at the beach, then standing beside a car, visibly slimmer',
+        focus: 'Full Body Recomposition & Muscle Development',
+        duration: '1 Year',
+        photos: [
+          {
+            src: '/brand/transformation-3.webp',
+            alt: 'Before and after: front view, flexing, with more definition in the arms, waist and legs',
+          },
+          {
+            src: '/brand/transformation-4.webp',
+            alt: 'Before and after: back view, flexing, with a more defined back, glutes and legs',
+          },
+          {
+            src: '/brand/transformation-5.webp',
+            alt: 'Before and after: side view, with a flatter midsection and fuller glutes',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-2.webp',
-        alt: 'Before and after: side view in training clothes, with a firmer, more toned figure',
+        focus: 'Body Recomposition & Glute Development',
+        duration: '3 Months',
+        photos: [
+          {
+            src: '/brand/transformation-6.webp',
+            alt: 'Before and after: side view, with a tighter waist and more shape in the glutes and legs',
+          },
+          {
+            src: '/brand/transformation-7.webp',
+            alt: 'Before and after: front view, flexing, with a leaner waist and more defined arms and legs',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-3.webp',
-        alt: 'Before and after: front view, flexing, with more definition in the arms, waist and legs',
+        focus: 'Fat Loss & Body Recomposition',
+        duration: '3 Months',
+        photos: [
+          {
+            src: '/brand/transformation-2.webp',
+            alt: 'Before and after: side view in training clothes, with a firmer, more toned figure',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-4.webp',
-        alt: 'Before and after: back view, flexing, with a more defined back, glutes and legs',
-      },
-      {
-        src: '/brand/transformation-5.webp',
-        alt: 'Before and after: side view, with a flatter midsection and fuller glutes',
-      },
-      {
-        src: '/brand/transformation-6.webp',
-        alt: 'Before and after: side view, with a tighter waist and more shape in the glutes and legs',
-      },
-      {
-        src: '/brand/transformation-7.webp',
-        alt: 'Before and after: front view, flexing, with a leaner waist and more defined arms and legs',
+        focus: 'Weight Loss & Body Transformation',
+        duration: '8 Months',
+        photos: [
+          {
+            src: '/brand/transformation-1.webp',
+            alt: 'Before and after: at the beach, then standing beside a car, visibly slimmer',
+          },
+        ],
       },
     ],
     storiesHeading: 'What clients say.',

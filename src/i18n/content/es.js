@@ -920,32 +920,56 @@ const es = {
     transformationsAccent: 'Transformaciones',
     transformations: [
       {
-        src: '/brand/transformation-1.webp',
-        alt: 'Antes y después: en la playa y luego junto a un auto, visiblemente más delgada',
+        focus: 'Recomposición corporal completa y desarrollo muscular',
+        duration: '1 año',
+        photos: [
+          {
+            src: '/brand/transformation-3.webp',
+            alt: 'Antes y después: vista frontal, flexionando, con más definición en brazos, cintura y piernas',
+          },
+          {
+            src: '/brand/transformation-4.webp',
+            alt: 'Antes y después: vista de espalda, flexionando, con espalda, glúteos y piernas más definidos',
+          },
+          {
+            src: '/brand/transformation-5.webp',
+            alt: 'Antes y después: vista lateral, con el abdomen más plano y los glúteos más llenos',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-2.webp',
-        alt: 'Antes y después: vista lateral en ropa de entrenamiento, con una figura más firme y tonificada',
+        focus: 'Recomposición corporal y desarrollo de glúteos',
+        duration: '3 meses',
+        photos: [
+          {
+            src: '/brand/transformation-6.webp',
+            alt: 'Antes y después: vista lateral, con la cintura más estrecha y más forma en glúteos y piernas',
+          },
+          {
+            src: '/brand/transformation-7.webp',
+            alt: 'Antes y después: vista frontal, flexionando, con la cintura más delgada y brazos y piernas más definidos',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-3.webp',
-        alt: 'Antes y después: vista frontal, flexionando, con más definición en brazos, cintura y piernas',
+        focus: 'Pérdida de grasa y recomposición corporal',
+        duration: '3 meses',
+        photos: [
+          {
+            src: '/brand/transformation-2.webp',
+            alt: 'Antes y después: vista lateral en ropa de entrenamiento, con una figura más firme y tonificada',
+          },
+        ],
       },
       {
-        src: '/brand/transformation-4.webp',
-        alt: 'Antes y después: vista de espalda, flexionando, con espalda, glúteos y piernas más definidos',
-      },
-      {
-        src: '/brand/transformation-5.webp',
-        alt: 'Antes y después: vista lateral, con el abdomen más plano y los glúteos más llenos',
-      },
-      {
-        src: '/brand/transformation-6.webp',
-        alt: 'Antes y después: vista lateral, con la cintura más estrecha y más forma en glúteos y piernas',
-      },
-      {
-        src: '/brand/transformation-7.webp',
-        alt: 'Antes y después: vista frontal, flexionando, con la cintura más delgada y brazos y piernas más definidos',
+        focus: 'Pérdida de peso y transformación corporal',
+        duration: '8 meses',
+        photos: [
+          {
+            src: '/brand/transformation-1.webp',
+            alt: 'Antes y después: en la playa y luego junto a un auto, visiblemente más delgada',
+          },
+        ],
       },
     ],
     storiesHeading: 'Lo que dicen las clientas.',
