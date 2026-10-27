@@ -3,7 +3,7 @@
   "private": true,
   "license": "UNLICENSED",
   "version": "2026.44.0",
-  "description": "DeluxFit by Angie: the direct-sale funnel for a personal training program.",
+  "description": "Website and client app for DeluxFit by Angie, a personal trainer.",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,191 +1,46 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.png" />
-    <img src="public/deluxfit-logo.webp" width="200" alt="DeluxFit by Angie" />
+    <img src="public/deluxfit-logo.webp" width="220" alt="DeluxFit by Angie" />
   </picture>
 </p>
-
 <h1 align="center">DeluxFit by Angie</h1>
-
-<p align="center">
-  <b>Discipline over excuses.</b>
-</p>
-<p align="center">
-  The direct-sale funnel, member portal, and coach dashboard for certified personal trainer Angie:<br />
-  memberships, online coaching, and live 1-on-1 training.
-</p>
-<p align="center">
-  <sub>Published for reading. Proprietary — see <a href="LICENSE.md">LICENSE.md</a>. Outside contributions are not accepted.</sub>
-</p>
-
+<p align="center">Website and client app for Angie, a certified personal trainer.</p>
+<p align="center"><a href="https://www.deluxfitbyangie.com">deluxfitbyangie.com</a></p>
 <p align="center">
   <img src="https://img.shields.io/badge/version-2026.44.0-e11d2a?style=for-the-badge" alt="Version 2026.44.0" />
-  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/Vite-7-e11d2a?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
-  <img src="https://img.shields.io/badge/Supabase-bd1521?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Stripe-e11d2a?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
-  <img src="https://img.shields.io/badge/Vercel-050505?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
 
-<br />
+Angie sells memberships and live one-on-one training online. People buy a program on the site, then sign in to a portal with their plan, nutrition, progress, bookings and a message thread with Angie. She runs her side from a coach dashboard in the same app.
 
-## Why DeluxFit
+## What's on the site
 
-Most trainer sites sell a service and then hand the client off to a spreadsheet and a text thread. This one keeps the whole relationship in the same app: the public funnel closes the sale through Stripe, the buyer signs in to a portal with their plan, nutrition, progress, bookings, and a message thread, and the coach works the other side of that same data from a staff-gated dashboard. The browser never holds a privileged key: every sensitive write goes through an edge function.
+- Four programs: a $14.99/month membership, a $75 single live session, live online training at $50 a session, and personalized online coaching at $150/month (marked coming soon for now)
+- Stripe checkout and member sign-up
+- A booking calendar for the live sessions
+- The public pages in English and Spanish
+- A member portal with the workout plan, nutrition targets, progress log, bookings, a media library, and messages with Angie that can carry file attachments
+- A coach dashboard where Angie writes plans and nutrition, uploads library content, reviews progress, sets her availability and manages bookings, memberships and clients
+- Client stories with reviews and transformation photos
 
-<table width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <h3 align="center">Server-owned writes</h3>
-      <p align="center">The client only performs RLS-scoped reads. Checkout, bookings, messaging, progress, and content authoring all run through Deno edge functions holding the service-role key.</p>
-    </td>
-    <td width="50%" valign="top">
-      <h3 align="center">Bilingual by construction</h3>
-      <p align="center">Every string on the public funnel comes from parallel English and Spanish content trees, so the site switches language with no second set of components.</p>
-    </td>
-  </tr>
-</table>
+## Running it locally
 
-<br />
-
-## Stack
-
-| Layer               | Technology                                                                                                                                                                                     |
-| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| UI                  | React 19 + a hand-rolled SPA router (no `react-router`)                                                                                                                                        |
-| Build & dev         | Vite 7 (Node `22.x`)                                                                                                                                                                           |
-| Styling             | Tailwind CSS 3 + the in-repo design system (`@deluxfit/ds`, `--df-*` tokens), Anton / Bodoni Moda / Inter self-hosted from `public/fonts`                                                      |
-| Design              | [Figma](https://www.figma.com/design/NrUxA2MvrolnUwDUxcPbpJ): tokens as variables, the type and elevation scales as styles, the components, and every route at 1440                            |
-| Components & motion | `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, Framer Motion 12, `lucide-react`, `ogl`, `@taylorurl/split-rail` for the attribution rail |
-| Backend             | Supabase: Auth, Postgres + RLS, 15 Deno edge functions                                                                                                                                         |
-| Payments            | Stripe Checkout, driven entirely from the edge functions                                                                                                                                       |
-| i18n                | Custom English / Spanish content trees                                                                                                                                                         |
-| Analytics           | First-party and cookieless, from a shared tracker script                                                                                                                                       |
-| Hosting             | Vercel (SPA rewrites + security headers)                                                                                                                                                       |
-
-## Getting started
-
-Requires Node `22.x`.
+You need Node 22.
 
 ```bash
 npm install
-npm run dev           # Vite dev server
-                      # /portal?demo=1 opens the client portal on a filled-in
-                      # account, without signing in; the route exists on the
-                      # dev server only
-npm run build         # production build to dist/
+npm run dev     # open /portal?demo=1 to see the portal with sample data
+npm run build
 ```
 
-No environment configuration is required. The Supabase URL and publishable key are baked into `src/config/supabase.js`, so the app runs as-is. `.env.example` lists the two overrides that exist, for pointing a clone at a different Supabase project.
+No `.env` is needed. The Supabase URL and publishable key are in `src/config/supabase.js`. To point a clone at a different Supabase project, copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Stripe keys and other secrets live in the Supabase project, not in this repo.
 
-| Variable                 | Purpose                                            |
-| :----------------------- | :------------------------------------------------- |
-| `VITE_SUPABASE_URL`      | Optional override for the Supabase project URL.    |
-| `VITE_SUPABASE_ANON_KEY` | Optional override for the browser publishable key. |
+The edge functions are documented in [supabase/functions/EDGE_FUNCTIONS.md](supabase/functions/EDGE_FUNCTIONS.md), the database in [migrations/MIGRATIONS.md](migrations/MIGRATIONS.md), and the design system in [packages/deluxfit-design-system/DESIGN_SYSTEM.md](packages/deluxfit-design-system/DESIGN_SYSTEM.md).
 
-Stripe secrets, the service-role key, and price ids live in the Supabase project, never in this repo. When Stripe is not configured, `create-checkout` returns `{ configured: false }` and the UI says so instead of faking a charge.
+## Built with
 
-### Scripts
+React 19, Vite 7, Tailwind CSS 3, Framer Motion, Supabase (auth, Postgres, edge functions) and Stripe. Hosted on Vercel.
 
-| Script                 | Does                                             |
-| :--------------------- | :----------------------------------------------- |
-| `npm run dev`          | Start the Vite dev server.                       |
-| `npm run build`        | Production build to `dist/`.                     |
-| `npm run preview`      | Serve the production build locally.              |
-| `npm run lint`         | Lint with ESLint.                                |
-| `npm run lint:fix`     | Lint and auto-fix.                               |
-| `npm run format`       | Format `src/**` and `packages/**` with Prettier. |
-| `npm run format:check` | Check formatting without writing.                |
+---
 
-## Architecture
-
-```mermaid
-flowchart TD
-    V["Visitor"] --> Funnel["Public funnel: Vite SPA on Vercel"]
-    Funnel -->|"buy / subscribe"| CO["create-checkout to Stripe"]
-    CO -->|"webhook"| Fns["Edge functions, service role"]
-    Funnel -->|"sign up / log in"| Auth["Supabase Auth"]
-    Auth --> Portal["Member portal"]
-    Auth --> Admin["Coach dashboard, staff only"]
-    Portal -->|"RLS-scoped reads"| DB[("Supabase Postgres, RLS-locked")]
-    Portal -->|"writes"| Fns
-    Admin -->|"writes"| Fns
-    Fns --> DB
-```
-
-## How it works
-
-- **Three surfaces, one bundle.** Vercel rewrites every path to `index.html` and the router picks the page — every path except `/assets`, `/fonts` and `/brand`, which hold files rather than routes and answer a name they do not have with a 404 instead of a page. `/portal` and `/admin` mount their own root-level shells; `/admin` also requires `profiles.role = 'staff'`.
-- **The funnel sells four offers.** Membership at $14.99/month, personalized online coaching at $150/month, a $75 single live session, and a $50/session live training program. Each CTA opens a Stripe Checkout session through `create-checkout`.
-- **The portal is the product after the sale.** Overview, workout plan, nutrition targets, progress history, bookings, a coach message thread with private attachments, and a media library, all RLS-scoped to the signed-in member.
-- **The dashboard is the same data from the coach's side.** Staff author plans, nutrition, and library content, review progress, and manage bookings, memberships, and invites; every admin function re-checks staff status server-side.
-- **The design system is consumed from source.** `packages/deluxfit-design-system` is aliased as `@deluxfit/ds` with no build step; `--df-*` CSS variables are mirrored into Tailwind by `tailwind-preset.cjs`, and `data-theme` re-scopes them on any subtree.
-- **Migrations are append-only.** The schema, RLS policies, and storage buckets are numbered SQL files applied in order, plus a transaction-wrapped `verify_rls_isolation.sql` self-test. The `.sql` files themselves are gitignored, so a fresh clone carries [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md), the version-controlled record of what each migration does, rather than the SQL.
-- **Nothing breaks quietly in a browser.** A small inline script in `index.html` catches uncaught errors, rejected promises, failed resource loads, and 5xx responses, and beacons them to the reporting collector. It caps itself at ten reports per page so a loop cannot flood the queue.
-
-## Deeper docs
-
-| Document                                                                                               | Covers                                                                                                                                            |
-| :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [`migrations/MIGRATIONS.md`](migrations/MIGRATIONS.md)                                                 | The append-only migration set, what each file adds, and the RLS isolation self-test. The `.sql` files are gitignored; this is the tracked record. |
-| [`supabase/functions/EDGE_FUNCTIONS.md`](supabase/functions/EDGE_FUNCTIONS.md)                         | Every edge function, its auth gate, deploy commands, and required secrets.                                                                        |
-| [`packages/deluxfit-design-system/DESIGN_SYSTEM.md`](packages/deluxfit-design-system/DESIGN_SYSTEM.md) | `--df-*` tokens, the Tailwind preset, and the component catalog.                                                                                  |
-
-## Project structure
-
-```
-deluxfitbyangie-com/
-├── public/
-│   ├── art/                       Drawn SVG plates: the training week and the progression block
-│   ├── brand/                     Studio + gym brand photography (WebP, 480/800/1200/full)
-│   ├── fonts/                     Anton, Inter and Bodoni Moda, latin subsets
-│   ├── deluxfit-logo.webp         Wordmark used across the app
-│   ├── og.png                     1200x630 share card
-│   ├── favicon.svg                Tab mark, plus apple-touch-icon.png and icon-512.png
-│   ├── site.webmanifest           Name, icons, and theme colour for an installed tile
-│   ├── robots.txt                 Crawl policy, AI crawlers included, and the sitemap pointer
-│   └── llms.txt                   What the site sells, for the readers that fetch it
-├── docs/logo-dark.png             Dark-scheme wordmark
-├── scripts/images.py              Resizes every raster and writes src/lib/images.js
-├── scripts/first-screen.js        Inlines the home hero into dist/index.html after the Vite build
-├── migrations/MIGRATIONS.md       Record of the ordered SQL DDL (the .sql files are gitignored)
-├── supabase/functions/            15 Deno edge functions (service role)
-├── packages/
-│   └── deluxfit-design-system/    In-repo DS: --df-* tokens, Tailwind preset, components
-├── src/
-│   ├── router/                    Hand-rolled SPA router (path match + <Link>)
-│   ├── pages/                     Home, Membership, OnlineCoaching, SingleSession,
-│   │                              LiveTrainingProgram, About, Testimonials, Contact, NotFound
-│   │   ├── auth/                  Login, Signup, ResetPassword, UpdatePassword
-│   │   └── legal/                 LegalPage and the Privacy and Terms wrappers
-│   ├── components/
-│   │   ├── layout/                Site chrome: shell, header, footer, brand mark
-│   │   ├── sections/              Page-composition blocks: hero, grids, price tile
-│   │   ├── media/                 Photo layouts and the drawn art plates
-│   │   ├── forms/                 Funnel forms, the booking calendar, submit hook
-│   │   ├── effects/               Wrappers over the vendored canvas backdrops
-│   │   ├── ui/                    Shared primitives the DS does not carry
-│   │   └── reactbits/             Vendored reactbits.dev source
-│   ├── auth/                      Supabase Auth provider, protected routes, roles
-│   ├── portal/                    Signed-in member portal and its panels
-│   ├── admin/                     Staff-gated coach dashboard
-│   ├── lib/                       datetime, timezone, image sources, sparkline, lazy-chunk
-│   │                              loading, software-renderer detection
-│   │   └── api/                   Supabase data layer: payments, booking, portal/admin
-│   ├── i18n/                      English + Spanish content trees
-│   └── config/                    Browser Supabase client and the canonical site origin
-├── api/version.js                 Reports the commit the deployment was built from
-├── vite.config.js                 `@` and `@deluxfit/ds` aliases, chunking, sitemap.xml
-└── vercel.json                    SPA rewrites + security headers
-```
-
-## License
-
-Private and proprietary. All rights reserved.
-
-<br />
-
-<p align="center">
-  <sub>Built by <a href="https://taylorurl.com">TaylorURL</a>. Custom sites for local businesses.</sub>
-</p>
+Built and maintained by [TaylorURL](https://www.taylorurl.com). Proprietary, see [LICENSE.md](LICENSE.md).
