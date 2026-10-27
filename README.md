@@ -13,7 +13,8 @@
 
 Angie sells memberships and live one-on-one training online. People buy a program on the site, then sign in to a portal with their plan, nutrition, progress, bookings and a message thread with Angie. She runs her side from a coach dashboard in the same app.
 
-## What's on the site
+<details>
+<summary>What's on the site</summary>
 
 - Four programs: a $14.99/month membership, a $75 single live session, live online training at $50 a session, and personalized online coaching at $150/month (marked coming soon for now)
 - Stripe checkout and member sign-up
@@ -23,7 +24,10 @@ Angie sells memberships and live one-on-one training online. People buy a progra
 - A coach dashboard where Angie writes plans and nutrition, uploads library content, reviews progress, sets her availability and manages bookings, memberships and clients
 - Client stories with reviews and transformation photos
 
-## Running it locally
+</details>
+
+<details>
+<summary>Running it locally</summary>
 
 You need Node 22.
 
@@ -37,12 +41,17 @@ No `.env` is needed. The Supabase URL and publishable key are in `src/config/sup
 
 The edge functions are documented in [supabase/functions/EDGE_FUNCTIONS.md](supabase/functions/EDGE_FUNCTIONS.md), the database in [migrations/MIGRATIONS.md](migrations/MIGRATIONS.md), and the design system in [packages/deluxfit-design-system/DESIGN_SYSTEM.md](packages/deluxfit-design-system/DESIGN_SYSTEM.md).
 
+</details>
+
 ## Built with
 
 React 19, Vite 7, Tailwind CSS 3, Framer Motion, Supabase (auth, Postgres, edge functions) and Stripe. Hosted on Vercel.
 
-## License
+<details>
+<summary>License</summary>
 
 Proprietary. Copyright (c) 2026 TaylorURL LLC, all rights reserved. See [LICENSE.md](LICENSE.md).
+
+</details>
 
 Built and maintained by [TaylorURL](https://www.taylorurl.com).
