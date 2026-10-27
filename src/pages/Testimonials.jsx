@@ -15,6 +15,14 @@ import PageHero from '@/components/sections/PageHero'
 import PhotoBand from '@/components/media/PhotoBand'
 import AnimatedBackdrop from '@/components/effects/AnimatedBackdrop'
 
+// A transformation's photos share one caption, so its card takes one column per
+// photo and keeps them side by side. Spelled out in full so Tailwind sees them.
+const TRANSFORMATION_LAYOUT = {
+  1: { span: '', columns: '' },
+  2: { span: 'sm:col-span-2', columns: 'sm:grid-cols-2' },
+  3: { span: 'sm:col-span-2 lg:col-span-3', columns: 'sm:grid-cols-2 lg:grid-cols-3' },
+}
+
 export default function Testimonials() {
   const { testimonials } = useContent()
 
@@ -51,25 +59,40 @@ export default function Testimonials() {
         accent={testimonials.transformationsAccent}
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {testimonials.transformations.map(({ src, alt }, index) => (
-            <Reveal key={src} delay={(index % 3) * 0.06}>
-              <figure className="overflow-hidden rounded-df-lg border border-df-border-strong bg-df-surface">
-                <img
-                  src={src}
-                  srcSet={imageSrcSet(src)}
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  width={imageBox(src)?.width}
-                  height={imageBox(src)?.height}
-                  alt={alt}
-                  loading="lazy"
-                  decoding="async"
-                  onError={recoverImage}
-                  onLoad={imageArrived}
-                  className="block h-auto w-full"
-                />
-              </figure>
-            </Reveal>
-          ))}
+          {testimonials.transformations.map(({ focus, duration, photos }, index) => {
+            const layout = TRANSFORMATION_LAYOUT[Math.min(photos.length, 3)]
+            return (
+              <Reveal key={focus} delay={index * 0.06} className={layout.span}>
+                <figure>
+                  <div className={`grid gap-4 sm:gap-6 ${layout.columns}`}>
+                    {photos.map(({ src, alt }) => (
+                      <div
+                        key={src}
+                        className="overflow-hidden rounded-df-lg border border-df-border-strong bg-df-surface"
+                      >
+                        <img
+                          src={src}
+                          srcSet={imageSrcSet(src)}
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          width={imageBox(src)?.width}
+                          height={imageBox(src)?.height}
+                          alt={alt}
+                          loading="lazy"
+                          decoding="async"
+                          onError={recoverImage}
+                          onLoad={imageArrived}
+                          className="block h-auto w-full"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <figcaption className="mt-3 text-sm font-600 leading-snug text-df-text sm:text-base">
+                    {focus} <span className="text-df-accent-bright">— {duration}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            )
+          })}
         </div>
       </Section>
 
