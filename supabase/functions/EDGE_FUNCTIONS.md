@@ -1,23 +1,8 @@
-<h1 align="center">Edge functions</h1>
+# Edge functions
 
-<p align="center">
-  <b>The service-role backend for DeluxFit by Angie: 15 Deno edge functions.</b>
-</p>
-<p align="center">
-  Every privileged write (bookings, messaging, checkout, media, coach and admin content)<br />
-  runs here, behind CORS, JWT auth, and a server-side <code>requireStaff</code> gate.
-</p>
+The service-role backend for DeluxFit by Angie. Every privileged write (bookings, messaging, checkout, media, coach and admin content) runs here, behind CORS, JWT auth and a server-side `requireStaff` check.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Deno-runtime-e11d2a?style=for-the-badge&logo=deno&logoColor=white" alt="Deno" />
-  <img src="https://img.shields.io/badge/Supabase-Edge_Functions-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Edge Functions" />
-  <img src="https://img.shields.io/badge/Stripe-server--side-e11d2a?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
-  <img src="https://img.shields.io/badge/project-wmqwcnpiewfujmxaivvy-e11d2a?style=for-the-badge" alt="Project ref" />
-</p>
-
-<br />
-
-## Why edge functions
+## How they work
 
 The browser only ever reads RLS-scoped rows and never holds a secret. Anything that must be
 trusted (writing another table, calling Stripe, sending a signed media URL, inviting a user)
@@ -49,17 +34,17 @@ coach/admin function enforces `profiles.role = 'staff'` server-side before any w
 
 ### Coach / admin (staff only)
 
-| Function            | Purpose                                                                                                                                                                                                                                   |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `invite-user`       | Sends a Supabase Auth invite email for `{ email, fullName?, role }` (role is `'client'` or `'staff'`), pre-stamping `data.role` so `handle_new_user()` records the right role. The frontend never writes roles or creates users directly. |
-| `upsert-plan`       | Create / update / delete a client's workout program (`plans` row).                                                                                                                                                                        |
-| `upsert-nutrition`  | Create / update / delete a client's nutrition plan (`nutrition_plans` row).                                                                                                                                                               |
-| `upsert-content`    | Create / update / delete a `content_items` row and sync its per-client `content_assignments`.                                                                                                                                             |
-| `upload-media`      | Multipart upload of coach media (library videos/PDFs, message video feedback) to the private `library-media` bucket; returns `{ bucket, path }`.                                                                                          |
-| `coach-message`     | Insert a `sender='coach'` message into a client's conversation (creating it if needed); supports a `library-media` attachment for video feedback.                                                                                         |
-| `update-membership` | Manually upsert / delete a client's `memberships` row (the manual override alongside the Stripe webhook).                                                                                                                                 |
-| `update-booking`    | Set a booking's status (`pending` / `confirmed` / `canceled`).                                                                                                                                                                            |
-| `upsert-availability` | Replace the standing weekly availability grid, or upsert / delete a single date's override. The booking calendar reads both tables directly and writes neither. |
+| Function              | Purpose                                                                                                                                                                                                                                   |
+| :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `invite-user`         | Sends a Supabase Auth invite email for `{ email, fullName?, role }` (role is `'client'` or `'staff'`), pre-stamping `data.role` so `handle_new_user()` records the right role. The frontend never writes roles or creates users directly. |
+| `upsert-plan`         | Create / update / delete a client's workout program (`plans` row).                                                                                                                                                                        |
+| `upsert-nutrition`    | Create / update / delete a client's nutrition plan (`nutrition_plans` row).                                                                                                                                                               |
+| `upsert-content`      | Create / update / delete a `content_items` row and sync its per-client `content_assignments`.                                                                                                                                             |
+| `upload-media`        | Multipart upload of coach media (library videos/PDFs, message video feedback) to the private `library-media` bucket; returns `{ bucket, path }`.                                                                                          |
+| `coach-message`       | Insert a `sender='coach'` message into a client's conversation (creating it if needed); supports a `library-media` attachment for video feedback.                                                                                         |
+| `update-membership`   | Manually upsert / delete a client's `memberships` row (the manual override alongside the Stripe webhook).                                                                                                                                 |
+| `update-booking`      | Set a booking's status (`pending` / `confirmed` / `canceled`).                                                                                                                                                                            |
+| `upsert-availability` | Replace the standing weekly availability grid, or upsert / delete a single date's override. The booking calendar reads both tables directly and writes neither.                                                                           |
 
 ## Deploying
 
@@ -130,9 +115,3 @@ Point a Stripe webhook endpoint at
   skip the email rather than erroring or faking a charge.
 - **No bundler required**: the Supabase Deno runtime resolves JSR/npm specifiers directly, so
   there is no `package.json` in this folder.
-
-<br />
-
-<p align="center">
-  <sub>Every trusted write, one service-role hop away from the browser.</sub>
-</p>
