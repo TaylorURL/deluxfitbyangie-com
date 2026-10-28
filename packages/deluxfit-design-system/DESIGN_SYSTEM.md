@@ -1,27 +1,12 @@
-<h1 align="center">@deluxfit/ds</h1>
+# @deluxfit/ds
 
-<p align="center">
-  <b>The DeluxFit by Angie design system. A red and black “gym-luxe” theme for the coaching funnel.</b>
-</p>
-<p align="center">
-  High-contrast and athletic: near-black grounds and crimson, a condensed display face,<br />
-  ring-first elevation, and <code>cva</code>-based components, consumed straight from source with no build step.
-</p>
+The DeluxFit by Angie design system. Near-black grounds and crimson, a condensed display face, ring-first elevation, and `cva` components used straight from source with no build step.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-preset-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind preset" />
-  <img src="https://img.shields.io/badge/Radix_UI-slot-e11d2a?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix UI" />
-  <img src="https://img.shields.io/badge/private-UNLICENSED-e11d2a?style=for-the-badge" alt="Private / UNLICENSED" />
-</p>
-
-<br />
-
-## Why @deluxfit/ds
+## Overview
 
 The whole site (funnel, portal, and coach dashboard) is drawn from one visual language: near-black grounds and charcoals, a crimson accent, off-white text, an ultra-condensed display face (Anton) for headlines, a didone serif (Bodoni Moda) reserved for pull quotes, and a clean sans (Inter) for everything else. `@deluxfit/ds` is that language made importable. It exposes tokens as CSS variables and a Tailwind preset, ships accessible `cva`-based components, and is aliased to source in the app, so a change to a token or component shows up everywhere with no publish and no build.
 
-Emphasis inside a headline is carried by colour in the same face at the same size. The other way to do it — dropping the phrase into an italic serif — costs the headline its line, because two faces at two widths never sit on one baseline the way one face does.
+Emphasis inside a headline is carried by colour in the same face at the same size. The other way to do it, dropping the phrase into an italic serif, costs the headline its line, because two faces at two widths never sit on one baseline the way one face does.
 
 Elevation is a ring first. Every shadow in the scale opens with a hairline of the surface's own border colour and then adds the ambient and key drops, so a raised surface is legible before any blur is drawn and stays legible on a ground the blur disappears into. A key sits on the surface rather than floating above it, which makes its light a contact shadow rather than a coloured bloom: one glowing button looks important, and a screen of them looks like a demo.
 
@@ -80,23 +65,23 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   `danger`; `size`: `sm` · `md` · `lg` from the control-height tokens; `block`; `asChild` for
   anchors. The filled key deepens under the pointer rather than brightening.
 - **Badge**: eyebrow / status pill; `tone` × `variant` (`soft`/`solid`/`outline`).
-- **Panel**: the surface a reader works inside — a form, a calendar, a sheet of controls.
+- **Panel**: the surface a reader works inside: a form, a calendar, a sheet of controls.
   `elevation`: `flat` · `raised`; `padded`; `as` to render it as the form itself.
 - **Card**: the surface a reader reads. Ring-first, no border of its own; `interactive`
   deepens the ring rather than lifting the card.
-- **PanelHeading**: one panel header, composed the same way everywhere — title, the `count`
+- **PanelHeading**: one panel header, composed the same way everywhere: title, the `count`
   that qualifies it, then the `actions`. The portal and the coach panel share it rather than
   keeping a copy each.
 - **EmptyState**: nothing here yet, said as a state. Dashed edge, and the way out where there
   is one, as a plain anchor the app's own click handler routes.
 - **PricingCard**: tier name, price, period, feature list, a recommended state named by its
-  edge rather than by being scaled up, and an anchor CTA — an internal path stays in the app,
+  edge rather than by being scaled up, and an anchor CTA. An internal path stays in the app,
   an absolute URL opens in a new tab with `rel="noopener noreferrer"`. The card is its own
   container: past twenty-five rems of content width the tier and figure take a left column
   and the inclusions run beside them, which is the shape it holds in a two-across grid.
 - **Testimonial**: quote, star rating, avatar (monogram fallback), name, result.
 - **Stat / StatBlock**: a figure with its unit and, where there is one, the change from
-  before — carried by an arrow as well as a colour, with `goodDirection` deciding which way
+  before, carried by an arrow as well as a colour, with `goodDirection` deciding which way
   green points.
 - **Meter**: a bounded figure drawn as a bar, `role="meter"`, filled on `scaleX`.
 - **DataTable**: sticky head, right-aligned tabular numerics, an `sm:hidden` card list for
@@ -112,7 +97,7 @@ All components are `cva`-based, composable, accessible, and theme-bound.
   `SegmentedControl`'s selected ground travels on a shared layout id.
 - **SectionEyebrow / SplitHeading**: uppercase kickers, and display headings on a three-step
   scale (`page` · `section` · `sub`) with one phrase carried in the accent colour.
-- **MicroLabel**: the smallest label in the system — the word above a figure, a legend, a
+- **MicroLabel**: the smallest label in the system: the word above a figure, a legend, a
   column head. One tracking and one weight, in `md` and the denser `xs`.
 - **Marquee**: scrolling logo/label strip that loops without a visible seam (pauses on hover, freezes under reduced
   motion).
@@ -135,7 +120,7 @@ entrance for hand-tuned sequencing.
 Above the fold it is the wrong tool twice over: it waits on an observer to say
 what the reader can already see, and an element first painted at nothing is never
 reconsidered as the page's largest paint. So the first screen arrives on the
-`animate-df-rise` keyframe instead — a transform with no opacity, running on the
+`animate-df-rise` keyframe instead: a transform with no opacity, running on the
 compositor rather than on a frame loop, which is also what makes it arrive in a
 tab the browser has throttled. `onMount` and `fade={false}` give `Reveal` the
 same two properties where a component needs them.
@@ -162,9 +147,3 @@ syntax, so Dev Mode reads the same token the stylesheet does.
 ## License
 
 Private and proprietary, `UNLICENSED`. Part of the DeluxFit by Angie codebase.
-
-<br />
-
-<p align="center">
-  <sub>One crimson language: tokens in, whole site out.</sub>
-</p>
