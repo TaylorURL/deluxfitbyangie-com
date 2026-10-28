@@ -9,7 +9,7 @@ Website and client app for Angie, a certified personal trainer.
 
 [deluxfitbyangie.com](https://www.deluxfitbyangie.com)
 
-<img src="https://img.shields.io/badge/version-2026.44.2-e11d2a?style=for-the-badge" alt="Version 2026.44.2" />
+<img src="https://img.shields.io/badge/version-2026.44.3-e11d2a?style=for-the-badge" alt="Version 2026.44.3" />
 
 People buy a membership or training, then sign in to a portal with their plan, nutrition, progress, bookings and a message thread with Angie. She runs her side from a coach dashboard in the same app.
 
