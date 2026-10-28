@@ -2,9 +2,9 @@
 
 The DeluxFit by Angie design system. Near-black grounds and crimson, a condensed display face, ring-first elevation, and `cva` components used straight from source with no build step.
 
-## Overview
+## The look
 
-The whole site (funnel, portal, and coach dashboard) is drawn from one visual language: near-black grounds and charcoals, a crimson accent, off-white text, an ultra-condensed display face (Anton) for headlines, a didone serif (Bodoni Moda) reserved for pull quotes, and a clean sans (Inter) for everything else. `@deluxfit/ds` is that language made importable. It exposes tokens as CSS variables and a Tailwind preset, ships accessible `cva`-based components, and is aliased to source in the app, so a change to a token or component shows up everywhere with no publish and no build.
+Off-white text and charcoal surfaces. Anton for headlines, Bodoni Moda only for pull quotes, Inter for everything else. The funnel, the portal and the coach dashboard all draw from this package, and the app aliases it to source, so a token or component change shows up everywhere with no publish step.
 
 Emphasis inside a headline is carried by colour in the same face at the same size. The other way to do it, dropping the phrase into an italic serif, costs the headline its line, because two faces at two widths never sit on one baseline the way one face does.
 
@@ -21,7 +21,7 @@ import { Button, PricingCard, Section } from '@deluxfit/ds'
 
 ## Tokens
 
-Tokens are the single source of truth, exposed two ways:
+Tokens come in two forms:
 
 1. **CSS variables** under the `--df-*` namespace, defined in `src/styles/tokens.css`. The
    scales that do not change with tone (radii, motion, elevation, header height, layering)
@@ -58,8 +58,6 @@ highlight and a gradient that runs a shade lighter at the top, and the brand red
 three things only: the filled key, the band across the recommended tier, and the one focus
 card on the dashboard. The `SplitHeading` scale has five steps (`hero`, `page`, `section`,
 `sub`, `card`) and every heading on the site is chosen from it.
-
-All components are `cva`-based, composable, accessible, and theme-bound.
 
 - **Button**: `variant`: `primary` (solid crimson) · `secondary` · `outline` · `ghost` ·
   `danger`; `size`: `sm` · `md` · `lg` from the control-height tokens; `block`; `asChild` for
