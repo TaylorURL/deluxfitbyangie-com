@@ -2,18 +2,11 @@
 
 Append-only SQL for the DeluxFit by Angie Supabase project. Numbered files applied in order (schema, RLS policies, storage buckets), plus a self-test in a rolled-back transaction that checks clients only see their own rows.
 
-## What this folder is
+The browser talks to Postgres directly, so these policies are what keep one client from reading another's rows. Never edit a migration that's already been applied. Add a new `NNNN_*.sql` file instead.
 
-The schema, its row-level security, and the storage buckets are the security perimeter of the
-whole app: the browser talks to Postgres directly, so RLS is what keeps one client from
-reading another's rows. These files are the append-only record of that perimeter. Files are
-numbered and applied in order; **never edit an already-applied migration. Add a new
-`NNNN_*.sql` file instead.**
+The `.sql` files themselves are gitignored (`migrations/*.sql`), so this document is the version-controlled record of the set. A fresh clone has this file and not the SQL it describes. The SQL is applied straight to Supabase from a local copy.
 
-> **Note**: the `.sql` files are gitignored (`migrations/*.sql` in the repo's `.gitignore`), so
-> this document is the version-controlled record of the migration set. The SQL itself lives in
-> this folder locally and is applied straight to Supabase (CLI, `psql`, or the dashboard SQL
-> editor); a fresh clone contains this document, not the files it describes.
+Every file is safe to re-run: `create table if not exists`, `create or replace function`, `drop policy if exists` before each `create policy`, and `create index if not exists`. `pgcrypto` is on for `gen_random_uuid()`.
 
 ## Files
 
@@ -69,9 +62,7 @@ psql "$SUPABASE_DB_URL" -f migrations/verify_rls_isolation.sql
 
 ## Applying
 
-Pick whichever path fits your workflow.
-
-### Supabase CLI (recommended)
+### Supabase CLI
 
 ```bash
 # One-time link
@@ -94,12 +85,3 @@ Get `SUPABASE_DB_URL` (the Postgres connection string) from
 ### SQL editor
 
 Paste the file contents into the dashboard SQL editor and run.
-
-## How it works
-
-- **Re-runnable by design**: `create table if not exists`, `create or replace function`,
-  `drop policy if exists` before each `create policy`, and `create index if not exists`.
-- **RLS on every table**: client access is read-only ("select own"); all sensitive writes
-  happen in edge functions using the service-role key, which bypasses RLS. See
-  [`supabase/functions/EDGE_FUNCTIONS.md`](../supabase/functions/EDGE_FUNCTIONS.md).
-- **`pgcrypto` enabled**, for `gen_random_uuid()`.
