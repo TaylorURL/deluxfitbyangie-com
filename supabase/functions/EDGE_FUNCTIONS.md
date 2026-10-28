@@ -2,12 +2,9 @@
 
 The service-role backend for DeluxFit by Angie. Every privileged write (bookings, messaging, checkout, media, coach and admin content) runs here, behind CORS, JWT auth and a server-side `requireStaff` check.
 
-## How they work
+## Shape of a function
 
-The browser only ever reads RLS-scoped rows and never holds a secret. Anything that must be
-trusted (writing another table, calling Stripe, sending a signed media URL, inviting a user)
-lives here instead, in a function that runs with the service-role key. Each function is a
-standard `Deno.serve` handler that:
+Each function is a standard `Deno.serve` handler that:
 
 1. answers the `OPTIONS` CORS preflight,
 2. creates a **service-role** Supabase client (bypasses RLS), and
@@ -105,13 +102,8 @@ Point a Stripe webhook endpoint at
 `checkout.session.completed`, `customer.subscription.updated`, and
 `customer.subscription.deleted`. Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 
-## How it works
+## Gotchas
 
-- **Service role, never the browser**: functions import `createClient` from
-  `jsr:@supabase/supabase-js@2` and run with the service-role key; the client never holds it.
-- **Staff is re-checked here**: `requireStaff` enforces `profiles.role = 'staff'` before any
-  coach/admin write, independent of the UI.
-- **Degrade gracefully**: missing Stripe or Resend secrets return `{ configured:false }` or
-  skip the email rather than erroring or faking a charge.
-- **No bundler required**: the Supabase Deno runtime resolves JSR/npm specifiers directly, so
-  there is no `package.json` in this folder.
+Functions import `createClient` from `jsr:@supabase/supabase-js@2`. The Deno runtime resolves JSR and npm specifiers itself, which is why there's no `package.json` here.
+
+A missing Stripe or Resend secret doesn't error. Checkout returns `{ configured:false }` instead of pretending to charge, and the booking email is skipped.
