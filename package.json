@@ -2,7 +2,7 @@
   "name": "deluxfitbyangie-com",
   "private": true,
   "license": "UNLICENSED",
-  "version": "2026.44.3",
+  "version": "2026.45.0",
   "description": "Website and client app for DeluxFit by Angie, a personal trainer",
   "type": "module",
   "scripts": {
