@@ -95,7 +95,7 @@ const lines = hero.headline
 
 const badge = `<span class="inline-flex items-center gap-3 text-[11px] font-700 uppercase tracking-[0.22em] text-df-accent-bright"><span class="h-px w-7 bg-df-accent" aria-hidden="true"></span><span class="inline-block">${escape(hero.badge)}</span></span>`
 
-const photo = `<figure class="relative overflow-hidden rounded-df-lg border border-df-border-strong bg-df-surface aspect-[4/5]"><img src="/brand/studio-portrait-dumbbells.webp" srcset="/brand/studio-portrait-dumbbells-480.webp 480w, /brand/studio-portrait-dumbbells-800.webp 800w, /brand/studio-portrait-dumbbells-1200.webp 1200w, /brand/studio-portrait-dumbbells.webp 1600w" sizes="(min-width: 640px) 18rem, 15rem" width="1600" height="2240" alt="${escape(hero.imageAlt)}" loading="eager" fetchpriority="high" decoding="sync" class="absolute inset-0 h-full w-full object-cover"><div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_70%_15%,var(--df-accent-wash),transparent_70%)] mix-blend-overlay"></div><div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-df-lg ring-1 ring-inset ring-df-glass-border"></div></figure>`
+const photo = `<figure class="relative overflow-hidden rounded-df-lg border border-df-border-strong bg-df-surface aspect-[4/5]"><img src="/brand/studio-portrait-dumbbells.webp" srcset="/brand/studio-portrait-dumbbells-480.webp 480w, /brand/studio-portrait-dumbbells-800.webp 800w, /brand/studio-portrait-dumbbells-1200.webp 1200w, /brand/studio-portrait-dumbbells.webp 1600w" sizes="(min-width: 640px) 18rem, 15rem" width="1600" height="2240" alt="${escape(hero.imageAlt)}" loading="eager" fetchpriority="high" decoding="sync" onerror="window.__dfPhotoAsk(this)" onload="window.__dfPhotoArrived(this)" class="absolute inset-0 h-full w-full object-cover"><div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_70%_15%,var(--df-accent-wash),transparent_70%)] mix-blend-overlay"></div><div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-df-lg ring-1 ring-inset ring-df-glass-border"></div></figure>`
 
 const shell = `<div id="df-first-screen" class="min-h-dvh"><div class="flex min-h-dvh flex-col"><main class="min-h-dvh flex-1"><section id="top" data-theme="dark" class="relative isolate overflow-hidden bg-df-bg text-df-text"><div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_45%_at_80%_5%,var(--df-accent-wash-soft),transparent_60%)]"></div><div class="mx-auto w-full px-5 sm:px-6 lg:px-8 max-w-6xl pb-12 pt-[calc(var(--df-header-height)+1.5rem)] sm:pb-16 lg:pb-20"><div class="grid items-end gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14"><div class="min-w-0">${badge}<h1 class="font-400 mt-6 pb-[0.14em] font-display text-[clamp(2.75rem,10vw,6.5rem)] uppercase leading-[0.86] tracking-[-0.015em] text-df-text sm:mt-8">${lines}</h1><p class="mt-6 max-w-xl text-base leading-relaxed text-df-text-muted sm:mt-8 sm:text-lg">${escape(hero.subhead)}</p><div class="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row"><a href="${escape(hero.primaryCtaHref)}" class="${PRIMARY}">${escape(hero.primaryCta)}${ARROW}</a><a href="${escape(hero.secondaryCtaHref)}" class="${SECONDARY}">${escape(hero.secondaryCta)}</a></div></div><div class="relative mx-auto w-full max-w-[15rem] sm:max-w-[18rem] lg:mx-0 lg:justify-self-end df-first-photo">${photo}</div></div></div></section></main></div></div>`
 
@@ -131,6 +131,71 @@ const guard = `<script>(function(){try{var p=location.pathname.replace(/\\/+$/,"
  */
 const insert = `<script>(function(){try{if(document.documentElement.classList.contains("df-no-first-screen"))return;var t=document.getElementById("df-first-screen-source");var r=document.getElementById("root");if(t&&r)r.appendChild(t.content.cloneNode(true))}catch(e){}})()</script>`
 
+/*
+ * The first screen's photograph asks again when its fetch fails, and says so
+ * only if it never arrives.
+ *
+ * `src/lib/images.js` gives every `img` the app renders a recovery: it asks
+ * again, backing off far enough to outlast a connection that is changing
+ * rather than dropping a packet, asks on the spot when the connection comes
+ * back, and claims the element as it takes it on — which is how the entry
+ * document knows to hold the first failure for the page's own console instead
+ * of filing it, because what is reported is the outcome and not each ask.
+ *
+ * The hero in the shell below is the one photograph on the site that is not
+ * rendered by the app. It is written into the served document, which is the
+ * whole point of it: it is on screen before the bundle has been asked for, it
+ * is `eager` and `fetchpriority="high"`, and it is therefore the single image
+ * on this site most likely to be in flight at the instant a connection
+ * hiccups. It had no recovery and no claim — so nothing asked for it again,
+ * and the entry document, finding an `img` that nothing had claimed a task
+ * later, filed every one of those failures. That is the same fault #863 was
+ * reported for and fixed: that fix landed on `FramedPhoto`, the app's hero,
+ * and the report had been coming from this one all along.
+ *
+ * So it speaks the same protocol, in the same marks on the element, with the
+ * same delays. The handler is an attribute written by the parser rather than a
+ * listener added afterwards, for the reason the stylesheet's is below: a
+ * listener attached by a later script is attached after the request it wants
+ * to hear about may already have failed.
+ *
+ * The app mounting over the shell is what ends this recovery, and it ends it
+ * correctly: the element leaves the document, every pending ask stops on its
+ * own `isConnected` check, nothing is reported, and the app's own hero carries
+ * the same recovery from there with a full budget. The asks only ever run out
+ * where the app never arrived at all, and a hero frame left empty with nothing
+ * left to ask is exactly the outcome worth filing.
+ */
+const photoGuard =
+  `<script>(function(){` +
+  `var DELAYS=[350,1400,5000,15000];var waiting=[];var watching=false;` +
+  `function drop(img){var at=waiting.indexOf(img);if(at>=0)waiting.splice(at,1)}` +
+  `function askAgain(img){` +
+  `if(!img.isConnected||img.dataset.retryFrom===undefined||img.naturalWidth>0){drop(img);return}` +
+  `var src=img.dataset.retryFrom,set=img.dataset.retryFromSet;` +
+  `img.removeAttribute('srcset');img.removeAttribute('src');` +
+  `if(set)img.setAttribute('srcset',set);if(src)img.setAttribute('src',src)}` +
+  `function gone(img){if(img.dataset.retryGaveUp!==undefined)return;img.dataset.retryGaveUp='';` +
+  `var span=0;for(var i=0;i<DELAYS.length;i++)span+=DELAYS[i];` +
+  `console.error('Failed to load img: '+(img.currentSrc||img.dataset.retryFrom||'(no src)')+` +
+  `' - still failing after '+(DELAYS.length+1)+' asks over '+Math.round(span/1000)+'s')}` +
+  `function watch(){if(watching)return;watching=true;` +
+  `window.addEventListener('online',function(){for(var i=waiting.length-1;i>=0;i--){var img=waiting[i];` +
+  `if(!img.isConnected||img.naturalWidth>0){waiting.splice(i,1);continue}` +
+  `img.dataset.retrySpent='0';delete img.dataset.retryGaveUp;askAgain(img)}})}` +
+  `window.__dfPhotoArrived=function(img){if(!img)return;drop(img);` +
+  `if(img.dataset.retryFrom===undefined)return;delete img.dataset.retrySpent;` +
+  `delete img.dataset.retryGaveUp;delete img.dataset.retryFrom;delete img.dataset.retryFromSet};` +
+  `window.__dfPhotoAsk=function(img){if(!img||!img.isConnected)return;` +
+  `if(img.dataset.retryFrom===undefined){img.dataset.retryFrom=img.getAttribute('src')||'';` +
+  `img.dataset.retryFromSet=img.getAttribute('srcset')||''}` +
+  `if(waiting.indexOf(img)<0)waiting.push(img);watch();` +
+  `if(navigator.onLine===false)return;` +
+  `var spent=Number(img.dataset.retrySpent||0);` +
+  `if(spent>=DELAYS.length){gone(img);return}` +
+  `img.dataset.retrySpent=String(spent+1);` +
+  `setTimeout(function(){askAgain(img)},DELAYS[spent])}})()</script>`
+
 let html = readFileSync(dist, 'utf8')
 if (!html.includes('<div id="root"></div>'))
   throw new Error('dist/index.html carries no empty root')
@@ -138,7 +203,7 @@ if (!html.includes('data-df-href='))
   throw new Error('dist/index.html carries no parked hero preload for the guard to hand back')
 html = html.replace(
   '<div id="root"></div>',
-  `<template id="df-first-screen-source">${shell}</template><div id="root"></div>${insert}`
+  `${photoGuard}<template id="df-first-screen-source">${shell}</template><div id="root"></div>${insert}`
 )
 html = html.replace('</head>', `${style}${guard}</head>`)
 
