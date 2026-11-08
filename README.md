@@ -9,11 +9,11 @@ Website and client app for Angie, a certified personal trainer.
 
 [deluxfitbyangie.com](https://www.deluxfitbyangie.com)
 
-<img src="https://img.shields.io/badge/version-2026.45.1-e11d2a?style=for-the-badge" alt="Version 2026.45.1" />
+<img src="https://img.shields.io/badge/version-2026.45.2-e11d2a?style=for-the-badge" alt="Version 2026.45.2" />
 
 People buy a membership or training, then sign in to a portal with their plan, nutrition, progress, bookings and a message thread with Angie. She runs her side from a coach dashboard in the same app.
 
-It's one Vite build serving the public site, the client portal at `/portal` and the coach dashboard at `/admin`. Supabase does auth, Postgres, private storage and the backend. `/portal?demo=1` shows the portal with sample data and no account.
+It's one Vite build serving the public site, the client portal at `/portal` and the coach dashboard at `/admin`. Supabase does auth, Postgres, private storage and the backend. On the dev server, `/portal?demo=1` fills the portal with a sample account, so the design can be checked without a real one. It's compiled out of the build.
 
 ## Reads and writes
 
