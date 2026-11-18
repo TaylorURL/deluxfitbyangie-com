@@ -142,6 +142,13 @@ export const saveMembership = payload =>
 export const removeMembership = ({ userId, product }) =>
   invoke('update-membership', { userId, product, delete: true })
 
+// Promo codes live in Stripe; the function reads and writes them there.
+export const listPromoCodes = () => invoke('promo-codes', { action: 'list' }).then(d => d.codes)
+export const createPromoCode = payload =>
+  invoke('promo-codes', { action: 'create', ...payload }).then(d => d.code)
+export const turnOffPromoCode = id =>
+  invoke('promo-codes', { action: 'turn-off', id }).then(d => d.code)
+
 export const updateBookingStatus = (id, status) =>
   invoke('update-booking', { id, status }).then(d => d.booking)
 

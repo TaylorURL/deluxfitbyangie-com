@@ -23,7 +23,7 @@ Writes go through the Deno functions in `supabase/functions/`: bookings, message
 
 Every storage bucket is private. `signed-url` is the only way to a file, and it hands out a 30-minute link only for things the caller may see: their own uploads, attachments in their own thread, or library media assigned to them or covered by `has_entitlement()`.
 
-Stripe keys live in Supabase. `create-checkout` sends the buyer to Stripe, and `stripe-webhook` checks the signature with Web Crypto and updates `memberships` when a checkout completes or a subscription changes or ends.
+Stripe keys live in Supabase. `create-checkout` sends the buyer to Stripe, and `stripe-webhook` checks the signature with Web Crypto and updates `memberships` when a checkout completes or a subscription changes or ends. Checkout always shows Stripe's promo code box, and Angie makes and switches off the codes for it under Promo Codes in her dashboard, through `promo-codes`. Each code is a Stripe promotion code on its own coupon, so Stripe keeps the count of who used what.
 
 ## The coach's preview
 
