@@ -250,11 +250,10 @@ function GrantForm({ clients, onSaved }) {
       <div className="mt-6 rounded-df-lg border border-df-border bg-df-surface-2 px-5 py-4">
         <MicroLabel tone="accent">Charging a client a different rate</MicroLabel>
         <p className="mt-2 text-sm leading-relaxed text-df-text-muted">
-          Create a coupon in Stripe under Product Catalog, add a promotion code to it, and set its
-          duration to <span className="text-df-text">Forever</span> so the discount applies to every
-          renewal rather than the first month alone. The client enters that code on the checkout
-          page when they subscribe on the website, and is billed the reduced rate from then on —
-          access and cancellation behave the same as any other member.
+          Make a promo code under Promo Codes and pick a percentage off every month. The client
+          enters that code on the checkout page when they subscribe on the website, and is billed
+          the reduced rate from then on — access and cancellation behave the same as any other
+          member.
         </p>
       </div>
     </SectionCard>

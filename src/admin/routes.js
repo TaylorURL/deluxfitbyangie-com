@@ -8,6 +8,7 @@ import {
   ClipboardList,
   Apple,
   CreditCard,
+  TicketPercent,
   ShieldCheck,
 } from 'lucide-react'
 import AdminDashboard from './pages/AdminDashboard'
@@ -19,6 +20,7 @@ import AdminContent from './pages/AdminContent'
 import AdminPlans from './pages/AdminPlans'
 import AdminNutrition from './pages/AdminNutrition'
 import AdminMemberships from './pages/AdminMemberships'
+import AdminPromoCodes from './pages/AdminPromoCodes'
 import AdminStaff from './pages/AdminStaff'
 
 /**
@@ -90,6 +92,13 @@ export const ADMIN_ROUTES = [
     icon: CreditCard,
     component: AdminMemberships,
     description: 'Grant, update, and remove memberships and coaching.',
+  },
+  {
+    path: '/admin/promo-codes',
+    label: 'Promo Codes',
+    icon: TicketPercent,
+    component: AdminPromoCodes,
+    description: 'Make the codes clients enter at checkout, and switch them off.',
   },
   {
     path: '/admin/staff',
