@@ -39,6 +39,15 @@ export function deleteLibraryItemPrompt(item) {
 }
 
 /** Removing a membership, which does not reach the subscription in Stripe. */
+/** Switching a promo code off, which stops it at checkout for good. */
+export function turnOffPromoCodePrompt(code) {
+  return {
+    title: 'Turn Off This Code?',
+    body: `${code.code} stops working at checkout straight away. Anyone who already subscribed with it keeps their discount, and you can make the same code again later.`,
+    confirmLabel: 'Turn Off Code',
+  }
+}
+
 export function removeMembershipPrompt(clientName, productLabel) {
   return {
     title: 'Remove This Membership?',
