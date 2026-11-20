@@ -311,37 +311,62 @@ const inlined = await new Beasties({
  * attached afterwards, because a listener added by a later script is added
  * after the request it wants to hear about may already have failed. One retry
  * answers a request lost on the wire; the sheet that answers it is a plain
- * one, since by then there is no paint left to protect. A second failure is a
- * file that has genuinely gone, and the only document that names a sheet which
- * exists is the current one — fetched once, on the same key and the same
- * window as the module recovery, so between them a reader is reloaded onto the
- * current build once and never twice.
+ * one, since by then there is no paint left to protect.
+ *
+ * A SECOND FAILURE IS A FILE THAT HAS GONE, AND WHAT REPLACED IT IS NAMED IN
+ * THE CURRENT DOCUMENT — SO FETCH THE DOCUMENT AND READ THE NAME, RATHER THAN
+ * RELOADING ONTO IT. This used to reload, on the key and the window the module
+ * recovery uses, which cost the reader the page twice over. That allowance is
+ * one reload per visit shared by every recovery here, and a deploy deletes
+ * every hashed file at once: the chunk that failed a moment earlier has
+ * usually spent it already, and the sheet then arrived at a recovery with
+ * nothing left to try and left the reader on the raw document — a whole page
+ * of unstyled text, with the one fault below filed to say so. That is #1724,
+ * reported from `/single-session`, and reproduced here with the allowance
+ * spent: 0 rules applied and the `h1` at 24px instead of 66px in Anton.
+ *
+ * The document is the only thing that knows which sheet exists, and asking for
+ * it is one request, `no-store` so the answer cannot be the stale document
+ * this is trying to escape. The sheet it names goes in as a plain `link` and
+ * the page is styled where it stands — nothing is reloaded, nothing is spent,
+ * the reader keeps their place on a client-routed path, and the modules' one
+ * reload is still theirs. It needs no storage either, so a privacy mode that
+ * refuses `sessionStorage` recovers like any other browser.
  *
  * WHAT IS REPORTED IS THE OUTCOME, NOT EACH ASK — the rule `src/lib/images.js`
  * already follows for a photograph. An ask that failed and was answered by the
  * next one is not a reader who lost the page, and the reader this covers never
- * sees anything: the retry lands, the sheet switches on, and the only trace is
- * a fault filed against a file that is sitting on the deploy answering every
- * request made for it. So the element is marked as one that recovers, which
- * the entry document reads as "hold this for the page's own console", and the
- * one thing said out loud is the outcome the reader actually got: the sheet is
- * still missing after both asks and there is no current document to be carried
- * to, so what is on screen is the raw document and it stays that way.
+ * sees anything: the sheet switches on and the only trace is a fault filed
+ * against a file that is sitting on the deploy answering every request made
+ * for it. So the element is marked as one that recovers, which the entry
+ * document reads as "hold this for the page's own console", and the one thing
+ * said out loud is the outcome the reader actually got — the asking is over,
+ * the document has been read, and there is still no sheet on the page. That
+ * fault is the whole notice anyone gets of a reader left on the raw document,
+ * so it stays exactly as loud as it is, and it now says which of the three
+ * ways the recovery ran out.
  */
 const sheetGuard =
   `<script>window.__dfStylesheetGone=(function(){` +
-  `var retried=false;` +
-  `function gone(href){console.error('Failed to load link: '+href+` +
-  `' - still failing after 2 asks, and the current document was not fetched')}` +
-  `function reload(href){try{var k='deluxfit:chunk-reload';` +
-  `var last=Number(sessionStorage.getItem(k))||0;` +
-  `if(Date.now()-last<30000)return gone(href);` +
-  `sessionStorage.setItem(k,String(Date.now()))}catch(e){return gone(href)}location.reload()}` +
-  `return function(link){var href=link.href;if(retried)return reload(href);retried=true;` +
-  `setTimeout(function(){var retry=document.createElement('link');` +
-  `retry.rel='stylesheet';retry.crossOrigin='';retry.setAttribute('data-df-recovers','');` +
-  `retry.href=href;retry.onerror=function(){reload(href)};` +
-  `document.head.appendChild(retry)},600)}})()</script>`
+  `var retried=false;var reading=false;` +
+  `function gone(href,why){console.error('Failed to load link: '+href+` +
+  `' - still failing after 2 asks, and '+why)}` +
+  `function add(href,fail){var l=document.createElement('link');l.rel='stylesheet';` +
+  `l.crossOrigin='';l.setAttribute('data-df-recovers','');l.href=href;` +
+  `l.onerror=fail;document.head.appendChild(l)}` +
+  `function fromCurrentDocument(href){if(reading)return;reading=true;` +
+  `fetch(location.href,{cache:'no-store',credentials:'same-origin'}).then(function(r){` +
+  `if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(function(html){` +
+  `var named=new DOMParser().parseFromString(html,'text/html')` +
+  `.querySelectorAll('link[rel=stylesheet][href]');var now=null;` +
+  `for(var i=0;i<named.length&&!now;i++){` +
+  `var u=new URL(named[i].getAttribute('href'),location.href).href;if(u!==href)now=u}` +
+  `if(!now)return gone(href,'the current document names the same stylesheet');` +
+  `add(now,function(){gone(href,'the stylesheet the current document names is missing too')})},` +
+  `function(){gone(href,'the current document was not fetched')})}` +
+  `return function(link){var href=link.href;if(retried)return fromCurrentDocument(href);` +
+  `retried=true;setTimeout(function(){` +
+  `add(href,function(){fromCurrentDocument(href)})},600)}})()</script>`
 
 // Beasties stamps the element it treated as the document; the page does not
 // need to carry that.
