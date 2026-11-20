@@ -348,25 +348,36 @@ const inlined = await new Beasties({
  */
 const sheetGuard =
   `<script>window.__dfStylesheetGone=(function(){` +
-  `var retried=false;var reading=false;` +
-  `function gone(href,why){console.error('Failed to load link: '+href+` +
-  `' - still failing after 2 asks, and '+why)}` +
+  `var asks={};var reading={};var filed={};` +
+  `function applied(href){try{var s=document.styleSheets;for(var i=0;i<s.length;i++){` +
+  `if(s[i].href!==href)continue;var r=null;try{r=s[i].cssRules}catch(e){return true}` +
+  `if(r&&r.length)return true}}catch(e){}return false}` +
+  `function gone(href,why){if(filed[href]||applied(href))return;filed[href]=true;` +
+  `console.error('Failed to load link: '+href+' - still failing after '+` +
+  `((asks[href]||1)-1)+' asks, and '+why)}` +
   `function add(href,fail){var l=document.createElement('link');l.rel='stylesheet';` +
   `l.crossOrigin='';l.setAttribute('data-df-recovers','');l.href=href;` +
   `l.onerror=fail;document.head.appendChild(l)}` +
-  `function fromCurrentDocument(href){if(reading)return;reading=true;` +
+  `function asText(href,why){fetch(href,{cache:'reload',credentials:'same-origin'})` +
+  `.then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text()})` +
+  `.then(function(css){if(!css)throw new Error('empty');if(applied(href))return;` +
+  `var s=document.createElement('style');s.setAttribute('data-df-recovers','');` +
+  `s.setAttribute('data-df-href',href);s.textContent=css;document.head.appendChild(s)},` +
+  `function(){gone(href,why)})}` +
+  `function fromCurrentDocument(href){if(reading[href])return;reading[href]=true;` +
   `fetch(location.href,{cache:'no-store',credentials:'same-origin'}).then(function(r){` +
   `if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(function(html){` +
   `var named=new DOMParser().parseFromString(html,'text/html')` +
   `.querySelectorAll('link[rel=stylesheet][href]');var now=null;` +
   `for(var i=0;i<named.length&&!now;i++){` +
   `var u=new URL(named[i].getAttribute('href'),location.href).href;if(u!==href)now=u}` +
-  `if(!now)return gone(href,'the current document names the same stylesheet');` +
-  `add(now,function(){gone(href,'the stylesheet the current document names is missing too')})},` +
-  `function(){gone(href,'the current document was not fetched')})}` +
-  `return function(link){var href=link.href;if(retried)return fromCurrentDocument(href);` +
-  `retried=true;setTimeout(function(){` +
-  `add(href,function(){fromCurrentDocument(href)})},600)}})()</script>`
+  `if(!now)return asText(href,'the current document names the same stylesheet, ` +
+  `which could not be read either');` +
+  `add(now,function(){asText(now,'the stylesheet the current document names is missing too')})},` +
+  `function(){asText(href,'the current document was not fetched and the sheet could not be read')})}` +
+  `return function(link){var href=link.href;var n=asks[href]=(asks[href]||0)+1;` +
+  `if(applied(href))return;if(n>2)return fromCurrentDocument(href);` +
+  `setTimeout(function(){add(href,function(){window.__dfStylesheetGone(this)})},n*600)}})()</script>`
 
 // Beasties stamps the element it treated as the document; the page does not
 // need to carry that.
